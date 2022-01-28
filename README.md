@@ -1,3 +1,5 @@
+<!-- @format -->
+
 # Final Project - Sport Field Reservations Platform
 
 ## Objetivos del Proyecto
@@ -14,15 +16,18 @@ El proyecto tendrá una duración máxima de tres semanas. En el caso de que com
 
 ## Comenzando
 
- 1. Crear User Stories y las tareas necesarias para los sprints
- 2. 
+1.  Crear User Stories
+2.  Determinar la priorización de las User Stories
+3.  Estimar el tiempo final con el uso de Story Points
+4.  Desglosar las tareas necesarias para llevar a caba cada User Story
+5.  Dividir los User Stories en tres Sprints
 
-__IMPORTANTE:__ Es necesario contar minimamente con la última versión estable de Node y NPM. Asegurarse de contar con ella para poder instalar correctamente las dependecias necesarias para correr el proyecto.
+**IMPORTANTE:** Es necesario contar minimamente con la última versión estable de Node y NPM. Asegurarse de contar con ella para poder instalar correctamente las dependecias necesarias para correr el proyecto.
 
 Actualmente las versiónes necesarias son:
 
- * __Node__: 12.18.3 o mayor
- * __NPM__: 6.14.16 o mayor
+- **Node**: 12.18.3 o mayor
+- **NPM**: 6.14.16 o mayor
 
 Para verificar que versión tienen instalada:
 
@@ -51,15 +56,16 @@ El contenido de `client` fue creado usando: Create React App.
 ## Enunciado
 
 La idea general es crear una aplicación en la cual se pueda:
+
 - Como usuario:
   - Visualizar las canchas deportivas cercanas a una ubicación.
-  - Poder filtrar la busqueda por localidad, tipo de deporte, 
+  - Poder filtrar la busqueda por localidad, tipo de deporte,
   - Agendar un horario para uso de canchas.
 - Como Establecimiento
   - Agregar una cancha para que usuarios la puedan reservar
 
-
 #### Tecnologías necesarias:
+
 - [ ] React
 - [ ] Redux
 - [ ] Express
@@ -69,14 +75,16 @@ La idea general es crear una aplicación en la cual se pueda:
 
 Se debe desarrollar una aplicación de React/Redux que contenga las siguientes pantallas/rutas.
 
-__Pagina inicial__: deben armar una landing page con
+**Pagina inicial**: deben armar una landing page con
+
 - [ ] Alguna imagen de fondo representativa al proyecto
 - [ ] Input de busqueda para encontrar canchas por:
   - [ ] Nombre
   - [ ] Ubicación
   - [ ] Tipo de deporte
 
-__Ruta resultados__: debe contener
+**Ruta resultados**: debe contener
+
 - [ ] Input de búsqueda para encontrar canchas
 - [ ] Área donde se verá el listado de canchas. Al iniciar deberá cargar los primeros resultados obtenidos y deberá mostrar su:
   - Imagen de la cancha
@@ -91,7 +99,8 @@ __Ruta resultados__: debe contener
 - [ ] Paginado para ir buscando y mostrando los siguientes paises, 10 paises por pagina, mostrando los primeros 9 en la primer pagina.
 - [ ] Mapa con las ubicaciones de los establecimientos cercanos a una area seleccionada
 
-__Ruta de detalle del establecimiento__: debe contener
+**Ruta de detalle del establecimiento**: debe contener
+
 - [ ] Nombre del establecimiento
 - [ ] Ubicación
 - [ ] Imagenes de las canchas
@@ -100,7 +109,8 @@ __Ruta de detalle del establecimiento__: debe contener
 - [ ] Precio
 - [ ] Mapa con ubicación
 
-__Ruta de formulario del nuevo establecimiento__: debe contener
+**Ruta de formulario del nuevo establecimiento**: debe contener
+
 - [ ] Nombre del establecimiento
 - [ ] Ubicación
 - [ ] Creación de canchas/productos
@@ -110,7 +120,8 @@ __Ruta de formulario del nuevo establecimiento__: debe contener
 - [ ] Calendario disponible
 - [ ] Precio
 
-__Ruta de detalle del Usuario__: debe contener
+**Ruta de detalle del Usuario**: debe contener
+
 - [ ] Nombre
 - [ ] Foto
 - [ ] Reservas
@@ -121,20 +132,21 @@ __Ruta de detalle del Usuario__: debe contener
   - Pagadas
   - Pendientes
 
-__Ruta de formulario de nuevo Usuario__: debe contener
+**Ruta de formulario de nuevo Usuario**: debe contener
+
 - [ ] Nombre
 - [ ] Foto
 
-> Es requisito que los formulario de creación estén validados con JavaScript y no sólo con validaciones HTML. Pueden agregar las validaciones que consideren. 
+> Es requisito que los formulario de creación estén validados con JavaScript y no sólo con validaciones HTML. Pueden agregar las validaciones que consideren.
 
 #### Base de datos
 
 El modelo de la base de datos deberá tener las siguientes entidades (Aquellas propiedades marcadas con asterísco deben ser obligatorias):
 
 - [ ] Usuario con las siguientes propiedades:
-  - ID (Código de 3 letras) *
-  - Nombre *
-  - 
+  - ID (Código de 3 letras) \*
+  - Nombre \*
+  -
 
 Crear las respectivas relaciones
 
@@ -142,36 +154,38 @@ Crear las respectivas relaciones
 
 Se debe desarrollar un servidor en Node/Express con las siguientes rutas:
 
-__Usuarios__
-- [ ] __GET /users__:
-  - Deberán traer todos los usuarios desde la base de datos 
-- [ ] __GET /users/{idUser}__:
+**Usuarios**
+
+- [ ] **GET /users**:
+  - Deberán traer todos los usuarios desde la base de datos
+- [ ] **GET /users/{idUser}**:
   - Obtener el detalle de un usuario en particular
   - Debe traer solo los datos pedidos en la ruta de detalle de usuario
   - Incluir los datos de las reservas realizadas anteriormente
-- [ ] __GET /users?name="..."__:
+- [ ] **GET /users?name="..."**:
   - Obtener los usuarios que coincidan con el nombre pasado como query parameter (No necesariamente tiene que ser una matcheo exacto)
   - Si no existe ningún usuario mostrar un mensaje adecuado
-- [ ] __POST /user__:
+- [ ] **POST /user**:
   - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de usuario por body
   - Crea un usuario en la base de datos
 
-__Establecimientos__
-- [ ] __GET /establishment__:
-  - Deberán traer todos los establecimientos desde la base de datos 
-- [ ] __GET /establishment/{idEstablishment}__:
+**Establecimientos**
+
+- [ ] **GET /establishment**:
+  - Deberán traer todos los establecimientos desde la base de datos
+- [ ] **GET /establishment/{idEstablishment}**:
   - Obtener el detalle de un establecimiento en particular
   - Debe traer solo los datos pedidos en la ruta de detalle de establecimientos
   - Incluir los datos de las canchas
-- [ ] __GET /establishment?name="..."__:
+- [ ] **GET /establishment?name="..."**:
   - Obtener los establecimientos que coincidan con el nombre pasado como query parameter (No necesariamente tiene que ser una matcheo exacto)
   - Si no existe ningún establecimiento mostrar un mensaje adecuado
-- [ ] __POST /establishment__:
+- [ ] **POST /establishment**:
   - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de establecimiento por body
   - Crea un establecimientos en la base de datos
 
-
 #### Testing
+
 - [ ] Al menos tener un componente del frontend con sus tests respectivos
 - [ ] Al menos tener una ruta del backend con sus tests respectivos
 - [ ] Al menos tener un modelo de la base de datos con sus tests respectivos
