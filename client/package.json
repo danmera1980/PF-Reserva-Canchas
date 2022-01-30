@@ -45,6 +45,13 @@
     ]
   },
   "devDependencies": {
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6"
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
+    "autoprefixer": "^10.4.2",
+    "postcss": "^8.4.5",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^14.0.2",
+    "postcss-preset-env": "^7.2.3",
+    "precss": "^4.0.0",
+    "tailwindcss": "^3.0.18"
   }
 }
