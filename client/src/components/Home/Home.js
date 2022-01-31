@@ -1,13 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "./Landing.scss";
+// import { Link } from "react-router-dom";
+import Header from "../Header/Header.js";
+import Footer from "../Footer/Footer.js";
+import "./Home.scss";
 
-function Landing() {
+function Home() {
   return (
     <div>
-      <h1>Landing Page</h1>
+      <Header />
+      <Footer />
+      Test
     </div>
   );
 }
 
-export default Landing;
+export default Home;

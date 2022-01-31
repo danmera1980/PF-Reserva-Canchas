@@ -1,0 +1,22 @@
+header{
+    display: flex;
+    justify-content: space-between;
+    padding: .5em;
+}
+
+.logo {
+    max-width: 243px;
+}
+
+.login {
+    display: flex;
+    align-items: center;
+    font-size: var(--fs-btn);
+}
+
+.btn_sign_in {
+    display: flex;
+    margin-right: 20px;
+    justify-content: space-between;
+
+}
