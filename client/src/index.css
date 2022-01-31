@@ -15,14 +15,15 @@
    --fw-bold: 900;
 
    --clr-light: #fff;
-   --clr-dark: #303030;
-   --clr-accent: #16e0bd;
+   --clr-background: #FFFEE6;
+   --clr-dark: #726ef7;
+   --clr-accent: #000;
 
    --fs-h1: 4.5em;
    --fs-h2: 2.2rem;
    --fs-h3: 1.5rem;
-   --fs-body: 1.25rem;
-   --fs-btn: 1.125rem
+   --fs-body: 1.125rem;
+   --fs-btn: .875rem
 }
 
 body {
@@ -30,7 +31,7 @@ body {
   font-family: var(--ff-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--clr-light);
+  background: var(--clr-background);
   color: var(--clr-dark);
   font-size: var(--fs-body);
   line-height: 1.6;
@@ -39,4 +40,22 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+h1{ 
+  font-size: var(--fs-h1); 
+  color: var(--clr-accent); 
+  font-weight: var(--fw-bold);
+}
+
+h2{ 
+  font-size: var(--fs-h2); 
+  color: var(--clr-accent); 
+  font-weight: var(--fw-bold);
+}
+
+h3{ 
+  font-size: var(--fs-h3); 
+  color: var(--clr-accent); 
+  font-weight: var(--fw-bold);
 }
