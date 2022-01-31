@@ -18,7 +18,7 @@ const postCourt = async (req,res,next) => {
 
       }  
     )
-//     let sedesDb = await Country.findAll({
+//     let sedesDb = await Sedes.findAll({
 //       where: { name: sede}
 //   })   
 
