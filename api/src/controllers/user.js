@@ -3,7 +3,7 @@
 const axios = require('axios');
 const { User } = require('../db');
 
-//test branch
+// starting to code
 const getAllUsers = async (req, res, next) => {
   try {
   } catch (e) {
