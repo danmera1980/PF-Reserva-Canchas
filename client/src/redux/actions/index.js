@@ -13,3 +13,10 @@ export const getAllUsers = () => {
         })
     }
 }
+
+export const postVideogame = (payload) => {
+    return async function() {
+        var establishment = await axios.post("", payload)
+        return establishment
+    }
+}
