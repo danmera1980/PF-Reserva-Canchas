@@ -19,7 +19,7 @@ export const postEstablishment = (payload) => {
         var establishment = await axios.post("", payload)
         return establishment
     }
-
+}
 export function postCourt(payload){
 
     try {
@@ -31,4 +31,4 @@ export function postCourt(payload){
     } catch (e) {
         console.log(e.response.data)
     }
-}
+} 
