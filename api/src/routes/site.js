@@ -1,9 +1,8 @@
 const { Router } = require('express');
-
-
-const { findByLocation } = require('../controllers/site');
-
 const router = Router();
+const {createSite, findByLocation } = require('../controllers/site');
+
+router.post('/', createSite)
 
 router.get('/', findByLocation)
 
