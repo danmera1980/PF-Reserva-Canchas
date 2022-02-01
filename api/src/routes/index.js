@@ -8,10 +8,10 @@ const axios = require('axios');
 
 const router = Router();
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
+const Court = require('./court');
 
-router.use('/users', User);
+
+router.use('/court', Court)
 
 
 
