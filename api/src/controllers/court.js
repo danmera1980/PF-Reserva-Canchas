@@ -1,9 +1,15 @@
-const { Court} = require ('../db');
+const { Court, Headquarter} = require ('../db');
 // cambiar nombre de sede cuando sepa el nombre de la tabla de sede
 
 const postCourt = async (req,res,next) => {
-    const {name, description, shiftLength, price, image, sport, sede} = req.body;
+    const {name, description, shiftLength, price, image, sport, headquarterName} = req.body;
     console.log();
+
+    let sedeDB = await Headquarter.findOne({
+      where: { name: headquarterName}
+    })   
+
+
   try {
 
     let courtCreated = await Court.findOrCreate({
@@ -14,21 +20,11 @@ const postCourt = async (req,res,next) => {
         price,
         image,
         sport,
-    }
+      }
+    })
 
-      }  
-    )
-//     let sedesDb = await Sedes.findAll({
-//       where: { name: sede}
-//   })   
 
-//   const court = await Court.findOne({
-//     where: {
-//       name: name,
-//     },
-//   });
-
-//   await court.addSede(sedesDb)
+  sedeDB.addCourt(courtCreated);
 
   res.send('cancha creada')
     
