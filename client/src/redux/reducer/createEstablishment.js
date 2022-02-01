@@ -14,4 +14,4 @@ const postEstablishmentReducer = (state = initialState, action) => {
     }
 }
 
-export default postEstablishmentReducer;
+export default postEstablishmentReducer; 

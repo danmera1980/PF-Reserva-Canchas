@@ -1,13 +1,13 @@
 const axios = require('axios');
-const {Establishment, Headquarter} = require('../db');
-import { createHeadquarter } from './site';
+const {Establishment, Site} = require('../db');
+const { createSite } = require('./site');
 
 
 const getEstablishmentsFromDB = async(searchBarName)=>{
 
     let establishmentDB = await Establishment.findAll({
         include: {
-            model: Headquarter,
+            model: Site,
             attributes: ['name'],
             through:{
                 attributes:[],
@@ -27,7 +27,7 @@ const getEstablishmentsFromDB = async(searchBarName)=>{
             timeActiveFrom: establishment.timeActiveFrom,
             timeActiveTo: establishment.timeActiveTo,
             responsable_id: establishment.responsable_id,
-            headquarters: establishment.headquarters
+            sites: establishment.sites
         }
     })
 
@@ -35,25 +35,37 @@ const getEstablishmentsFromDB = async(searchBarName)=>{
 }
 
 
-const createEstablishment = async function(id,name,logoImage,rating, timeActiveFrom, timeActiveTo, responsable_id, headquarters){
+const createEstablishment = async (req, res, next)=>{
+
+    const {id,name,logoImage,rating, timeActiveFrom, timeActiveTo, responsable_id} = req.body
 
     // creo el establecimiento
-    let establishmentCreated = await Establishment.create({
-        id,
-        name,
-        logoImage,
-        rating,
-        timeActiveFrom,
-        timeActiveTo,
-        responsable_id
+
+    let establishmentDB = await Establishment.findOne({
+        where : {id: id}
     })
 
-    // headquarters va a ser un array de objetos.
-    if(headquarters.length>0){
-        headquarters.forEach(h => {
-            createHeadquarter(id, h)
-        })
+    try {
+        if(!establishmentDB){
+            let establishmentCreated = await Establishment.create({
+                id,
+                name,
+                logoImage,
+                rating,
+                timeActiveFrom,
+                timeActiveTo,
+                responsable_id
+            })
+
+            res.send('establishment created')
+        }
+        else{
+            res.status(404).send('establishment already exist')
+        }
+    } catch (error) {
+        next(error)
     }
+    
 
 }
 
