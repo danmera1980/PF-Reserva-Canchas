@@ -14,7 +14,7 @@ export const getAllUsers = () => {
     }
 }
 
-export const postVideogame = (payload) => {
+export const postEstablishment = (payload) => {
     return async function() {
         var establishment = await axios.post("", payload)
         return establishment
