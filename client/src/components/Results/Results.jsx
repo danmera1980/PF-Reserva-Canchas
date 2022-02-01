@@ -1,12 +1,12 @@
 import React from 'react';
-import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+// import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import Header from '../Header/Header';
 import SearchBar from '../SearchBar/SearchBar';
 import Footer from '../Footer/Footer';
-import apiKey from ''
+// import apiKey from '';
 import './Results.scss';
 
-export default function Results() {
+function Results() {
 
     // const {} = useLoadScript{()}
   return (
@@ -25,3 +25,4 @@ export default function Results() {
   );
 }
 
+export default Results;
