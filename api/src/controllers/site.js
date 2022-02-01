@@ -1,29 +1,49 @@
-const {Establishment, Headquarter} = require('../db');
+const {Establishment, Site} = require('../db');
 
-const createHeadquarter = async function (establishmentID, {name, country, city, street, streetNumber, latitude, longitude}){
+const createSite = async (req, res, next)=>{
+
+    const {establishmentId, name, country, city, street, streetNumber, latitude, longitude} = req.body
 
     let establishmentDB = await Establishment.findOne({
-        where : {id: establishmentID}
+        where : {id: establishmentId}
     })
 
-    let headquarterCreated = await Headquarter.create({
-        name,
-        country,
-        city,
-        street,
-        streetNumber,
-        latitude,
-        longitude
+    let siteDB = await Site.findOne({
+        where: {
+            name: name,
+            establishmentId: establishmentId
+        }
     })
 
-    establishmentDB.addHeadquarter(headquarterCreated);
-
+    try {
+        if(!siteDB){
+            let siteCreated = await Site.create({
+                name,
+                country,
+                city,
+                street,
+                streetNumber,
+                latitude,
+                longitude
+            })
+        
+            establishmentDB.addSite(siteCreated);
+            
+            res.send('site created')
+        }
+        else{
+            res.status(404).send('site already exist')
+        }    
+    } catch (error) {
+        next(error)
+    }
+    
 }
 
 const findByLocation = () =>{
     const {location} = req.query.location
     try {
-      const results = await Headquarter.findAll({
+      const results = await Site.findAll({
         where:{
           city: location
         }
@@ -34,4 +54,4 @@ const findByLocation = () =>{
     }
 }
 
-module.exports = {createHeadquarter, findByLocation}
+module.exports = {createSite, findByLocation}
