@@ -15,7 +15,7 @@ router.get("/", getAllUsers);
 router.get("/:id", getUserByID);
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.put("/edit", editUser);
+router.put("/:id", editUser);
 
 
 
