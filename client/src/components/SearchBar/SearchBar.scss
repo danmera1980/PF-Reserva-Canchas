@@ -34,7 +34,18 @@
     align-items: center;
     justify-content: center;
     background-color: transparent;
+    margin-right: 20px;
+    margin-left: 20px;
 }
+
+.select select{
+    color: gray;
+    background-color: var(--clr-light);
+    height: 100%;
+    width: 90%;
+}
+
+.select-selected{ background-color: dodgerblue;}
 
 .faIcon{
     font-size: 30px;
