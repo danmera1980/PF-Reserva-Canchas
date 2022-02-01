@@ -12,7 +12,7 @@ router.post('/', async(req, res)=>{
         timeActiveFrom,
         timeActiveTo,
         responsable_id,
-        headquarters
+        sites
     } = req.body;
 
     // con esto revisaría si el usuario que estoy asignando como responsable existe en la DB.
@@ -23,7 +23,7 @@ router.post('/', async(req, res)=>{
 
     // if(userResponsable){
         try {
-            createEstablishment(id,name,logoImage,rating, timeActiveFrom, timeActiveTo, responsable_id, headquarters)
+            createEstablishment(id,name,logoImage,rating, timeActiveFrom, timeActiveTo, responsable_id, sites)
             res.status(200).send('establishment succesfully created')  
         } catch (error) {
             res.status(404).send('establishment cannot be created')
