@@ -33,7 +33,7 @@ const decodedToken = jwt.verify(token, SECRET)
 if (!token || !decodedToken.id){
     return res.status(401).jason({error: "token missing or invalid"})
 }
-
+ y un par de cosas mas que voy a ver despues de intergar google
 });
 
 
