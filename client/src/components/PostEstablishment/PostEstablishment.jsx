@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { postEstablishment } from "../../redux/actions";
+import "./PostEstablishment.css";
 
 function validate(input) {
  
@@ -66,51 +67,51 @@ export default function PostEstablishment() {
     }
     return (
         <div>
-            <div>
-                <form onSubmit={(e) => handleSubmit(e)}>
+            <div className="container-crear">
+                <form className="formularioCrear" onSubmit={(e) => handleSubmit(e)}>
                     <div>
                     <label>Cuit: </label>
-                    <input placeholder="Cuit..." type="text" value={input.cuit} name="cuit" onChange={(e)=>handleChange(e)}></input>
+                    <input className="input" placeholder="Cuit..." type="text" value={input.cuit} name="cuit" onChange={(e)=>handleChange(e)}></input>
                     {errors.cuit ?
                     <p>{errors.cuit}</p> : null
                     }
                     </div>
                     <div>
                     <label>Nombre: </label>
-                    <input placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)}></input>
+                    <input className="input" placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)}></input>
                     {errors.name ?
                     <p>{errors.name}</p> : null
                     }
                     </div>
                     <div>
                     <label>Descripcion: </label>
-                    <input placeholder="Descripcion..." type="text" value={input.descripcion} name="descripcion" onChange={(e)=>handleChange(e)}></input>
+                    <input className="input" placeholder="Descripcion..." type="text" value={input.descripcion} name="descripcion" onChange={(e)=>handleChange(e)}></input>
                     </div>
                     <div>
                     <label>Logo-Imagen: </label>
-                    <input placeholder="Logo..." type="text" value={input.logoImage} name="logoImage" onChange={(e)=>handleChange(e)}></input>
+                    <input className="input" placeholder="Logo..." type="text" value={input.logoImage} name="logoImage" onChange={(e)=>handleChange(e)}></input>
                     </div>
                     <div>
                     <label>Rating: </label>
-                    <input placeholder="Rating..." type="text" value={input.rating} name="rating" onChange={(e)=>handleChange(e)}></input>
+                    <input className="input" placeholder="Rating..." type="text" value={input.rating} name="rating" onChange={(e)=>handleChange(e)}></input>
                     </div>
                     <div>
                     <label>Horario de apertura: </label>
-                    <input placeholder="Hora de apertura..." type="text" value={input.timeActiveFrom} name="timeActiveFrom" onChange={(e)=>handleChange(e)}></input>
+                    <input className="input" placeholder="Hora de apertura..." type="text" value={input.timeActiveFrom} name="timeActiveFrom" onChange={(e)=>handleChange(e)}></input>
                     </div>
                     {errors.timeActiveFrom ?
                     <p>{errors.timeActiveFrom}</p> : null
                     }
                     <div>
                     <label>Horario de cierre: </label>
-                    <input placeholder="Hora de cierre..." type="text" value={input.timeActiveTo} name="timeActiveTo" onChange={(e)=>handleChange(e)}></input>
+                    <input className="input" placeholder="Hora de cierre..." type="text" value={input.timeActiveTo} name="timeActiveTo" onChange={(e)=>handleChange(e)}></input>
                     </div>
                     {errors.timeActiveTo ?
                     <p>{errors.timeActiveTo}</p> : null
                     }
                     <div>
                     <label>Numero de usuario responsable: </label>
-                    <input placeholder="Numero(id) del usuario responsable..." type="text" value={input.responsable_id} name="responsable_id" onChange={(e)=>handleChange(e)}></input>
+                    <input className="input" placeholder="Numero(id) del usuario responsable..." type="text" value={input.responsable_id} name="responsable_id" onChange={(e)=>handleChange(e)}></input>
                     {errors.responsable_id ?
                     <p>{errors.responsable_id}</p> : null
                     }
