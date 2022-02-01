@@ -10,12 +10,13 @@ const routerHeadquarter = reuire('/routerHeadquarter')
 
 const router = Router();
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
+const Court = require('./court');
 
 router.use('/users', User);
 router.use('/establishments', routerEstablishment)
 router.use('/headquarters', routerHeadquarter)
+
+router.use('/court', Court)
 
 
 
