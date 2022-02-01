@@ -25,7 +25,9 @@ module.exports = (sequelize) => {
     phone: {
       type: DataTypes.STRING,
     },
-    
+    img: {
+      type: DataTypes.STRING,
+    },
     hasEstablishment: {
       type: DataTypes.BOOLEAN,
       allowNull: false
