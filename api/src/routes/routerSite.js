@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const router = Router();
-const {Establishment, Headquarter} = require('../db');
-const {createHeadquarter} = require('../controllers/headquarter')
+const {Establishment} = require('../db');
+const {createSite} = require('../controllers/site')
 
 router.post('/', async(req, res)=>{
-    let = {
+    const {
         establishmentID,
         name,
         country,
@@ -24,14 +24,14 @@ router.post('/', async(req, res)=>{
 
     if(establishmentExist){
         try {
-            createHeadquarter(establishmentID, {name, country, city, street, streetNumber, latitude, longitude})
-            res.status(200).send('headquarter succesfully created')  
+            createSite(establishmentID, {name, country, city, street, streetNumber, latitude, longitude})
+            res.status(200).send('site succesfully created')  
         } catch (error) {
-            res.status(404).send('headquarter cannot be created')
+            res.status(404).send('site cannot be created')
         }
     }
     else{
-        res.status(404).send('this user cannot create headquarter for this establishment')
+        res.status(404).send('this user cannot create site for this establishment')
     }
     
 })

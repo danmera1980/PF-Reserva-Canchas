@@ -1,13 +1,13 @@
 const axios = require('axios');
-const {Establishment, Headquarter} = require('../db');
-const { createHeadquarter } = require('./headquarter');
+const {Establishment, Site} = require('../db');
+const { createSite } = require('./site');
 
 
 const getEstablishmentsFromDB = async(searchBarName)=>{
 
     let establishmentDB = await Establishment.findAll({
         include: {
-            model: Headquarter,
+            model: Site,
             attributes: ['name'],
             through:{
                 attributes:[],
@@ -27,7 +27,7 @@ const getEstablishmentsFromDB = async(searchBarName)=>{
             timeActiveFrom: establishment.timeActiveFrom,
             timeActiveTo: establishment.timeActiveTo,
             responsable_id: establishment.responsable_id,
-            headquarters: establishment.headquarters
+            sites: establishment.sites
         }
     })
 
@@ -35,7 +35,7 @@ const getEstablishmentsFromDB = async(searchBarName)=>{
 }
 
 
-const createEstablishment = async function(id,name,logoImage,rating, timeActiveFrom, timeActiveTo, responsable_id, headquarters){
+const createEstablishment = async function(id,name,logoImage,rating, timeActiveFrom, timeActiveTo, responsable_id, sites){
 
     // creo el establecimiento
     let establishmentCreated = await Establishment.create({
@@ -48,10 +48,10 @@ const createEstablishment = async function(id,name,logoImage,rating, timeActiveF
         responsable_id
     })
 
-    // headquarters va a ser un array de objetos.
-    if(headquarters.length>0){
-        headquarters.forEach(h => {
-            createHeadquarter(id, h)
+    // sites va a ser un array de objetos.
+    if(sites.length>0){
+        sites.forEach(h => {
+            createSite(id, h)
         })
     }
 

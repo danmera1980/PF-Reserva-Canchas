@@ -1,12 +1,12 @@
-const { Court, Headquarter} = require ('../db');
+const { Court, Site} = require ('../db');
 // cambiar nombre de sede cuando sepa el nombre de la tabla de sede
 
 const postCourt = async (req,res,next) => {
-    const {name, description, shiftLength, price, image, sport, headquarterName} = req.body;
+    const {name, description, shiftLength, price, image, sport, siteName} = req.body;
     console.log();
 
-    let sedeDB = await Headquarter.findOne({
-      where: { name: headquarterName}
+    let siteDB = await Site.findOne({
+      where: { name: siteName}
     })   
 
 
@@ -24,7 +24,7 @@ const postCourt = async (req,res,next) => {
     })
 
 
-  sedeDB.addCourt(courtCreated);
+  siteDB.addCourt(courtCreated);
 
   res.send('cancha creada')
     

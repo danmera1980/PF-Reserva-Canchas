@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const axios = require('axios');
 const routerEstablishment = require('./routerEstablishment');
-const routerHeadquarter = require('./routerHeadquarter');
+const routerSite = require('./routerSite');
 const user = require('./user')
 
 
@@ -15,7 +15,7 @@ const Court = require('./court');
 
 router.use('/users', user);
 router.use('/establishment', routerEstablishment)
-router.use('/headquarter', routerHeadquarter)
+router.use('/site', routerSite)
 
 router.use('/court', Court)
 
