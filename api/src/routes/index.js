@@ -12,12 +12,15 @@ const user = require('./user')
 const router = Router();
 
 const Court = require('./court');
+const Card = require('./card');
 
 router.use('/users', user);
 router.use('/establishment', routerEstablishment)
 router.use('/site', routerSite)
 
 router.use('/court', Court)
+
+router.use('/card', Card)
 
 
 
