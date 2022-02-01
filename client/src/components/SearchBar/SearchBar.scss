@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: center;
     width: 850px;
-    background: rgba(114, 110, 247, 0.7);
+    background: var(--clr-dark);
     height: 130px;
     border-radius: 20px;
     margin: 0 auto;
@@ -28,6 +28,7 @@
 
 .select,
 .input {
+    display:flex;
     flex-grow: 1;
     width: 30%;
     align-items: center;

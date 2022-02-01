@@ -16,7 +16,7 @@
 
    --clr-light: #fff;
    --clr-background: #FFFEE6;
-   --clr-dark: #726ef7;
+   --clr-dark: rgba(114, 110, 247, 0.46);
    --clr-accent: #000;
 
    --fs-h1: 4.5em;

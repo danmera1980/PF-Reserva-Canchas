@@ -22,6 +22,15 @@ function Header() {
                 </div>
                 <button id='signup' className='btn_signup'>Sign up</button>
             </div>
+            {/* <div className='login'>
+                <div className='btn_sign_in'>
+                    <Link to={"/"}>
+                        <span>Sign in </span>
+                        <FontAwesomeIcon icon={faSignInAlt} />
+                    </Link>
+                </div>
+                <button id='signup' className='btn_signup'>Sign up</button>
+            </div> */}
         </header>
     </div>
   );
