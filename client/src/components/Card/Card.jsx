@@ -4,15 +4,15 @@ import Slider from "../Slider/Slider";
 function Card() {
   return (
     <div className="flex flex-wrap -m-3">
-      <div className="w-full flex flex-col p-3 max-w-3xl sm:relative">
+      <div className="w-full flex flex-col p-3 max-w-3xl">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-1 flex-col sm:grid sm:grid-cols-2">
           <Slider />
 
-          <div className="flex flex-1 flex-col p-1 font-['Roboto']">
-            <button className="absolute right-2 top-0 block scale-125 active:scale-90 transition-all">
+          <div className="flex flex-1 flex-col p-1 font-['Roboto'] relative">
+
+            <button className="absolute right-4 top-2 block scale-125 active:scale-90 transition-all sm:right-2">
               ⭐
             </button>
-
             <h1 className="font-bold text-2xl">Las canchas de pepe</h1>
 
             <div className="m-2 text-sm flex-1">
