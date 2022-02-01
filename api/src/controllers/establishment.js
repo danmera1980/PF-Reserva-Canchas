@@ -1,6 +1,6 @@
 const axios = require('axios');
 const {Establishment, Headquarter} = require('../db');
-import { createHeadquarter } from './headquarter';
+const { createHeadquarter } = require('./headquarter');
 
 
 const getEstablishmentsFromDB = async(searchBarName)=>{

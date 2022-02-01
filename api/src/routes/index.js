@@ -1,7 +1,8 @@
 const { Router } = require('express');
 const axios = require('axios');
 const routerEstablishment = require('./routerEstablishment');
-const routerHeadquarter = reuire('/routerHeadquarter')
+const routerHeadquarter = require('./routerHeadquarter');
+const user = require('./user')
 
 
 // Importar todos los routers;
@@ -12,9 +13,9 @@ const router = Router();
 
 const Court = require('./court');
 
-router.use('/users', User);
-router.use('/establishments', routerEstablishment)
-router.use('/headquarters', routerHeadquarter)
+router.use('/users', user);
+router.use('/establishment', routerEstablishment)
+router.use('/headquarter', routerHeadquarter)
 
 router.use('/court', Court)
 
