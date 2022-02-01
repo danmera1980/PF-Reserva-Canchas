@@ -5,12 +5,12 @@ const router = Router();
 // Ejemplo: const authRouter = require('./auth.js');
 const routerEstablishment = require('./routerEstablishment');
 const routerSite = require('./routerSite');
-const userRoute = require("./user");
-const Court = require("./court");
+const routerUser = require("./routerUser");
+const routerCourt = require("./routerCourt");
 
 router.use('/establishment', routerEstablishment)
 router.use('/site', routerSite)
-router.use('/court', Court)
-router.use("/users", userRoute);
+router.use('/court', routerCourt)
+router.use("/users", routerUser);
 
 module.exports = router;

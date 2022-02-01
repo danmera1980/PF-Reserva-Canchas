@@ -2,17 +2,17 @@ const { Court, Site} = require ('../db');
 // cambiar nombre de sede cuando sepa el nombre de la tabla de sede
 
 const postCourt = async (req,res,next) => {
-    const {name, description, shiftLength, price, image, sport, siteName} = req.body;
+    const {name, description, shiftLength, price, image, sport, siteId} = req.body;
 
     let siteDB = await Site.findOne({
-      where: { name: siteName}
+      where: { id: siteId}
     })   
 
     let courtDB = await Court.findOne({
       where : {
         name : name,
         sport: sport,
-        siteName: siteName
+        siteId: siteId
       }
     })
     console.log(courtDB);
