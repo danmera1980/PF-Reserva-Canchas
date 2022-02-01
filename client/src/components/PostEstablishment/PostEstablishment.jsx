@@ -51,6 +51,11 @@ export default function PostEstablishment() {
     }
     function handleSubmit(e) {
         e.preventDefault()
+        if(!input.cuit || !input.name || !input.timeActiveFrom || !input.timeActiveTo || !input.responsable_id || 
+            errors.hasOwnProperty("cuit") || errors.hasOwnProperty("name") || errors.hasOwnProperty("timeActiveFrom") || 
+            errors.hasOwnProperty("timeActiveTo") || errors.hasOwnProperty("responsable_id")) {
+                alert("Faltan completar campos obligatorios")
+            } else {
         dispatch(postEstablishment(input))
         alert("Establecimiento creado con exito")
         setInput({
@@ -65,6 +70,7 @@ export default function PostEstablishment() {
         })
         history.push("/home")
     }
+    }
     return (
         <div>
             <div className="container-crear">
@@ -73,14 +79,14 @@ export default function PostEstablishment() {
                     <label>Cuit: </label>
                     <input className="input" placeholder="Cuit..." type="text" value={input.cuit} name="cuit" onChange={(e)=>handleChange(e)}></input>
                     {errors.cuit ?
-                    <p>{errors.cuit}</p> : null
+                    <p className="error">{errors.cuit}</p> : null
                     }
                     </div>
                     <div>
                     <label>Nombre: </label>
                     <input className="input" placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)}></input>
                     {errors.name ?
-                    <p>{errors.name}</p> : null
+                    <p className="error">{errors.name}</p> : null
                     }
                     </div>
                     <div>
@@ -100,20 +106,20 @@ export default function PostEstablishment() {
                     <input className="input" placeholder="Hora de apertura..." type="text" value={input.timeActiveFrom} name="timeActiveFrom" onChange={(e)=>handleChange(e)}></input>
                     </div>
                     {errors.timeActiveFrom ?
-                    <p>{errors.timeActiveFrom}</p> : null
+                    <p className="error">{errors.timeActiveFrom}</p> : null
                     }
                     <div>
                     <label>Horario de cierre: </label>
                     <input className="input" placeholder="Hora de cierre..." type="text" value={input.timeActiveTo} name="timeActiveTo" onChange={(e)=>handleChange(e)}></input>
                     </div>
                     {errors.timeActiveTo ?
-                    <p>{errors.timeActiveTo}</p> : null
+                    <p className="error">{errors.timeActiveTo}</p> : null
                     }
                     <div>
                     <label>Numero de usuario responsable: </label>
                     <input className="input" placeholder="Numero(id) del usuario responsable..." type="text" value={input.responsable_id} name="responsable_id" onChange={(e)=>handleChange(e)}></input>
                     {errors.responsable_id ?
-                    <p>{errors.responsable_id}</p> : null
+                    <p className="error">{errors.responsable_id}</p> : null
                     }
                     </div>
                     <button type="submit">Crear Establecimiento</button> 
