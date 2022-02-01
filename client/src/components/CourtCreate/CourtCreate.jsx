@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Link, useHistory} from 'react-router-dom';
-import { postCourt } from "../../redux/actions"; 
+import { postCourt } from "../../redux/actions/users"; 
 import { useDispatch, useSelector } from "react-redux";
 import './CourtCreate.scss'
 
