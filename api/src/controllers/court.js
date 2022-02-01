@@ -2,17 +2,17 @@ const { Court, Site} = require ('../db');
 // cambiar nombre de sede cuando sepa el nombre de la tabla de sede
 
 const postCourt = async (req,res,next) => {
-    const {name, description, shiftLength, price, image, sport, siteName} = req.body;
+    const {name, description, shiftLength, price, image, sport, siteId} = req.body;
 
     let siteDB = await Site.findOne({
-      where: { name: siteName}
+      where: { id: siteId}
     })   
 
     let courtDB = await Court.findOne({
       where : {
         name : name,
         sport: sport,
-        siteName: siteName
+        siteId: siteId
       }
     })
     console.log(courtDB);
@@ -48,4 +48,30 @@ const postCourt = async (req,res,next) => {
   }
    
 }
-module.exports= { postCourt }
+
+const findBySport = async (req, res) => { 
+  const {sport} = req.query.sport
+  try {
+    const results = await Court.findAll({
+      where:{
+        sport: sport
+      }
+    })
+    res.send(results)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+
+const sortByPrice = async (req, res) => {
+  const range = req.query.range 
+
+  const courts = await Court.findAll()
+
+  if(range === 'max'){
+    
+  }
+
+}
+module.exports= { postCourt, findBySport }
