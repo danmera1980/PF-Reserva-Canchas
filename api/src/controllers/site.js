@@ -20,4 +20,18 @@ const createHeadquarter = async function (establishmentID, {name, country, city,
 
 }
 
-module.exports = {createHeadquarter}
+const findByLocation = () =>{
+    const {location} = req.query.location
+    try {
+      const results = await Headquarter.findAll({
+        where:{
+          city: location
+        }
+      })
+      res.send(results)
+    } catch (e) {
+      console.log(e)
+    }
+}
+
+module.exports = {createHeadquarter, findByLocation}
