@@ -48,4 +48,30 @@ const postCourt = async (req,res,next) => {
   }
    
 }
-module.exports= { postCourt }
+
+const findBySport = async (req, res) => { 
+  const {sport} = req.query.sport
+  try {
+    const results = await Court.findAll({
+      where:{
+        sport: sport
+      }
+    })
+    res.send(results)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+
+const sortByPrice = async (req, res) => {
+  const range = req.query.range 
+
+  const courts = await Court.findAll()
+
+  if(range === 'max'){
+    
+  }
+
+}
+module.exports= { postCourt, findBySport }

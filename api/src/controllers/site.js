@@ -40,4 +40,18 @@ const createSite = async (req, res, next)=>{
     
 }
 
-module.exports = {createSite}
+const findByLocation = () =>{
+    const {location} = req.query.location
+    try {
+      const results = await Site.findAll({
+        where:{
+          city: location
+        }
+      })
+      res.send(results)
+    } catch (e) {
+      console.log(e)
+    }
+}
+
+module.exports = {createSite, findByLocation}
