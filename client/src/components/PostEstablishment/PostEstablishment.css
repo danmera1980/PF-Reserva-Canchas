@@ -27,3 +27,9 @@
     backdrop-filter: blur(0.5px);
     color: black;
 }
+.error {
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: 400;
+    color: red;
+}
