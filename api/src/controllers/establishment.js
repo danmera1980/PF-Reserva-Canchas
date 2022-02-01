@@ -1,6 +1,7 @@
 const axios = require('axios');
 const {Establishment, Headquarter} = require('../db');
-const {API_KEY} = process.env
+import { createHeadquarter } from './headquarter';
+
 
 const getEstablishmentsFromDB = async(searchBarName)=>{
 
@@ -34,4 +35,26 @@ const getEstablishmentsFromDB = async(searchBarName)=>{
 }
 
 
-module.exports = {getEstablishmentsFromDB}
+const createEstablishment = async function(id,name,logoImage,rating, timeActiveFrom, timeActiveTo, responsable_id, headquarters){
+
+    // creo el establecimiento
+    let establishmentCreated = await Establishment.create({
+        id,
+        name,
+        logoImage,
+        rating,
+        timeActiveFrom,
+        timeActiveTo,
+        responsable_id
+    })
+
+    // headquarters va a ser un array de objetos.
+    if(headquarters.length>0){
+        headquarters.forEach(h => {
+            createHeadquarter(id, h)
+        })
+    }
+
+}
+
+module.exports = {getEstablishmentsFromDB, createEstablishment}
