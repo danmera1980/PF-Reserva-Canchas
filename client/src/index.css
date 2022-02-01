@@ -18,6 +18,9 @@
    --clr-background: #FFFEE6;
    --clr-dark: rgba(114, 110, 247, 0.46);
    --clr-accent: #000;
+   --clr-font: #000;
+
+   --shadow: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.25));
 
    --fs-h1: 4.5em;
    --fs-h2: 2.2rem;
