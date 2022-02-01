@@ -14,3 +14,22 @@ export const getAllUsers = () => {
     }
 }
 
+export const postEstablishment = (payload) => {
+    return async function() {
+        var establishment = await axios.post("", payload)
+        return establishment
+    }
+}
+
+export function postCourt(payload){
+
+    try {
+        return async function(dispatch){
+            const response = await axios.post(`http://${serverUrl}:3001/court`,payload);
+            return response
+        }
+        
+    } catch (e) {
+        console.log(e.response.data)
+    }
+}
