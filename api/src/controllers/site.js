@@ -40,7 +40,7 @@ const createSite = async (req, res, next)=>{
     
 }
 
-const findByLocation = () =>{
+const findByLocation = async (req, res) =>{
     const {location} = req.query.location
     try {
       const results = await Site.findAll({
