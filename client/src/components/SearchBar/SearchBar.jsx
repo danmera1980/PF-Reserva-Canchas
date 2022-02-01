@@ -9,7 +9,7 @@ const establishment = 'Establecimiento';
 
 function SearchBar() {
   return (
-    <div className='search'>
+    <div>
         <div className='searchBar'>
             <div className='select'>
                 <select>

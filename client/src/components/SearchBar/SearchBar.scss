@@ -24,6 +24,7 @@
     height: 60px;
     color: var(--clr-accent);
     padding: 10px;
+    filter: var(--shadow);
 }
 
 .select,
@@ -44,8 +45,6 @@
     height: 100%;
     width: 90%;
 }
-
-.select-selected{ background-color: dodgerblue;}
 
 .faIcon{
     font-size: 30px;
