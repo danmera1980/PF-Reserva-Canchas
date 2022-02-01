@@ -1,6 +1,4 @@
-/** @format */
-
-const axios = require('axios');
+const bcrypt = require('bcrypt')
 const { User } = require('../db');
 
 // starting to code
@@ -21,7 +19,29 @@ const getUserByID = async (req, res, next) => {
   }
 };
 
+
+const registerUser = async (req, res, next) => {
+  try {
+    const { name, email, password, isAdmin, hasEstablishment } = req.body;
+    const passwordHash = await(bcrypt.hash(password, 10))
+    const user = await User.findOne({where:{email:email.toLowerCase()}})
+    if (user){
+        throw new Error ('Email previously registered')
+    }
+    const newUser = await User.create({
+        name, email, passwordHash, isAdmin, hasEstablishment 
+      }
+    );
+    res.send("Register ok") 
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserByID,
+  registerUser,
+
 };
