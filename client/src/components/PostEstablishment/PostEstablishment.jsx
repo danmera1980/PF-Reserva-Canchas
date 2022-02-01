@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { postEstablishment } from "../../redux/actions";
-import "./PostEstablishment.css";
+import { postEstablishment } from "../../redux/actions/establishment.js";
+import "./PostEstablishment.scss";
 
 function validate(input) {
  
