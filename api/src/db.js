@@ -33,6 +33,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
+const { Court } = sequelize.models;
 
 
 
