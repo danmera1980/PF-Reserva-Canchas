@@ -14,12 +14,6 @@ export const getAllUsers = () => {
     }
 }
 
-export const postEstablishment = (payload) => {
-    return async function() {
-        var establishment = await axios.post("", payload)
-        return establishment
-    }
-}
 
 export function postCourt(payload){
 
@@ -32,4 +26,4 @@ export function postCourt(payload){
     } catch (e) {
         console.log(e.response.data)
     }
-}
+} 
