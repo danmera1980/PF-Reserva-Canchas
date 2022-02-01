@@ -36,8 +36,10 @@ const { User, Establishment , Site, Court} = sequelize.models;
 // Product.hasMany(Reviews);
 
 Establishment.hasMany(Site,{as: 'sites', foreignKey: 'establishmentId'});
-Site.belongsToMany(Court, {through: 'site_court'});
-Court.belongsTo(Site, {through: 'site_court'});
+Site.hasMany(Court,{as: 'courts', foreignKey: 'siteName'});
+
+// Site.belongsToMany(Court, {through: 'site_court'});
+// Court.belongsTo(Site, {through: 'site_court'});
 
 
 module.exports = {

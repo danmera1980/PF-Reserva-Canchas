@@ -3,30 +3,45 @@ const { Court, Site} = require ('../db');
 
 const postCourt = async (req,res,next) => {
     const {name, description, shiftLength, price, image, sport, siteName} = req.body;
-    console.log();
 
     let siteDB = await Site.findOne({
       where: { name: siteName}
     })   
 
+    let courtDB = await Court.findOne({
+      where : {
+        name : name,
+        sport: sport,
+        siteName: siteName
+      }
+    })
+    console.log(courtDB);
 
   try {
 
-    let courtCreated = await Court.findOrCreate({
-      where:{
+    
+    
+    if(!courtDB){
+      let courtCreated = await Court.create({
+      
         name,
-        description, 
+        description,
         shiftLength, 
         price,
         image,
         sport,
-      }
-    })
-
-
-  siteDB.addCourt(courtCreated);
-
-  res.send('cancha creada')
+        
+      })
+  
+  
+    await siteDB.addCourt(courtCreated);
+  
+    res.send('court created')
+  }
+  else{
+    res.status(404).send('court already exist')
+  }
+    
     
   } catch (e) {
    next(e) 

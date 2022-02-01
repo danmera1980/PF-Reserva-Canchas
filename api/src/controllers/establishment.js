@@ -35,25 +35,37 @@ const getEstablishmentsFromDB = async(searchBarName)=>{
 }
 
 
-const createEstablishment = async function(id,name,logoImage,rating, timeActiveFrom, timeActiveTo, responsable_id, sites){
+const createEstablishment = async (req, res, next)=>{
+
+    const {id,name,logoImage,rating, timeActiveFrom, timeActiveTo, responsable_id} = req.body
 
     // creo el establecimiento
-    let establishmentCreated = await Establishment.create({
-        id,
-        name,
-        logoImage,
-        rating,
-        timeActiveFrom,
-        timeActiveTo,
-        responsable_id
+
+    let establishmentDB = await Establishment.findOne({
+        where : {id: id}
     })
 
-    // sites va a ser un array de objetos.
-    if(sites.length>0){
-        sites.forEach(h => {
-            createSite(id, h)
-        })
+    try {
+        if(!establishmentDB){
+            let establishmentCreated = await Establishment.create({
+                id,
+                name,
+                logoImage,
+                rating,
+                timeActiveFrom,
+                timeActiveTo,
+                responsable_id
+            })
+
+            res.send('establishment created')
+        }
+        else{
+            res.status(404).send('establishment already exist')
+        }
+    } catch (error) {
+        next(error)
     }
+    
 
 }
 
