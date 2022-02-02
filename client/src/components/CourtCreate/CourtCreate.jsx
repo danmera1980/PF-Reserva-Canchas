@@ -7,7 +7,7 @@ import "./CourtCreate.scss";
 
 function validate(input) {
   let errors = {};
-  console.log(errors);
+  // console.log(errors);
   if (!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.name)) {
     errors.name =
       "Se requieren entre 2 y 20 caracteres, no se permiten símbolos";
@@ -32,8 +32,8 @@ export default function CourtCreate() {
   const [input, setInput] = useState({
     name: "",
     description: "",
-    shiftLength: null,
-    price: null,
+    shiftLength: "",
+    price: "",
     sport: "",
     image: [],
     sede: "",
@@ -95,14 +95,13 @@ export default function CourtCreate() {
   function handleSubmit(e) {
     console.log(input);
     e.preventDefault();
-    // console.log(input)
     dispatch(postCourt(input));
     alert("Cancha Creada!!");
     setInput({
       name: "",
       description: "",
-      shiftLength: null,
-      price: null,
+      shiftLength: "",
+      price: "",
       sport: "",
       image: [],
       sede: "",
@@ -164,7 +163,7 @@ export default function CourtCreate() {
             <label className="text-black">Precio (por turno):</label>
             <input
               className="inputForm"
-              type="text"
+              type="number"
               value={input.price}
               name="price"
               onChange={(e) => handleChange(e)}
