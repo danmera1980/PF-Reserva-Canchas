@@ -54,4 +54,13 @@ const findByLocation = async (req, res) =>{
     }
 }
 
-module.exports = {createSite, findByLocation}
+const getAllSites = async (req, res) =>{
+    try {
+      const results = await Site.findAll()
+      res.send(results)
+    } catch (e) {
+      console.log(e)
+    }
+}
+
+module.exports = {createSite, findByLocation, getAllSites}
