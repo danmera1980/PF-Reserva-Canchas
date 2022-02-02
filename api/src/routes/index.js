@@ -8,14 +8,17 @@ const router = Router();
 const routerEstablishment = require('./routerEstablishment');
 const routerSite = require('./routerSite');
 const userRoute = require('./user');
-const Court = require('./court');
+const routerCourt = require("./routerCourt");
+const Card = require('./card');
+
 
 router.use('/establishment', routerEstablishment);
 router.use('/site', routerSite);
 router.use('/court', Court);
 router.use('/users', userRoute);
+router.use('/card', Card);
 
-router.use('/court', Court);
+
 /*// en la ruta de creacion de las canchas o las reservas
 const jwt = require("jsonwebtoken");
 
@@ -37,6 +40,5 @@ if (!token || !decodedToken.id){
 
 
 
-*/
 
 module.exports = router;

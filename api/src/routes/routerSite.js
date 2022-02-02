@@ -1,8 +1,8 @@
 const { Router } = require('express');
 const router = Router();
-const {Establishment} = require('../db');
-const {createSite} = require('../controllers/site')
+const {createSite, findByLocation} = require('../controllers/site')
 
 router.post('/', createSite)
+router.get('/', findByLocation)
 
 module.exports = router
