@@ -37,7 +37,7 @@ const Login = () => {
 
   const responseSuccess = (response) => {
     dispatch(loginWithGoogle(response))
-    alert("login correcto");
+    alert("login OK");
 
     history.push("/");
   };
@@ -58,7 +58,6 @@ const Login = () => {
         [e.target.name]: e.target.value,
       })
     );
-    console.log(userInfo);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
