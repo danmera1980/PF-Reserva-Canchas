@@ -22,7 +22,7 @@ const Navbar = ({ user }) => {
           </li>
         </ul>
       ) : (
-        <Link className={style.link} to="login">
+        <Link className={style.link} to="/login">
           Login
         </Link>
       )}

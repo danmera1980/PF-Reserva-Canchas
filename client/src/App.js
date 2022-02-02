@@ -47,7 +47,7 @@ function App() {
         <Route exact path="/court" component={CourtCreate} />
         <Route exact path="/results" component={Results} />
         <Route exact path="/establishment" component={PostEstablishment} />
-        <Route exact path="/login" component={user ? { Home } : { Login }} />
+        <Route exact path="/login" component={ Login } />
         <Route exact path="/register" component={Register} />
       </div>
     </React.Fragment>

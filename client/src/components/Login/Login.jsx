@@ -10,6 +10,20 @@ import style from '../../styles/todo.module.css';
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [errors, setErrors] = useState({});
+
+  
+function validate(breed) {
+  let errors = {};
+
+  if (!values.email) {
+    errors.email= "Complete la contraseña";
+
+  } else if(!values.password){
+    errors.password= "Complete la contraseña";
+
+  }
+}
 
   const initialState = {
     email: '',
@@ -22,20 +36,27 @@ const Login = () => {
   };
   const handleChange = e => {
     e.preventDefault();
-    setValues(values => ({
+    setValues({
       ...values,
       [e.target.name]: e.target.value,
-    }));
+    });
+    setErrors(
+      validate({
+        ...values,
+        [e.target.name]: e.target.value,
+      })
+    );
+    console.log(values)
   };
   const handleSubmit = e => {
     e.preventDefault();
-
-    if (values.name && values.email) {
+      if(values.email && values.password){
+      console.log("entre")
       dispatch(login(values));
       history.push('/');
       setValues(initialState);
-    } else {
-      alert('Debe Ingresar Email y Contraseña');
+    } else{
+      alert("Verifique lo ingresado")
     }
   };
   return (
@@ -57,7 +78,6 @@ const Login = () => {
                 name="email"
                 value={values.email}
                 placeholder="Escribe tu Email"
-                autoComplete="off"
                 onChange={handleChange}
               ></input>
             </div>
@@ -68,7 +88,6 @@ const Login = () => {
                 name="password"
                 value={values.password}
                 placeholder="Escribe tu contraseña"
-                autoComplete="off"
                 onChange={handleChange}
               ></input>
             </div>

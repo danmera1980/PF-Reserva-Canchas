@@ -48,8 +48,8 @@ export function login(payload) {
   return function (dispatch) {
     axios
       .post(`http://${serverUrl}:3001/users/login`, payload)
-      .then(data => {
-        return dispatch({ type: LOGIN, payload: data.data });
+      .then(user => {
+        return dispatch({ type: LOGIN, payload: user.data });
       })
       .catch(err => {
         console.log(err);
