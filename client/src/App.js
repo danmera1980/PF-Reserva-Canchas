@@ -1,5 +1,3 @@
-/** @format */
-
 import './App.css';
 import '../src/styles/index.scss';
 import { Route } from 'react-router-dom';

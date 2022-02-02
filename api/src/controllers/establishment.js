@@ -3,18 +3,16 @@ const {Establishment, Site} = require('../db');
 const { createSite } = require('./site');
 
 
-const getEstablishmentsFromDB = async(searchBarName)=>{
+const getEstablishmentsFromDB = async(req,res,next)=>{
+  
+    const searchBarName = req.query.name
+   
 
-    let establishmentDB = await Establishment.findAll({
-        include: {
-            model: Site,
-            attributes: ['name'],
-            through:{
-                attributes:[],
-            }
-        }
-    })
-    if(searchBarName!==''){
+try {
+
+    let establishmentDB = await Establishment.findAll()
+
+    if(searchBarName){
         establishmentDB = establishmentDB.filter(establishment => establishment.name.toLowerCase().includes(searchBarName));
     }
 
@@ -30,8 +28,14 @@ const getEstablishmentsFromDB = async(searchBarName)=>{
             sites: establishment.sites
         }
     })
+    res.send(establishmentDB) ;
+    
+    
+} catch (error) {
+    console.log(error)
+}
 
-    return establishmentDB;
+   
 }
 
 
