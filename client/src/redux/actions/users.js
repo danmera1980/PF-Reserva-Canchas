@@ -32,19 +32,19 @@ export function postCourt(payload) {
   }
 }
 
-export function register(payload) {
+export function registerUser(payload) {
   return function (dispatch) {
     axios
       .post(`http://${serverUrl}:3001/users/register`, payload)
-      .then(data => {
-        return dispatch({ type: REGISTER, payload: data.data });
+      .then(response => {
+        return dispatch({ type: REGISTER, payload: response.data });
       })
       .catch(err => {
         console.log(err);
       });
   };
 }
-export function login(payload) {
+export function loginUser(payload) {
   return function (dispatch) {
     axios
       .post(`http://${serverUrl}:3001/users/login`, payload)
@@ -55,4 +55,10 @@ export function login(payload) {
         console.log(err);
       });
   };
+}
+
+export function loginWithGoogle(responseGoogle){
+  return function(dispatch){
+    return dispatch({type: LOGINGOOGLE, payload: responseGoogle})
+  }
 }
