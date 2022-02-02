@@ -2,11 +2,16 @@ const { Court, Site} = require ('../db');
 // cambiar nombre de sede cuando sepa el nombre de la tabla de sede
 
 const postCourt = async (req,res,next) => {
-    const {name, description, shiftLength, price, image, sport, siteId} = req.body;
+  const {name, description, shiftLength, price, image, sport, siteId} = req.body;
 
-    let siteDB = await Site.findOne({
-      where: { id: siteId}
-    })   
+  let siteDB = await Site.findOne({
+    where: { id: siteId}
+  })
+
+  if(!siteDB){
+    res.status(400).send('site does not exist')
+  }
+  else{
 
     let courtDB = await Court.findOne({
       where : {
@@ -17,36 +22,29 @@ const postCourt = async (req,res,next) => {
     })
     console.log(courtDB);
 
-  try {
-
+    try {
+      if(!courtDB){
+        let courtCreated = await Court.create({
+          name,
+          description,
+          shiftLength, 
+          price,
+          image,
+          sport,
+        })
     
+        await siteDB.addCourt(courtCreated);
     
-    if(!courtDB){
-      let courtCreated = await Court.create({
-      
-        name,
-        description,
-        shiftLength, 
-        price,
-        image,
-        sport,
-        
-      })
-  
-  
-    await siteDB.addCourt(courtCreated);
-  
-    res.send('court created')
+        res.send('court created')
+      } 
+      else{
+        res.status(404).send('court already exist')
+      }
+            
+    } catch (e) {
+        next(e) 
+      }
   }
-  else{
-    res.status(404).send('court already exist')
-  }
-    
-    
-  } catch (e) {
-   next(e) 
-  }
-   
 }
 
 const findBySport = async (req, res) => { 
