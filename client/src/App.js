@@ -13,6 +13,7 @@ import Register from './components/Register/Register';
 import SiteCreate from "./components/SiteCreate/SiteCreate";
 
 function App() {
+
   const [user, setUser] = useState(null);
   useEffect(() => {
     const getUser = () => {

@@ -2,6 +2,7 @@ import { ALL_USERS } from '../actions/actionNames';
 
 const initialState = {
     users: [],
+    userDetails: []
 }
 
 const userReducer = (state = initialState, action) => {
