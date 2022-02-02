@@ -24,7 +24,7 @@ const getCards = async (req,res)=>{
         for (let k = 0; k < allEstablishments.length; k++) {
             if (allCourts[i].siteId===allSites[j].id && allEstablishments[k].id===allSites[j].establishmentId){
                 var infoCardIn={name:allCourts[i].name, siteName:allSites[j].name, city:allSites[j].city,shiftLength:allCourts[i].shiftLength,
-                    price:allCourts[i].price, street:allSites[j].street, streetNumber:allSites[j].streetNumber, establishment:allEstablishments[k].name}
+                    price:allCourts[i].price, image:allCourts[i].image[0], street:allSites[j].street, streetNumber:allSites[j].streetNumber, establishment:allEstablishments[k].name}
             }
             
         }
