@@ -14,6 +14,7 @@ const bodySchema = Joi.object({
     responsable_id: Joi.string().min(2).required()
 })
 
+router.get('/',getEstablishmentsFromDB)
 router.post('/',validator.body(bodySchema), createEstablishment)
 
 module.exports = router

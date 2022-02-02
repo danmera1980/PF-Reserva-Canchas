@@ -9,14 +9,14 @@ const routerEstablishment = require('./routerEstablishment');
 const routerSite = require('./routerSite');
 const userRoute = require('./routerUser');
 const routerCourt = require("./routerCourt");
-const Card = require('./card');
+const routerCard = require('./routerCard');
 
 
 router.use('/establishment', routerEstablishment);
 router.use('/site', routerSite);
 router.use('/court', routerCourt);
 router.use('/users', userRoute);
-router.use('/card', Card);
+router.use('/card', routerCard);
 
 
 /*// en la ruta de creacion de las canchas o las reservas
