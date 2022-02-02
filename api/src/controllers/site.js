@@ -8,36 +8,62 @@ const createSite = async (req, res, next)=>{
         where : {id: establishmentId}
     })
 
-    let siteDB = await Site.findOne({
-        where: {
-            name: name,
-            establishmentId: establishmentId
-        }
-    })
+    if(!establishmentDB){
+        res.status(400).send('establishment does not exist')
+    }else{
+        let siteDB = await Site.findOne({
+            where: {
+                name: name,
+                establishmentId: establishmentId
+            }
+        })
 
-    try {
-        if(!siteDB){
-            let siteCreated = await Site.create({
-                name,
-                country,
-                city,
-                street,
-                streetNumber,
-                latitude,
-                longitude
-            })
-        
-            establishmentDB.addSite(siteCreated);
+        try {
+            if(!siteDB){
+                let siteCreated = await Site.create({
+                    name,
+                    country,
+                    city,
+                    street,
+                    streetNumber,
+                    latitude,
+                    longitude
+                })
             
-            res.send('site created')
+                establishmentDB.addSite(siteCreated);
+                
+                res.send('site created')
+            }
+            else{
+                res.status(404).send('site already exist')
+            }    
+        } catch (error) {
+            next(error)
         }
-        else{
-            res.status(404).send('site already exist')
-        }    
-    } catch (error) {
-        next(error)
-    }
-    
+    } 
 }
 
-module.exports = {createSite}
+const findByLocation = async (req, res) =>{
+    const {location} = req.query.location
+    try {
+      const results = await Site.findAll({
+        where:{
+          city: location
+        }
+      })
+      res.send(results)
+    } catch (e) {
+      console.log(e)
+    }
+}
+
+const getAllSites = async (req, res) =>{
+    try {
+      const results = await Site.findAll()
+      res.send(results)
+    } catch (e) {
+      console.log(e)
+    }
+}
+
+module.exports = {createSite, findByLocation, getAllSites}

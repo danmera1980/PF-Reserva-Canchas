@@ -3,16 +3,15 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   
     sequelize.define('site', {
-        // id: {
-        //     type: DataTypes.UUID,
-        //     defaultValue: DataTypes.UUIDV4,
-        //     allowNull: false,
-        //     primaryKey: true
-        // },
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            allowNull: false,
+            primaryKey: true
+        },
         name: {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true
         },
         country: {
             type: DataTypes.STRING,
@@ -33,12 +32,10 @@ module.exports = (sequelize) => {
         ,
         latitude: {
             type: DataTypes.FLOAT,
-            allowNull:false
         }
         ,
         longitude: {
             type: DataTypes.FLOAT,
-            allowNull:false
         }
         
     })

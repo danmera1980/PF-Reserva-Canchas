@@ -2,10 +2,10 @@ const { Router } = require('express');
 const axios = require('axios');
 
 
-const { postCourt } = require('../controllers/court');
+const { getCards } = require('../controllers/card');
 
 const router = Router();
 
-router.post('/', postCourt)
+router.get('/', getCards)
 
 module.exports = router;

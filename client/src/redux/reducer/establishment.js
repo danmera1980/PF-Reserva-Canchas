@@ -1,8 +1,8 @@
 import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_NAME, FILTER_BY_SPORT, GET_ESTABLISHMENT, SORT_BY_AVAILABILITY, SORT_BY_PRICE } from "../actions/actionNames";
 
 const initialState = {
-    establishments = [],
-    establishmentDetail = []
+    establishments : [],
+    establishmentDetail : []
 }
 
 const establishmentReducer = (state = initialState, action) => {
