@@ -1,22 +1,29 @@
+/** @format */
+
 const { Router } = require('express');
-const axios = require('axios');
 const routerEstablishment = require('./routerEstablishment');
 const routerSite = require('./routerSite');
-const user = require('./user')
+const userRoute = require('./routerUser');
+const routerCourt = require("./routerCourt");
+const Card = require('./card');
 
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-const userRoute = require("./user");
+
 
 const router = Router();
 
-const Court = require("./court");
+const axios = require("axios");
 
-router.use("/users", userRoute);
-router.use('/establishment', routerEstablishment)
-router.use('/site', routerSite)
+// Importar todos los routers;
+// Ejemplo: const authRouter = require('./auth.js');
 
-router.use("/court", Court);
+
+router.use('/establishment', routerEstablishment);
+router.use('/site', routerSite);
+router.use('/court', routerCourt);
+router.use('/users', userRoute);
+router.use('/card', Card);
+
+
 /*// en la ruta de creacion de las canchas o las reservas
 const jwt = require("jsonwebtoken");
 
@@ -33,12 +40,14 @@ const decodedToken = jwt.verify(token, SECRET)
 if (!token || !decodedToken.id){
     return res.status(401).jason({error: "token missing or invalid"})
 }
+
  y un par de cosas mas que voy a ver despues de intergar google
+
 });
 
 
-
 */
+
 
 
 module.exports = router;

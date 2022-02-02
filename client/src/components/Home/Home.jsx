@@ -15,7 +15,9 @@ function Home() {
         <div>
           <img src={homeImage} alt="home here" className="homeImage"></img>
         </div>
-        <SearchBar />
+        <div className='search'>
+          <SearchBar />
+        </div>
       </div>
       <Popular />
       <Footer />

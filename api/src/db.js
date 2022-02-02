@@ -34,10 +34,20 @@ const { User, Establishment , Site, Court} = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-/*
-Establishment.hasMany(Headquarter, {through: 'establishment_headquarter'});
-Headquarter.belongsTo(Establishment, {through: 'establishment_headquarter'});
-*/
+
+Establishment.hasMany(Site,{as: 'sites', foreignKey: 'establishmentId'});
+Site.hasMany(Court,{as: 'courts', foreignKey: 'siteName'});
+
+// Site.belongsToMany(Court, {through: 'site_court'});
+// Court.belongsTo(Site, {through: 'site_court'});
+Site.hasMany(Court,{as: 'courts', foreignKey: 'siteName'}); 
+
+
+
+
+>>>>>>>>> Temporary merge branch 2
+/
+
 
 
 module.exports = {

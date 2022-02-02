@@ -14,7 +14,7 @@ export const getEstablishment = (id) => {
 }
 export const postEstablishment = (payload) => {
     return async function() {
-        var establishment = await axios.post("", payload)
+        var establishment = await axios.post(`http://${serverUrl}:3001/establishment`, payload)
         return establishment
     }
 }
