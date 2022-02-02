@@ -5,16 +5,15 @@ import '../src/styles/index.scss';
 import { Route } from 'react-router-dom';
 import React from 'react';
 import Home from './components/Home/Home';
-import { useEffect, useState } from 'react';
+//import { useEffect, useState } from 'react';
 import CourtCreate from './components/CourtCreate/CourtCreate';
 import Results from './components/Results/Results';
 import PostEstablishment from './components/PostEstablishment/PostEstablishment';
-import Navbar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 
 function App() {
-  const [user, setUser] = useState(null);
+  /*const [user, setUser] = useState(null);
   useEffect(() => {
     const getUser = () => {
       fetch('http://localhost:5000/auth/login/success', {
@@ -38,11 +37,10 @@ function App() {
         });
     };
     getUser();
-  }, []);
+  }, []);*/
   return (
     <React.Fragment>
       <div className="App">
-        <Navbar user={user} />
         <Route exact path="/" component={Home} />
         <Route exact path="/court" component={CourtCreate} />
         <Route exact path="/results" component={Results} />
