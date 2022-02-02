@@ -8,7 +8,7 @@ import './Header.scss';
 
 
 function Header() {
-    const logged = true;
+    const logged = false;
 
 
     return (
