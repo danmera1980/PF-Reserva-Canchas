@@ -25,7 +25,9 @@ module.exports = (sequelize) => {
     phone: {
       type: DataTypes.STRING,
     },
-    
+    img: {
+      type: DataTypes.STRING,
+    },
     hasEstablishment: {
       type: DataTypes.BOOLEAN,
       allowNull: false
@@ -33,7 +35,7 @@ module.exports = (sequelize) => {
     
     isAdmin: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      defaultValue: false
     },
   });
 };
