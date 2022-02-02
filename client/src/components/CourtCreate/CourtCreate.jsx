@@ -34,8 +34,8 @@ export default function CourtCreate(){
     const [input,setInput] = useState({
         name:'',
         description:'',
-        shiftLength:null,
-        price:null,
+        shiftLength:'',
+        price:'',
         sport:'',
         image:[],
         sede:'',
@@ -96,8 +96,8 @@ export default function CourtCreate(){
             setInput({
                 name:'',
                 description:'',
-                shiftLength:null,
-                price:null,
+                shiftLength:'',
+                price:'',
                 sport:'',
                 image:[],
                 sede:'',
@@ -135,14 +135,14 @@ export default function CourtCreate(){
             </div>
             <div>
                 <label className="label">Duración del turno (minutos):</label>
-                <input className="inputForm" type='text' value={input.shiftLength} name='shiftLength' onChange={(e) => handleChange(e)} />
+                <input className="inputForm" type='number' value={input.shiftLength} name='shiftLength' onChange={(e) => handleChange(e)} />
                 {errors.shiftLength&& (
                     <p  className='error' >{errors.shiftLength}</p>
                 )}
             </div>
             <div>
                 <label className="label">Precio (por turno):</label>
-                <input className="inputForm" type='text' value={input.price} name='price' onChange={(e) => handleChange(e)} />
+                <input className="inputForm" type='number' value={input.price} name='price' onChange={(e) => handleChange(e)} />
                 {errors.price&& (
                     <p  className='error' >{errors.price}</p>
                 )}

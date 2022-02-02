@@ -8,36 +8,39 @@ const createSite = async (req, res, next)=>{
         where : {id: establishmentId}
     })
 
-    let siteDB = await Site.findOne({
-        where: {
-            name: name,
-            establishmentId: establishmentId
-        }
-    })
+    if(!establishmentDB){
+        res.status(400).send('establishment does not exist')
+    }else{
+        let siteDB = await Site.findOne({
+            where: {
+                name: name,
+                establishmentId: establishmentId
+            }
+        })
 
-    try {
-        if(!siteDB){
-            let siteCreated = await Site.create({
-                name,
-                country,
-                city,
-                street,
-                streetNumber,
-                latitude,
-                longitude
-            })
-        
-            establishmentDB.addSite(siteCreated);
+        try {
+            if(!siteDB){
+                let siteCreated = await Site.create({
+                    name,
+                    country,
+                    city,
+                    street,
+                    streetNumber,
+                    latitude,
+                    longitude
+                })
             
-            res.send('site created')
+                establishmentDB.addSite(siteCreated);
+                
+                res.send('site created')
+            }
+            else{
+                res.status(404).send('site already exist')
+            }    
+        } catch (error) {
+            next(error)
         }
-        else{
-            res.status(404).send('site already exist')
-        }    
-    } catch (error) {
-        next(error)
-    }
-    
+    } 
 }
 
 const findByLocation = async (req, res) =>{
@@ -54,4 +57,13 @@ const findByLocation = async (req, res) =>{
     }
 }
 
-module.exports = {createSite, findByLocation}
+const getAllSites = async (req, res) =>{
+    try {
+      const results = await Site.findAll()
+      res.send(results)
+    } catch (e) {
+      console.log(e)
+    }
+}
+
+module.exports = {createSite, findByLocation, getAllSites}
