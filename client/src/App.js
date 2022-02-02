@@ -5,6 +5,7 @@ import Home from "./components/Home/Home";
 import React from "react";
 import CourtCreate from "./components/CourtCreate/CourtCreate";
 import PostEstablishment from "./components/PostEstablishment/PostEstablishment";
+import SiteCreate from "./components/SiteCreate/SiteCreate";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/court" component={CourtCreate} />
         <Route exact path="/establishment" component={PostEstablishment} />
+        <Route exact path="/site" component={SiteCreate} />
       </div>
     </React.Fragment>
   );
