@@ -20,7 +20,7 @@ function validate(input) {
         errors.timeActiveTo = "Se requiere un horario de cierre"
     }
     if(input.responsable_id === '') {
-        errors.responsable_id = "Se requiere un id del usuario responsable"
+        errors.responsableId = "Se requiere un id del usuario responsable"
     }
     return errors
 }
@@ -36,7 +36,7 @@ export default function PostEstablishment() {
         rating: null,
         timeActiveFrom: null,
         timeActiveTo: null,
-        responsable_id: ""
+        responsableId: ""
     })
     function handleChange(e) {
         setInput({
@@ -50,7 +50,7 @@ export default function PostEstablishment() {
     }
     function handleSubmit(e) {
         e.preventDefault()
-        if(!input.id || !input.name || !input.timeActiveFrom || !input.timeActiveTo || !input.responsable_id || 
+        if(!input.id || !input.name || !input.timeActiveFrom || !input.timeActiveTo || !input.responsableId || 
             errors.hasOwnProperty("id") || errors.hasOwnProperty("name") || errors.hasOwnProperty("timeActiveFrom") || 
             errors.hasOwnProperty("timeActiveTo") || errors.hasOwnProperty("responsable_id")) {
                 alert("Faltan completar campos obligatorios")
@@ -64,7 +64,7 @@ export default function PostEstablishment() {
         rating: null,
         timeActiveFrom: null,
         timeActiveTo: null,
-        responsable_id: ""
+        responsableId: ""
         })
         history.push("/home")
     }
@@ -111,9 +111,9 @@ export default function PostEstablishment() {
                     }
                     <div>
                     <label className="label">Numero de usuario responsable: </label>
-                    <input className="input" placeholder="Numero(id) del usuario responsable..." type="text" value={input.responsable_id} name="responsable_id" onChange={(e)=>handleChange(e)}></input>
-                    {errors.responsable_id ?
-                    <p className="error">{errors.responsable_id}</p> : null
+                    <input className="input" placeholder="Numero(id) del usuario responsable..." type="text" value={input.responsableId} name="responsableId" onChange={(e)=>handleChange(e)}></input>
+                    {errors.responsableId ?
+                    <p className="error">{errors.responsableId}</p> : null
                     }
                     </div>
                     <button type="submit">Crear Establecimiento</button> 
