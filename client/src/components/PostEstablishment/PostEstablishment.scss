@@ -1,0 +1,52 @@
+
+.formularioCrear {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 600px;
+    padding: 10px;
+    margin: 0 auto;
+    background-color: var(--clr-dark);
+    backdrop-filter: blur(10px);
+    border-style: solid;
+    border-width: .3rem;
+    border-color: black;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.formularioCrear div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 600px;
+}
+.label {
+    color: var(--clr-background);
+    font-family: var(--ff-primary);
+    letter-spacing: 1px;
+}
+
+.input {
+    border-style: solid;
+    border-width: .1rem;
+    border-color: rgba(255, 255, 255, 0.692);
+    border-radius: 5px;
+    background-color: transparent;
+    backdrop-filter: blur(0.5px);
+    color: var(--clr-background);
+    width: 500px;
+    backdrop-filter: blur(55px);
+}
+.error {
+    font-family: var(--ff-primary);
+    font-size: 12px;
+    font-weight: 400;
+    color: red;
+}
+::placeholder {
+    font-family: var(--ff-primary);
+    letter-spacing: 2px;
+}

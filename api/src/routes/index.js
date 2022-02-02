@@ -1,17 +1,21 @@
-const { Router } = require("express");
-const axios = require("axios");
+/** @format */
+
+const { Router } = require('express');
+const router = Router();
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const userRoute = require("./user");
+const routerEstablishment = require('./routerEstablishment');
+const routerSite = require('./routerSite');
+const userRoute = require('./user');
+const Court = require('./court');
 
-const router = Router();
+router.use('/establishment', routerEstablishment);
+router.use('/site', routerSite);
+router.use('/court', Court);
+router.use('/users', userRoute);
 
-const Court = require("./court");
-
-router.use("/users", userRoute);
-
-router.use("/court", Court);
+router.use('/court', Court);
 /*// en la ruta de creacion de las canchas o las reservas
 const jwt = require("jsonwebtoken");
 
@@ -34,6 +38,5 @@ if (!token || !decodedToken.id){
 
 
 */
-
 
 module.exports = router;

@@ -1,4 +1,6 @@
 import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_NAME, FILTER_BY_SPORT, GET_ESTABLISHMENT, SORT_BY_AVAILABILITY, SORT_BY_PRICE } from "./actionNames";
+import axios from 'axios';
+const serverUrl = 'localhost'
 
 
 export const getEstablishment = (id) => {
@@ -8,6 +10,12 @@ export const getEstablishment = (id) => {
             type: GET_ESTABLISHMENT,
             payload: result.data
         })
+    }
+}
+export const postEstablishment = (payload) => {
+    return async function() {
+        var establishment = await axios.post(`http://${serverUrl}:3001/establishment`, payload)
+        return establishment
     }
 }
 

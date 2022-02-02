@@ -1,14 +1,16 @@
-const bcrypt = require("bcrypt");
-const { User } = require("../db");
+const bcrypt = require('bcrypt')
+const { User } = require('../db');
 
 // starting to code
 const getAllUsers = async (req, res, next) => {
   try {
-    res.send("aca van todos los usuarios enlistados");
+    res.send('aca van todos los usuarios enlistados')
   } catch (e) {
     next(e);
   }
 };
+
+
 
 const getUserByID = async (req, res, next) => {
   try {
@@ -16,6 +18,7 @@ const getUserByID = async (req, res, next) => {
     next(e);
   }
 };
+
 
 const registerUser = async (req, res, next) => {
   try {
