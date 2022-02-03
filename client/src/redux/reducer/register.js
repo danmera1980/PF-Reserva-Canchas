@@ -1,40 +1,45 @@
 /** @format */
 
-import { REGISTER, LOGIN, LOGINGOOGLE } from '../actions/actionNames';
+import { REGISTER, LOGIN, LOGINGOOGLE } from "../actions/actionNames";
 
 const initialState = {
   signUpResponse: undefined,
-  userToken: undefined,
-  userId: undefined,
-  userEmail: undefined,
-  userName: undefined,
-  userImage: undefined,
+  userLogged: {
+    userToken: undefined,
+    userId: undefined,
+    userEmail: undefined,
+    userName: undefined,
+    userImage: undefined,
+  },
 };
 
 const registerReducer = (state = initialState, action) => {
   switch (action.type) {
     case REGISTER:
-      console.log(action.payload)
+      console.log(action.payload);
       return {
         ...state,
         signUpResponse: action.payload,
       };
     case LOGIN:
-      console.log(action.payload)
+      console.log(action.payload);
       return {
         ...state,
-        userToken: action.payload.token,
-        userId: action.payload.id,
-        userEmail: action.payload.email,
-        userName: action.payload.name,
+        userLogged: {
+          userToken: action.payload.token,
+          userId: action.payload.id,
+          userEmail: action.payload.email,
+          userName: action.payload.name,
+        },
       };
     case LOGINGOOGLE:
-
       return {
         ...state,
-        //userToken: action.payload.Iw.tokenId,
-        //userEmail: action.payload.Iw.Ju.zv,
-        //userName: action.payload.Iw.Ju.tf,
+        sessionToken: action.payload.Iw.tokenId,
+        userName: action.payload.Iw.Ju.tf,
+        userLastName: action.payload.Iw.Ju.wW,
+
+
       };
     default:
       return state;

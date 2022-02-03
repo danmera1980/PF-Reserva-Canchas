@@ -36,8 +36,9 @@ const Login = () => {
   const [userInfo, setUserInfo] = useState(initialState);
 
   const responseSuccess = (response) => {
+    console.log(response)
     dispatch(loginWithGoogle(response))
-    alert("login correcto");
+    alert("login OK");
 
     history.push("/");
   };
@@ -58,7 +59,6 @@ const Login = () => {
         [e.target.name]: e.target.value,
       })
     );
-    console.log(userInfo);
   };
   const handleSubmit = (e) => {
     e.preventDefault();

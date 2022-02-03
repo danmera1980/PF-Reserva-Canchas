@@ -5,7 +5,7 @@
  */
 
 import axios from 'axios';
-import { ALL_USERS, REGISTER, LOGIN, LOGINGOOGLE } from './actionNames';
+import { ALL_USERS, REGISTER, LOGIN, LOGINGOOGLE, EDIT_SUCCESS, SET_ERRORS } from './actionNames';
 const serverUrl = 'localhost';
 
 export const getAllUsers = () => {
@@ -18,29 +18,21 @@ export const getAllUsers = () => {
   };
 };
 
-export function postCourt(payload) {
-  try {
-    return async function (dispatch) {
-      const response = await axios.post(
-        `http://${serverUrl}:3001/court`,
-        payload
-      );
-      return response;
-    };
-  } catch (e) {
-    console.log(e.response.data);
-  }
-}
-
 export function registerUser(payload) {
+  const headers = {
+    'Authorization': 'Bearer ${token}...'
+
+  }
   return function (dispatch) {
     axios
-      .post(`http://${serverUrl}:3001/users/register`, payload)
-      .then(response => {
-        return dispatch({ type: REGISTER, payload: response.data });
+      .post(`http://${serverUrl}:3001/users/register`, payload, {headers: headers})
+      .then(data => {
+        return dispatch({ type: REGISTER, payload: data.data });
       })
       .catch(err => {
         console.log(err);
+                //aca accion que avisa error en registro
+
       });
   };
 }
@@ -53,12 +45,34 @@ export function loginUser(payload) {
       })
       .catch(err => {
         console.log(err);
+        //aca accion que avisa error en login
       });
   };
 }
 
-export function loginWithGoogle(responseGoogle){
-  return function(dispatch){
-    return dispatch({type: LOGINGOOGLE, payload: responseGoogle})
-  }
+export function loginWithGoogle(payload) {
+  return function (dispatch) {
+   //get user mandando el token en middleware me crea o encuentra el usuario y zas devuelve la info 
+        return dispatch({ type: LOGINGOOGLE, payload: payload });
+      }
+      
+}
+
+export function editUser(payload, userToken) {
+  const headers = {  
+     'Authorization': `Bearer ${userToken}`
+   }
+   
+  return  async function (dispatch){
+    try {
+      const response = await axios.put(
+        `http://${serverUrl}:3001/users/login`,
+         payload,
+         {headers:headers}
+         )
+      return dispatch({type: EDIT_SUCCESS, payload: response.data})        
+    } catch (error) {
+        return dispatch({type: SET_ERRORS, payload: error})
+    }
+   }
 }
