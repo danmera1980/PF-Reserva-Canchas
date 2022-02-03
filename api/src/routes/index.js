@@ -1,22 +1,27 @@
 /** @format */
 
 const { Router } = require('express');
-const router = Router();
-
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
 const routerEstablishment = require('./routerEstablishment');
 const routerSite = require('./routerSite');
 const userRoute = require('./routerUser');
 const routerCourt = require("./routerCourt");
-const Card = require('./card');
+const routerCard = require('./routerCard');
+
+
+
+const router = Router();
+
+const axios = require("axios");
+
+// Importar todos los routers;
+// Ejemplo: const authRouter = require('./auth.js');
 
 
 router.use('/establishment', routerEstablishment);
 router.use('/site', routerSite);
 router.use('/court', routerCourt);
 router.use('/users', userRoute);
-router.use('/card', Card);
+router.use('/card', routerCard);
 
 
 /*// en la ruta de creacion de las canchas o las reservas
@@ -36,7 +41,11 @@ if (!token || !decodedToken.id){
     return res.status(401).jason({error: "token missing or invalid"})
 }
 
+ y un par de cosas mas que voy a ver despues de intergar google
+
 });
+
+
 */
 
 

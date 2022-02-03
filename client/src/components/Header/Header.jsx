@@ -8,7 +8,7 @@ import './Header.scss';
 
 
 function Header() {
-    const logged = true;
+    const logged = false;
 
 
     return (
@@ -27,12 +27,14 @@ function Header() {
                 :
                     <div className='login'>
                         <div className='btn_sign_in'>
-                            <Link to={"/"}>
+                            <Link to={"/login"}>
                                 <span>Sign in </span>
                                 <FontAwesomeIcon icon={faSignInAlt} />
                             </Link>
                         </div>
+                        <Link to={"/register"}>
                         <button id='signup' className='btn_signup'>Sign up</button>
+                        </Link>
                     </div>
                 }
             </header>

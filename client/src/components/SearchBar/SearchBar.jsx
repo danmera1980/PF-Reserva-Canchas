@@ -11,20 +11,20 @@ function SearchBar() {
   return (
     <div>
         <div className='searchBar'>
-            <div className='select'>
+            <div className='searchSelect'>
                 <select>
                     <option value=''>{location}</option>
                 </select>
                 <FontAwesomeIcon icon={faMapMarkerAlt} className='faIcon'/>
             </div>
-            <div className='select'>
+            <div className='searchSelect'>
                 <select id='sport'>
                     <option value=''>{sports}</option>
                     <option value='football'>Fútbol</option>
                 </select>
                 <FontAwesomeIcon icon={faBasketballBall} className='faIcon'/>
             </div>
-            <div className='input' >
+            <div className='searchInput' >
                 <input id='establishment'placeholder={establishment}/>
                 <FontAwesomeIcon icon={faSearchLocation} className='faIcon'/>
             </div>

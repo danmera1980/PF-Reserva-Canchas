@@ -7,7 +7,6 @@ import "./CourtCreate.scss";
 
 function validate(input) {
   let errors = {};
-  // console.log(errors);
   if (!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.name)) {
     errors.name =
       "Se requieren entre 2 y 20 caracteres, no se permiten símbolos";
@@ -29,15 +28,37 @@ export default function CourtCreate() {
   const history = useHistory();
   const [errors, setErrors] = useState({});
 
-  const [input, setInput] = useState({
-    name: "",
-    description: "",
-    shiftLength: "",
-    price: "",
-    sport: "",
-    image: [],
-    sede: "",
-  });
+    const [input,setInput] = useState({
+        name:'',
+        description:'',
+        shiftLength:'',
+        price:'',
+        sport:'',
+        image:[],
+        sede:'',
+    
+    })
+    
+    function handleSelectSport(e){
+        setInput({
+            ...input,
+            sport: e.target.value
+        });
+        setErrors(validate({
+              ...input,
+              [e.target.name]: e.target.value
+          }))
+    }
+    function handleSelectSede(e){
+        setInput({
+            ...input,
+            sede: e.target.value
+        });
+        setErrors(validate({
+              ...input,
+              [e.target.name]: e.target.value
+          }))
+    }
 
   function fileChange() {
     let photos = document.getElementById("input_img");
@@ -61,31 +82,6 @@ export default function CourtCreate() {
           console.log(err);
         });
     });
-  }
-
-  function handleSelectSport(e) {
-    setInput({
-      ...input,
-      sport: e.target.value,
-    });
-    setErrors(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
-  }
-  function handleSelectSede(e) {
-    setInput({
-      ...input,
-      sede: e.target.value,
-    });
-    setErrors(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
   }
 
   function handleChange(e) {
