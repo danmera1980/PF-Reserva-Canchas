@@ -10,16 +10,22 @@ import './CourtCreate.scss'
 
 function validate(input) {
     let errors = {};
-    if(!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.name)) {
-        errors.name = 'Se requieren entre 2 y 20 caracteres, no se permiten simbolos';
+    // if(!/^[a-zA-Z0-9_\-' ']{1,20}$/.test(input.name)) {
+    //     errors.name = 'Completar nombre';
+    // }; 
+    if(!/^[a-zA-Z0-9_\-' ']{0,20}$/.test(input.name)) {
+        errors.name = 'No se permiten simbolos';
     }; 
     
-    if(!input.description) {
-        errors.description = 'Se requiere una descripción';
+    // if(!/^[a-zA-Z0-9_\-' ',.]{1,40}$/.test(input.description)) {
+    //     errors.description = 'Completar la descripcion';
+    // }; 
+    if(!/^[a-zA-Z0-9_\-' ',.]{0,100}$/.test(input.description)) {
+        errors.description = 'No se permiten simbolos';
     }; 
-    if(!input.sport) {
-        errors.sport = 'Selecciona un deporte';
-    }; 
+    // if(!input.sport) {
+    //     errors.sport = 'Selecciona un deporte';
+    // }; 
    
     
     return errors
@@ -115,12 +121,18 @@ export default function CourtCreate(){
             [e.target.name] :   e.target.value
         });
       setErrors(validate({
-            ...input,
             [e.target.name]: e.target.value
         }))
     }
 
     function handleSubmit(e){  
+        if(errors.name || errors.description ||input.name.trim().length===0
+        ||input.description.trim().length===0){
+            alert('completar los campos correctamente')
+        } else{
+
+        
+
             e.preventDefault();
             dispatch(postCourt(input));
             alert('Cancha Creada!!')
@@ -134,7 +146,7 @@ export default function CourtCreate(){
                 siteId:'',
             })
              history.push('./home')
-        
+            }
     }    
        
 
@@ -147,7 +159,7 @@ export default function CourtCreate(){
                 <form className="form" onSubmit={(e) => handleSubmit(e)} >
                     <div>
                         <label className="label">Nombre cancha:</label>
-                        <input className="inputForm" id='nombre' type='text' value={input.name} name='name' onChange={(e) => handleChange(e)} />
+                        <input className="inputForm" id='nombre' type='text' value={input.name} name='name' onChange={(e) => handleChange(e)} required/>
                         
                         {errors.name&& (
                             <p  className='error' >{errors.name}</p>
@@ -155,29 +167,29 @@ export default function CourtCreate(){
                     </div>
                     <div>
                         <label className="label">Descripción:</label>
-                        <input className="inputForm" type='text' value={input.description} name='description' onChange={(e) => handleChange(e)} />
+                        <input className="inputForm" type='text' value={input.description} name='description' onChange={(e) => handleChange(e)} required />
                         {errors.description&& (
                             <p  className='error' >{errors.description}</p>
                         )}
                     </div>
                     <div>
                         <label className="label">Duración del turno (minutos):</label>
-                        <input className="inputForm" type='number' value={input.shiftLength} name='shiftLength' onChange={(e) => handleChange(e)} />
+                        <input className="inputForm" type='number' value={input.shiftLength} name='shiftLength' onChange={(e) => handleChange(e)}required />
                         {errors.shiftLength&& (
                             <p  className='error' >{errors.shiftLength}</p>
                         )}
                     </div>
                     <div>
                         <label className="label">Precio (por turno):</label>
-                        <input className="inputForm" type='number' value={input.price} name='price' onChange={(e) => handleChange(e)} />
+                        <input className="inputForm" type='number' value={input.price} name='price' onChange={(e) => handleChange(e)} required/>
                         {errors.price&& (
                             <p  className='error' >{errors.price}</p>
                         )}
                     </div>
                     <div>
                         <label className="label">Deporte:</label>
-                        <select className="inputForm" name='sport' onChange={(e) => handleSelectSport(e)} >
-                            <option value=''>Seleccioná un deporte</option>
+                        <select className="inputForm" name='sport' onChange={(e) => handleSelectSport(e)} required>
+                            <option value=''  >Seleccioná un deporte</option>
                             <option value='Basquet'>Basquet</option>
                             <option value='Futbol 11'>Futbol 11</option>
                             <option value='Futbol 7'>Futbol 7</option>
@@ -205,7 +217,7 @@ export default function CourtCreate(){
                             {errors.image && <p className="error">{errors.image}</p>}
                     <div>
                         <label className="label" >Establecimiento:</label> 
-                        <select className="inputForm" name='establishments' onChange={(e) => handleSelectEstablishment(e)} >
+                        <select className="inputForm" name='establishments' onChange={(e) => handleSelectEstablishment(e)} required >
                                     
                         <option value=''>Seleccioná un establecimiento</option>
                             {establishments.map((c) => (
@@ -218,9 +230,9 @@ export default function CourtCreate(){
                     </div>
                     <div>
                         <label className="label" >Site:</label> 
-                        <select className="inputForm" name='sites' onChange={(e) => handleSelectSite(e)} >
+                        <select className="inputForm" name='sites' onChange={(e) => handleSelectSite(e)} required >
                                     
-                        <option value=''>Seleccioná una sede</option>
+                        <option value='' >Seleccioná una sede</option>
                             {sites.map((c) => (
                                     <option value={c.id} key={c.id}>{c.name}</option>
                             ))}
