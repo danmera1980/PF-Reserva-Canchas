@@ -11,7 +11,7 @@ const bodySchema = Joi.object({
     shiftLength: Joi.number().min(15).max(120).integer().required(),
     price: Joi.number().integer(),
     sport: Joi.string().valid('Basquet', 'Futbol 11', 'Futbol 7', 'Futbol 5', 'Tenis', 'Padel', 'Handbol', 'Squash'),
-    image: Joi.array().items(Joi.string().regex(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/).min(8)),
+    image: Joi.array().items(Joi.string().regex(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/).min(8)).allow(null),
 })
 
 router.post('/', validator.body(bodySchema), postCourt)
