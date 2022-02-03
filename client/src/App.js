@@ -3,7 +3,6 @@ import '../src/styles/index.scss';
 import { Route } from 'react-router-dom';
 import React from 'react';
 import Home from './components/Home/Home';
-//import { useEffect, useState } from 'react';
 import CourtCreate from './components/CourtCreate/CourtCreate';
 import Results from './components/Results/Results';
 import PostEstablishment from './components/PostEstablishment/PostEstablishment';
@@ -12,31 +11,6 @@ import Register from './components/Register/Register';
 import SiteCreate from "./components/SiteCreate/SiteCreate";
 
 function App() {
-  /*const [user, setUser] = useState(null);
-  useEffect(() => {
-    const getUser = () => {
-      fetch('http://localhost:5000/auth/login/success', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Credentials': true,
-        },
-      })
-        .then(response => {
-          if (response.status === 200) return response.json();
-          throw new Error('authentication has been failed!');
-        })
-        .then(resObject => {
-          setUser(resObject.user);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    };
-    getUser();
-  }, []);*/
 
   return (
     <React.Fragment>
