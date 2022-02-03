@@ -57,13 +57,30 @@ const findByLocation = async (req, res) =>{
     }
 }
 
-const getAllSites = async (req, res) =>{
+const getAllSites = async (req, res, next) =>{
+
+    const estabId = req.params.estabId;
+    let sites;
+    
     try {
-      const results = await Site.findAll()
-      res.send(results)
+        if(estabId){
+            sites = await Site.findAll({
+                where: {establishmentId: estabId}
+            });
+            sites = sites.map(site => {
+                return {
+                    id: site.id,
+                    name: site.name
+                }
+            })
+          return res.send(sites)
+        }
+
+        sites = await Site.findAll()
+        res.send(sites)
     } catch (e) {
       console.log(e)
     }
 }
 
-module.exports = {createSite, findByLocation, getAllSites}
+module.exports = {createSite, getAllSites, findByLocation}

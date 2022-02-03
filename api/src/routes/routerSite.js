@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const {createSite, findByLocation, getAllSites} = require('../controllers/site')
+const {createSite, getAllSites, findByLocation} = require('../controllers/site')
 
 const validator = require('express-joi-validation').createValidator({})
 const Joi = require('joi')
@@ -22,7 +22,8 @@ const bodySchema = Joi.object({
 
 
 router.post('/',validator.body(bodySchema), createSite)
-router.get('/', findByLocation)
-router.get('/all', getAllSites)
+router.get('/location', findByLocation)
+router.get('/:estabId', getAllSites)
+router.get('/',getAllSites)
 
 module.exports = router
