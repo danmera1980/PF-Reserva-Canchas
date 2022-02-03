@@ -50,8 +50,7 @@ export default function CourtCreate(){
         price:'',
         sport:'',
         image:[],
-        establishment:'',
-        site:'',
+        siteId:'',
     
     })
     
@@ -79,10 +78,10 @@ export default function CourtCreate(){
     }
     
     function handleSelectEstablishment(e){
-        setInput({
-            ...input,
-            establishment: e.target.value
-        });
+        // setInput({
+        //     ...input,
+        //     establishment: e.target.value
+        // });
         dispatch(getSitesByEstablishmentId(e.target.value));
         setErrors(validate({
               ...input,
@@ -93,7 +92,7 @@ export default function CourtCreate(){
     function handleSelectSite(e){
         setInput({
             ...input,
-            site: e.target.value
+            siteId: e.target.value
         });
         setErrors(validate({
               ...input,
@@ -126,7 +125,7 @@ export default function CourtCreate(){
                 price:'',
                 sport:'',
                 image:[],
-                site:'',
+                siteId:'',
             })
              history.push('./home')
         
@@ -144,7 +143,7 @@ export default function CourtCreate(){
             
                 <form className="form" onSubmit={(e) => handleSubmit(e)} >
                     <div>
-                        <label className="label" for='nombre'>Nombre cancha:</label>
+                        <label className="label">Nombre cancha:</label>
                         <input className="inputForm" id='nombre' type='text' value={input.name} name='name' onChange={(e) => handleChange(e)} />
                         
                         {errors.name&& (
@@ -205,11 +204,11 @@ export default function CourtCreate(){
                                     
                         <option value=''> </option>
                             {establishments.map((c) => (
-                                    <option value={c.id}>{c.name}</option>
+                                    <option value={c.id} key={c.id}>{c.name}</option>
                             ))}
                         </select>
                         {errors.establishment&& (
-                            <p  className='error' >{errors.site}</p>
+                            <p  className='error' >{errors.siteId}</p>
                         )}
                     </div>
                     <div>
@@ -218,11 +217,11 @@ export default function CourtCreate(){
                                     
                         <option value=''> </option>
                             {sites.map((c) => (
-                                    <option value={c.id}>{c.name}</option>
+                                    <option value={c.id} key={c.id}>{c.name}</option>
                             ))}
                         </select>
-                        {errors.site&& (
-                            <p  className='error' >{errors.site}</p>
+                        {errors.siteId&& (
+                            <p  className='error' >{errors.siteId}</p>
                         )}
                     </div>
                     <div>

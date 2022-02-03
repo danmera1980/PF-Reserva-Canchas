@@ -30,12 +30,12 @@ export default function PostEstablishment() {
     const history = useHistory()
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
-        id: null,
+        id: '',
         name: "",
-        logoImage: null,
-        rating: null,
-        timeActiveFrom: null,
-        timeActiveTo: null,
+        logoImage: '',
+        rating: '',
+        timeActiveFrom: '',
+        timeActiveTo: '',
         responsableId: userId
     })
     function handleChange(e) {
@@ -58,12 +58,12 @@ export default function PostEstablishment() {
         dispatch(postEstablishment(input))
         alert("Establecimiento creado con exito")
         setInput({
-            id: null,
+            id: '',
             name: "",
-            logoImage: null,
-            rating: null,
-            timeActiveFrom: null,
-            timeActiveTo: null,
+            logoImage: '',
+            rating: '',
+            timeActiveFrom: '',
+            timeActiveTo: '',
             responsableId: userId
         })
         history.push("/home")
