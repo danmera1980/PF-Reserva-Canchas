@@ -18,8 +18,9 @@ const getAllUsers = async (req, res, next) => {
 
 const getUserByID = async (req, res, next) => {
   try {
-    // ver esta porqueria que funcione con el ide que me manda el front y el que pido
-    const {id} = req
+    // ver esta porqueria que funcione con el idea que me manda el front y el que pido
+    const validatedId = req.user.id
+    const { id } = req.params
 
   } catch (e) {
     next(e);
