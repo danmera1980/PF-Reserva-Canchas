@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -L",
+    "start": "nodemon -L --trace-warnings",
     "test": "mocha -w ./tests/**/*.spec.js"
   },
   "author": "Henry",

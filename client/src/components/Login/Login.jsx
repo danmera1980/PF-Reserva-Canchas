@@ -36,6 +36,7 @@ const Login = () => {
   const [userInfo, setUserInfo] = useState(initialState);
 
   const responseSuccess = (response) => {
+    console.log(response)
     dispatch(loginWithGoogle(response))
     alert("login OK");
 

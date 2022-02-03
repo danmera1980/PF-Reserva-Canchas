@@ -19,6 +19,8 @@ const getAllUsers = async (req, res, next) => {
 
 const getUserByID = async (req, res, next) => {
   try {
+    const {id} = req
+
   } catch (e) {
     next(e);
   }
