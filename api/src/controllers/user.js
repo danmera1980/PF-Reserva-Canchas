@@ -1,33 +1,49 @@
-const bcrypt = require('bcrypt')
-const { User } = require('../db');
+const bcrypt = require("bcrypt");
+const { User } = require("../db");
 
 // starting to code
 const getAllUsers = async (req, res, next) => {
   try {
-    const allUsers =  await User.findAll()
-    if(!allUsers.length){
+    const allUsers = await User.findAll();
+    if (!allUsers.length) {
       throw new Error("No users available");
     }
-    res.send(allUsers)
+    res.send(allUsers);
   } catch (e) {
     next(e);
   }
 };
-
-
 
 const getUserByID = async (req, res, next) => {
   try {
     // ver esta porqueria que funcione con el idea que me manda el front y el que pido
-    const validatedId = req.user.id
-    const { id } = req.params
+    const { user } = req;
 
+    const { id } = req.params;
+
+    if ( !user.isAdmin && user.id !== parseInt(id) ) {
+      throw new Error("not authorized");
+    }
+
+    const wantedUser = await User.findOne({ where:{id},
+      attributes: {exclude: ['passwordHash']}})
+    res.send(wantedUser);
   } catch (e) {
     next(e);
   }
 };
 
-
+const registerGoogle = async (req, res, next) => {
+  try {
+    // ver esta porqueria que funcione con el idea que me manda el front y el que pido
+    const { email } = req.user;
+    const wantedUser = await User.findOne({ where:{email},
+      attributes: {exclude: ['passwordHash']}})
+    res.send(wantedUser);
+  } catch (e) {
+    next(e);
+  }
+};
 const registerUser = async (req, res, next) => {
   try {
     const { name, lastName, email, password } = req.body;
@@ -50,20 +66,21 @@ const registerUser = async (req, res, next) => {
 
 const editUser = async (req, res, next) => {
   try {
-    if (!req.user) return res.status(401).json({ error: "Authentication required" });
-    const {id} = req.user
+    if (!req.user)
+      return res.status(401).json({ error: "Authentication required" });
+    const { id } = req.user;
     const { name, lastname, img, phone, hasEstablishment } = req.body;
 
     const user = await User.findOne({ where: { id } });
     if (!user) {
       throw new Error("User not fund");
     }
-    name && (user.name = name)
-    lastname && (user.lastname = lastname)
-    img && (user.img = img)
-    phone && (user.phone = phone)
-    hasEstablishment && (user.hasEstablishment = hasEstablishment)
-    await user.save()
+    name && (user.name = name);
+    lastname && (user.lastname = lastname);
+    img && (user.img = img);
+    phone && (user.phone = phone);
+    hasEstablishment && (user.hasEstablishment = hasEstablishment);
+    await user.save();
     res.send(user);
   } catch (e) {
     next(e);
@@ -75,4 +92,5 @@ module.exports = {
   getUserByID,
   registerUser,
   editUser,
+  registerGoogle
 };
