@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const { User } = require('../db');
+const { use } = require('../routes/routerUser');
 
 // starting to code
 const getAllUsers = async (req, res, next) => {
@@ -18,6 +19,8 @@ const getAllUsers = async (req, res, next) => {
 
 const getUserByID = async (req, res, next) => {
   try {
+    const {id} = req
+
   } catch (e) {
     next(e);
   }
@@ -47,22 +50,20 @@ const registerUser = async (req, res, next) => {
 
 const editUser = async (req, res, next) => {
   try {
-    const id = req.params
+    const {id} = req
     const { name, lastname, img, phone, hasEstablishment } = req.body;
 
-    const updatedUser = await User.findOne({ where: { id } });
-    if (!updatedUser) {
-      throw Error("User not fund");
+    const user = await User.findOne({ where: { id } });
+    if (!user) {
+      throw new Error("User not fund");
     }
-    if(name) updatedUser.name = name;
-    if(lastname) updatedUser.lastname = lastname;
-
-    if(phone) updatedUser.phone = phone;
-    if(img) updatedUser.img = img;
-    if(hasEstablishment) updatedUser.hasEstablishment= hasEstablishment
-    await updatedUser.save();
-
-    res.send(updatedUser);
+    name && (user.name = name)
+    lastname && (user.lastname = lastname)
+    img && (user.img = img)
+    phone && (user.phone = phone)
+    hasEstablishment && (user.hasEstablishment = hasEstablishment)
+    await user.save()
+    res.send(user);
   } catch (e) {
     next(e);
   }
