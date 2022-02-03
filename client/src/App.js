@@ -9,8 +9,11 @@ import PostEstablishment from './components/PostEstablishment/PostEstablishment'
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import SiteCreate from "./components/SiteCreate/SiteCreate";
+import UserEdit from './components/UserEdit/UserEdit';
 
 function App() {
+
+
 
   return (
     <React.Fragment>
@@ -22,6 +25,7 @@ function App() {
         <Route exact path="/site" component={SiteCreate} />
         <Route exact path="/login" component={ Login } />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/useredit" component={UserEdit} />
       </div>
     </React.Fragment>
   );

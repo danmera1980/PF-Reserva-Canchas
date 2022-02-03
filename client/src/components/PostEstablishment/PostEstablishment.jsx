@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import axios from 'axios';
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { postEstablishment } from "../../redux/actions/establishment.js";
@@ -13,30 +14,31 @@ function validate(input) {
     if(input.name === '') {
         errors.name = "Se requiere un nombre de establecimiento"
     } 
-    if(input.timeActiveFrom === '') {
+    if(input.timeActiveFrom === null) {
         errors.timeActiveFrom = "Se requiere un horario de apertura"
     }
-    if (input.timeActiveTo === ''){
+    if (input.timeActiveTo === null){
         errors.timeActiveTo = "Se requiere un horario de cierre"
-    }
-    if(input.responsable_id === '') {
-        errors.responsable_id = "Se requiere un id del usuario responsable"
     }
     return errors
 }
 
 export default function PostEstablishment() {
+
+    const userId = '35953287' // acá falta ver cómo va a venir este dato (estado global, params)
+
     const dispatch = useDispatch()
     const history = useHistory()
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
-        id: null,
+        id: '',
         name: "",
-        logoImage: "",
-        rating: null,
-        timeActiveFrom: null,
-        timeActiveTo: null,
-        responsable_id: ""
+        logoImage: '',
+        rating: '',
+        timeActiveFrom: '',
+        timeActiveTo: '',
+        responsableId: userId
+
     })
     function handleChange(e) {
         setInput({
@@ -50,25 +52,54 @@ export default function PostEstablishment() {
     }
     function handleSubmit(e) {
         e.preventDefault()
-        if(!input.id || !input.name || !input.timeActiveFrom || !input.timeActiveTo || !input.responsable_id || 
+        if(!input.id || !input.name || !input.timeActiveFrom || !input.timeActiveTo || !input.responsableId || 
             errors.hasOwnProperty("id") || errors.hasOwnProperty("name") || errors.hasOwnProperty("timeActiveFrom") || 
-            errors.hasOwnProperty("timeActiveTo") || errors.hasOwnProperty("responsable_id")) {
+            errors.hasOwnProperty("timeActiveTo") || errors.hasOwnProperty("responsableId")) {
                 alert("Faltan completar campos obligatorios")
             } else {
-        dispatch(postEstablishment(input))
-        alert("Establecimiento creado con exito")
-        setInput({
-        id: null,
-        name: "",
-        logoImage: "",
-        rating: null,
-        timeActiveFrom: null,
-        timeActiveTo: null,
-        responsable_id: ""
-        })
-        history.push("/home")
+                dispatch(postEstablishment(input))
+                alert("Establecimiento creado con exito")
+                setInput({
+                    id: '',
+                    name: "",
+                    logoImage: '',
+                    rating: '',
+                    timeActiveFrom: '',
+                    timeActiveTo: '',
+                    responsableId: userId
+
+                })
+                history.push("/home")
+            }
     }
-    }
+
+    
+    function fileChange() {
+        let photos = document.getElementById("input_img");
+        Array.from(photos.files).map(async (photo) => {
+          const body = new FormData();
+          body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
+          body.append("image", photo);
+    
+          await axios({
+            method: "post",
+            url: "https://api.imgbb.com/1/upload",
+            data: body,
+          })
+            .then((response) => {
+              setInput({
+                ...input,
+                logoImage: response.data.data.url,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      }
+
+
+
     return (
         <div>
             <div className="container-crear">
@@ -89,33 +120,26 @@ export default function PostEstablishment() {
                     </div>
                     <div>
                     <label className="label">Logo-Imagen: </label>
-                    <input className="input" placeholder="Logo..." type="text" value={input.logoImage} name="logoImage" onChange={(e)=>handleChange(e)}></input>
+                    <input className="inputForm" type="file" accept="image/*" name="logoImage" id="input_img" onChange={fileChange}/>
                     </div>
                     <div>
                     <label className="label">Rating: </label>
-                    <input className="input" placeholder="Rating..." type="text" value={input.rating} name="rating" onChange={(e)=>handleChange(e)}></input>
+                    <input className="input" placeholder="Rating..." type="number" value={input.rating} name="rating" onChange={(e)=>handleChange(e)}></input>
                     </div>
                     <div>
                     <label className="label">Horario de apertura: </label>
-                    <input className="input" placeholder="Hora de apertura..." type="text" value={input.timeActiveFrom} name="timeActiveFrom" onChange={(e)=>handleChange(e)}></input>
+                    <input className="input" placeholder="Hora de apertura..." type="number" value={input.timeActiveFrom} name="timeActiveFrom" onChange={(e)=>handleChange(e)}></input>
                     </div>
                     {errors.timeActiveFrom ?
                     <p className="error">{errors.timeActiveFrom}</p> : null
                     }
                     <div>
                     <label className="label">Horario de cierre: </label>
-                    <input className="input" placeholder="Hora de cierre..." type="text" value={input.timeActiveTo} name="timeActiveTo" onChange={(e)=>handleChange(e)}></input>
+                    <input className="input" placeholder="Hora de cierre..." type="number" value={input.timeActiveTo} name="timeActiveTo" onChange={(e)=>handleChange(e)}></input>
                     </div>
                     {errors.timeActiveTo ?
                     <p className="error">{errors.timeActiveTo}</p> : null
                     }
-                    <div>
-                    <label className="label">Numero de usuario responsable: </label>
-                    <input className="input" placeholder="Numero(id) del usuario responsable..." type="text" value={input.responsable_id} name="responsable_id" onChange={(e)=>handleChange(e)}></input>
-                    {errors.responsable_id ?
-                    <p className="error">{errors.responsable_id}</p> : null
-                    }
-                    </div>
                     <button type="submit">Crear Establecimiento</button> 
                     <br/>
                     <Link to="/home">
