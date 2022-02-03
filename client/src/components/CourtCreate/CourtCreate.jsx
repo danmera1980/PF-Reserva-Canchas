@@ -1,16 +1,15 @@
-
 import React, {useState, useEffect} from "react";
 import {Link, useHistory} from 'react-router-dom';
 import { postCourt } from "../../redux/actions/court";
 import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms";
-
 import { useDispatch, useSelector } from "react-redux";
-import "./CourtCreate.scss";
+import './CourtCreate.scss'
+
 
 
 function validate(input) {
-
     let errors = {};
+    console.log(errors)
     if(!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.name)) {
         errors.name = 'Se requieren entre 2 y 20 caracteres, no se permiten simbolos';
     }; 
@@ -25,15 +24,11 @@ function validate(input) {
     
     return errors
 }
-  if (!input.description) {
-    errors.description = "Se requiere una descripción";
-  }
-  if (!input.sport) {
-    errors.sport = "Selecciona un deporte";
-  }
+
 
 export default function CourtCreate(){
     const dispatch = useDispatch();
+  //  const sites = useSelector ((state) => state.sites)
     const history = useHistory()
     const [errors,setErrors] = useState({});
     const establishments = useSelector(state => state.forms.establishmentByUser)
@@ -47,6 +42,7 @@ export default function CourtCreate(){
     },[userId])
 
 
+
     const [input,setInput] = useState({
         name:'',
         description:'',
@@ -57,6 +53,18 @@ export default function CourtCreate(){
         siteId:'',
     
     })
+    
+    function handlePutImage(e){  
+   setInput({
+            ...input,
+            image:[...input.image,   e.target.value]
+            
+        });
+        setErrors(validate({
+              ...input,
+              [e.target.name]: e.target.value
+          }))
+    }
     
     function handleSelectSport(e){
         setInput({
@@ -92,29 +100,17 @@ export default function CourtCreate(){
           }))
     }
 
-  function fileChange() {
-    let photos = document.getElementById("input_img");
-    Array.from(photos.files).map(async (photo) => {
-      const body = new FormData();
-      body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
-      body.append("image", photo);
-
-      await axios({
-        method: "post",
-        url: "https://api.imgbb.com/1/upload",
-        data: body,
-      })
-        .then((response) => {
-          setInput((prevInput) => ({
+    function  handleChange(e){
+       setInput({
             ...input,
-            image: [...prevInput.image, response.data.data.url],
-          }));
-        })
-        .catch((err) => {
-          console.log(err);
+            [e.target.name] :   e.target.value
         });
-    });
-  }
+      setErrors(validate({
+            ...input,
+            [e.target.name]: e.target.value
+        }))
+      //  console.log(input)
+    }
 
     function handleSubmit(e){  
        console.log(input)
