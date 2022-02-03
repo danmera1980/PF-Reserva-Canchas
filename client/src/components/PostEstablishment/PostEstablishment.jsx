@@ -37,6 +37,7 @@ export default function PostEstablishment() {
         timeActiveFrom: '',
         timeActiveTo: '',
         responsableId: userId
+
     })
     function handleChange(e) {
         setInput({
@@ -65,6 +66,7 @@ export default function PostEstablishment() {
             timeActiveFrom: '',
             timeActiveTo: '',
             responsableId: userId
+
         })
         history.push("/home")
     }
