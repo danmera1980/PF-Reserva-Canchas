@@ -29,6 +29,7 @@ export default function SiteCreate() {
     const history = useHistory()
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
+        establishmentId: "",
         name: "",
         country: "",
         city: "",
@@ -55,6 +56,7 @@ export default function SiteCreate() {
         dispatch(postSite(input))
         alert("Sede creada con exito")
         setInput({
+        establishmentId: "",
         name: "",
         country: "",
         city: "",
@@ -71,27 +73,42 @@ export default function SiteCreate() {
                     <div>
                         <label>Nombre: </label>
                         <input placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)}></input>
+                        {errors.name ?
+                        <p className="error">{errors.name}</p> : null
+                        }
                     </div>
                     <div>
                         <label>Pais: </label>
                         <input placeholder="pais..." type="text" value={input.country} name="country" onChange={(e)=>handleChange(e)}></input>
+                        {errors.country ?
+                        <p className="error">{errors.country}</p> : null
+                        }
                     </div>
                     <div>
                         <label>Ciudad: </label>
                         <input placeholder="Ciudad..." type="text" value={input.city} name="city" onChange={(e)=>handleChange(e)}></input>
+                        {errors.city ?
+                        <p className="error">{errors.city}</p> : null
+                        }
                     </div>
                     <div>
                         <label>Calle: </label>
                         <input placeholder="Calle..." type="text" value={input.street} name="street" onChange={(e)=>handleChange(e)}></input>
+                        {errors.street ?
+                        <p className="error">{errors.street}</p> : null
+                        }
                     </div>
                     <div>
                         <label>Numero de calle: </label>
                         <input placeholder="Numero de calle..." type="text" value={input.streetNumber} name="streetNumber" onChange={(e)=>handleChange(e)}></input>
+                        {errors.streetNumber ?
+                        <p className="error">{errors.streetNumber}</p> : null
+                        }
                     </div>
                     <button type="submit">Crear tu sede</button> 
                     <br/>
                     <Link to="/home">
-                    <button>Cargaste todas?</button>
+                    <button>Volver</button>
                     </Link>
                 </form>
             </div>

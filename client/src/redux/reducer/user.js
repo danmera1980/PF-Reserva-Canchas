@@ -4,7 +4,9 @@ const initialState = {
     //para el admin
     users: [],
     //user details para enviar la info que necesita el perfil
+    userDetails: []
     //un temporal para los filtros del admin
+
 }
 
 const userReducer = (state = initialState, action) => {
