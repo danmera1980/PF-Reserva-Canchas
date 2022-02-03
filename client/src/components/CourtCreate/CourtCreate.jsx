@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import axios from 'axios';
 import {Link, useHistory} from 'react-router-dom';
 import { postCourt } from "../../redux/actions/court";
 import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms";
@@ -9,7 +10,6 @@ import './CourtCreate.scss'
 
 function validate(input) {
     let errors = {};
-    console.log(errors)
     if(!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.name)) {
         errors.name = 'Se requieren entre 2 y 20 caracteres, no se permiten simbolos';
     }; 
@@ -54,17 +54,30 @@ export default function CourtCreate(){
     
     })
     
-    function handlePutImage(e){  
-   setInput({
-            ...input,
-            image:[...input.image,   e.target.value]
-            
+
+    function fileChange() {
+        let photos = document.getElementById("input_img");
+        Array.from(photos.files).map(async (photo) => {
+          const body = new FormData();
+          body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
+          body.append("image", photo);
+    
+          await axios({
+            method: "post",
+            url: "https://api.imgbb.com/1/upload",
+            data: body,
+          })
+            .then((response) => {
+              setInput((prevInput) => ({
+                ...input,
+                image: [...prevInput.image, response.data.data.url],
+              }));
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         });
-        setErrors(validate({
-              ...input,
-              [e.target.name]: e.target.value
-          }))
-    }
+      }
     
     function handleSelectSport(e){
         setInput({
@@ -78,10 +91,6 @@ export default function CourtCreate(){
     }
     
     function handleSelectEstablishment(e){
-        // setInput({
-        //     ...input,
-        //     establishment: e.target.value
-        // });
         dispatch(getSitesByEstablishmentId(e.target.value));
         setErrors(validate({
               ...input,
@@ -109,13 +118,10 @@ export default function CourtCreate(){
             ...input,
             [e.target.name]: e.target.value
         }))
-      //  console.log(input)
     }
 
     function handleSubmit(e){  
-       console.log(input)
             e.preventDefault();
-           // console.log(input)
             dispatch(postCourt(input));
             alert('Cancha Creada!!')
             setInput({
@@ -171,7 +177,7 @@ export default function CourtCreate(){
                     <div>
                         <label className="label">Deporte:</label>
                         <select className="inputForm" name='sport' onChange={(e) => handleSelectSport(e)} >
-                            <option value=''></option>
+                            <option value=''>Seleccioná un deporte</option>
                             <option value='Basquet'>Basquet</option>
                             <option value='Futbol 11'>Futbol 11</option>
                             <option value='Futbol 7'>Futbol 7</option>
@@ -186,20 +192,22 @@ export default function CourtCreate(){
                             <p  className='error' >{errors.sport}</p>
                         )}
                     </div> 
-                    <label className="label" >Imagenes:</label> 
-                        {/* <select className="inputForm" name='image' onChange={(e) => handlePutImage(e)} >
-                                    
-                        </select> */}
-                        <input className="inputForm" type='text' value={input.image} name='price' onChange={(e) => handlePutImage(e)} />
-                        {errors.image&& (
-                            <p  className='error' >{errors.image}</p>
-                        )}
-
+                    <label className="text-black">Imágenes:</label>
+                            <input
+                                className="inputForm"
+                                type="file"
+                                accept="image/*"
+                                name="image"
+                                id="input_img"
+                                onChange={fileChange}
+                                multiple
+                            />
+                            {errors.image && <p className="error">{errors.image}</p>}
                     <div>
                         <label className="label" >Establecimiento:</label> 
                         <select className="inputForm" name='establishments' onChange={(e) => handleSelectEstablishment(e)} >
                                     
-                        <option value=''> </option>
+                        <option value=''>Seleccioná un establecimiento</option>
                             {establishments.map((c) => (
                                     <option value={c.id} key={c.id}>{c.name}</option>
                             ))}
@@ -212,7 +220,7 @@ export default function CourtCreate(){
                         <label className="label" >Site:</label> 
                         <select className="inputForm" name='sites' onChange={(e) => handleSelectSite(e)} >
                                     
-                        <option value=''> </option>
+                        <option value=''>Seleccioná una sede</option>
                             {sites.map((c) => (
                                     <option value={c.id} key={c.id}>{c.name}</option>
                             ))}

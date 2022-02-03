@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import axios from 'axios';
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { postEstablishment } from "../../redux/actions/establishment.js";
@@ -56,21 +57,49 @@ export default function PostEstablishment() {
             errors.hasOwnProperty("timeActiveTo") || errors.hasOwnProperty("responsableId")) {
                 alert("Faltan completar campos obligatorios")
             } else {
-        dispatch(postEstablishment(input))
-        alert("Establecimiento creado con exito")
-        setInput({
-            id: '',
-            name: "",
-            logoImage: '',
-            rating: '',
-            timeActiveFrom: '',
-            timeActiveTo: '',
-            responsableId: userId
+                dispatch(postEstablishment(input))
+                alert("Establecimiento creado con exito")
+                setInput({
+                    id: '',
+                    name: "",
+                    logoImage: '',
+                    rating: '',
+                    timeActiveFrom: '',
+                    timeActiveTo: '',
+                    responsableId: userId
 
-        })
-        history.push("/home")
+                })
+                history.push("/home")
+            }
     }
-    }
+
+    
+    function fileChange() {
+        let photos = document.getElementById("input_img");
+        Array.from(photos.files).map(async (photo) => {
+          const body = new FormData();
+          body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
+          body.append("image", photo);
+    
+          await axios({
+            method: "post",
+            url: "https://api.imgbb.com/1/upload",
+            data: body,
+          })
+            .then((response) => {
+              setInput({
+                ...input,
+                logoImage: response.data.data.url,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      }
+
+
+
     return (
         <div>
             <div className="container-crear">
@@ -91,7 +120,7 @@ export default function PostEstablishment() {
                     </div>
                     <div>
                     <label className="label">Logo-Imagen: </label>
-                    <input className="input" placeholder="Logo..." type="text" value={input.logoImage} name="logoImage" onChange={(e)=>handleChange(e)}></input>
+                    <input className="inputForm" type="file" accept="image/*" name="logoImage" id="input_img" onChange={fileChange}/>
                     </div>
                     <div>
                     <label className="label">Rating: </label>
