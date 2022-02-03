@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, DATEONLY } = require('sequelize');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
@@ -16,15 +16,12 @@ module.exports = (sequelize) => {
     logoImage:{
         type: DataTypes.STRING,
     },
-    rating:{
-        type: DataTypes.FLOAT,
-    },
     timeActiveFrom:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     timeActiveTo:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     responsableId: {

@@ -10,6 +10,7 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import SiteCreate from "./components/SiteCreate/SiteCreate";
 import Profile from "./components/Profile/Profile";
+import UserEdit from './components/UserEdit/UserEdit';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/useredit" component={UserEdit} />
       </div>
     </React.Fragment>
   );

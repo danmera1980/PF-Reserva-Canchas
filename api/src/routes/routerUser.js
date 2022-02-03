@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const userExtractor = require("../middleware/userExtractor");
+const authGoogle = require('../middleware/auth')
 const {
   getAllUsers,
   getUserByID,
@@ -12,7 +13,7 @@ const router = Router();
 
 router.get("/", getAllUsers);
 
-router.get("/:id", userExtractor, getUserByID);
+router.get("/:id", userExtractor, authGoogle,  getUserByID);
 router.post("/register", registerUser);
 router.post(
   "/login",
@@ -22,7 +23,7 @@ router.post(
 
 router.put(
   "/edit",
-  userExtractor,
+  userExtractor, authGoogle,
   editUser
 );
 
