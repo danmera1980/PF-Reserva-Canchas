@@ -7,9 +7,7 @@ const {
   editUser,
 } = require("../controllers/user");
 const { loginUser } = require("../controllers/login");
-const passport = require("passport");
 
-require('../middleware/auth')
 const router = Router();
 
 router.get("/", getAllUsers);
