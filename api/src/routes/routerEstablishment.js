@@ -11,10 +11,11 @@ const bodySchema = Joi.object({
     rating: Joi.number().min(1),
     timeActiveFrom: Joi.number().min(0).max(23).required(),
     timeActiveTo: Joi.number().min(1).max(23).required(),
-    responsable_id: Joi.string().min(2).required()
+    responsableId: Joi.string().min(2).required()
 })
 
-router.get('/',getEstablishmentsFromDB)
+//router.get('/',getEstablishmentsFromDB)
+router.get('/:responsableId',getEstablishmentsFromDB)
 router.post('/',validator.body(bodySchema), createEstablishment)
 
 module.exports = router

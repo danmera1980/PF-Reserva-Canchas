@@ -18,20 +18,6 @@ export const getAllUsers = () => {
   };
 };
 
-export function postCourt(payload) {
-  try {
-    return async function (dispatch) {
-      const response = await axios.post(
-        `http://${serverUrl}:3001/court`,
-        payload
-      );
-      return response;
-    };
-  } catch (e) {
-    console.log(e.response.data);
-  }
-}
-
 export function register(payload) {
   return function (dispatch) {
     axios
