@@ -48,12 +48,13 @@ const postCourt = async (req,res,next) => {
 }
 
 const findBySport = async (req, res) => { 
-  const {sport} = req.query.sport
+  const {sport} = req.query
+  console.log(sport);
   try {
     const results = await Court.findAll({
       where:{
         sport: sport
-      }
+      },
     })
     res.send(results)
   } catch (e) {

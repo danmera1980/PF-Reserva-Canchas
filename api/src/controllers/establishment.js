@@ -13,7 +13,7 @@ try {
     let establishmentDB = await Establishment.findAll()
 
     if(searchBarName){
-        establishmentDB = establishmentDB.filter(establishment => establishment.name.toLowerCase().includes(searchBarName));
+        establishmentDB = establishmentDB.filter(establishment => establishment.name.toLowerCase().includes(searchBarName.toLowerCase()));
     }
 
     establishmentDB = establishmentDB.map(establishment => {

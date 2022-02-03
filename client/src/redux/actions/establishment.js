@@ -49,9 +49,9 @@ export const filterByLocation = () => {
     }
 }
 
-export const filterByName = () => {
+export const filterByName = (name) => {
     return async(dispatch) =>{
-        var results = await axios(`http://${serverUrl}:3001/`)
+        var results = await axios(`http://${serverUrl}:3001/establishment?name=${name}`)
         return dispatch({
             type: FILTER_BY_NAME,
             payload: results.data
