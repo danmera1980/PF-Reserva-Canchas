@@ -10,11 +10,16 @@ const serverUrl = 'localhost';
 
 export const getAllUsers = () => {
   return async dispatch => {
-    var results = await axios.get(`http://${serverUrl}:3001/users`);
-    return dispatch({
-      type: ALL_USERS,
-      payload: results.data,
-    });
+    try {
+      var results = await axios.get(`http://${serverUrl}:3001/users`);
+      return dispatch({
+        type: ALL_USERS,
+        payload: results.data,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({type: SET_ERRORS, payload: error})
+    }
   };
 };
 
@@ -27,6 +32,7 @@ export function registerUser(payload) {
       })
       .catch(err => {
         console.log(err);
+        dispatch({type: SET_ERRORS, payload: err})
       });
   };
 }
@@ -39,6 +45,7 @@ export function loginUser(payload) {
       })
       .catch(err => {
         console.log(err);
+        dispatch({type: SET_ERRORS, payload: err})
       });
   };
 }
