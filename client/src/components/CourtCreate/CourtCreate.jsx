@@ -5,6 +5,7 @@ import { postCourt } from "../../redux/actions/court";
 import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms";
 import { useDispatch, useSelector } from "react-redux";
 import './CourtCreate.scss'
+import swal from 'sweetalert2';
 
 
 
@@ -13,19 +14,27 @@ function validate(input) {
     // if(!/^[a-zA-Z0-9_\-' ']{1,20}$/.test(input.name)) {
     //     errors.name = 'Completar nombre';
     // }; 
-    if(!/^[a-zA-Z0-9_\-' ']{0,20}$/.test(input.name)) {
+    if(!/^[a-zA-Z0-9_\-' ':]{0,20}$/.test(input.name)) {
         errors.name = 'No se permiten simbolos';
     }; 
     
     // if(!/^[a-zA-Z0-9_\-' ',.]{1,40}$/.test(input.description)) {
     //     errors.description = 'Completar la descripcion';
     // }; 
-    if(!/^[a-zA-Z0-9_\-' ',.]{0,100}$/.test(input.description)) {
+    if(!/^[a-zA-Z0-9_\-' ',.:]{0,100}$/.test(input.description)) {
         errors.description = 'No se permiten simbolos';
     }; 
     // if(!input.sport) {
     //     errors.sport = 'Selecciona un deporte';
     // }; 
+
+    if(input.shiftLength!=='' && input.shiftLength<15 ||input.shiftLength>120  ) {
+        errors.shiftLength = 'La duracion del turno tiene que ser entre 15 y 120 mins';
+    }; 
+   
+    if(input.price!==''&& input.price<10) {
+        errors.price = 'El precio tiene que ser igual o mayor a 10';
+    }; 
    
     
     return errors
@@ -121,13 +130,14 @@ export default function CourtCreate(){
             [e.target.name] :   e.target.value
         });
       setErrors(validate({
+            ...input,
             [e.target.name]: e.target.value
         }))
     }
 
     function handleSubmit(e){  
         if(errors.name || errors.description ||input.name.trim().length===0
-        ||input.description.trim().length===0){
+        ||input.description.trim().length===0 || input.shiftLength || input.price){
             alert('completar los campos correctamente')
         } else{
 
@@ -174,14 +184,14 @@ export default function CourtCreate(){
                     </div>
                     <div>
                         <label className="label">Duración del turno (minutos):</label>
-                        <input className="inputForm" type='number' value={input.shiftLength} name='shiftLength' onChange={(e) => handleChange(e)}required />
+                        <input className="inputForm" type='number' value={input.shiftLength} min={15} max={120} step={15} name='shiftLength' onChange={(e) => handleChange(e)}required />
                         {errors.shiftLength&& (
                             <p  className='error' >{errors.shiftLength}</p>
                         )}
                     </div>
                     <div>
                         <label className="label">Precio (por turno):</label>
-                        <input className="inputForm" type='number' value={input.price} name='price' onChange={(e) => handleChange(e)} required/>
+                        <input className="inputForm" type='number' value={input.price} min={10} step={10} name='price' onChange={(e) => handleChange(e)} required/>
                         {errors.price&& (
                             <p  className='error' >{errors.price}</p>
                         )}
