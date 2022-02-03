@@ -14,7 +14,7 @@ function validate(input) {
     // if(!/^[a-zA-Z0-9_\-' ']{1,20}$/.test(input.name)) {
     //     errors.name = 'Completar nombre';
     // }; 
-    if(!/^[a-zA-Z0-9_\-' ':]{0,20}$/.test(input.name)) {
+    if(!/^[a-zA-Z0-9\' ':]{0,20}$/.test(input.name)) {
         errors.name = 'No se permiten simbolos';
     }; 
     

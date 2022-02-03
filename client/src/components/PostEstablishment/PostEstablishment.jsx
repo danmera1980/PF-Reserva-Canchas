@@ -11,7 +11,7 @@ function validate(input) {
     if(input.id !=='' && !/^[0-9\']{2,20}$/.test(input.id)) {
         errors.cuit = "Ingrese sólo números"
     }
-    if(input.name !=='' && !/^[a-zA-Z0-9_\-' ':]{0,20}$/.test(input.name)) {
+    if(input.name !=='' && !/^[a-zA-Z0-9_\-' ':]{1,20}$/.test(input.name)) {
         errors.name = "No se permiten simbolos"
     } 
     if(input.timeActiveFrom!=='' && input.timeActiveFrom<0 ||input.timeActiveFrom>24 ) {

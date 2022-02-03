@@ -7,20 +7,20 @@ import { getEstablishmentByUser} from "../../redux/actions/forms";
 function validate(input) {
  
     let errors = {};
-    if(input.name === '') {
-        errors.name = "Se requiere un nombre"
+    if(input.name !=='' && !/^[a-zA-Z0-9\' ':.]{1,30}$/.test(input.name)) {
+        errors.name = "No se permiten simbolos"
     }
-    if(input.country === '') {
-        errors.country = "Se requiere un pais"
+    if(input.country !=='' && !/^[a-zA-Z0-9\' ']{1,30}$/.test(input.country)) {
+        errors.country = "No se permiten simbolos"
     } 
-    if(input.city === '') {
+    if(input.city !=='' && !/^[a-zA-Z0-9\' ']{1,30}$/.test(input.city)) {
         errors.city = "Se requiere una ciudad"
     }
-    if (input.street === ''){
+    if (input.street !=='' && !/^[a-zA-Z0-9\' ':.]{1,30}$/.test(input.street)){
         errors.street = "Se requiere un nombre de calle"
     }
-    if(input.streetNumber === '') {
-        errors.streetNumber = "Se requiere el numero de la calle"
+    if(input.streetNumber !=='' && input.streetNumber<0) {
+        errors.streetNumber = "No se permite numero negativo"
     }
     return errors
 }
@@ -85,7 +85,7 @@ export default function SiteCreate() {
                 <form onSubmit={(e) => handleSubmit(e)}>
                     <div>
                         <label className="label" >Establecimiento:</label> 
-                        <select className="inputForm" name='establishmentId' onChange={(e) => handleChange(e)} >
+                        <select className="inputForm" name='establishmentId' onChange={(e) => handleChange(e)} required >
                                     
                         <option value=''> </option>
                             {establishments.map((c) => (
@@ -98,35 +98,35 @@ export default function SiteCreate() {
                     </div>
                     <div>
                         <label>Nombre: </label>
-                        <input placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)}></input>
+                        <input placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)} required></input>
                         {errors.name ?
                         <p className="error">{errors.name}</p> : null
                         }
                     </div>
                     <div>
                         <label>Pais: </label>
-                        <input placeholder="pais..." type="text" value={input.country} name="country" onChange={(e)=>handleChange(e)}></input>
+                        <input placeholder="pais..." type="text" value={input.country} name="country" onChange={(e)=>handleChange(e)} required></input>
                         {errors.country ?
                         <p className="error">{errors.country}</p> : null
                         }
                     </div>
                     <div>
                         <label>Ciudad: </label>
-                        <input placeholder="Ciudad..." type="text" value={input.city} name="city" onChange={(e)=>handleChange(e)}></input>
+                        <input placeholder="Ciudad..." type="text" value={input.city} name="city" onChange={(e)=>handleChange(e)} required></input>
                         {errors.city ?
                         <p className="error">{errors.city}</p> : null
                         }
                     </div>
                     <div>
                         <label>Calle: </label>
-                        <input placeholder="Calle..." type="text" value={input.street} name="street" onChange={(e)=>handleChange(e)}></input>
+                        <input placeholder="Calle..." type="text" value={input.street} name="street" onChange={(e)=>handleChange(e)} required></input>
                         {errors.street ?
                         <p className="error">{errors.street}</p> : null
                         }
                     </div>
                     <div>
                         <label>Numero de calle: </label>
-                        <input placeholder="Numero de calle..." type="number" value={input.streetNumber} name="streetNumber" onChange={(e)=>handleChange(e)}></input>
+                        <input placeholder="Numero de calle..." type="number" value={input.streetNumber} name="streetNumber" onChange={(e)=>handleChange(e)} required></input>
                         {errors.streetNumber ?
                         <p className="error">{errors.streetNumber}</p> : null
                         }
