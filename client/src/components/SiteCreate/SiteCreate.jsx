@@ -48,8 +48,7 @@ export default function SiteCreate() {
     }
     function handleSubmit(e) {
         e.preventDefault()
-        if(!input.establishmentId || !input.name || !input.country || !input.city || !input.street || !input.streetNumber ||
-            errors.hasOwnProperty("establishmentId") ||
+        if(!input.name || !input.country || !input.city || !input.street || !input.streetNumber ||
             errors.hasOwnProperty("name") || errors.hasOwnProperty("country") || 
             errors.hasOwnProperty("city") || errors.hasOwnProperty("street") || errors.hasOwnProperty("streetNumber")) {
                 alert("Faltan completar campos obligatorios")
@@ -71,13 +70,6 @@ export default function SiteCreate() {
         <div>
             <div>
                 <form onSubmit={(e) => handleSubmit(e)}>
-                    <div>
-                        <label>Establecimiento ID: </label>
-                        <input placeholder="Id del establecimiento..." type="text" value={input.establishmentId} name="establishmentId" onChange={(e)=>handleChange(e)}></input>
-                        {errors.establishmentId ?
-                        <p className="error">{errors.establishmentId}</p> : null
-                        }
-                    </div>
                     <div>
                         <label>Nombre: </label>
                         <input placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)}></input>
