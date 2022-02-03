@@ -18,14 +18,15 @@ const loginUser = async (req, res, next) => {
     const userForToken = {
       id: user.id,
       name:user.name,
-      email: user.email
+      email: user.email,
+      iss: "tuCanchaYa",
     }
 
     const token = jwt.sign(userForToken, SECRET)
 
     res.send( {
       id: user.id,
-      name:user.name,
+      name: user.name,
       email: user.email,
       token
     })

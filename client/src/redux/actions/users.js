@@ -19,14 +19,20 @@ export const getAllUsers = () => {
 };
 
 export function registerUser(payload) {
+  const headers = {
+    'Authorization': 'Bearer ${token}...'
+
+  }
   return function (dispatch) {
     axios
-      .post(`http://${serverUrl}:3001/users/register`, payload)
+      .post(`http://${serverUrl}:3001/users/register`, payload, {headers: headers})
       .then(data => {
         return dispatch({ type: REGISTER, payload: data.data });
       })
       .catch(err => {
         console.log(err);
+                //aca accion que avisa error en registro
+
       });
   };
 }
@@ -39,14 +45,20 @@ export function loginUser(payload) {
       })
       .catch(err => {
         console.log(err);
+        //aca accion que avisa error en login
       });
   };
 }
 
 export function loginWithGoogle(payload) {
   return function (dispatch) {
-   
+   //get user mandando el token en middleware me crea o encuentra el usuario y zas devuelve la info 
         return dispatch({ type: LOGINGOOGLE, payload: payload });
       }
       
+}
+
+
+export function userUpdate(){
+
 }

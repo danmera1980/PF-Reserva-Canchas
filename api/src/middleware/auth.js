@@ -1,28 +1,42 @@
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const passport = require("passport")
-const {
-GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET  } = process.env;
+const { OAuth2Client } = require("google-auth-library");
+const { CLIENT_ID } = process.env;
+const jwt_decode = require("jwt-decode");
 
-passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/google/callback",
+const client = new OAuth2Client(CLIENT_ID);
+const { User } = require("../db");
+const { isMyToken } = require("./utils");
 
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    console.log(profile)
-   // User.findOrCreate({ email: profile.email }, function (err, user) {
-   //   return cb(err, user);
-  //  });
-  return done(err, profile)
+module.exports = async function (req, res, next) {
+  const authorization = req.get("authorization");
+  let token = null;
+  if (authorization && authorization.toLowerCase().startsWith("bearer")) {
+    token = authorization.substring(7);
+  } else {
+    next();
+    return;
   }
-));
 
-passport.serializeUser(function(user, done){
-  done(null, user);
-})
-passport.deserializeUser(function(user, done){
-  done(null, user);
-})
-
-
+  if (!isMyToken(token)) {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
+      // Or, if multiple clients access the backend:
+      //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+    });
+    const userData = ticket.payload
+    const [loggedUser, created] = await User.findOrCreate({
+        where: { email: userData.email.toLowerCase() },
+        defaults: {
+          name: userData.given_name,
+          lastName: userData.family_name,
+          email: userData.email,
+          img: userData.picture,
+          passwordHash: userData.sub,
+        },
+      });
+      
+    req.id = loggedUser.id;
+    req.email = loggedUser.id;
+  }
+  next();
+};

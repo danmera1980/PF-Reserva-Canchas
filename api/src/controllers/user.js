@@ -28,7 +28,7 @@ const getUserByID = async (req, res, next) => {
 
 const registerUser = async (req, res, next) => {
   try {
-    const { name, lastName, email, password, hasEstablishment } = req.body;
+    const { name, lastName, email, password } = req.body;
     const passwordHash = await bcrypt.hash(password, 10);
     const user = await User.findOne({ where: { email: email.toLowerCase() } });
     if (user) {
@@ -39,7 +39,6 @@ const registerUser = async (req, res, next) => {
       lastName,
       email,
       passwordHash,
-      hasEstablishment,
     });
     res.json(newUser);
   } catch (error) {
