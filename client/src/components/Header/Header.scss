@@ -24,8 +24,17 @@ header{
 
 .btn_sign_in {
     display: flex;
+    align-items: center;
     margin-right: 20px;
     justify-content: space-between;
+}
+
+.btn_sign_in:hover{
+    color: green;
+}
+
+.btn_sign_in svg{
+    margin-left: 10px;
 }
 
 .btn_signup{
@@ -33,6 +42,10 @@ header{
     height: 44px;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #8BFA37;
     border-radius: 10px;
+}
+
+.btn_signup:hover{
+    background-color: #FFFFFF;
 }
 
 .btn_signed_in{
