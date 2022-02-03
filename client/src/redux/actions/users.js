@@ -5,7 +5,7 @@
  */
 
 import axios from 'axios';
-import { ALL_USERS, REGISTER, LOGIN, LOGINGOOGLE } from './actionNames';
+import { ALL_USERS, REGISTER, LOGIN, LOGINGOOGLE, EDIT_SUCCESS, SET_ERRORS } from './actionNames';
 const serverUrl = 'localhost';
 
 export const getAllUsers = () => {
@@ -58,7 +58,21 @@ export function loginWithGoogle(payload) {
       
 }
 
-
-export function userUpdate(){
-
+export function editUser(payload, userToken) {
+  const headers = {  
+     'Authorization': `Bearer ${userToken}`
+   }
+   
+  return  async function (dispatch){
+    try {
+      const response = await axios.put(
+        `http://${serverUrl}:3001/users/login`,
+         payload,
+         {headers:headers}
+         )
+      return dispatch({type: EDIT_SUCCESS, payload: response.data})        
+    } catch (error) {
+        return dispatch({type: SET_ERRORS, payload: error})
+    }
+   }
 }

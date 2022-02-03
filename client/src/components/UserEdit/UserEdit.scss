@@ -1,0 +1,78 @@
+.containerCreateCourt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+.form {
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 5vh 2vw;
+  background-color: #f3f1edb7;
+  box-shadow: -1px 2px 104px 12px rgba(0, 0, 0, 0.68);
+  margin-bottom: 20px;
+}
+
+.title {
+  margin-top: 0;
+  margin-top: 20px;
+  margin-bottom: 4vh;
+  color: #230d85;
+}
+
+.error {
+  color: #c21e1e;
+}
+
+.label {
+  color: slateblue;
+  font-weight: 900;
+}
+
+.inputForm {
+  width: 90%;
+  height: 1.5rem;
+  margin-left: 2vw;
+  background-color: rgb(232, 240, 254);
+  border: 1px solid #776c62;
+}
+
+.btnBack {
+  color: white;
+  border-radius: 10px;
+  font-size: 15px;
+  height: 25px;
+  width: 80px;
+  background-color: rgb(42, 0, 231);
+  margin-top: 50px;
+}
+
+.btnBack:hover {
+  cursor: pointer;
+  background-color: white;
+  color: rgb(42, 0, 231);
+  font-size: 15px;
+  height: 25px;
+  width: 80px;
+}
+
+.buttonCreateCourt {
+  color: white;
+  border-radius: 10px;
+  font-size: 15px;
+  height: 30px;
+  width: 120px;
+  background-color: rgb(42, 0, 231);
+  margin-top: 20px;
+}
+
+.buttonCreateCourt:hover {
+  cursor: pointer;
+  background-color: white;
+  color: rgb(42, 0, 231);
+  font-size: 15px;
+  height: 30px;
+  width: 120px;
+}
