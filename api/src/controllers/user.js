@@ -1,10 +1,15 @@
 const bcrypt = require('bcrypt')
 const { User } = require('../db');
+const { use } = require('../routes/routerUser');
 
 // starting to code
 const getAllUsers = async (req, res, next) => {
   try {
-    res.send('aca van todos los usuarios enlistados')
+    const allUsers =  await User.findAll()
+    if(!allUsers.length){
+      throw new Error("No users available");
+    }
+    res.send(allUsers)
   } catch (e) {
     next(e);
   }
@@ -14,6 +19,8 @@ const getAllUsers = async (req, res, next) => {
 
 const getUserByID = async (req, res, next) => {
   try {
+    const {id} = req
+
   } catch (e) {
     next(e);
   }
@@ -22,7 +29,7 @@ const getUserByID = async (req, res, next) => {
 
 const registerUser = async (req, res, next) => {
   try {
-    const { name, email, password, hasEstablishment } = req.body;
+    const { name, lastName, email, password, hasEstablishment } = req.body;
     const passwordHash = await bcrypt.hash(password, 10);
     const user = await User.findOne({ where: { email: email.toLowerCase() } });
     if (user) {
@@ -30,11 +37,12 @@ const registerUser = async (req, res, next) => {
     }
     const newUser = await User.create({
       name,
+      lastName,
       email,
       passwordHash,
       hasEstablishment,
     });
-    res.send("Register ok");
+    res.json(newUser);
   } catch (error) {
     next(error);
   }
@@ -42,20 +50,20 @@ const registerUser = async (req, res, next) => {
 
 const editUser = async (req, res, next) => {
   try {
-    const id = req.params
-    const { name, img, phone, hasEstablishment } = req.body;
+    const {id} = req
+    const { name, lastname, img, phone, hasEstablishment } = req.body;
 
-    const updatedUser = await User.findOne({ where: { id } });
-    if (!updatedUser) {
-      throw Error("User not fund");
+    const user = await User.findOne({ where: { id } });
+    if (!user) {
+      throw new Error("User not fund");
     }
-    updatedUser.name = name;
-    updatedUser.phone = phone;
-    updatedUser.img = img;
-    updatedUser.hasEstablishment= hasEstablishment
-    await updatedUser.save();
-
-    res.send(updatedUser);
+    name && (user.name = name)
+    lastname && (user.lastname = lastname)
+    img && (user.img = img)
+    phone && (user.phone = phone)
+    hasEstablishment && (user.hasEstablishment = hasEstablishment)
+    await user.save()
+    res.send(user);
   } catch (e) {
     next(e);
   }

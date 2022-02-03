@@ -1,10 +1,10 @@
 const initialState = {
-    usersEstablishment: []
+    usersSites: []
 }
 
-const postEstablishmentReducer = (state = initialState, action) => {
+const postSiteReducer = (state = initialState, action) => {
     switch(action.type){
-        case "POST_ESTABLISHMENT":
+        case "POST_SITE":
             return {
                 ...state,
             };
@@ -14,4 +14,4 @@ const postEstablishmentReducer = (state = initialState, action) => {
     }
 }
 
-export default postEstablishmentReducer; 
+export default postSiteReducer; 

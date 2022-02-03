@@ -1,12 +1,12 @@
 .search {
     position: relative;
-    top: -65px;
+    top: -40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 850px;
+    width: 650px;
     background: var(--clr-dark);
-    height: 130px;
+    height: 80px;
     border-radius: 20px;
     margin: 0 auto;
 }
@@ -15,20 +15,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 700px;
+    width: 600px;
     margin: 0 auto;
     background-color: var(--clr-light);
     // color: var(--clr-light);
     font-size: var(--fs-btn);
     border-radius: 15px;
-    height: 60px;
     color: var(--clr-accent);
-    padding: 10px;
+    padding-right: 20px;
     filter: var(--shadow);
 }
 
-.select,
-.input {
+.searchSelect,
+.searchInput {
     display:flex;
     flex-grow: 1;
     width: 30%;
@@ -39,7 +38,10 @@
     margin-left: 20px;
 }
 
-.select select{
+searchInput input{
+
+}
+.searchSelect select{
     color: gray;
     background-color: var(--clr-light);
     height: 100%;

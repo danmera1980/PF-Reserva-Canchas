@@ -3,7 +3,7 @@
 import { REGISTER, LOGIN, LOGINGOOGLE } from '../actions/actionNames';
 
 const initialState = {
-  signUpData: undefined,
+  signUpResponse: undefined,
   userToken: undefined,
   userId: undefined,
   userEmail: undefined,
@@ -14,23 +14,23 @@ const initialState = {
 const registerReducer = (state = initialState, action) => {
   switch (action.type) {
     case REGISTER:
+      console.log(action.payload)
       return {
         ...state,
-        signUpData: action.payload,
+        signUpResponse: action.payload,
       };
     case LOGIN:
+      console.log(action.payload)
       return {
         ...state,
         userToken: action.payload.token,
         userId: action.payload.id,
         userEmail: action.payload.email,
         userName: action.payload.name,
-        userImage: action.payload.image,
       };
     case LOGINGOOGLE:
       return {
         ...state,
-        signUpData: action.payload,
       };
     default:
       return state;

@@ -18,21 +18,7 @@ export const getAllUsers = () => {
   };
 };
 
-export function postCourt(payload) {
-  try {
-    return async function (dispatch) {
-      const response = await axios.post(
-        `http://${serverUrl}:3001/court`,
-        payload
-      );
-      return response;
-    };
-  } catch (e) {
-    console.log(e.response.data);
-  }
-}
-
-export function register(payload) {
+export function registerUser(payload) {
   return function (dispatch) {
     axios
       .post(`http://${serverUrl}:3001/users/register`, payload)
@@ -44,7 +30,7 @@ export function register(payload) {
       });
   };
 }
-export function login(payload) {
+export function loginUser(payload) {
   return function (dispatch) {
     axios
       .post(`http://${serverUrl}:3001/users/login`, payload)
@@ -55,4 +41,12 @@ export function login(payload) {
         console.log(err);
       });
   };
+}
+
+export function loginWithGoogle(payload) {
+  return function (dispatch) {
+   
+        return dispatch({ type: LOGINGOOGLE, payload: payload });
+      }
+      
 }
