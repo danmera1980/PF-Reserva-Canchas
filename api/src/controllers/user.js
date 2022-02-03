@@ -18,6 +18,7 @@ const getAllUsers = async (req, res, next) => {
 
 const getUserByID = async (req, res, next) => {
   try {
+    // ver esta porqueria que funcione con el ide que me manda el front y el que pido
     const {id} = req
 
   } catch (e) {
@@ -48,7 +49,8 @@ const registerUser = async (req, res, next) => {
 
 const editUser = async (req, res, next) => {
   try {
-    const {id} = req
+    if (!req.user) return res.status(401).json({ error: "Authentication required" });
+    const {id} = req.user
     const { name, lastname, img, phone, hasEstablishment } = req.body;
 
     const user = await User.findOne({ where: { id } });

@@ -13,7 +13,7 @@ const router = Router();
 
 router.get("/", getAllUsers);
 
-router.get("/:id",  getUserByID);
+router.get("/:id", userExtractor, authGoogle,  getUserByID);
 router.post("/register", registerUser);
 router.post(
   "/login",

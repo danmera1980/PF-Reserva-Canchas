@@ -17,14 +17,13 @@ module.exports = async function (req, res, next) {
   }
 
   if (!isMyToken(token)) {
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
-      // Or, if multiple clients access the backend:
-      //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-    });
-    const userData = ticket.payload
-    const [loggedUser, created] = await User.findOrCreate({
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: CLIENT_ID,
+      });
+      const userData = ticket.payload;
+      const [loggedUser, created] = await User.findOrCreate({
         where: { email: userData.email.toLowerCase() },
         defaults: {
           name: userData.given_name,
@@ -34,9 +33,11 @@ module.exports = async function (req, res, next) {
           passwordHash: userData.sub,
         },
       });
-      
-    req.id = loggedUser.id;
-    req.email = loggedUser.id;
+
+      req.user = loggedUser;
+      next();
+    } catch (error) {
+      return res.status(401).json({ error: "token invalid" });
+    }
   }
-  next();
 };
