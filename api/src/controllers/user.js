@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt')
 const { User } = require('../db');
-const { use } = require('../routes/routerUser');
 
 // starting to code
 const getAllUsers = async (req, res, next) => {
