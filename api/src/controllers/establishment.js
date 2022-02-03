@@ -81,6 +81,7 @@ const createEstablishment = async (req, res, next)=>{
             res.status(404).send('establishment already exist')
         }
     } catch (error) {
+        console.log(error)
         next(error)
     }
     

@@ -18,20 +18,19 @@ export const getAllUsers = () => {
   };
 };
 
-
 export function register(payload) {
   return function (dispatch) {
     axios
       .post(`http://${serverUrl}:3001/users/register`, payload)
-      .then(response => {
-        return dispatch({ type: REGISTER, payload: response.data });
+      .then(data => {
+        return dispatch({ type: REGISTER, payload: data.data });
       })
       .catch(err => {
         console.log(err);
       });
   };
 }
-export function loginUser(payload) {
+export function login(payload) {
   return function (dispatch) {
     axios
       .post(`http://${serverUrl}:3001/users/login`, payload)
@@ -42,10 +41,4 @@ export function loginUser(payload) {
         console.log(err);
       });
   };
-}
-
-export function loginWithGoogle(responseGoogle){
-  return function(dispatch){
-    return dispatch({type: LOGINGOOGLE, payload: responseGoogle})
-  }
 }

@@ -2,14 +2,14 @@ import React, {useState, useEffect} from "react";
 import {Link, useHistory} from 'react-router-dom';
 import { postCourt } from "../../redux/actions/court";
 import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms";
-
-
 import { useDispatch, useSelector } from "react-redux";
-import "./CourtCreate.scss";
+import './CourtCreate.scss'
+
 
 
 function validate(input) {
     let errors = {};
+    console.log(errors)
     if(!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.name)) {
         errors.name = 'Se requieren entre 2 y 20 caracteres, no se permiten simbolos';
     }; 
@@ -25,15 +25,10 @@ function validate(input) {
     return errors
 }
 
-  if (!input.description) {
-    errors.description = "Se requiere una descripción";
-  }
-  if (!input.sport) {
-    errors.sport = "Selecciona un deporte";
-  }
 
 export default function CourtCreate(){
     const dispatch = useDispatch();
+  //  const sites = useSelector ((state) => state.sites)
     const history = useHistory()
     const [errors,setErrors] = useState({});
     const establishments = useSelector(state => state.forms.establishmentByUser)
@@ -46,6 +41,8 @@ export default function CourtCreate(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[userId])
 
+
+
     const [input,setInput] = useState({
         name:'',
         description:'',
@@ -53,10 +50,21 @@ export default function CourtCreate(){
         price:'',
         sport:'',
         image:[],
-        establishment:'',
-        site:'',
+        siteId:'',
     
     })
+    
+    function handlePutImage(e){  
+   setInput({
+            ...input,
+            image:[...input.image,   e.target.value]
+            
+        });
+        setErrors(validate({
+              ...input,
+              [e.target.name]: e.target.value
+          }))
+    }
     
     function handleSelectSport(e){
         setInput({
@@ -70,10 +78,10 @@ export default function CourtCreate(){
     }
     
     function handleSelectEstablishment(e){
-        setInput({
-            ...input,
-            establishment: e.target.value
-        });
+        // setInput({
+        //     ...input,
+        //     establishment: e.target.value
+        // });
         dispatch(getSitesByEstablishmentId(e.target.value));
         setErrors(validate({
               ...input,
@@ -84,7 +92,7 @@ export default function CourtCreate(){
     function handleSelectSite(e){
         setInput({
             ...input,
-            site: e.target.value
+            siteId: e.target.value
         });
         setErrors(validate({
               ...input,
@@ -92,29 +100,17 @@ export default function CourtCreate(){
           }))
     }
 
-  function fileChange() {
-    let photos = document.getElementById("input_img");
-    Array.from(photos.files).map(async (photo) => {
-      const body = new FormData();
-      body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
-      body.append("image", photo);
-
-      await axios({
-        method: "post",
-        url: "https://api.imgbb.com/1/upload",
-        data: body,
-      })
-        .then((response) => {
-          setInput((prevInput) => ({
+    function  handleChange(e){
+       setInput({
             ...input,
-            image: [...prevInput.image, response.data.data.url],
-          }));
-        })
-        .catch((err) => {
-          console.log(err);
+            [e.target.name] :   e.target.value
         });
-    });
-  }
+      setErrors(validate({
+            ...input,
+            [e.target.name]: e.target.value
+        }))
+      //  console.log(input)
+    }
 
     function handleSubmit(e){  
        console.log(input)
@@ -129,7 +125,7 @@ export default function CourtCreate(){
                 price:'',
                 sport:'',
                 image:[],
-                site:'',
+                siteId:'',
             })
              history.push('./home')
         
@@ -144,7 +140,7 @@ export default function CourtCreate(){
             
                 <form className="form" onSubmit={(e) => handleSubmit(e)} >
                     <div>
-                        <label className="label" for='nombre'>Nombre cancha:</label>
+                        <label className="label">Nombre cancha:</label>
                         <input className="inputForm" id='nombre' type='text' value={input.name} name='name' onChange={(e) => handleChange(e)} />
                         
                         {errors.name&& (
@@ -205,11 +201,11 @@ export default function CourtCreate(){
                                     
                         <option value=''> </option>
                             {establishments.map((c) => (
-                                    <option value={c.id}>{c.name}</option>
+                                    <option value={c.id} key={c.id}>{c.name}</option>
                             ))}
                         </select>
                         {errors.establishment&& (
-                            <p  className='error' >{errors.site}</p>
+                            <p  className='error' >{errors.siteId}</p>
                         )}
                     </div>
                     <div>
@@ -218,11 +214,11 @@ export default function CourtCreate(){
                                     
                         <option value=''> </option>
                             {sites.map((c) => (
-                                    <option value={c.id}>{c.name}</option>
+                                    <option value={c.id} key={c.id}>{c.name}</option>
                             ))}
                         </select>
-                        {errors.site&& (
-                            <p  className='error' >{errors.site}</p>
+                        {errors.siteId&& (
+                            <p  className='error' >{errors.siteId}</p>
                         )}
                     </div>
                     <div>
@@ -235,4 +231,3 @@ export default function CourtCreate(){
 
     )
 }
-

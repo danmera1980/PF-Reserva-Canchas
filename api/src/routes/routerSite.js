@@ -15,8 +15,8 @@ const bodySchema = Joi.object({
     city: Joi.string().regex(/^[a-zA-Z0-9 :.]+$/).min(2).max(40).required(),
     street: Joi.string().regex(/^[a-zA-Z0-9 :.]+$/).min(2).max(40).required(),
     streetNumber: Joi.number().min(1).integer().required(),
-    latitude: Joi.number(),
-    longitude: Joi.number()
+    latitude: Joi.number().allow(null),
+    longitude: Joi.number().allow(null)
 })
 
 
