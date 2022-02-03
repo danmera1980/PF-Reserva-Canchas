@@ -29,12 +29,8 @@ const registerReducer = (state = initialState, action) => {
         userName: action.payload.name,
       };
     case LOGINGOOGLE:
-
       return {
         ...state,
-        //userToken: action.payload.Iw.tokenId,
-        //userEmail: action.payload.Iw.Ju.zv,
-        //userName: action.payload.Iw.Ju.tf,
       };
     default:
       return state;
