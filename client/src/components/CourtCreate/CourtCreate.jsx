@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { postCourt } from "../../redux/actions/users";
 import { useDispatch, useSelector } from "react-redux";
-import { fileChange } from "../../utils/apiImg";
 import "./CourtCreate.scss";
 
 function validate(input) {
@@ -39,18 +39,28 @@ export default function CourtCreate() {
     sede: "",
   });
 
-  function handlePutImage(e) {
-    fileChange();
-    setInput({
-      ...input,
-      image: [...input.image, e.target.value],
-    });
-    setErrors(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
+  function fileChange() {
+    let photos = document.getElementById("input_img");
+    Array.from(photos.files).map(async (photo) => {
+      const body = new FormData();
+      body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
+      body.append("image", photo);
+
+      await axios({
+        method: "post",
+        url: "https://api.imgbb.com/1/upload",
+        data: body,
       })
-    );
+        .then((response) => {
+          setInput((prevInput) => ({
+            ...input,
+            image: [...prevInput.image, response.data.data.url],
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   }
 
   function handleSelectSport(e) {
@@ -89,11 +99,9 @@ export default function CourtCreate() {
         [e.target.name]: e.target.value,
       })
     );
-    //  console.log(input)
   }
 
   function handleSubmit(e) {
-    console.log(input);
     e.preventDefault();
     dispatch(postCourt(input));
     alert("Cancha Creada!!");
@@ -190,19 +198,15 @@ export default function CourtCreate() {
             {errors.sport && <p className="error">{errors.sport}</p>}
           </div>
           <label className="text-black">Imágenes:</label>
-          {/* <select className="inputForm" name='image' onChange={(e) => handlePutImage(e)} >
-                            
-                </select> */}
 
           <input
             className="inputForm"
             type="file"
-            id="input_img"
             accept="image/*"
-            value={input.image}
             name="image"
-            onChange={(e) => handlePutImage(e)}
-            // onChange={(e) => handlePutImage(e)}
+            id="input_img"
+            onChange={fileChange}
+            multiple
           />
           {errors.image && <p className="error">{errors.image}</p>}
           <div>
