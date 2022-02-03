@@ -34,7 +34,6 @@ export default function PostEstablishment() {
         id: '',
         name: "",
         logoImage: '',
-        rating: '',
         timeActiveFrom: '',
         timeActiveTo: '',
         responsableId: userId
@@ -45,13 +44,15 @@ export default function PostEstablishment() {
             ...input,
             [e.target.name] : e.target.value
         })
+       console.log('soy input',input)
         setErrors(validate({
             ...input,
             [e.target.name]: e.target.value
         }))
     }
     function handleSubmit(e) {
-       // console.log('soy input',input)
+      //  console.log('soy input', input)
+
         e.preventDefault()
         if(!input.id || !input.name || !input.timeActiveFrom || !input.timeActiveTo || !input.responsableId || 
             errors.hasOwnProperty("id") || errors.hasOwnProperty("name") || errors.hasOwnProperty("timeActiveFrom") || 
@@ -64,7 +65,6 @@ export default function PostEstablishment() {
                     id: '',
                     name: "",
                     logoImage: '',
-                    rating: '',
                     timeActiveFrom: '',
                     timeActiveTo: '',
                     responsableId: userId
@@ -123,10 +123,7 @@ export default function PostEstablishment() {
                     <label className="label">Logo-Imagen: </label>
                     <input className="inputForm" type="file" accept="image/*" name="logoImage" id="input_img" onChange={fileChange}/>
                     </div>
-                    {/* <div>
-                    <label className="label">Rating: </label>
-                    <input className="input" placeholder="Rating..." type="number" value={input.rating} name="rating" onChange={(e)=>handleChange(e)}></input>
-                    </div> */}
+                
                     <div>
                     <label className="label">Horario de apertura: </label>
                     <input className="input" placeholder="Hora de apertura..." type="time" value={input.timeActiveFrom}  name="timeActiveFrom" onChange={(e)=>handleChange(e)} required></input>
