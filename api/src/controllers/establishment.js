@@ -76,9 +76,11 @@ const createEstablishment = async (req, res, next)=>{
 
     
     let user = await User.findOne({
-        where: { id: userId}
+        where: { 
+            id: userId,
+            hasEstablishment:false}
     })
-    if (user){console.log('soy usuario',user)}
+    
 
     // creo el establecimiento
     let establishmentDB = await Establishment.findOne({
@@ -86,7 +88,10 @@ const createEstablishment = async (req, res, next)=>{
     })
 
     try {
-        if(!establishmentDB){
+        if(!user){
+            res.status(400).send('user does not exist or has already an establishment')
+        }
+        else if(!establishmentDB){
             let establishmentCreated = await Establishment.create({
                 id,
                 name,
