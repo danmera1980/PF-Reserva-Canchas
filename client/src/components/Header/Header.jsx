@@ -1,34 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/img/logo.png';
 import userImage from '../../assets/img/user.png';
-import SweetAlert2 from 'react-sweetalert2';
-import Login from '../Login/Login';
 import './Header.scss';
-import Register from '../Register/Register';
 
 
 function Header() {
-    const logged = false;
-    const signin = "Ingresar";
-    const register = "Registrarse";
+    const [ logged, setLogged] = useState(false);
+    const signinText = "Ingresar";
+    const registerText = "Registrarse";
+    const profileText = "Mi Perfil"
+    const logoutText = "Salir"
     
-    const [ swalProps, setSwalProps ] = useState();
+    console.log(localStorage.getItem('key'))
+    
+    useEffect(()=>{
+        localStorage.getItem('key')!==''?setLogged(true):setLogged(false)
+    },[])
 
-    const clickLogin = () => {
-        setSwalProps({
-            show: true,
-            title: signin
-        });
-    }
-
-    const clickRegister = () => {
-        setSwalProps({
-            show: true,
-            title: register
-        });
+    const logOut = ()=> {
+        localStorage.setItem('key', '')
+        setLogged(false)
     }
 
     return (
@@ -39,29 +33,29 @@ function Header() {
                 </div>
                 {logged ?
                     <div className='login'>
-                        <div className='btn_signed_in'>
-                            <img className='userLoggedImage' src={userImage} alt="user here"/>
-                            <FontAwesomeIcon icon={faAngleDown} />
+                        <div className='dropdown inline-block relative hover:shadow filter hover:'>
+                            <button className='btn_signed_in'>
+                                <img className='userLoggedImage' src={userImage} alt="user here"/>
+                                <FontAwesomeIcon icon={faAngleDown} />
+                            </button>
+                            <ul className='dropdown-menu absolute hidden'>
+                                <li><a href="#">{profileText}</a></li>
+                                <li><a href="#"  onClick={()=>logOut()}>{logoutText}</a></li>
+                            </ul>
+                            {/* <button onClick={()=>logOut()}>Logout</button> */}
                         </div>
                     </div>
                 :
                     <div className='login'>
-                        <div className='btn_sign_in'  onClick={() => clickLogin()}>
-                            {/* <Link to={"/login"}> */}
-                                <span>{signin}</span>
+                        <div className='btn_sign_in'>
+                            <Link to={"/login"}>
+                                <span>{signinText}</span>
                                 <FontAwesomeIcon icon={faSignInAlt} />
-                            {/* </Link> */}
-                            {/* <SweetAlert2 {...setSwalProps}>
-                                <Login />
-                            </SweetAlert2> */}
+                            </Link>
                         </div>
-                        {/* <Link to={"/register"}> */}
-                            <button id='signup' className='btn_signup' onClick={clickRegister}>{register}</button>
-                        {/* </Link> */}
-                        <SweetAlert2 {...setSwalProps}>
-                                {/* <Register /> */}
-                                <h2>Hello world</h2>
-                        </SweetAlert2>
+                        <Link to={"/register"}>
+                            <button id='signup' className='btn_signup'>{registerText}</button>
+                        </Link>
                     </div>
                 }
             </header>

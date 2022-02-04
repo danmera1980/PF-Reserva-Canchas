@@ -62,3 +62,8 @@ header{
     margin-right: 10px;
     filter: var(--shadow);
 }
+
+.login .dropdown:hover .dropdown-menu{
+    display: block;
+    background-color: #8BFA37;
+}

@@ -65,6 +65,7 @@ const Login = () => {
     if (userInfo.email && userInfo.password) {
       dispatch(loginUser(userInfo));
       history.push("/");
+      window.location.reload(true);
       setUserInfo(initialState);
     } else {
       Swal.fire({
