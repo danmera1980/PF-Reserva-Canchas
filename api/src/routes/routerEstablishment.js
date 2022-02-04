@@ -2,7 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const validator = require('express-joi-validation').createValidator({})
 const Joi = require('joi')
-const {getEstablishmentsFromDB, createEstablishment, getEstablishmentsName, addUsertoEstablishment} = require('../controllers/establishment.js');
+const {getEstablishmentsFromDB, createEstablishment, getEstablishmentsName, addUsertoEstablishment, getEstabIdByUserId} = require('../controllers/establishment.js');
 
 const bodySchema = Joi.object({
     id: Joi.string().regex(/^[0-9]+$/).required(),
@@ -14,8 +14,8 @@ const bodySchema = Joi.object({
     
 })
 
+router.get('/:userId', getEstabIdByUserId )
 router.get('/',getEstablishmentsFromDB)
-//router.get('/:responsableId',getEstablishmentsFromDB)
 router.post('/', validator.body(bodySchema), createEstablishment)
 router.get('/', getEstablishmentsName)
 router.post('/addUser/:establishmentId', addUsertoEstablishment)
