@@ -29,9 +29,9 @@ export const allEstablishments = () => {
     }
 }
 
-export const filterBySport = () => {
+export const filterBySport = (sport) => {
     return async(dispatch) =>{
-        var results = await axios(`http://${serverUrl}:3001/`)
+        var results = await axios(`http://localhost:3001/findsport?sport=${sport}`)
         return dispatch({
             type: FILTER_BY_SPORT,
             payload: results.data
@@ -39,9 +39,9 @@ export const filterBySport = () => {
     }
 }
 
-export const filterByLocation = () => {
+export const filterByLocation = (location) => {
     return async(dispatch) =>{
-        var results = await axios(`http://${serverUrl}:3001/`)
+        var results = await axios(`http://localhost:3001/findlocation?location=${location}`)
         return dispatch({
             type: FILTER_BY_LOCATION,
             payload: results.data
@@ -51,7 +51,7 @@ export const filterByLocation = () => {
 
 export const filterByName = (name) => {
     return async(dispatch) =>{
-        var results = await axios(`http://${serverUrl}:3001/establishment?name=${name}`)
+        var results = await axios(`http://localhost:3001/establishment?name=${name}`)
         return dispatch({
             type: FILTER_BY_NAME,
             payload: results.data

@@ -2,7 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const validator = require('express-joi-validation').createValidator({})
 const Joi = require('joi')
-const { postCourt,findBySport } = require('../controllers/court');
+const { postCourt} = require('../controllers/court');
 
 const bodySchema = Joi.object({
     siteId: Joi.string().regex(/^[a-zA-Z0-9-]+$/).min(2).max(40).required(),
@@ -15,6 +15,5 @@ const bodySchema = Joi.object({
 })
 
 router.post('/', validator.body(bodySchema), postCourt)
-router.get('/', findBySport)
 
 module.exports = router;
