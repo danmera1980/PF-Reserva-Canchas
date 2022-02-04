@@ -24,10 +24,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    responsableId: {
-        type: DataTypes.STRING,
-        allowNull:false
-    }
+    // responsableId: {
+    //     type: DataTypes.STRING,
+    //     allowNull:false
+    // }
 
   });
 };
