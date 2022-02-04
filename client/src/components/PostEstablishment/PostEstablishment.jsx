@@ -85,7 +85,7 @@ export default function PostEstablishment() {
 
                
                 })
-                history.push("/home")
+                history.push("/")
             }
     }
 
@@ -95,7 +95,7 @@ export default function PostEstablishment() {
         Array.from(photos.files).map(async (photo) => {
           const body = new FormData();
           body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
-          body.append("image", photo);
+          body.append("image", photo.files[0]);
     
           await axios({
             method: "post",
@@ -182,6 +182,7 @@ export default function PostEstablishment() {
                     }
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded shadow-2xl shadow-indigo-600" type="submit">Crear Establecimiento</button> 
                     <br/>
+
                     <br/>
                     <Link to="/">
                     <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Volver</button>

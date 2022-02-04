@@ -162,16 +162,18 @@ export default function CourtCreate(){
                 image:[],
                 siteId:'',
             })
-             history.push('./home')
+             history.push('/')
             }
     }    
        
 
     return(
-        
-           
-           
-            <div className="lg: flex justify-center">
+
+        <div className="containerCreateCourt">
+            <Link to='/' ><button className='btnBack' >Volver</button>  </Link>
+            <h1 className="title">Crea una Cancha</h1>
+             <div className="lg: flex justify-center">
+
             
 
                 <form className="mx-5 w-full max-w-lg" onSubmit={(e) => handleSubmit(e)} >

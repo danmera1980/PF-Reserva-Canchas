@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import {useDispatch} from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faBasketballBall, faSearchLocation } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import './SearchBar.scss';
 import { filterByLocation, filterByName, filterBySport } from '../../redux/actions/establishment';
 
@@ -69,14 +70,18 @@ function SearchBar() {
                 <FontAwesomeIcon icon={faBasketballBall} className='faIcon'/>
             </div>
             <div className='searchInput' >
+
                 <input 
                     type= 'text'
                     onChange={(e) => handleInput(e)}
                     value={name}
                     id='establishment'
                     placeholder={establishment}
-                />
+                /> 
+                 <Link to={"/results"}>
                 <FontAwesomeIcon onClick={(e) => handleClickName(e)} icon={faSearchLocation} className='faIcon'/>
+                  </Link>
+
             </div>
         </div>
     </div>

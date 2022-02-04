@@ -3,6 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import { editUser } from "../../redux/actions/users";
 import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import './UserEdit.scss'
 
 
@@ -43,11 +44,35 @@ export default function UserEdit(){
     const [input,setInput] = useState({
         name:'',
         lastName: '',
-        img:'',
+        img:"",
         phone:'',
         hasEstablishment: undefined,
     })
       
+    function fileChange() {
+        let photos = document.getElementById("input_img");
+        Array.from(photos.files).map(async (photo) => {
+          const body = new FormData();
+          body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
+          body.append("image", photo);
+    
+          await axios({
+            method: "post",
+            url: "https://api.imgbb.com/1/upload",
+            data: body,
+          })
+            .then((response) => {
+              setInput({
+                ...input,
+                img: response.data.data.url,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      }
+
     function  handleChange(e){
        setInput({
             ...input,
@@ -63,17 +88,17 @@ export default function UserEdit(){
     function handleSubmit(e){  
        console.log(input)
             e.preventDefault();
-            console.log(input)
             dispatch(UserEdit(input));
+            console.log(input)
             alert('Cancha Creada!!')
             setInput({
                 name:'',
                 lastName: '',
-                img:'',
+                img:"",
                 phone:'',
                 hasEstablishment: undefined
             })
-             history.push('./home')
+             history.push('/')
     }    
 
     let handleCheck = (e)=>{
@@ -93,7 +118,7 @@ export default function UserEdit(){
 
     return(
         <div className="containerCreateCourt">
-            <Link to='/home' ><button className='btnBack' >Volver</button>  </Link>
+            <Link to='/' ><button className='btnBack' >Volver</button>  </Link>
             <h1 className="title">Crea una Cancha</h1>
             <div className="create">
             
@@ -138,19 +163,12 @@ export default function UserEdit(){
                             <p  className='error' >{errors.phone}</p>
                         )}
                     </div>
-                    <div>
+
+                    
                         <label className="label">Imagen:</label>
-                        <input 
-                            className="inputForm" 
-                            type='text' 
-                            value={input.img} 
-                            name='img' 
-                            onChange={(e) => handleChange(e)} 
-                        />
-                        {/* {errors.price&& (
-                            <p  className='error' >{errors.price}</p>
-                        )} */}
-                    </div>
+                         <input className="inputForm" type="file" accept="image/*" name="logoImage" id="input_img" onChange={fileChange}/>
+        
+                    
                     <div>
                         <label><input 
                         onChange={e => handleCheck(e)} 
