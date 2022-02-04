@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/img/logo.png';
 import userImage from '../../assets/img/user.png';
+import Profile from "../Profile/Profile.jsx";
 import './Header.scss';
 
 
@@ -39,7 +40,7 @@ function Header() {
                                 <FontAwesomeIcon icon={faAngleDown} />
                             </button>
                             <ul className='dropdown-menu absolute hidden'>
-                                <li><a href="#">{profileText}</a></li>
+                                <li><Link to={"/profile"}>{profileText}</Link></li>
                                 <li><a href="#"  onClick={()=>logOut()}>{logoutText}</a></li>
                             </ul>
                             {/* <button onClick={()=>logOut()}>Logout</button> */}

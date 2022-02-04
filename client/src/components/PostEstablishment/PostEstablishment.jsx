@@ -70,7 +70,7 @@ export default function PostEstablishment() {
                     responsableId: userId
 
                 })
-                history.push("/home")
+                history.push("/")
             }
     }
 
@@ -80,7 +80,7 @@ export default function PostEstablishment() {
         Array.from(photos.files).map(async (photo) => {
           const body = new FormData();
           body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
-          body.append("image", photo);
+          body.append("image", photo.files[0]);
     
           await axios({
             method: "post",
@@ -140,7 +140,7 @@ export default function PostEstablishment() {
                     }
                     <button type="submit">Crear Establecimiento</button> 
                     <br/>
-                    <Link to="/home">
+                    <Link to="/">
                     <button>Volver</button>
                     </Link>
                 </form>

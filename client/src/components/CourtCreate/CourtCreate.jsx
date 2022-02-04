@@ -155,14 +155,14 @@ export default function CourtCreate(){
                 image:[],
                 siteId:'',
             })
-             history.push('./home')
+             history.push('/')
             }
     }    
        
 
     return(
         <div className="containerCreateCourt">
-            <Link to='/home' ><button className='btnBack' >Volver</button>  </Link>
+            <Link to='/' ><button className='btnBack' >Volver</button>  </Link>
             <h1 className="title">Crea una Cancha</h1>
             <div className="create">
             

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faBasketballBall, faSearchLocation } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import './SearchBar.scss';
 
 const location = 'Ubicación';
@@ -26,7 +27,9 @@ function SearchBar() {
             </div>
             <div className='searchInput' >
                 <input id='establishment'placeholder={establishment}/>
+                <Link to={"/results"}>
                 <FontAwesomeIcon icon={faSearchLocation} className='faIcon'/>
+                </Link>
             </div>
         </div>
     </div>
