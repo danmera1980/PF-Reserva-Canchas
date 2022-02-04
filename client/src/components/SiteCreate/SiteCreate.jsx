@@ -94,21 +94,21 @@ export default function SiteCreate() {
     }
     return (
         <div>
-
             <div className="lg: flex justify-center">
                 <form className=" mx-5 w-full max-w-lg " onSubmit={(e) => handleSubmit(e)}>
                     <div className="flex flex-wrap -mx-3 mb-6">
-                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Nombre: </label>
-                        <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)} required></input>
-
-            <div>
-                <form onSubmit={(e) => handleSubmit(e)}>
+                        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Nombre: </label>
+                            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)} required></input>
+                            {errors.name ?
+                            <p className="text-red-500 text-xs italic">{errors.name}</p> : null
+                            }
+                        </div>
+                    </div>
                     <div>
                         <label className="label" >Establecimiento:</label> 
-                        <select className="inputForm" name='establishmentId' onChange={(e) => handleChange(e)} required >
-                                    
-                        <option value=''> </option>
+                        <select className="inputForm" name='establishmentId' onChange={(e) => handleChange(e)} required >         
+                            <option value=''> </option>
                             {establishments.map((c) => (
                                     <option value={c.id} key={c.id}>{c.name}</option>
                             ))}
@@ -117,60 +117,42 @@ export default function SiteCreate() {
                             <p  className='error' >{errors.siteId}</p>
                         )}
                     </div>
-                  
-                      
-
-                        {errors.name ?
-                        <p className="text-red-500 text-xs italic">{errors.name}</p> : null
-                        }
-                    </div>
-
                     <div className="w-full md:w-1/2 px-3">
                         <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Pais: </label>
                         <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="pais..." type="text" value={input.country} name="country" onChange={(e)=>handleChange(e)} required></input>
-
-                    
                         {errors.country ?
                         <p className="text-red-500 text-xs italic">{errors.country}</p> : null
                         }
                     </div>
-
+                    <div className="flex flex-wrap -mx-3 mb-2">
+                        <div className="w-full md:w-full px-3 mb-6 md:mb-0">
+                            <label  className="tracking-wide text-gray-700 text-xs font-bold mb-2">Ciudad: </label>
+                            <input className=" appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Ciudad..." type="text" value={input.city} name="city" onChange={(e)=>handleChange(e)} required></input>
+                            {errors.city ?
+                            <p className="text-red-500 text-xs italic">{errors.city}</p> : null
+                            }
+                        </div>
                     </div>
                     <div className="flex flex-wrap -mx-3 mb-2">
-                    <div className="w-full md:w-full px-3 mb-6 md:mb-0">
-                        <label  className="tracking-wide text-gray-700 text-xs font-bold mb-2">Ciudad: </label>
-                        <input className=" appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Ciudad..." type="text" value={input.city} name="city" onChange={(e)=>handleChange(e)} required></input>
+                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Calle: </label>
+                            <input className="md:w-full block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Calle..." type="text" value={input.street} name="street" onChange={(e)=>handleChange(e)} required></input>
 
                     
-                        {errors.city ?
-                        <p className="text-red-500 text-xs italic">{errors.city}</p> : null
-                        }
-                    </div>
-
-                    </div>
-                    <div className="flex flex-wrap -mx-3 mb-2">
-                    <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                        <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Calle: </label>
-                        <input className="md:w-full block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Calle..." type="text" value={input.street} name="street" onChange={(e)=>handleChange(e)} required></input>
-
-                   
-                        {errors.street ?
-                        <p className="text-red-500 text-xs italic">{errors.street}</p> : null
-                        }
-                    </div>
+                            {errors.street ?
+                            <p className="text-red-500 text-xs italic">{errors.street}</p> : null
+                            }
+                        </div>
+                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Numero de calle: </label>
+                            
+                            <input className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Numero de calle..." type="text" value={input.streetNumber} name="streetNumber" onChange={(e)=>handleChange(e)} required></input>
 
                     
-                    
-                    <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                        <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Numero de calle: </label>
-                        
-                        <input className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Numero de calle..." type="text" value={input.streetNumber} name="streetNumber" onChange={(e)=>handleChange(e)} required></input>
-
-                   
-                        {errors.streetNumber ?
-                        <p className="text-red-500 text-xs italic">{errors.streetNumber}</p> : null
-                        }
-                    </div>
+                            {errors.streetNumber ?
+                            <p className="text-red-500 text-xs italic">{errors.streetNumber}</p> : null
+                            }
+                        </div>
                     </div>
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded shadow-2xl shadow-indigo-600" type="submit">Crear tu sede</button> 
                     <br/>
