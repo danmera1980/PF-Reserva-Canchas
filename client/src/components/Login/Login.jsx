@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser, loginWithGoogle } from "../../redux/actions/users";
 import { useHistory } from "react-router";
 import style from "../../styles/todo.module.css";
-import Swal from 'sweetalert2'
-
+import Swal from "sweetalert2";
 
 function validate(values) {
   let errors = {};
@@ -21,7 +20,7 @@ function validate(values) {
   } else if (!values.password) {
     errors.password = "Complete la contraseña";
   }
-  return errors
+  return errors;
 }
 
 const Login = () => {
@@ -36,14 +35,17 @@ const Login = () => {
   const [userInfo, setUserInfo] = useState(initialState);
 
   const responseSuccess = (response) => {
-    console.log(response)
-    dispatch(loginWithGoogle(response))
-    alert("login OK");
-
+    console.log(response);
+    dispatch(loginWithGoogle(response));
+    Swal.fire({
+      title: `Sesion iniciada`,
+    });
     history.push("/");
   };
   const responseFailure = (response) => {
-    alert("Hubo un error");
+    Swal.fire({
+      title: `Hubo un error`,
+    });
     console.log(response);
   };
 
@@ -69,7 +71,8 @@ const Login = () => {
     } else {
       Swal.fire({
         title: `Completar todos los datos`,
-        })    }
+      });
+    }
   };
   return (
     <div className={style.login}>
@@ -96,8 +99,7 @@ const Login = () => {
                 placeholder="Escribe tu Email"
                 onChange={handleChange}
               ></input>
-            {errors.email && <p>{errors.email}</p>}
-
+              {errors.email && <p>{errors.email}</p>}
             </div>
             <div>
               <label>Contraseña: </label>

@@ -1,6 +1,6 @@
 /** @format */
 
-import { REGISTER, LOGIN, LOGINGOOGLE } from "../actions/actionNames";
+import { REGISTER, LOGIN, LOGINGOOGLE, EDIT_SUCCESS } from "../actions/actionNames";
 
 const initialState = {
   signUpResponse: undefined,
@@ -33,14 +33,21 @@ const registerReducer = (state = initialState, action) => {
         },
       };
     case LOGINGOOGLE:
+      console.log( action.payload[0].name)
       return {
         ...state,
-        sessionToken: action.payload.Iw.tokenId,
-        userName: action.payload.Iw.Ju.tf,
-        userLastName: action.payload.Iw.Ju.wW,
-
-
+        sessionToken: action.payload[1], //aca tiene que guardar response.tokenId
+        userName: action.payload[0].name,
+        userEmail: action.payload[0].email,
+        userId: action.payload[0].id,
       };
+      case EDIT_SUCCESS:
+        console.log(action.payload);
+        return {
+          ...state,
+          userName: action.payload.name,
+          userEmail: action.payload.email,
+          userId: action.payload.id,        };
     default:
       return state;
   }

@@ -63,7 +63,7 @@ export default function UserEdit(){
     function handleSubmit(e){  
        console.log(input)
             e.preventDefault();
-           // console.log(input)
+            console.log(input)
             dispatch(UserEdit(input));
             alert('Cancha Creada!!')
             setInput({

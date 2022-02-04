@@ -34,12 +34,14 @@ const getUserByID = async (req, res, next) => {
 };
 
 const registerGoogle = async (req, res, next) => {
-  try {
-    // ver esta porqueria que funcione con el idea que me manda el front y el que pido
-    const { email } = req.user;
-    const wantedUser = await User.findOne({ where:{email},
+  try { 
+    const { user } = req;
+
+    const wantedUser = await User.findOne({ where: {id: user.id},
       attributes: {exclude: ['passwordHash']}})
     res.send(wantedUser);
+
+ 
   } catch (e) {
     next(e);
   }

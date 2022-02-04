@@ -11,7 +11,7 @@ const serverUrl = 'localhost';
 export const getAllUsers = () => {
   return async dispatch => {
     try {
-      var results = await axios.get(`http://${serverUrl}:3001/users`);
+      var results = await axios.get(`https://${serverUrl}:3001/users`);
       return dispatch({
         type: ALL_USERS,
         payload: results.data,
@@ -24,13 +24,10 @@ export const getAllUsers = () => {
 };
 
 export function registerUser(payload) {
-  const headers = {
-    'Authorization': 'Bearer ${token}...'
 
-  }
   return function (dispatch) {
     axios
-      .post(`http://${serverUrl}:3001/users/register`, payload, {headers: headers})
+      .post(`http://${serverUrl}:3001/users/register`, payload)
       .then(data => {
         return dispatch({ type: REGISTER, payload: data.data });
       })
@@ -54,12 +51,21 @@ export function loginUser(payload) {
   };
 }
 
-export function loginWithGoogle(payload) {
+export function loginWithGoogle(response) {
+  const headers = {  
+    'Authorization': `Bearer ${response.tokenId}`
+  }
   return function (dispatch) {
-   //get user mandando el token en middleware me crea o encuentra el usuario y zas devuelve la info 
-        return dispatch({ type: LOGINGOOGLE, payload: payload });
-      }
-      
+    axios.post(`http://${serverUrl}:3001/users/googleRegister`,{},
+    {headers:headers})
+    .then(user => {
+      return dispatch({ type: LOGINGOOGLE, payload: [user.data, response.tokenId] });
+    })
+    .catch(err => {
+      console.log(err);
+    });      
+  }
+    
 }
 
 export function editUser(payload, userToken) {
@@ -70,7 +76,7 @@ export function editUser(payload, userToken) {
   return  async function (dispatch){
     try {
       const response = await axios.put(
-        `http://${serverUrl}:3001/users/login`,
+        `http://${serverUrl}:3001/users/edit`,
          payload,
          {headers:headers}
          )
