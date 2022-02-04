@@ -33,12 +33,6 @@ export default function UserEdit(){
     const [errors,setErrors] = useState({});
     const userToken = useSelector((state) => state.register.userToken)
 
-    let userId = '35953287';
-
-    useEffect(()=>{
-        dispatch((getEstablishmentByUser(userId)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[userId])
 
     const [input,setInput] = useState({
         name:'',
@@ -63,9 +57,10 @@ export default function UserEdit(){
     function handleSubmit(e){  
        console.log(input)
             e.preventDefault();
-            console.log(input)
-            dispatch(UserEdit(input));
-            alert('Cancha Creada!!')
+            console.log('input del submit',input)
+            dispatch(editUser(input));
+
+            alert('usuario modificado!!')
             setInput({
                 name:'',
                 lastName: '',

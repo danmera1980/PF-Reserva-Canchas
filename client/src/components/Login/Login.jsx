@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginUser, loginWithGoogle } from "../../redux/actions/users";
 import { useHistory } from "react-router";
 import style from "../../styles/todo.module.css";
