@@ -7,8 +7,7 @@ const getEstablishmentsFromDB = async(req,res,next)=>{
   
     // const searchBarName = req.query.name
     const {responsableId} = req.params
-    console.log(responsableId)
-    console.log(typeof responsableId)
+    
    
     try {
 
@@ -36,7 +35,6 @@ const getEstablishmentsFromDB = async(req,res,next)=>{
                 id: establishment.id,
                 name: establishment.name,
                 logoImage: establishment.logoImage,
-                rating: establishment.rating,
                 timeActiveFrom: establishment.timeActiveFrom,
                 timeActiveTo: establishment.timeActiveTo,
                 responsableId: establishment.responsableId,
@@ -72,7 +70,7 @@ const getEstablishmentsName = async ( req ,res) => {
 
 const createEstablishment = async (req, res, next)=>{
 
-    const {id,name,logoImage,rating, timeActiveFrom, timeActiveTo, responsableId} = req.body
+    const {id,name,logoImage, timeActiveFrom, timeActiveTo, responsableId} = req.body
 
     // creo el establecimiento
 
@@ -86,7 +84,6 @@ const createEstablishment = async (req, res, next)=>{
                 id,
                 name,
                 logoImage,
-                rating,
                 timeActiveFrom,
                 timeActiveTo,
                 responsableId

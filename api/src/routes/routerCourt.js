@@ -6,7 +6,7 @@ const { postCourt} = require('../controllers/court');
 
 const bodySchema = Joi.object({
     siteId: Joi.string().regex(/^[a-zA-Z0-9-]+$/).min(2).max(40).required(),
-    name: Joi.string().regex(/^[a-zA-Z0-9 :]+$/).min(2).max(40).required(),
+    name: Joi.string().regex(/^[a-zA-Z0-9 :]+$/).min(1).max(40).required(),
     description: Joi.string().min(2).max(1000).required(),
     shiftLength: Joi.number().min(15).max(120).integer().required(),
     price: Joi.number().integer(),

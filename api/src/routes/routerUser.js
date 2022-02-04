@@ -6,6 +6,7 @@ const {
   getUserByID,
   registerUser,
   editUser,
+  registerGoogle,
 } = require("../controllers/user");
 const { loginUser } = require("../controllers/login");
 
@@ -14,6 +15,8 @@ const router = Router();
 router.get("/", getAllUsers);
 
 router.get("/:id", userExtractor, authGoogle,  getUserByID);
+router.post("/googleRegister", userExtractor, authGoogle,  registerGoogle);
+
 router.post("/register", registerUser);
 router.post(
   "/login",
