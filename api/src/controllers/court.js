@@ -47,21 +47,6 @@ const postCourt = async (req,res,next) => {
   }
 }
 
-const findBySport = async (req, res) => { 
-  const {sport} = req.query.sport
-  try {
-    const results = await Court.findAll({
-      where:{
-        sport: sport
-      }
-    })
-    res.send(results)
-  } catch (e) {
-    console.log(e)
-  }
-}
-
-
 const sortByPrice = async (req, res) => {
   const range = req.query.range 
 
@@ -72,4 +57,4 @@ const sortByPrice = async (req, res) => {
   }
 
 }
-module.exports= { postCourt, findBySport }
+module.exports= { postCourt }
