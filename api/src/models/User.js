@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
     },
     hasEstablishment: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      defaultValue: false
     },
     
     isAdmin: {
