@@ -11,13 +11,13 @@ import "./PostEstablishment.scss";
 function validate(input) {
  
     let errors = {};
-    if(input.id !=='' && !/^[0-9\']{2,20}$/.test(input.id)) {
+    if(input.id !=='' && !/^[0-9']{2,20}$/.test(input.id)) {
         errors.cuit = "Ingrese sólo números"
     }
     if(input.name !=='' && !/^[a-zA-Z0-9_\-' ':]{1,20}$/.test(input.name)) {
         errors.name = "No se permiten simbolos"
     } 
-    if(input.timeActiveFrom!=='' && input.timeActiveFrom<0 ||input.timeActiveFrom>24 ) {
+    if(input.timeActiveFrom!=='' && (input.timeActiveFrom<0 ||input.timeActiveFrom>24) ) {
         errors.timeActiveFrom = "Se requiere un horario entre 0 y 24"
     }
     if (input.timeActiveTo !=='' && input.timeActiveTo<input.timeActiveFrom){

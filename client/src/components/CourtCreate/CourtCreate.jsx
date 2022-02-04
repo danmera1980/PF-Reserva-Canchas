@@ -6,7 +6,7 @@ import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/a
 import { useDispatch, useSelector } from "react-redux";
 import Swal from 'sweetalert2';
 import './CourtCreate.scss'
-import swal from 'sweetalert2';
+
 
 
 
@@ -15,7 +15,7 @@ function validate(input) {
     // if(!/^[a-zA-Z0-9_\-' ']{1,20}$/.test(input.name)) {
     //     errors.name = 'Completar nombre';
     // }; 
-    if(!/^[a-zA-Z0-9\' ':]{0,20}$/.test(input.name)) {
+    if(!/^[a-zA-Z0-9' ':]{0,20}$/.test(input.name)) {
         errors.name = 'No se permiten simbolos';
     }; 
     
@@ -29,7 +29,7 @@ function validate(input) {
     //     errors.sport = 'Selecciona un deporte';
     // }; 
 
-    if(input.shiftLength!=='' && input.shiftLength<15 ||input.shiftLength>120  ) {
+    if(input.shiftLength!=='' && (input.shiftLength<15 || input.shiftLength>120)) {
         errors.shiftLength = 'La duracion del turno tiene que ser entre 15 y 120 mins';
     }; 
    

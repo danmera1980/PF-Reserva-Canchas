@@ -11,16 +11,16 @@ import { getEstablishmentByUser} from "../../redux/actions/forms";
 function validate(input) {
  
     let errors = {};
-    if(input.name !=='' && !/^[a-zA-Z0-9\' ':.]{1,30}$/.test(input.name)) {
+    if(input.name !=='' && !/^[a-zA-Z0-9' ':.]{1,30}$/.test(input.name)) {
         errors.name = "No se permiten simbolos"
     }
-    if(input.country !=='' && !/^[a-zA-Z0-9\' ']{1,30}$/.test(input.country)) {
+    if(input.country !=='' && !/^[a-zA-Z0-9' ']{1,30}$/.test(input.country)) {
         errors.country = "No se permiten simbolos"
     } 
-    if(input.city !=='' && !/^[a-zA-Z0-9\' ']{1,30}$/.test(input.city)) {
+    if(input.city !=='' && !/^[a-zA-Z0-9' ']{1,30}$/.test(input.city)) {
         errors.city = "Se requiere una ciudad"
     }
-    if (input.street !=='' && !/^[a-zA-Z0-9\' ':.]{1,30}$/.test(input.street)){
+    if (input.street !=='' && !/^[a-zA-Z0-9' ':.]{1,30}$/.test(input.street)){
         errors.street = "Se requiere un nombre de calle"
     }
     if(input.streetNumber !=='' && input.streetNumber<0) {
