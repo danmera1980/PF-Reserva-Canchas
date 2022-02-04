@@ -6,8 +6,8 @@ const routerSite = require('./routerSite');
 const userRoute = require('./routerUser');
 const routerCourt = require("./routerCourt");
 const routerCard = require('./routerCard');
-
-
+const routerFindSport = require('./routerFindSport')
+const routerFindLocation = require('./routerFindLocation')
 
 const router = Router();
 
@@ -22,6 +22,8 @@ router.use('/site', routerSite);
 router.use('/court', routerCourt);
 router.use('/users', userRoute);
 router.use('/card', routerCard);
+router.use('/findsport', routerFindSport);
+router.use('/findlocation', routerFindLocation)
 
 
 
