@@ -41,7 +41,7 @@ const { User, Establishment, Site, Court } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-User.belongsToMany(Establishment, { through: "user_establishments" });
+User.belongsTo(Establishment, { through: "user_establishments" });
 Establishment.belongsToMany(User, { through: "user_establishments" });
 
 Establishment.hasMany(Site, { as: "sites", foreignKey: "establishmentId" });
