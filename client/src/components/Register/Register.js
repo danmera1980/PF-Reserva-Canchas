@@ -3,10 +3,13 @@ import Google from "../../assets/img/google.png";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { registerUser } from "../../redux/actions/users";
+import { loginWithGoogle, registerUser } from "../../redux/actions/users";
 import { useHistory } from "react-router";
 import { validate } from "../../helpers";
 import "./Register.scss";
+import Swal from "sweetalert2";
+import GoogleLogin from "react-google-login";
+
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -25,8 +28,21 @@ const Register = () => {
   const [userInfo, setUserInfo] = useState(initialState);
   const [errors, setErrors] = useState({});
 
-  const google = () => {
-    window.open("http://localhost:5000/auth/google", "_self");
+
+  const responseSuccess = (response) => {
+    console.log(response);
+    dispatch(loginWithGoogle(response));
+    Swal.fire({
+      title: `Sesion iniciada`,
+    });
+    history.push("/");
+  };
+
+  const responseFailure = (response) => {
+    Swal.fire({
+      title: `Hubo un error`,
+    });
+    console.log(response);
   };
   const handleChange = (e) => {
     e.preventDefault();
@@ -58,10 +74,16 @@ const Register = () => {
       <h1 className="">Registrate</h1>
       <div className="">
         <div className="">
-          <div className="" onClick={google}>
-            <img src={Google} alt="" />
-            Google
-          </div>
+        <div className="temp">
+          <GoogleLogin
+            clientId="325119971427-qq0udfk49hkpt0qrbbhfia9bbo6vjs8u.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={responseSuccess}
+            onFailure={responseFailure}
+            cookiePolicy={"single_host_origin"}
+          />
+          
+        </div>
         </div>
         <div className="">
           <form onSubmit={handleSubmit}>

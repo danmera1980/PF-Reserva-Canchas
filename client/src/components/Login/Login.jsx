@@ -67,7 +67,6 @@ const Login = () => {
     if (userInfo.email && userInfo.password) {
       dispatch(loginUser(userInfo));
       history.push("/");
-      window.location.reload(true);
       setUserInfo(initialState);
     } else {
       Swal.fire({
@@ -87,7 +86,7 @@ const Login = () => {
             onFailure={responseFailure}
             cookiePolicy={"single_host_origin"}
           />
-          ,
+          
         </div>
         <div className="temp">
           <form onSubmit={handleSubmit}>

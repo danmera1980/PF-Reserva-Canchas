@@ -1,16 +1,11 @@
 /** @format */
 
-import { REGISTER, LOGIN, LOGINGOOGLE, EDIT_SUCCESS } from "../actions/actionNames";
+import { REGISTER, LOGIN, LOGINGOOGLE, EDIT_SUCCESS, LOGOUT } from "../actions/actionNames";
 
 const initialState = {
   signUpResponse: undefined,
-  userLogged: {
-    userToken: undefined,
-    userId: undefined,
-    userEmail: undefined,
-    userName: undefined,
-    userImage: undefined,
-  },
+  userToken: null,
+  userId: null,
 };
 
 const registerReducer = (state = initialState, action) => {
@@ -22,34 +17,34 @@ const registerReducer = (state = initialState, action) => {
         signUpResponse: action.payload,
       };
     case LOGIN:
-      localStorage.setItem('key', action.payload.token);
+      console.log(action.payload)
       return {
         ...state,
-        userLogged: {
-          userToken: action.payload.token,
-          userId: action.payload.id,
-          userEmail: action.payload.email,
-          userName: action.payload.name,
-        },
+        userToken: action.payload.token,
+        userId: action.payload.id,
       };
     case LOGINGOOGLE:
-      console.log( action.payload[0].name)
+      console.log(action.payload)
       return {
         ...state,
-        userLogged: {
-        sessionToken: action.payload[1], //aca tiene que guardar response.tokenId
-        userName: action.payload[0].name,
-        userEmail: action.payload[0].email,
+        userToken: action.payload[1], 
         userId: action.payload[0].id,
-        }
       };
-      case EDIT_SUCCESS:
-        console.log(action.payload);
-        return {
-          ...state,
-          userName: action.payload.name,
-          userEmail: action.payload.email,
-          userId: action.payload.id,        };
+    case EDIT_SUCCESS:
+      console.log(action.payload);
+      return {
+        ...state,
+        userName: action.payload.name,
+        userEmail: action.payload.email,
+        userId: action.payload.id,
+      };
+    case LOGOUT:
+      console.log('estoy en logout');
+      return {
+        ...state,
+        userToken: null,
+        userId: null,
+      };
     default:
       return state;
   }
