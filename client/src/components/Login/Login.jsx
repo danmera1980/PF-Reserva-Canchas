@@ -5,8 +5,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser, loginWithGoogle } from "../../redux/actions/users";
 import { useHistory } from "react-router";
-import style from "../../styles/todo.module.css";
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2'
+import "./Login.scss";
 
 function validate(values) {
   let errors = {};
@@ -67,6 +67,7 @@ const Login = () => {
     if (userInfo.email && userInfo.password) {
       dispatch(loginUser(userInfo));
       history.push("/");
+      window.location.reload(true);
       setUserInfo(initialState);
     } else {
       Swal.fire({
@@ -75,10 +76,10 @@ const Login = () => {
     }
   };
   return (
-    <div className={style.login}>
-      <h1 className={style.loginTitle}>Selecciona un metodo para Ingresar</h1>
-      <div className={style.wrapper}>
-        <div className={style.left}>
+    <div className="temp">
+      <h1 className="temp">Selecciona un metodo para Ingresar</h1>
+      <div className="temp">
+        <div className="temp">
           <GoogleLogin
             clientId="325119971427-qq0udfk49hkpt0qrbbhfia9bbo6vjs8u.apps.googleusercontent.com"
             buttonText="Login"
@@ -88,7 +89,7 @@ const Login = () => {
           />
           ,
         </div>
-        <div className={style.right}>
+        <div className="temp">
           <form onSubmit={handleSubmit}>
             <div>
               <label>Email: </label>
@@ -114,7 +115,7 @@ const Login = () => {
             </div>
 
             <div>
-              <button className={style.submit} type="submit">
+              <button className="temp" type="submit">
                 Entrar
               </button>
             </div>
