@@ -11,13 +11,13 @@ import "./PostEstablishment.scss";
 function validate(input) {
  
     let errors = {};
-    if(input.id !=='' && !/^[0-9\']{2,20}$/.test(input.id)) {
+    if(input.id !=='' && !/^[0-9']{2,20}$/.test(input.id)) {
         errors.cuit = "Ingrese sólo números"
     }
     if(input.name !=='' && !/^[a-zA-Z0-9_\-' ':]{1,20}$/.test(input.name)) {
         errors.name = "No se permiten simbolos"
     } 
-    if(input.timeActiveFrom!=='' && input.timeActiveFrom<0 ||input.timeActiveFrom>24 ) {
+    if(input.timeActiveFrom!=='' && (input.timeActiveFrom<0 ||input.timeActiveFrom>24) ) {
         errors.timeActiveFrom = "Se requiere un horario entre 0 y 24"
     }
     if (input.timeActiveTo !=='' && input.timeActiveTo<input.timeActiveFrom){
@@ -134,7 +134,7 @@ export default function PostEstablishment() {
 
                     <div className="w-full md:w-1/2 px-3">
                     <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Nombre: </label>
-                    <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e) required}></input>
+                    <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)} required></input>
 
                   
                     {errors.name ?
