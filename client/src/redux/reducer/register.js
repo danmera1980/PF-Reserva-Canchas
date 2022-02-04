@@ -22,7 +22,7 @@ const registerReducer = (state = initialState, action) => {
         signUpResponse: action.payload,
       };
     case LOGIN:
-      // console.log(action.payload);
+      console.log(action.payload);
       localStorage.setItem('key', action.payload.token);
       return {
         ...state,
@@ -37,10 +37,12 @@ const registerReducer = (state = initialState, action) => {
       console.log( action.payload[0].name)
       return {
         ...state,
+        userLogged: {
         sessionToken: action.payload[1], //aca tiene que guardar response.tokenId
         userName: action.payload[0].name,
         userEmail: action.payload[0].email,
         userId: action.payload[0].id,
+        }
       };
       case EDIT_SUCCESS:
         console.log(action.payload);

@@ -72,7 +72,7 @@ const editUser = async (req, res, next) => {
       return res.status(401).json({ error: "Authentication required" });
     const { id } = req.user;
     const { name, lastname, img, phone, hasEstablishment } = req.body;
-
+    
     const user = await User.findOne({ where: { id } });
     if (!user) {
       throw new Error("User not fund");
