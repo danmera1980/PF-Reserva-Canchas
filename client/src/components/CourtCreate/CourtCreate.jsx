@@ -12,22 +12,22 @@ import './CourtCreate.scss'
 
 function validate(input) {
     let errors = {};
-    // if(!/^[a-zA-Z0-9_\-' ']{1,20}$/.test(input.name)) {
-    //     errors.name = 'Completar nombre';
-    // }; 
+    if(!/^[a-zA-Z0-9_\-' ']{1,20}$/.test(input.name)) {
+        errors.name = 'Completar nombre';
+    }; 
     if(!/^[a-zA-Z0-9' ':]{0,20}$/.test(input.name)) {
         errors.name = 'No se permiten simbolos';
     }; 
     
-    // if(!/^[a-zA-Z0-9_\-' ',.]{1,40}$/.test(input.description)) {
-    //     errors.description = 'Completar la descripcion';
-    // }; 
+    if(!/^[a-zA-Z0-9_\-' ',.]{1,40}$/.test(input.description)) {
+        errors.description = 'Completar la descripcion';
+    }; 
     if(!/^[a-zA-Z0-9_\-' ',.:]{0,100}$/.test(input.description)) {
         errors.description = 'No se permiten simbolos';
     }; 
-    // if(!input.sport) {
-    //     errors.sport = 'Selecciona un deporte';
-    // }; 
+    if(!input.sport) {
+        errors.sport = 'Selecciona un deporte';
+    }; 
 
     if(input.shiftLength!=='' && (input.shiftLength<15 || input.shiftLength>120)) {
         errors.shiftLength = 'La duracion del turno tiene que ser entre 15 y 120 mins';
@@ -47,7 +47,7 @@ export default function CourtCreate(){
   //  const sites = useSelector ((state) => state.sites)
     const history = useHistory()
     const [errors,setErrors] = useState({});
-    const establishments = useSelector(state => state.forms.establishmentByUser)
+    const establishmentId = useSelector(state => state.forms.establishmentId)
     const sites = useSelector(state => state.forms.sitesByEstablishment)
 
     let userId = '35953287';
@@ -56,6 +56,12 @@ export default function CourtCreate(){
         dispatch((getEstablishmentByUser(userId)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[userId])
+
+    useEffect(()=>{
+        dispatch(getSitesByEstablishmentId(establishmentId));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[getEstablishmentByUser])
+    
 
 
 
@@ -106,13 +112,13 @@ export default function CourtCreate(){
           }))
     }
     
-    function handleSelectEstablishment(e){
-        dispatch(getSitesByEstablishmentId(e.target.value));
-        setErrors(validate({
-              ...input,
-              [e.target.name]: e.target.value
-          }))
-    }
+    // function handleSelectEstablishment(e){
+    //     dispatch(getSitesByEstablishmentId(e.target.value));
+    //     setErrors(validate({
+    //           ...input,
+    //           [e.target.name]: e.target.value
+    //       }))
+    // }
 
     function handleSelectSite(e){
         setInput({
@@ -136,15 +142,14 @@ export default function CourtCreate(){
         }))
     }
 
-    function handleSubmit(e){  
-        if(errors.name || errors.description ||input.name.trim().length===0
-        ||input.description.trim().length===0 || input.shiftLength || input.price){
+    function handleSubmit(e){
+        e.preventDefault();
+        setErrors(validate({
+            ...input
+        }))
+        if(Object.keys(errors).length !== 0){
             alert('completar los campos correctamente')
         } else{
-
-        
-
-            e.preventDefault();
             dispatch(postCourt(input));
             Swal.fire({
                 position: 'top-end',
@@ -245,19 +250,6 @@ export default function CourtCreate(){
                             multiple
                         />
                         {errors.image && <p className="error">{errors.image}</p>}
-                    </div>
-                    <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                        <label className="tracking-wide text-gray-700 text-xs font-bold mb-2" >Establecimiento:</label> 
-                        <select className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name='establishments' onChange={(e) => handleSelectEstablishment(e)} required>
-     
-                           <option value=''>Seleccioná un establecimiento</option>
-                            {establishments.map((c) => (
-                                    <option value={c.id} key={c.id}>{c.name}</option>
-                            ))}
-                        </select>
-                        {errors.establishment&& (
-                            <p  className='text-red-500 text-xs italic' >{errors.siteId}</p>
-                        )}
                     </div>
                     <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                         <label className="tracking-wide text-gray-700 text-xs font-bold mb-2" >Site:</label> 

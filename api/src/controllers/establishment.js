@@ -3,7 +3,27 @@ const { UserRefreshClient } = require('google-auth-library');
 const {Establishment, Site, User} = require('../db');
 const { createSite } = require('./site');
 
+const getEstabIdByUserId = async (req,res, next) =>{
 
+    const {userId} = req.params;
+    if(userId){
+        try {
+
+            let user = await User.findOne({
+                where:{id : userId}
+            })
+            
+            res.send(user)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }else{
+        next();
+    }
+    
+    
+}
 const getEstablishmentsFromDB = async(req,res,next)=>{
   
     // const searchBarName = req.query.name
@@ -128,7 +148,6 @@ const addUsertoEstablishment = async (req, res, next)=>{
                  hasEstablishment:false }
     })
     
-    // creo el establecimiento
     let establishmentDB = await Establishment.findOne({
         where : {id: establishmentId}
     })
@@ -159,4 +178,4 @@ const addUsertoEstablishment = async (req, res, next)=>{
 
 
 
-module.exports = {getEstablishmentsFromDB, createEstablishment, getEstablishmentsName, addUsertoEstablishment}
+module.exports = {getEstablishmentsFromDB, createEstablishment, getEstablishmentsName, addUsertoEstablishment, getEstabIdByUserId}

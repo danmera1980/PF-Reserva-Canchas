@@ -41,14 +41,13 @@ const { User, Establishment, Site, Court } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-User.belongsTo(Establishment, { through: "user_establishments" });
-Establishment.belongsToMany(User, { through: "user_establishments" });
 
+
+Establishment.hasMany(User, {as: 'users', foreignKey:'establishmentId'})
 Establishment.hasMany(Site, { as: "sites", foreignKey: "establishmentId" });
 Site.hasMany(Court, { as: "courts", foreignKey: "siteId" });
 
-// Site.belongsToMany(Court, {through: 'site_court'});
-// Court.belongsTo(Site, {through: 'site_court'});
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
