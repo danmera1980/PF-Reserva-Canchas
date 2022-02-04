@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { registerUser } from "../../redux/actions/users";
 import { useHistory } from "react-router";
 import { validate } from "../../helpers";
-import style from "../../styles/todo.module.css";
+import "./Register.scss";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -54,16 +54,16 @@ const Register = () => {
   };
 
   return (
-    <div className={style.login}>
-      <h1 className={style.loginTitle}>Registrate</h1>
-      <div className={style.wrapper}>
-        <div className={style.left}>
-          <div className={style.loginButton} onClick={google}>
+    <div className="">
+      <h1 className="">Registrate</h1>
+      <div className="">
+        <div className="">
+          <div className="" onClick={google}>
             <img src={Google} alt="" />
             Google
           </div>
         </div>
-        <div className={style.right}>
+        <div className="">
           <form onSubmit={handleSubmit}>
             <div>
               <label>Nombre: </label>

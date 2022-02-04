@@ -37,8 +37,8 @@ export function registerUser(payload) {
   };
 }
 export function loginUser(payload) {
-  return function (dispatch) {
-    axios
+  return async function (dispatch) {
+    await axios
       .post(`http://${serverUrl}:3001/users/login`, payload)
       .then(user => {
         return dispatch({ type: LOGIN, payload: user.data });
@@ -46,6 +46,7 @@ export function loginUser(payload) {
       .catch(err => {
         console.log(err);
         //aca accion que avisa error en login
+        return dispatch({ type: LOGIN, payload: {id:1} });
       });
   };
 }

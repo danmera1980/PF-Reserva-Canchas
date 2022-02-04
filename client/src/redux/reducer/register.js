@@ -22,7 +22,8 @@ const registerReducer = (state = initialState, action) => {
         signUpResponse: action.payload,
       };
     case LOGIN:
-      console.log(action.payload);
+      // console.log(action.payload);
+      localStorage.setItem('key', action.payload.token);
       return {
         ...state,
         userLogged: {
