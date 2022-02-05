@@ -1,8 +1,29 @@
 const axios = require('axios');
-const {Establishment, Site, Court} = require('../db');
+const { UserRefreshClient } = require('google-auth-library');
+const {Establishment, Site, User, Court} = require('../db');
 const { createSite } = require('./site');
 
+const getEstabIdByUserId = async (req,res, next) =>{
 
+    const {userId} = req.params;
+    if(userId){
+        try {
+
+            let user = await User.findOne({
+                where:{id : userId}
+            })
+            
+            res.send(user)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }else{
+        next();
+    }
+    
+    
+}
 const getEstablishmentsFromDB = async(req,res,next)=>{
   
     const searchBarName = req.query.name
@@ -52,24 +73,40 @@ const getEstablishmentsFromDB = async(req,res,next)=>{
 
 const createEstablishment = async (req, res, next)=>{
 
-    const {id,name,logoImage, timeActiveFrom, timeActiveTo, responsableId} = req.body
+    const {id,name,logoImage, timeActiveFrom, timeActiveTo, userId} = req.body
+
+
+    
+    let user = await User.findOne({
+        where: { 
+            id: userId,
+            hasEstablishment:false}
+    })
+    
 
     // creo el establecimiento
-
     let establishmentDB = await Establishment.findOne({
         where : {id: id}
     })
 
     try {
-        if(!establishmentDB){
+        if(!user){
+            res.status(400).send('user does not exist or has already an establishment')
+        }
+        else if(!establishmentDB){
             let establishmentCreated = await Establishment.create({
                 id,
                 name,
                 logoImage,
                 timeActiveFrom,
-                timeActiveTo,
-                responsableId
+                timeActiveTo
             })
+
+          await establishmentCreated.addUser(user);
+        
+          await User.update(
+            {hasEstablishment:true},  
+            { where:{id:userId} })
 
             res.send('establishment created')
         }
@@ -81,7 +118,44 @@ const createEstablishment = async (req, res, next)=>{
         next(error)
     }
     
+}
+const addUserToEstablishment = async (req, res, next)=>{
 
+    const {email,establishmentId } = req.body
+    
+    let user = await User.findOne({
+        where: { email: email,
+                 hasEstablishment:false }
+    })
+    
+    let establishmentDB = await Establishment.findOne({
+        where : {id: establishmentId}
+    })
+
+    try {
+        if(!user){
+            res.status(400).send('user does not exist or has already an establishment')
+        }
+        else if(establishmentDB){
+
+          await establishmentDB.addUser(user);
+
+          await User.update(
+            {hasEstablishment:true},  
+            { where:{email:email} }) 
+
+            res.send('user added')
+        }
+        else{
+            res.status(404).send('user can not be added')
+        }
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+    
 }
 
-module.exports = {getEstablishmentsFromDB, createEstablishment}
+
+
+module.exports = {getEstablishmentsFromDB, createEstablishment, getEstablishmentsName, addUserToEstablishment, getEstabIdByUserId}

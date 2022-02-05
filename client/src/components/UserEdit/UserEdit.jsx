@@ -3,6 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import { editUser } from "../../redux/actions/users";
 import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms";
 import { useDispatch, useSelector } from "react-redux";
+import Header from '../Header/Header';
 import axios from "axios";
 import './UserEdit.scss'
 
@@ -116,73 +117,112 @@ export default function UserEdit(){
        
 
     return(
-        <div className="containerCreateCourt">
-            <Link to='/' ><button className='btnBack' >Volver</button>  </Link>
-            <h1 className="title">Crea una Cancha</h1>
-            <div className="create">
-            
-                <form className="form" onSubmit={(e) => handleSubmit(e)} >
+
+        <div className="">
+            <Header />
+            {/* <Link to='/' ><button className='btnBack' >Volver</button>  </Link>
+            <h1 className="title">Crea una Cancha</h1> */}
+            <div className="flex justify-center">
+                <form className="md:mx-56 lg:w-full lg:mx-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={(e) => handleSubmit(e)} >
+                {input.img? <img className="w-36 h-36 bg-cover rounded-full" src={input.img}   /> : null}
                     <input type='hidden' value={userToken}/>
-                    <div>
-                        <label className="label">Nombre de Usuario:</label>
+                    <div className="relative mt-10">
                         <input 
-                            className="inputForm" 
+                            className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" 
+                            autoComplete="off"
                             id='nombre' 
                             type='text' 
                             value={input.name} 
                             name='name' 
+                            placeholder="Nombre de usuario "
                             onChange={(e) => handleChange(e)} 
                         />
                         
+                            <label className="  absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="nombre"
+                                            >
+                                                Nombre de Usuario
+                             </label>
                         {errors.name&& (
-                            <p  className='error' >{errors.name}</p>
+                            <p  className=' text-xs text-red-500' >{errors.name}</p>
                         )}
                     </div>
-                    <div>
-                        <label className="label">Apellido:</label>
+                    <div className="mb-4 relative mt-3" >
                         <input 
-                            className="inputForm" 
+                            className="peer placeholder-transparent h-10 w-full  border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
+                            autoComplete="off" 
                             type='text' value={input.lastName} 
                             name='lastName' 
+                            placeholder=" "
                             onChange={(e) => handleChange(e)}
                         />
+                        <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="lastName">Apellido</label>
                         {errors.lastName&& (
-                            <p  className='error' >{errors.lastName}</p>
+                            <p  className='text-xs text-red-500' >{errors.lastName}</p>
                         )}
                     </div>
-                    <div>
-                        <label className="label">Telefono de contacto:</label>
+                    <div className="mb-4 relative mt-3">
                         <input 
-                            className="inputForm" 
+                            className="peer placeholder-transparent h-10 w-full  border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" 
+                            placeholder=" "
+                            autoComplete="off"
                             type='text' value={input.phone} 
                             name='phone' 
+                            id="telefono"
                             onChange={(e) => handleChange(e)}
-                        />
+                        /> 
+                            <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="telefono">Telefono de contacto</label>
                         {errors.phone&& (
-                            <p  className='error' >{errors.phone}</p>
+                            <p  className='text-xs text-red-500' >{errors.phone}</p>
                         )}
                     </div>
-
-                    
-                        <label className="label">Imagen:</label>
-                         <input className="inputForm" type="file" accept="image/*" name="logoImage" id="input_img" onChange={fileChange}/>
+                    <div className="mb-4 relative mt-3 bg-indigo-400 text-center hover:bg-indigo-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        
+                        <input className="absolute top-0 right-0 left-0 bottom-0 w-full h-full opacity-0" autoComplete="off" placeholder=" " type="file" accept="image/*" name="logoImage" id="input_img" onChange={fileChange}/>
+                        <label className="text-white " htmlFor="input_img">Añadir Imagen</label>
         
+                    </div>
+                    <div className="mb-4 relative group">
+                        <label className="">
+                            <input 
+                                className="mr-2 h-4 w-4 rounded-l border-x-indigo-300 text-indigo-500"
+                                onChange={e => handleCheck(e)} 
+                                type='checkbox' 
+                                name='hasEstablishment' 
+                                value={input.hasEstablishment}
+                            />
+                            <span className="text-sm">Tiene establecimiento ?</span>
+                        </label>
+                    </div>
+                    <div className="flex items-center justify-between">
+                        <button className='w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type="submit" >Guardar cambios</button>
+                    </div>
                     
-                    <div>
-                        <label><input 
-                        onChange={e => handleCheck(e)} 
-                        type='checkbox' 
-                        name='hasEstablishment' 
-                        value={input.hasEstablishment}
-                         ></input>Tiene establecimiento ?</label>
-                    </div>
-                    <div>
-                        <button className='buttonCreateCourt' type="submit" >Guardar cambios</button>
-                    </div>
                 </form>
 
             </div>
+            
         </div>
-
+        
     )
 }

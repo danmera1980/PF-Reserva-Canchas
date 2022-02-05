@@ -40,10 +40,12 @@ function Profile() {
                   <FontAwesomeIcon icon={faMoneyCheckAlt} size={"2x"} />
                   <p>Transacciones</p>
                 </button>
-                <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all">
-                  <FontAwesomeIcon icon={faFutbol} size={"2x"} />
-                  <p>Establecimiento</p>
-                </button>
+                  <Link to={"/establishmentprofile"}>
+                    <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all">
+                      <FontAwesomeIcon icon={faFutbol} size={"2x"} />
+                      <p>Establecimiento</p>
+                    </button>
+                  </Link>
                 <Link to={"/useredit"}>
                 <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all">
                   <FontAwesomeIcon icon={faCog} size={"2x"} />

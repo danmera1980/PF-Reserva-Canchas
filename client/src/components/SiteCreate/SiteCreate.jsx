@@ -32,19 +32,10 @@ function validate(input) {
 export default function SiteCreate() {
     const dispatch = useDispatch()
     const history = useHistory()
-    const establishments = useSelector(state => state.forms.establishmentByUser)
-
-    let userId = '35953287';
-
-    useEffect(()=>{
-        dispatch((getEstablishmentByUser(userId)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[userId])
-
-
+    const establishmentId = useSelector(state => state.forms.establishmentId)
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
-        establishmentId: "",
+        establishmentId: '',
         name: "",
         country: "",
         city: "",
@@ -52,10 +43,26 @@ export default function SiteCreate() {
         streetNumber: "",
     })
 
+    let userId = 1;
+
+    useEffect(()=>{
+        setInput({
+            ...input,
+            establishmentId: establishmentId,
+        })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[establishmentId])
+
+    useEffect(()=>{
+        dispatch((getEstablishmentByUser(userId)))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[userId])
+
 
     function handleChange(e) {
         setInput({
             ...input,
+            
             [e.target.name] : e.target.value
         })
         setErrors(validate({
@@ -82,7 +89,7 @@ export default function SiteCreate() {
             timer: 1500
           })
         setInput({
-        establishmentId: "",
+        establishmentId: establishmentId,
         name: "",
         country: "",
         city: "",
@@ -104,18 +111,6 @@ export default function SiteCreate() {
                             <p className="text-red-500 text-xs italic">{errors.name}</p> : null
                             }
                         </div>
-                    </div>
-                    <div>
-                        <label className="label" >Establecimiento:</label> 
-                        <select className="inputForm" name='establishmentId' onChange={(e) => handleChange(e)} required >         
-                            <option value=''> </option>
-                            {establishments.map((c) => (
-                                    <option value={c.id} key={c.id}>{c.name}</option>
-                            ))}
-                        </select>
-                        {errors.establishment&& (
-                            <p  className='error' >{errors.siteId}</p>
-                        )}
                     </div>
                     <div className="w-full md:w-1/2 px-3">
                         <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Pais: </label>
