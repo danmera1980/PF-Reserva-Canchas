@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     shiftLength: {
@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     image: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: true
     },
     sport: { 

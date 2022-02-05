@@ -38,6 +38,7 @@ export function registerUser(payload) {
   };
 }
 export function loginUser(payload) {
+  console.log(payload)
   return async function (dispatch) {
     await axios
       .post(`http://${serverUrl}:3001/users/login`, payload)
