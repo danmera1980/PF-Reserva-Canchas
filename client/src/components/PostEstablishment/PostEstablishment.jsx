@@ -28,7 +28,7 @@ function validate(input) {
 
 export default function PostEstablishment() {
 
-    const userId = 2 // acá falta ver cómo va a venir este dato (estado global, params)
+    const userId = 1 // acá falta ver cómo va a venir este dato (estado global, params)
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -48,7 +48,6 @@ export default function PostEstablishment() {
             ...input,
             [e.target.name] : e.target.value
         })
-       console.log('soy input',input)
         setErrors(validate({
             ...input,
             [e.target.name]: e.target.value

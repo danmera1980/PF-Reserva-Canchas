@@ -2,6 +2,12 @@ import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_NAME, FILTER_BY_SPORT
 import axios from 'axios';
 const serverUrl = 'localhost'
 
+export const addUserToEstablishment = (payload) => {
+    return async function() {
+        var info = await axios.post(`http://${serverUrl}:3001/establishment/addUserToEstablishment`, payload)
+        return info
+    }
+}
 
 export const getEstablishment = (id) => {
     return async (dispatch) => {

@@ -5,19 +5,17 @@ const serverUrl = 'localhost';
 export function getEstablishmentByUser(userId){
     return async function(dispatch){
         try {
-            let info = await axios.get(`http://${serverUrl}:3001/establishment/${userId}`)
+            let user = await axios.get(`http://${serverUrl}:3001/establishment/${userId}`)
+
             return dispatch({
                 type: GET_ESTABLISHMENT_BY_ID,
-                payload: info.data 
+                payload: user.data.establishmentId 
             })    
         } catch (error) {
             console.log(error);
             return dispatch({
                 type: GET_ESTABLISHMENT_BY_ID,
-                payload: [{
-                    id : '',
-                    name: 'No Results',  
-                }]
+                payload: 'No Results'
             }) 
 
         }

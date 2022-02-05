@@ -1,13 +1,33 @@
 import React from "react";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import logo from "../../assets/img/logo.png";
+
+
+
+import {Link} from "react-router-dom";
+
+
+
 
 function EstablishmentProfile() {
     return (
         <div>
-            <Header />
+<
+       
             
+      
+
+            <div>
+                <Link to={"/site"}>
+                    <button>Crear sede</button>
+                </Link>
+            </div>
+            <div>
+                <Link to={"/court"}>
+                    <button>Crear cancha</button>
+                </Link>
+            </div>
         </div>
     )
 }
+
+export default EstablishmentProfile
+
