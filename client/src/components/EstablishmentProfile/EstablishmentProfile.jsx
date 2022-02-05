@@ -1,8 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-
-
 function EstablishmentProfile() {
     return (
         <div>
@@ -21,3 +19,4 @@ function EstablishmentProfile() {
 }
 
 export default EstablishmentProfile
+
