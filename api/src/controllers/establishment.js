@@ -3,7 +3,27 @@ const { UserRefreshClient } = require('google-auth-library');
 const {Establishment, Site, User} = require('../db');
 const { createSite } = require('./site');
 
+const getEstabIdByUserId = async (req,res, next) =>{
 
+    const {userId} = req.params;
+    if(userId){
+        try {
+
+            let user = await User.findOne({
+                where:{id : userId}
+            })
+            
+            res.send(user)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }else{
+        next();
+    }
+    
+    
+}
 const getEstablishmentsFromDB = async(req,res,next)=>{
   
     // const searchBarName = req.query.name
@@ -76,9 +96,11 @@ const createEstablishment = async (req, res, next)=>{
 
     
     let user = await User.findOne({
-        where: { id: userId}
+        where: { 
+            id: userId,
+            hasEstablishment:false}
     })
-    if (user){console.log('soy usuario',user)}
+    
 
     // creo el establecimiento
     let establishmentDB = await Establishment.findOne({
@@ -86,7 +108,10 @@ const createEstablishment = async (req, res, next)=>{
     })
 
     try {
-        if(!establishmentDB){
+        if(!user){
+            res.status(400).send('user does not exist or has already an establishment')
+        }
+        else if(!establishmentDB){
             let establishmentCreated = await Establishment.create({
                 id,
                 name,
@@ -98,8 +123,7 @@ const createEstablishment = async (req, res, next)=>{
           await establishmentCreated.addUser(user);
         
           await User.update(
-            {hasEstablishment:true,
-            isAdmin:true         },  
+            {hasEstablishment:true},  
             { where:{id:userId} })
 
             res.send('establishment created')
@@ -113,17 +137,15 @@ const createEstablishment = async (req, res, next)=>{
     }
     
 }
-const addUsertoEstablishment = async (req, res, next)=>{
+const addUserToEstablishment = async (req, res, next)=>{
 
-    const {email} = req.body
-    const { establishmentId} = req.params
+    const {email,establishmentId } = req.body
     
     let user = await User.findOne({
         where: { email: email,
                  hasEstablishment:false }
     })
     
-    // creo el establecimiento
     let establishmentDB = await Establishment.findOne({
         where : {id: establishmentId}
     })
@@ -154,4 +176,4 @@ const addUsertoEstablishment = async (req, res, next)=>{
 
 
 
-module.exports = {getEstablishmentsFromDB, createEstablishment, getEstablishmentsName, addUsertoEstablishment}
+module.exports = {getEstablishmentsFromDB, createEstablishment, getEstablishmentsName, addUserToEstablishment, getEstabIdByUserId}
