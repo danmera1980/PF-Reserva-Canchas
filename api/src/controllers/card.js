@@ -11,7 +11,7 @@ let establishmentDB = ()=> {
 }
 
 
-const getCards = async (req,res)=>{
+const getCard = async (req,res)=>{
 
 
     const allCourts = await courtDB();
@@ -53,5 +53,32 @@ const getCards = async (req,res)=>{
         console.log(e)
     }   
 };
+
+const getCards = async ( req ,res) => {
+    const name= req.query.name
+    console.log(name);
+    try {
+        var courts = await Court.findAll({
+            attributes: { exclude: ['createdAt','updatedAt'] }
+          })
+        for(var i = 0; i<courts.length ; i++){
+            var site = await Site.findOne({
+                where: { id: courts[i].siteId},
+                attributes: ['name', 'id', 'establishmentId','street', 'streetNumber', 'city']
+              })
+            courts[i]= {...courts[i].dataValues, site}
+        }
+        for(var i=0; i<courts.length ; i++){
+            var establishment = await Establishment.findOne({
+                where: { id: courts[i].site.establishmentId},
+                attributes: ['name', 'id', 'timeActiveFrom', 'timeActiveTo']
+            })
+            courts[i]= {...courts[i], establishment}
+        }
+        res.send(courts)    
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 module.exports= { getCards }

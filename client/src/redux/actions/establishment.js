@@ -21,7 +21,7 @@ export const postEstablishment = (payload) => {
 
 export const allEstablishments = () => {
     return async (dispatch) => {
-        var results = await axios(`http://${serverUrl}:3001/establishments`)
+        var results = await axios(`http://${serverUrl}:3001/card`)
         return dispatch({
             type: ALL_ESTABLISHMENTS,
             payload: results.data
@@ -31,7 +31,7 @@ export const allEstablishments = () => {
 
 export const filterBySport = (sport) => {
     return async(dispatch) =>{
-        var results = await axios(`http://localhost:3001/findsport?sport=${sport}`)
+        var results = await axios(`http://${serverUrl}:3001/findsport?sport=${sport}`)
         return dispatch({
             type: FILTER_BY_SPORT,
             payload: results.data
@@ -41,7 +41,7 @@ export const filterBySport = (sport) => {
 
 export const filterByLocation = (location) => {
     return async(dispatch) =>{
-        var results = await axios(`http://localhost:3001/findlocation?location=${location}`)
+        var results = await axios(`http://${serverUrl}:3001/findlocation?location=${location}`)
         return dispatch({
             type: FILTER_BY_LOCATION,
             payload: results.data
@@ -51,7 +51,7 @@ export const filterByLocation = (location) => {
 
 export const filterByName = (name) => {
     return async(dispatch) =>{
-        var results = await axios(`http://localhost:3001/establishment?name=${name}`)
+        var results = await axios(`http://${serverUrl}:3001/findname?name=${name}`)
         return dispatch({
             type: FILTER_BY_NAME,
             payload: results.data

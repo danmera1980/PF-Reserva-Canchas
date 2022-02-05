@@ -82,15 +82,14 @@ export default function UserEdit(){
             ...input,
             [e.target.name]: e.target.value
         }))
-      //  console.log(input)
     }
 
     function handleSubmit(e){  
        console.log(input)
             e.preventDefault();
-            dispatch(UserEdit(input));
+            dispatch(userEdit(input));
             console.log(input)
-            alert('Cancha Creada!!')
+            alert('Edicion exitosa')
             setInput({
                 name:'',
                 lastName: '',

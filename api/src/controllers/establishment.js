@@ -1,11 +1,11 @@
 const axios = require('axios');
-const {Establishment, Site} = require('../db');
+const {Establishment, Site, Court} = require('../db');
 const { createSite } = require('./site');
 
 
 const getEstablishmentsFromDB = async(req,res,next)=>{
   
-    // const searchBarName = req.query.name
+    const searchBarName = req.query.name
     const {responsableId} = req.params
     
    
@@ -50,24 +50,6 @@ const getEstablishmentsFromDB = async(req,res,next)=>{
    
 }
 
-const getEstablishmentsName = async ( req ,res) => {
-    const name= req.query.name
-    console.log(name);
-    try {
-        const establishments = await Establishment.findAll({
-            include:{
-                model:Site,
-                as: "sites",
-                attributes: ['id','name','country','city', 'street','streetNumber','latitude','longitude']}
-        })
-        const results = establishments.filter(el => el.name.toLowerCase().includes(name.toLowerCase()))
-        res.send(results)    
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-
 const createEstablishment = async (req, res, next)=>{
 
     const {id,name,logoImage, timeActiveFrom, timeActiveTo, responsableId} = req.body
@@ -102,4 +84,4 @@ const createEstablishment = async (req, res, next)=>{
 
 }
 
-module.exports = {getEstablishmentsFromDB, createEstablishment, getEstablishmentsName}
+module.exports = {getEstablishmentsFromDB, createEstablishment}

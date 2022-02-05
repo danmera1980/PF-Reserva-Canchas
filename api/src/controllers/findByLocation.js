@@ -5,20 +5,20 @@ const findByLocation = async (req, res) => {
     console.log(location)
 
     try {
-        var courts = await Court.findAll({
+          var courts = await Court.findAll({
             attributes: { exclude: ['createdAt','updatedAt'] }
           })
         for(var i = 0; i<courts.length ; i++){
             var site = await Site.findOne({
                 where: { id: courts[i].siteId},
-                attributes: { exclude: ['createdAt','updatedAt'] }
+                attributes: ['name', 'id', 'establishmentId','street', 'streetNumber', 'city']
               })
             courts[i]= {...courts[i].dataValues, site}
         }
         for(var i=0; i<courts.length ; i++){
             var establishment = await Establishment.findOne({
                 where: { id: courts[i].site.establishmentId},
-                attributes: { exclude: ['createdAt','updatedAt'] }
+                attributes: ['name', 'id', 'timeActiveFrom', 'timeActiveTo']
             })
             courts[i]= {...courts[i], establishment}
         }

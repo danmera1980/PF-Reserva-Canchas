@@ -1,13 +1,11 @@
-const { Court, Site, Establishment} = require ('../db');
+const {Establishment, Site, Court} = require('../db');
 
-const findBySport = async (req, res) => { 
-    const {sport} = req.query
 
+const findByName = async ( req ,res) => {
+    const name= req.query.name
+    console.log(name);
     try {
         var courts = await Court.findAll({
-            where:{
-              sport: sport
-            },
             attributes: { exclude: ['createdAt','updatedAt'] }
           })
         for(var i = 0; i<courts.length ; i++){
@@ -24,11 +22,11 @@ const findBySport = async (req, res) => {
             })
             courts[i]= {...courts[i], establishment}
         }
-      res.send(courts)
-    } catch (e) {
-      console.log(e)
-      res.send(e)
+        const results = courts.filter(el => el.establishment.name.toLowerCase().includes(name.toLowerCase()))
+        res.send(results)    
+    } catch (error) {
+        console.log(error)
     }
-  }
+}
 
-module.exports= { findBySport }
+module.exports = {findByName}
