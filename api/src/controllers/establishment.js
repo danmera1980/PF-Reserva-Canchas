@@ -123,8 +123,7 @@ const createEstablishment = async (req, res, next)=>{
           await establishmentCreated.addUser(user);
         
           await User.update(
-            {hasEstablishment:true,
-            isAdmin:true         },  
+            {hasEstablishment:true},  
             { where:{id:userId} })
 
             res.send('establishment created')
