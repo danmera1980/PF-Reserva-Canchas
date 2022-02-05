@@ -124,8 +124,8 @@ export default function UserEdit(){
             {/* <Link to='/' ><button className='btnBack' >Volver</button>  </Link>
             <h1 className="title">Crea una Cancha</h1> */}
             <div className="flex justify-center">
-            
-                <form className="md:mx-56 lg:w-full lg:mx-[500px] flex-col justify-center align-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={(e) => handleSubmit(e)} >
+                <form className="md:mx-56 lg:w-full lg:mx-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={(e) => handleSubmit(e)} >
+                {input.img? <img className="w-36 h-36 bg-cover rounded-full" src={input.img}   /> : null}
                     <input type='hidden' value={userToken}/>
                     <div className="relative mt-10">
                         <input 
@@ -198,7 +198,7 @@ export default function UserEdit(){
                         )}
                     </div>
                     <div className="mb-4 relative mt-3 bg-indigo-400 text-center hover:bg-indigo-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    
+                        
                         <input className="absolute top-0 right-0 left-0 bottom-0 w-full h-full opacity-0" autoComplete="off" placeholder=" " type="file" accept="image/*" name="logoImage" id="input_img" onChange={fileChange}/>
                         <label className="text-white " for="input_img">Añadir Imagen</label>
         
