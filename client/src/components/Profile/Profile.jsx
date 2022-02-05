@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../assets/img/logo.png";
 import Header from "../Header/Header";
-import Card from "../Card/Card";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,12 +10,44 @@ import {
   faMoneyCheckAlt,
   faThLarge,
 } from "@fortawesome/free-solid-svg-icons";
+import Card from "../Card/Card";
 
 function Profile() {
+  // const [visual, setVisual] = useState("bookings");
+
+  // const switchVisual = (visual) => {
+  //   switch (visual) {
+  //     case "profile":
+  //       return <Profile />;
+  //     default:
+  //       <Card />;
+  //   }
+  // };
+
+  const Switch = (props) => {
+    const { test, children } = props;
+    // filter out only children with a matching prop
+    return children.find((child) => {
+      return children.find((child) => {
+        return child.props.value === test;
+      });
+    });
+  };
+
+  const Sample = (props) => {
+    const someTest = true;
+    return (
+      <Switch test={someTest}>
+        <div value={"profile"}></div>
+        <div value={"card"}></div>
+      </Switch>
+    );
+  };
+
   return (
     <div className="dark:bg-darkPrimary">
       <Header />
-      <div className="md:max-w-[1200px] m-auto dark:bg-darkSecondary">
+      <div className="md:max-w-[1200px] m-auto dark:bg-darkSecondary antialiased">
         <div className="h-36 bg-[#F4B30B]"></div>
         <div className="md:grid md:grid-cols-2 xl:grid-cols-[30%,70%] h-3/4">
           <div>
@@ -40,26 +71,21 @@ function Profile() {
                   <FontAwesomeIcon icon={faMoneyCheckAlt} size={"2x"} />
                   <p>Transacciones</p>
                 </button>
-                  <Link to={"/establishmentprofile"}>
-                    <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all">
-                      <FontAwesomeIcon icon={faFutbol} size={"2x"} />
-                      <p>Establecimiento</p>
-                    </button>
-                  </Link>
-                <Link to={"/useredit"}>
+                <Link to={"/establishmentprofile"}>
+                  <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all">
+                    <FontAwesomeIcon icon={faFutbol} size={"2x"} />
+                    <p>Establecimiento</p>
+                  </button>
+                </Link>
                 <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all">
                   <FontAwesomeIcon icon={faCog} size={"2x"} />
                   <p>Editar perfil</p>
                 </button>
-                </Link>
               </div>
             </div>
           </div>
           <div className="pt-7 md:overflow-auto md:max-h-fit">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {/* <div>{switchVisual(visual)}</div> */}
           </div>
         </div>
       </div>
