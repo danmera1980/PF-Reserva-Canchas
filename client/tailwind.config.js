@@ -4,13 +4,18 @@ module.exports = {
   theme: {
     extend: {
       backgroundColor: {
-        primary: "var(--color-bg-primary)",
-        secondary: "var(--color-bg-secondary)",
+        lightPrimary: "var(--light-bg-primary)",
+        lightSecondary: "var(--light-bg-secondary)",
+        darkPrimary: "var(--dark-color-bg-primary)",
+        darkSecondary: "var(--dark-color-bg-secondary)",
       },
       textColor: {
-        accent: "var(--color-text-accent)",
-        primary: "var(--color-text-primary)",
-        secondary: "var(--color-text-secondary)",
+        lightPrimary: "var(--light-text-primary)",
+        lightSecondary: "var( --light-text-secondary)",
+        lightAccent: "var(--light-text-accent)",
+        darkPrimary: "var(--dark-color-text-primary)",
+        darkSecondary: "var( --dark-color-text-secondary)",
+        darkAccent: "var(--dark-color-text-accent)",
       },
     },
   },

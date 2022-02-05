@@ -9,7 +9,7 @@ import "./Home.scss";
 
 function Home() {
   return (
-    <div className="home">
+    <div className="home dark:bg-darkPrimary dark:text-darkPrimary">
       <Header />
       <div>
         <div>

@@ -12,8 +12,8 @@ header {
 }
 
 .logo {
-  max-width: 243px;
   filter: var(--shadow);
+  max-width: 243px;
 }
 
 .login {
@@ -30,7 +30,7 @@ header {
 }
 
 .btn_sign_in:hover {
-  color: green;
+  color: var( --dark-color-bg-secondary);
 }
 
 .btn_sign_in svg {
@@ -66,5 +66,5 @@ header {
 
 .login .dropdown:hover .dropdown-menu {
   display: block;
-  background-color: #8bfa37;
+  background-color: whitesmoke;
 }

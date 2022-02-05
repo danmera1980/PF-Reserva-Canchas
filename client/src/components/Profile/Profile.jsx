@@ -14,9 +14,9 @@ import {
 
 function Profile() {
   return (
-    <div>
+    <div className="dark:bg-darkPrimary">
       <Header />
-      <div className="md:max-w-[1200px] m-auto">
+      <div className="md:max-w-[1200px] m-auto dark:bg-darkSecondary">
         <div className="h-36 bg-[#F4B30B]"></div>
         <div className="md:grid md:grid-cols-2 xl:grid-cols-[30%,70%] h-3/4">
           <div>

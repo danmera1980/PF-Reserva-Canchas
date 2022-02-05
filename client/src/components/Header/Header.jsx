@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/img/logo.png";
-// import logo_white from "../../assets/img/logo_white.png";
+import logo_white from "../../assets/img/logo_white.png";
 import userImage from "../../assets/img/user.png";
 import "./Header.scss";
 
@@ -21,7 +21,7 @@ function Header() {
 
   useEffect(() => {
     localStorage.getItem("key") !== "" ? setLogged(true) : setLogged(false);
-  }, []);
+  }, [darkMode]);
 
   const logOut = () => {
     localStorage.setItem("key", "");
@@ -29,11 +29,11 @@ function Header() {
   };
 
   return (
-    <div className="head dark:bg-black">
+    <div className="head dark:bg-darkPrimary">
       <header className="header">
         <div className="logo">
           <a href="/">
-            <img src={darkMode ? logo : logo} alt="logo here" />
+            <img src={darkMode ? logo_white : logo} alt="logo here" />
           </a>
         </div>
         <div>
@@ -41,17 +41,18 @@ function Header() {
         </div>
         {logged ? (
           <div className="login">
-            <div className="dropdown inline-block relative hover:shadow filter hover:">
+            <div className="dropdown inline-block relative hover:shadow filter">
               <button className="btn_signed_in">
                 <img
                   className="userLoggedImage"
                   src={userImage}
                   alt="user here"
                 />
-                <FontAwesomeIcon
-                  icon={faAngleDown}
-                  color={darkMode ? "white" : "black"}
-                />
+                {darkMode ? (
+                  <FontAwesomeIcon icon={faAngleDown} color={"white"} />
+                ) : (
+                  <FontAwesomeIcon icon={faAngleDown} color={"black"} />
+                )}
               </button>
               <ul className="dropdown-menu absolute hidden">
                 <li>

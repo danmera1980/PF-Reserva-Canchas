@@ -9,7 +9,7 @@ function Footer() {
   return (
     <div className='footer'>
       <div className='footer__info'>
-        <h2>{createdBy}</h2>
+        <h2 className='dark:text-darkPrimary'>{createdBy}</h2>
         <div className='social-media'>
           <FontAwesomeIcon icon={faFacebookF} />
           <FontAwesomeIcon icon={faInstagram} />
