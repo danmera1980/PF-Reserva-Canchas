@@ -9,24 +9,40 @@
 }
 
 :root {
-   --ff-primary: 'Roboto', sans-serif;
+  --ff-primary: "Roboto", sans-serif;
 
-   --fw-reg: 300;
-   --fw-bold: 900;
+  --fw-reg: 300;
+  --fw-bold: 900;
 
-   --clr-light: #fff;
-   --clr-background: #FFFEE6;
-   --clr-dark: rgba(114, 110, 247, 0.46);
-   --clr-accent: #000;
-   --clr-font: #000;
+  --clr-light: #fff;
+  --clr-background: #fffee6;
+  --clr-dark: rgba(114, 110, 247, 0.46);
+  --clr-accent: #000;
+  --clr-font: #000;
 
-   --shadow: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.25));
+  --shadow: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.25));
 
-   --fs-h1: 4.5em;
-   --fs-h2: 2.2rem;
-   --fs-h3: 1.5rem;
-   --fs-body: 1.125rem;
-   --fs-btn: .875rem
+  --fs-h1: 4.5em;
+  --fs-h2: 2.2rem;
+  --fs-h3: 1.5rem;
+  --fs-body: 1.125rem;
+  --fs-btn: 0.875rem;
+}
+
+.dark {
+  --color-bg-primary: #2d3748;
+  --color-bg-secondary: #283141;
+  --color-text-primary: #f7fafc;
+  --color-text-secondary: #e2e8f0;
+  --color-text-accent: #81e6d9;
+}
+
+.light {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #edf2f7;
+  --color-text-primary: #2d3748;
+  --color-text-secondary: #4a5568;
+  --color-text-accent: #2b6cb0;
 }
 
 body {
@@ -45,20 +61,20 @@ code {
     monospace;
 }
 
-h1{ 
-  font-size: var(--fs-h1); 
-  color: var(--clr-accent); 
+h1 {
+  font-size: var(--fs-h1);
+  color: var(--clr-accent);
   font-weight: var(--fw-bold);
 }
 
-h2{ 
-  font-size: var(--fs-h2); 
-  color: var(--clr-accent); 
+h2 {
+  font-size: var(--fs-h2);
+  color: var(--clr-accent);
   font-weight: var(--fw-bold);
 }
 
-h3{ 
-  font-size: var(--fs-h3); 
-  color: var(--clr-accent); 
+h3 {
+  font-size: var(--fs-h3);
+  color: var(--clr-accent);
   font-weight: var(--fw-bold);
 }

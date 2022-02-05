@@ -1,16 +1,17 @@
 module.exports = {
+  darkMode: 'class',
   content: ["./src/components/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      fonts: {
-        primaryFont: "--ff-primary",
-        regular : "--fw-reg",
-        strong: " --fw-bold"
+      backgroundColor: {
+        primary: "var(--color-bg-primary)",
+        secondary: "var(--color-bg-secondary)",
       },
-      colors: {
-       fontColor: "--clr-font",
-       dark: "--clr-dark"
-      }
+      textColor: {
+        accent: "var(--color-text-accent)",
+        primary: "var(--color-text-primary)",
+        secondary: "var(--color-text-secondary)",
+      },
     },
   },
   plugins: [require("tailwindcss"), require("precss"), require("autoprefixer")],

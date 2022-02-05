@@ -1,4 +1,3 @@
-import "./App.css";
 import "../src/styles/index.scss";
 import { Route } from "react-router-dom";
 import React from "react";
@@ -15,7 +14,7 @@ import UserEdit from './components/UserEdit/UserEdit';
 function App() {
   return (
     <React.Fragment>
-      <div className="App">
+      <div>
         <Route exact path="/" component={Home} />
         <Route exact path="/court" component={CourtCreate} />
         <Route exact path="/results" component={Results} />

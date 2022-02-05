@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import useDarkMode from '../DarkModeToggle/darkModeToggle';
+import Toggle from '../DarkModeToggle/Toggle';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignInAlt, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faSignInAlt, faAngleDown, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/img/logo.png';
 import userImage from '../../assets/img/user.png';
-import Profile from "../Profile/Profile.jsx";
 import './Header.scss';
 
 
 function Header() {
     const [ logged, setLogged] = useState(false);
+    const [darkMode, toggleDarkMode] = useDarkMode();
     const signinText = "Ingresar";
     const registerText = "Registrarse";
     const profileText = "Mi Perfil"
@@ -31,6 +33,10 @@ function Header() {
             <header className='header'>
                 <div className='logo'>
                     <a href="/"><img src={logo} alt='logo here'/></a>
+                </div>
+                <div>
+                    <Toggle/>
+                {/* <button className="inline-block" onClick={() => toggleDarkMode()}>{darkMode ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}</button> */}
                 </div>
                 {logged ?
                     <div className='login'>
