@@ -123,8 +123,7 @@ const createEstablishment = async (req, res, next)=>{
           await establishmentCreated.addUser(user);
         
           await User.update(
-            {hasEstablishment:true,
-            isAdmin:true         },  
+            {hasEstablishment:true},  
             { where:{id:userId} })
 
             res.send('establishment created')
@@ -138,10 +137,9 @@ const createEstablishment = async (req, res, next)=>{
     }
     
 }
-const addUsertoEstablishment = async (req, res, next)=>{
+const addUserToEstablishment = async (req, res, next)=>{
 
-    const {email} = req.body
-    const { establishmentId} = req.params
+    const {email,establishmentId } = req.body
     
     let user = await User.findOne({
         where: { email: email,
@@ -178,4 +176,4 @@ const addUsertoEstablishment = async (req, res, next)=>{
 
 
 
-module.exports = {getEstablishmentsFromDB, createEstablishment, getEstablishmentsName, addUsertoEstablishment, getEstabIdByUserId}
+module.exports = {getEstablishmentsFromDB, createEstablishment, getEstablishmentsName, addUserToEstablishment, getEstabIdByUserId}
