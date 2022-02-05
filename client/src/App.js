@@ -11,6 +11,7 @@ import Register from "./components/Register/Register";
 import SiteCreate from "./components/SiteCreate/SiteCreate";
 import Profile from "./components/Profile/Profile";
 import UserEdit from './components/UserEdit/UserEdit';
+import EstablishmentProfile from "./components/EstablishmentProfile/EstablishmentProfile";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/useredit" component={UserEdit} />
+        <Route exact path="/establishmentprofile" component={EstablishmentProfile} />
       </div>
     </React.Fragment>
   );
