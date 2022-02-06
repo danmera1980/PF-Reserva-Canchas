@@ -1,5 +1,6 @@
+import { SERVER_URL } from './actionNames';
+
 const axios = require('axios');
-const serverUrl = 'localhost';
 
 
 
@@ -7,7 +8,7 @@ export function postCourt(payload) {
     try {
       return async function (dispatch) {
         const response = await axios.post(
-          `http://${serverUrl}:3001/court`,
+          `${SERVER_URL}/court`,
           payload
         );
         return response;

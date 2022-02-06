@@ -68,7 +68,6 @@ const Login = () => {
     if (userInfo.email && userInfo.password) {
       dispatch(loginUser(userInfo));
       history.push("/");
-      window.location.reload(true);
       setUserInfo(initialState);
     } else {
       Swal.fire({
@@ -88,7 +87,7 @@ const Login = () => {
             onFailure={responseFailure}
             cookiePolicy={"single_host_origin"}
           />
-          ,
+          
         </div>
         <div className="flex justify-center">
           <form className="md:w-3/5 lg:w-2/5 flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={handleSubmit}>

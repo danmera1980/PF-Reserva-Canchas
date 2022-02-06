@@ -3,11 +3,15 @@ import Google from "../../assets/img/google.png";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { registerUser } from "../../redux/actions/users";
+import { loginWithGoogle, registerUser } from "../../redux/actions/users";
 import { useHistory } from "react-router";
 import { validate } from "../../helpers";
 import "./Register.scss";
-import Swal from 'sweetalert2';
+
+import Swal from "sweetalert2";
+import GoogleLogin from "react-google-login";
+
+
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -26,8 +30,21 @@ const Register = () => {
   const [userInfo, setUserInfo] = useState(initialState);
   const [errors, setErrors] = useState({});
 
-  const google = () => {
-    window.open("http://localhost:5000/auth/google", "_self");
+
+  const responseSuccess = (response) => {
+    console.log(response);
+    dispatch(loginWithGoogle(response));
+    Swal.fire({
+      title: `Sesion iniciada`,
+    });
+    history.push("/");
+  };
+
+  const responseFailure = (response) => {
+    Swal.fire({
+      title: `Hubo un error`,
+    });
+    console.log(response);
   };
   const handleChange = (e) => {
     e.preventDefault();
@@ -65,10 +82,18 @@ const Register = () => {
       <h1 className="flex justify-center text-xl text-indigo-800">Registrate</h1>
       <br/>
       <div className="">
+        
+         
+          
         <div className="flex justify-center cursor-pointer">
-          <div className="flex justify-center text-green-400 bg-slate-500 h-10 w-24 items-center rounded-md" onClick={google}>
-            <img className="" src={Google} alt="" />
-            Google
+        <div className="flex justify-center text-green-400 bg-slate-500 h-10 w-24 items-center rounded-md">
+          <GoogleLogin
+            clientId="325119971427-qq0udfk49hkpt0qrbbhfia9bbo6vjs8u.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={responseSuccess}
+            onFailure={responseFailure}
+            cookiePolicy={"single_host_origin"}
+          />
           </div>
         </div>
         <div className="flex justify-center">
