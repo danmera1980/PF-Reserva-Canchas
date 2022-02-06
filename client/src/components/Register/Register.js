@@ -7,8 +7,10 @@ import { loginWithGoogle, registerUser } from "../../redux/actions/users";
 import { useHistory } from "react-router";
 import { validate } from "../../helpers";
 import "./Register.scss";
+
 import Swal from "sweetalert2";
 import GoogleLogin from "react-google-login";
+
 
 
 const Register = () => {
@@ -63,7 +65,13 @@ const Register = () => {
     e.preventDefault();
 
     dispatch(registerUser(userInfo));
-    alert("Registro exitoso");
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Registro exitoso',
+      showConfirmButton: false,
+      timer: 1500
+    })
 
     history.push("/login");
     setUserInfo(initialState);
