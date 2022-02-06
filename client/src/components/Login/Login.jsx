@@ -40,7 +40,7 @@ const Login = () => {
     Swal.fire({
       title: `Sesion iniciada`,
     });
-    history.push("/");
+    history.push("/profile");
   };
   const responseFailure = (response) => {
     Swal.fire({
@@ -66,7 +66,7 @@ const Login = () => {
     e.preventDefault();
     if (userInfo.email && userInfo.password) {
       dispatch(loginUser(userInfo));
-      history.push("/");
+      history.push("/profile");
       setUserInfo(initialState);
     } else {
       Swal.fire({

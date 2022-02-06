@@ -60,13 +60,13 @@ export function loginUser(payload) {
 }
 
 export function loginWithGoogle(response) {
+
   const headers = {
     Authorization: `Bearer ${response.tokenId}`,
   };
-  console.log('action', response.tokenId)
   return function (dispatch) {
     axios
-      .post(`${SERVER_URL}/users/googleRegister`, {}, {
+      .post(`${SERVER_URL}/users/googleRegister`, response, {
         headers: headers,
       })
       .then((user) => {

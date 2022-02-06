@@ -2,13 +2,14 @@ const bcrypt = require("bcrypt");
 const { User } = require("../db");
 
 //Temp function to load data
-const { Establishment, Site, Court } = require('../db')
-const usersData = require('../TempData/usersData.json');
-const establishmentsData = require('../TempData/establishmentsData.json');
-const sitesData = require('../TempData/sitesData.json');
-const courtsData = require('../TempData/courtsData.json');
+const { Establishment, Site, Court } = require("../db");
+const usersData = require("../TempData/usersData.json");
+const establishmentsData = require("../TempData/establishmentsData.json");
+const sitesData = require("../TempData/sitesData.json");
+const courtsData = require("../TempData/courtsData.json");
+const { use } = require("../routes/routerUser");
 
-const loadDataToDB =  () => {
+const loadDataToDB = () => {
   usersData.map(async (user) => {
     // console.log(user.name)
     const passwordHash = await bcrypt.hash("password123", 10);
@@ -21,9 +22,9 @@ const loadDataToDB =  () => {
         phone: user.phone,
         img: user.img,
         hasEstablishment: user.hasEstablishment,
-        isAdmin: user.isAdmin
-      }
-    })
+        isAdmin: user.isAdmin,
+      },
+    });
   });
 
   establishmentsData.map(async (est) => {
@@ -34,10 +35,10 @@ const loadDataToDB =  () => {
         logoImage: est.logoImage,
         timeActiveFrom: est.timeActiveFrom,
         timeActiveTo: est.timeActiveTo,
-        responsableId: String(est.responsableId)
-      }
+        responsableId: String(est.responsableId),
+      },
     });
-  })
+  });
 
   sitesData.map(async (site) => {
     await Site.findOrCreate({
@@ -48,13 +49,11 @@ const loadDataToDB =  () => {
         street: site.street,
         streetNumber: site.streetNumber,
         latitude: site.latitude,
-        longitude: site.longitude
+        longitude: site.longitude,
         // establishmentId: site.establishmentId
-      }
+      },
     });
-  })
-
-
+  });
 
   courtsData.map(async (court) => {
     // console.log(court)
@@ -65,12 +64,12 @@ const loadDataToDB =  () => {
         shiftLength: court.shiftLength,
         price: court.price,
         image: [court.image],
-        sport: court.sport
+        sport: court.sport,
         // siteId: court.siteId
-      }
+      },
     });
-  })
-}
+  });
+};
 
 // loadDataToDB();
 
@@ -89,19 +88,16 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
-const getUserByID = async (req, res, next) => {
+const getUserProfile = async (req, res, next) => {
   try {
     // ver esta porqueria que funcione con el idea que me manda el front y el que pido
-    const { user } = req;
+    console.log(req.user);
 
-    const { id } = req.params;
-
-    if ( !user.isAdmin && user.id !== parseInt(id) ) {
-      throw new Error("not authorized");
-    }
-
-    const wantedUser = await User.findOne({ where:{id},
-      attributes: {exclude: ['passwordHash']}})
+    const {id} = req.user.id
+    const wantedUser = await User.findOne({
+      where: { id },
+      attributes: { exclude: ["passwordHash"] },
+    });
     res.send(wantedUser);
   } catch (e) {
     next(e);
@@ -109,14 +105,9 @@ const getUserByID = async (req, res, next) => {
 };
 
 const registerGoogle = async (req, res, next) => {
-  try { 
-    const { user } = req;
-
-    const wantedUser = await User.findOne({ where: {id: user.id},
-      attributes: {exclude: ['passwordHash']}})
-    res.send(wantedUser);
-
- 
+  try {
+    const user  = req.user;
+    res.status(200).json(user.id);
   } catch (e) {
     next(e);
   }
@@ -143,22 +134,22 @@ const registerUser = async (req, res, next) => {
 
 const editUser = async (req, res, next) => {
   try {
-    if (!req.user)
-      return res.status(401).json({ error: "Authentication required" });
-    const { id } = req.user;
-    const { name, lastname, img, phone, hasEstablishment } = req.body;
-    
-    const user = await User.findOne({ where: { id } });
-    if (!user) {
+   
+    const id  = req.user.id;
+    const { name, lastname, img, phone } = req.body;
+    const changedUser = await User.findOne({ where: { id } });
+    if (!changedUser) {
       throw new Error("User not fund");
     }
-    name && (user.name = name);
-    lastname && (user.lastname = lastname);
-    img && (user.img = img);
-    phone && (user.phone = phone);
-    hasEstablishment && (user.hasEstablishment = hasEstablishment);
-    await user.save();
-    res.send(user);
+    name && (changedUser.name = name);
+    lastname && (changedUser.lastname = lastname);
+    img && (changedUser.img = img);
+    phone && (changedUser.phone = phone);
+
+    await changedUser.save();
+    console.log(changedUser.name)
+
+    res.status(200).json({changedUser});
   } catch (e) {
     next(e);
   }
@@ -166,8 +157,8 @@ const editUser = async (req, res, next) => {
 
 module.exports = {
   getAllUsers,
-  getUserByID,
+  getUserProfile,
   registerUser,
   editUser,
-  registerGoogle
+  registerGoogle,
 };
