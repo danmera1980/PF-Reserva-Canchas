@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../assets/img/logo.png";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -13,36 +13,13 @@ import {
 import Card from "../Card/Card";
 
 function Profile() {
-  // const [visual, setVisual] = useState("bookings");
+  const [visual, setVisual] = useState("bookings");
 
-  // const switchVisual = (visual) => {
-  //   switch (visual) {
-  //     case "profile":
-  //       return <Profile />;
-  //     default:
-  //       <Card />;
-  //   }
-  // };
 
-  const Switch = (props) => {
-    const { test, children } = props;
-    // filter out only children with a matching prop
-    return children.find((child) => {
-      return children.find((child) => {
-        return child.props.value === test;
-      });
-    });
-  };
-
-  const Sample = (props) => {
-    const someTest = true;
-    return (
-      <Switch test={someTest}>
-        <div value={"profile"}></div>
-        <div value={"card"}></div>
-      </Switch>
-    );
-  };
+  const onButtonSelection = (option) => {
+    console.log(option)
+    setVisual(option)
+  }
 
   return (
     <div className="dark:bg-darkPrimary">
@@ -63,21 +40,21 @@ function Profile() {
 
             <div className="md:grid md:grid-cols-2 md:w-max">
               <div className="grid grid-cols-2 gap-4 ml-5 md:ml-7 max-w-xs">
-                <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all">
+                <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all" onClick={()=>onButtonSelection('bookings')}>
                   <FontAwesomeIcon icon={faThLarge} size={"2x"} />
                   <p>Mis Reservas</p>
                 </button>
-                <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all">
+                <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all" onClick={()=>onButtonSelection('transactions')}>
                   <FontAwesomeIcon icon={faMoneyCheckAlt} size={"2x"} />
                   <p>Transacciones</p>
                 </button>
-                <Link to={"/establishmentprofile"}>
-                  <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all">
+                {/* <Link to={"/establishmentprofile"}> */}
+                  <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all" onClick={()=>onButtonSelection('establishments')}>
                     <FontAwesomeIcon icon={faFutbol} size={"2x"} />
                     <p>Establecimiento</p>
                   </button>
-                </Link>
-                <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all">
+                {/* </Link> */}
+                <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all" onClick={()=>onButtonSelection('editProfile')}>
                   <FontAwesomeIcon icon={faCog} size={"2x"} />
                   <p>Editar perfil</p>
                 </button>
@@ -85,7 +62,20 @@ function Profile() {
             </div>
           </div>
           <div className="pt-7 md:overflow-auto md:max-h-fit">
-            {/* <div>{switchVisual(visual)}</div> */}
+            {(() => {
+              switch(visual) {
+                case 'bookings':
+                  return <Card />
+                case 'transactions':
+                  return <div>Mi transaccion</div>
+                case 'establishments':
+                  return <div>Mi establecimiento</div>
+                case 'editProfile':
+                  return <div>Mi perfil</div>
+                default:
+                  return<div>Default</div>
+              }
+            })()}
           </div>
         </div>
       </div>
