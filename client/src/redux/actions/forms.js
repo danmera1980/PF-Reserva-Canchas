@@ -1,12 +1,10 @@
-import {GET_ESTABLISHMENT_BY_ID, GET_SITES_BY_ESTAB_ID} from './actionNames';
+import {GET_ESTABLISHMENT_BY_ID, GET_SITES_BY_ESTAB_ID, SERVER_URL} from './actionNames';
 const axios = require('axios');
-const serverUrl = 'localhost';
 
 export function getEstablishmentByUser(userId){
     return async function(dispatch){
         try {
-            let user = await axios.get(`http://${serverUrl}:3001/establishment/${userId}`)
-
+            let user = await axios.get(`${SERVER_URL}/establishment/${userId}`)
             return dispatch({
                 type: GET_ESTABLISHMENT_BY_ID,
                 payload: user.data.establishmentId 
@@ -25,7 +23,7 @@ export function getEstablishmentByUser(userId){
 export function getSitesByEstablishmentId(estabId){
     return async function(dispatch){
         try {
-            let info = await axios.get(`http://${serverUrl}:3001/site/${estabId}`)
+            let info = await axios.get(`${SERVER_URL}/site/${estabId}`)
             return dispatch({
                 type: GET_SITES_BY_ESTAB_ID,
                 payload: info.data 

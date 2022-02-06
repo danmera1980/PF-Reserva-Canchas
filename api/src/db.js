@@ -43,6 +43,7 @@ const { User, Establishment, Site, Court } = sequelize.models;
 // Product.hasMany(Reviews);
 
 
+
 Establishment.hasMany(User, {as: 'users', foreignKey:'establishmentId'})
 Establishment.hasMany(Site, { as: "sites", foreignKey: "establishmentId" });
 Site.hasMany(Court, { as: "courts", foreignKey: "siteId" });

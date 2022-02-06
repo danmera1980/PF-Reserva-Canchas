@@ -14,11 +14,16 @@
    --fw-reg: 300;
    --fw-bold: 900;
 
-   --clr-light: #fff;
+   --clr-light: white;
    --clr-background: #FFFEE6;
    --clr-dark: rgba(114, 110, 247, 0.46);
    --clr-accent: #000;
    --clr-font: #000;
+   --clr--claro: white;
+   --clr--medio: rgba(79, 70, 229);
+   --clr--fuerte: rgb(75, 85, 99);
+   --clr--intermedio: rgb(156 163 175);
+
 
    --shadow: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.25));
 

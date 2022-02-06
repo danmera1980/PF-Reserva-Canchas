@@ -67,7 +67,6 @@ const Login = () => {
     if (userInfo.email && userInfo.password) {
       dispatch(loginUser(userInfo));
       history.push("/");
-      window.location.reload(true);
       setUserInfo(initialState);
     } else {
       Swal.fire({
@@ -77,9 +76,9 @@ const Login = () => {
   };
   return (
     <div className="temp">
-      <h1 className="temp">Selecciona un metodo para Ingresar</h1>
+      <h1 className="flex justify-center text-xl text-indigo-800">Selecciona un metodo para Ingresar</h1>
       <div className="temp">
-        <div className="temp">
+        <div className="mt-5 flex justify-center cursor-pointer rounded-xl">
           <GoogleLogin
             clientId="325119971427-qq0udfk49hkpt0qrbbhfia9bbo6vjs8u.apps.googleusercontent.com"
             buttonText="Login"
@@ -87,40 +86,57 @@ const Login = () => {
             onFailure={responseFailure}
             cookiePolicy={"single_host_origin"}
           />
-          ,
+          
         </div>
-        <div className="temp">
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label>Email: </label>
-              <input
+        <div className="flex justify-center">
+          <form className="md:w-3/5 lg:w-2/5 flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={handleSubmit}>
+            <div className="relative ">
+              <input id="mail" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 type="email"
                 name="email"
                 value={userInfo.email}
                 placeholder="Escribe tu Email"
                 onChange={handleChange}
-              ></input>
-              {errors.email && <p>{errors.email}</p>}
+                ></input>
+                <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="mail">Email 
+                  </label>
+              {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
             </div>
-            <div>
-              <label>Contraseña: </label>
-              <input
+            <div className="relative mt-3">
+              <input id="pw" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 type="password"
                 name="password"
                 value={userInfo.password}
                 placeholder="Escribe tu contraseña"
                 onChange={handleChange}
-              ></input>
-              {errors.password && <p>{errors.email}</p>}
+                ></input>
+                <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="pw">Contraseña 
+
+                </label>
+              {errors.password && <p className="text-xs text-red-500">{errors.email}</p>}
             </div>
 
             <div>
-              <button className="temp" type="submit">
+              <button className="mt-5 w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                 Entrar
               </button>
             </div>
             <div>
-              <p>
+              <p className="mt-3 text-xl text-indigo-800">
                 ¿Aún no te has registrado?{" "}
                 <Link to="/register">Regístrate aquí</Link>
               </p>

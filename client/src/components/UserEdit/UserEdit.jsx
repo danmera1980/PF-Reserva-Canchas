@@ -41,7 +41,7 @@ export default function UserEdit(){
         lastName: '',
         img:"",
         phone:'',
-        hasEstablishment: undefined,
+        hasEstablishment: false,
     })
       
     function fileChange() {
@@ -84,7 +84,7 @@ export default function UserEdit(){
        console.log(input)
             e.preventDefault();
             console.log('input del submit',input)
-            dispatch(editUser(input));
+            dispatch(editUser(input, userToken));
 
             alert('usuario modificado!!')
             
@@ -93,7 +93,7 @@ export default function UserEdit(){
                 lastName: '',
                 img:"",
                 phone:'',
-                hasEstablishment: undefined
+                hasEstablishment: false
             })
              history.push('/')
     }    
@@ -120,7 +120,7 @@ export default function UserEdit(){
             {/* <Link to='/' ><button className='btnBack' >Volver</button>  </Link>
             <h1 className="title">Crea una Cancha</h1> */}
             <div className="flex justify-center">
-                <form className="md:mx-56 lg:w-full lg:mx-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={(e) => handleSubmit(e)} >
+                <form className="md:mx-56 lg:w-full lg:mx-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={handleSubmit} >
                 {input.img? <img className="w-36 h-36 bg-cover rounded-full" src={input.img}   /> : null}
                     <input type='hidden' value={userToken}/>
                     <div className="relative mt-10">
@@ -199,18 +199,7 @@ export default function UserEdit(){
                         <label className="text-white " htmlFor="input_img">Añadir Imagen</label>
         
                     </div>
-                    <div className="mb-4 relative group">
-                        <label className="">
-                            <input 
-                                className="mr-2 h-4 w-4 rounded-l border-x-indigo-300 text-indigo-500"
-                                onChange={e => handleCheck(e)} 
-                                type='checkbox' 
-                                name='hasEstablishment' 
-                                value={input.hasEstablishment}
-                            />
-                            <span className="text-sm">Tiene establecimiento ?</span>
-                        </label>
-                    </div>
+                   
                     <div className="flex items-center justify-between">
                         <button className='w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type="submit" >Guardar cambios</button>
                     </div>

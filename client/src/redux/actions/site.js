@@ -1,9 +1,9 @@
 import axios from 'axios';
-const serverUrl = 'localhost'
+import { SERVER_URL } from './actionNames';
 
 export const postSite = (payload) => {
     return async function() {
-        var site = await axios.post(`http://${serverUrl}:3001/site`, payload)
+        var site = await axios.post(`${SERVER_URL}/site`, payload)
         return site
     }
 }
