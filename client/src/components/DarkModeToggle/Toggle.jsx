@@ -7,7 +7,7 @@ import useDarkMode from '../DarkModeToggle/darkModeToggle';
 function Toggle() {
     const [darkMode, toggleDarkMode] = useDarkMode();
   return (
-    <div className="w-28 h-12 rounded-[200px] border-2 overflow-hidden relative bg-[url('https://leerzaam.com/wp-content/uploads/2021/03/10526.jpg')] bg-cover shadow-sm shadow-white">
+    <div className="relative rotate-90 scale-50 w-28 h-12 rounded-[200px] border-2 overflow-hidden bg-[url('https://leerzaam.com/wp-content/uploads/2021/03/10526.jpg')] bg-cover shadow-sm shadow-white">
       <input
         type="checkbox"
         className="peer transition-all hidden"
@@ -25,14 +25,14 @@ function Toggle() {
           size={"2x"}
           color={"white"}
           spin={true}
-          className="absolute left-16 top-1 duration-[2s]"
+          className="absolute left-16 top-1.5 duration-[2s]"
         />{" "}
         </span>
         <FontAwesomeIcon
           icon={faMoon}
           size={"2x"}
           color={"white"}
-          className="absolute left-1 top-11 shadow-xl duration-[1s] opacity-100 peer-checked:-translate-y-10"
+          className="absolute left-1 top-[2.90rem] shadow-xl duration-[1s] opacity-100 peer-checked:-translate-y-10"
         />
     </div>
   );

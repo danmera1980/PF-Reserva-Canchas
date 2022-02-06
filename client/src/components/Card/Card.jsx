@@ -8,7 +8,7 @@ function Card() {
         <div className="dark:bg-darkPrimary dark:text-darkPrimary bg-white rounded-lg shadow-lg overflow-hidden flex flex-1 flex-col sm:grid sm:grid-cols-2">
           <Slider />
 
-          <div className="flex flex-1 flex-col p-1 font-['Roboto'] relative">
+          <div className="flex flex-1 flex-col p-1 relative">
 
             <button className="absolute right-4 top-2 block scale-125 active:scale-90 transition-all sm:right-2">
               ⭐

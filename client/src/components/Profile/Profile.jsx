@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../../assets/img/logo.png";
+import logo from "../../assets/img/logo.svg";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
@@ -10,7 +10,6 @@ import {
   faMoneyCheckAlt,
   faThLarge,
 } from "@fortawesome/free-solid-svg-icons";
-import Card from "../Card/Card";
 
 function Profile() {
   // const [visual, setVisual] = useState("bookings");
@@ -45,10 +44,10 @@ function Profile() {
   };
 
   return (
-    <div className="dark:bg-darkPrimary">
+    <div className="dark:bg-darkPrimary dark:text-white">
       <Header />
-      <div className="md:max-w-[1200px] m-auto dark:bg-darkSecondary antialiased">
-        <div className="h-36 bg-[#F4B30B]"></div>
+      <div className="md:max-w-[1200px] md:h-screen m-auto">
+        <div className="h-36 bg-[#498C8A] dark:bg-[#057276]"></div>
         <div className="md:grid md:grid-cols-2 xl:grid-cols-[30%,70%] h-3/4">
           <div>
             <img
@@ -89,9 +88,8 @@ function Profile() {
           </div>
         </div>
       </div>
-      <div className="bottom-0 left-0 right-0">
-        <Footer />
-      </div>
+
+      <Footer />
     </div>
   );
 }

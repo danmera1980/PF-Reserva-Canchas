@@ -4,8 +4,7 @@ import Toggle from "../DarkModeToggle/Toggle";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import logo from "../../assets/img/logo.png";
-import logo_white from "../../assets/img/logo_white.png";
+import logo from "../../assets/img/logo.svg";
 import userImage from "../../assets/img/user.png";
 import "./Header.scss";
 
@@ -29,16 +28,14 @@ function Header() {
   };
 
   return (
-    <div className="head dark:bg-darkPrimary">
-      <header className="header">
-        <div className="logo">
+    <div className="head bg-lightSecondary dark:bg-darkSecondary w-full">
+      <header className="header w-[90%] xl:w-[100%]">
+        <div className="logo max-w-[40%] md:max-w-2xl">
           <a href="/">
-            <img src={darkMode ? logo_white : logo} alt="logo here" />
+            <img src={logo} alt="logo here" className=""/>
           </a>
         </div>
-        <div>
-          <Toggle />
-        </div>
+        <div className="flex ">
         {logged ? (
           <div className="login">
             <div className="dropdown inline-block relative hover:shadow filter">
@@ -82,6 +79,10 @@ function Header() {
             </Link>
           </div>
         )}
+        <span className="flex-none w-[50px]">
+          <Toggle />
+          </span>
+        </div>
       </header>
     </div>
   );

@@ -1,9 +1,5 @@
 {
-    "cSpell.ignoreWords": [
-        "browserslist"
-    ],
-    "cSpell.words": [
-        "fortawesome",
-        "signup"
-    ]
+  "cSpell.ignoreWords": ["browserslist"],
+  "cSpell.words": ["fortawesome", "signup"],
+  "svg.preview.background": "transparent"
 }

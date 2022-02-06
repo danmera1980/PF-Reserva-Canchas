@@ -1,5 +1,4 @@
 .head {
-  background: var(--clr-dark);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 header {
@@ -9,11 +8,11 @@ header {
   margin: 0 auto;
   max-width: 1200px;
   color: var(--clr-accent);
+  align-items: center;
 }
 
 .logo {
   filter: var(--shadow);
-  max-width: 243px;
 }
 
 .login {
@@ -30,7 +29,7 @@ header {
 }
 
 .btn_sign_in:hover {
-  color: var( --dark-color-bg-secondary);
+  color: var(--dark-color-bg-secondary);
 }
 
 .btn_sign_in svg {
@@ -65,6 +64,47 @@ header {
 }
 
 .login .dropdown:hover .dropdown-menu {
+  border-radius: 0px 0px 10px 10px;
+  padding: 10px;
+  width: 100px;
+  z-index: 100;
   display: block;
-  background-color: whitesmoke;
+  background-color: var(--light-bg-secondary);
+  -webkit-border-radius: 0px 0px 10px 10px;
+  -moz-border-radius: 0px 0px 10px 10px;
+  -ms-border-radius: 0px 0px 10px 10px;
+  -o-border-radius: 0px 0px 10px 10px;
+  animation: growDown(300ms ease-in-out forwards);
+}
+
+.dropdown-menu li:hover{
+  color: white;
+}
+
+@keyframes growDown {
+  0% {
+    transform: scaleY(0);
+    -webkit-transform: scaleY(0);
+    -moz-transform: scaleY(0);
+    -ms-transform: scaleY(0);
+    -o-transform: scaleY(0);
+  }
+  80% {
+    transform: scaleY(1.1);
+    -webkit-transform: scaleY(1.1);
+    -moz-transform: scaleY(1.1);
+    -ms-transform: scaleY(1.1);
+    -o-transform: scaleY(1.1);
+  }
+  100% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -o-transform: scaleY(1);
+  }
+}
+
+.dark .login .dropdown:hover .dropdown-menu {
+  background: var(--dark-color-bg-secondary);
 }

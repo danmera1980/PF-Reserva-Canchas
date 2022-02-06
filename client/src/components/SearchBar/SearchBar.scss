@@ -1,54 +1,43 @@
-.search {
-    position: relative;
-    top: -40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 650px;
-    background: var(--clr-dark);
-    height: 80px;
-    border-radius: 20px;
-    margin: 0 auto;
-}
-
 .searchBar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 600px;
-    margin: 0 auto;
-    background-color: var(--clr-light);
-    // color: var(--clr-light);
-    font-size: var(--fs-btn);
-    border-radius: 15px;
-    color: var(--clr-accent);
-    padding-right: 20px;
-    filter: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+  margin: 0 auto;
+  background-color: var(--clr-light);
+  // color: var(--clr-light);
+  font-size: var(--fs-btn);
+  border-radius: 15px;
+  color: var(--clr-accent);
+  padding-right: 20px;
+  filter: var(--shadow);
 }
 
 .searchSelect,
 .searchInput {
-    display:flex;
-    flex-grow: 1;
-    width: 30%;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    margin-right: 20px;
-    margin-left: 20px;
+  display: flex;
+  flex-grow: 1;
+  width: 30%;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
-searchInput input{
-
+searchInput input {
 }
-.searchSelect select{
-    color: gray;
-    background-color: var(--clr-light);
-    height: 100%;
-    width: 90%;
+.searchSelect select {
+  color: gray;
+  background-color: var(--clr-light);
+  height: 100%;
+  width: 90%;
 }
 
-.faIcon{
-    font-size: 30px;
-    padding-left: 5px;
+.faIcon {
+  font-size: 30px;
+  padding-left: 5px;
+}
+
+@media (min-width: 768px) {
 }

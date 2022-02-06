@@ -9,11 +9,9 @@ export default function useDarkMode() {
     if (darkMode) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
-      console.log(darkMode);
     } else {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
-      console.log(darkMode);
     }
   }, [darkMode]);
 
