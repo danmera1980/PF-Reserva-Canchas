@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from '../Header/Header';
 import axios from "axios";
 import './UserEdit.scss'
+import Swal from 'sweetalert2'
+import Login from "../Login/Login";
 
 
 
@@ -29,7 +31,6 @@ function validate(input) {
 
 export default function UserEdit(){
     const dispatch = useDispatch();
-  //  const sites = useSelector ((state) => state.sites)
     const history = useHistory()
     const [errors,setErrors] = useState({});
     const userToken = useSelector((state) => state.register.userToken)
@@ -40,7 +41,6 @@ export default function UserEdit(){
         lastName: '',
         img:"",
         phone:'',
-        hasEstablishment: false,
     })
       
     function fileChange() {
@@ -85,8 +85,9 @@ export default function UserEdit(){
             console.log('input del submit',input)
             dispatch(editUser(input, userToken));
 
-            alert('usuario modificado!!')
-            
+            Swal.fire({
+                title: `Usuario modificado`,
+              });            
             setInput({
                 name:'',
                 lastName: '',
@@ -94,30 +95,14 @@ export default function UserEdit(){
                 phone:'',
                 hasEstablishment: false
             })
-             history.push('/')
+             history.push('/profile')
     }    
-
-    let handleCheck = (e)=>{
-        if(e.target.checked){
-            setInput({
-                ...input,
-                hasEstablishment: true
-            })
-        }else{
-            setInput({
-                ...input,
-                hasEstablishment: false
-            })
-        }
-    }
        
 
     return(
-
+        userToken ?
         <div className="">
             <Header />
-            {/* <Link to='/' ><button className='btnBack' >Volver</button>  </Link>
-            <h1 className="title">Crea una Cancha</h1> */}
             <div className="flex justify-center">
                 <form className="md:mx-56 lg:w-full lg:mx-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={handleSubmit} >
                 {input.img? <img className="w-36 h-36 bg-cover rounded-full" src={input.img}   /> : null}
@@ -207,6 +192,10 @@ export default function UserEdit(){
 
             </div>
             
+        </div> 
+        :
+        <div>
+        <Login/>
         </div>
         
     )

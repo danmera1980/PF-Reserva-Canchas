@@ -3,7 +3,7 @@ const userExtractor = require("../middleware/userExtractor");
 const authGoogle = require('../middleware/auth')
 const {
   getAllUsers,
-  getUserByID,
+  getUserProfile,
   registerUser,
   editUser,
   registerGoogle,
@@ -14,7 +14,7 @@ const router = Router();
 
 router.get("/", getAllUsers);
 
-router.get("/:id", userExtractor, authGoogle,  getUserByID);
+router.get("/profile", userExtractor, authGoogle,  getUserProfile);
 router.post("/googleRegister", userExtractor, authGoogle,  registerGoogle);
 
 router.post("/register", registerUser);

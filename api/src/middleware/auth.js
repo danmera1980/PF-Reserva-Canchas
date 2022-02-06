@@ -11,12 +11,9 @@ module.exports = async function (req, res, next) {
   let token = null;
   if (authorization && authorization.toLowerCase().startsWith("bearer")) {
     token = authorization.substring(7);
-  } else {
-    next();
-    return;
   }
 
-  if (!isMyToken(token)) {
+  if (token && !isMyToken(token)) {
     try {
       const ticket = await client.verifyIdToken({
         idToken: token,
@@ -35,10 +32,10 @@ module.exports = async function (req, res, next) {
       });
 
       req.user = loggedUser;
-      console.log("end auth google")
-      next();
+      console.log("end auth google");
     } catch (error) {
       return res.status(401).json({ error: "token invalid" });
     }
-  }next();
+  }
+  next();
 };
