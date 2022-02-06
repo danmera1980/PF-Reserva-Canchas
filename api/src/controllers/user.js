@@ -72,7 +72,7 @@ const loadDataToDB =  () => {
   })
 }
 
-loadDataToDB();
+// loadDataToDB();
 
 // End temp function to load data
 

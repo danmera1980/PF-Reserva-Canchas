@@ -9,7 +9,11 @@ module.exports = {
       },
       colors: {
        fontColor: "--clr-font",
-       dark: "--clr-dark"
+       dark: "--clr-dark",
+       fondo: "--clr-claro",
+       medio: "--clr--medio",
+       gris: "--clr--fuerte",
+       grisMedio: "--clr--intermedio"
       }
     },
   },
