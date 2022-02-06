@@ -94,7 +94,7 @@ export default function PostEstablishment() {
         Array.from(photos.files).map(async (photo) => {
           const body = new FormData();
           body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
-          body.append("image", photo.files[0]);
+          body.append("image", photo);
     
           await axios({
             method: "post",
@@ -160,7 +160,7 @@ export default function PostEstablishment() {
                    
                         <div className="mb-4 relative mt-3 bg-indigo-400 text-center hover:bg-indigo-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             <input className=" absolute top-0 right-0 left-0 bottom-0 w-full h-full opacity-0"  type="file" accept="image/*" name="logoImage" id="input_img" onChange={fileChange}></input>
-                            <label className="text-white" htmlFor="input_imp">Logo-Imagen </label>
+                            <label className="text-white" htmlFor="input_imp">Añadir logo</label>
                         </div>
                     
                     
