@@ -24,7 +24,7 @@ const registerReducer = (state = initialState, action) => {
         userId: action.payload.id,
       };
     case LOGINGOOGLE:
-      console.log(action.payload[1])
+      console.log(action.payload[1],action.payload[0], 'reducer google')
       return {
         ...state,
         userToken: action.payload[1], 
