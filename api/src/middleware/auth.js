@@ -35,6 +35,7 @@ module.exports = async function (req, res, next) {
       });
 
       req.user = loggedUser;
+      console.log("end auth google")
       next();
     } catch (error) {
       return res.status(401).json({ error: "token invalid" });
