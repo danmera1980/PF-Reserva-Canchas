@@ -49,6 +49,7 @@ Establishment.hasMany(Site, { as: "sites", foreignKey: "establishmentId" });
 Site.hasMany(Court, { as: "courts", foreignKey: "siteId" });
 
 
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');

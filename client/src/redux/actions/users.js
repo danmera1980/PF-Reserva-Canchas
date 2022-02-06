@@ -45,7 +45,7 @@ export function registerUser(payload) {
   };
 }
 export function loginUser(payload) {
-  console.log(payload);
+  console.log(payload)
   return async function (dispatch) {
     await axios
       .post(`${SERVER_URL}/users/login`, payload)
