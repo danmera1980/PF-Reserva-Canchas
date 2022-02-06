@@ -307,10 +307,12 @@ export default function CourtCreate(){
                     </div>
                     <br/>
                     <div>
+                        <Link to="/court">
                         <button className='mt-5 w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type="submit" >Crear Cancha</button>
+                        </Link>
                         <br/>
                         <br/>
-                        <Link to='/' ><button className='w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded' >Volver</button>  </Link>
+                        <Link to='/establishmentprofile' ><button className='w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded' >Volver</button>  </Link>
                     </div>
                 </form>
             </div>
