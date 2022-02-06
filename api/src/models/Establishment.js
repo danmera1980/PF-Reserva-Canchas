@@ -4,7 +4,7 @@ const { DataTypes, DATEONLY } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('establishment', {
-    id:{// Este sería el CUIT/CUIL, correcto?
+    cuit:{// Este sería el CUIT/CUIL, correcto?
       type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true

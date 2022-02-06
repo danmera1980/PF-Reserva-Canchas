@@ -1,7 +1,7 @@
 /** @format */
 import { Link } from "react-router-dom";
 import GoogleLogin from "react-google-login";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser, loginWithGoogle } from "../../redux/actions/users";
 import { useHistory } from "react-router";
@@ -33,6 +33,7 @@ const Login = () => {
     password: "",
   };
   const [userInfo, setUserInfo] = useState(initialState);
+  
 
   const responseSuccess = (response) => {
     console.log(response);

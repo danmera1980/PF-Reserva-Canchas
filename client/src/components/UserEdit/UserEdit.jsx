@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from "react";
-import {Link, useHistory} from 'react-router-dom';
+import React, {useState} from "react";
+import {useHistory} from 'react-router-dom';
 import { editUser } from "../../redux/actions/users";
-import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms";
 import { useDispatch, useSelector } from "react-redux";
 import Header from '../Header/Header';
 import axios from "axios";

@@ -3,6 +3,8 @@ const router = Router();
 const validator = require('express-joi-validation').createValidator({})
 const Joi = require('joi')
 const { postCourt} = require('../controllers/court');
+const userExtractor = require("../middleware/userExtractor");
+const authGoogle = require('../middleware/auth')
 
 const bodySchema = Joi.object({
     siteId: Joi.string().regex(/^[a-zA-Z0-9-]+$/).min(2).max(40).required(),
@@ -14,6 +16,6 @@ const bodySchema = Joi.object({
     image: Joi.array().items(Joi.string().regex(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/).min(8)).allow(null),
 })
 
-router.post('/', validator.body(bodySchema), postCourt)
+router.post('/', userExtractor, authGoogle, validator.body(bodySchema), postCourt)
 
 module.exports = router;

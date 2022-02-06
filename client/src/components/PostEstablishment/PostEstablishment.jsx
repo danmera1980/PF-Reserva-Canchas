@@ -3,15 +3,16 @@
 import React, {useState} from "react";
 import axios from 'axios';
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postEstablishment } from "../../redux/actions/establishment.js";
+import {getEstablishmentByUser} from "../../redux/actions/forms.js"
 import Swal from 'sweetalert2';
 import "./PostEstablishment.scss";
 
 function validate(input) {
  
     let errors = {};
-    if(input.id !=='' && !/^[0-9']{2,20}$/.test(input.id)) {
+    if(input.cuit !=='' && !/^[0-9']{2,20}$/.test(input.cuit)) {
         errors.cuit = "Ingrese sólo números"
     }
     if(input.name !=='' && !/^[a-zA-Z0-9_\-' ':]{1,20}$/.test(input.name)) {
@@ -28,20 +29,19 @@ function validate(input) {
 
 export default function PostEstablishment() {
 
-    const userId = 1 // acá falta ver cómo va a venir este dato (estado global, params)
+    const userToken = useSelector((state) => state.login.userToken)
+    const userId = useSelector((state) => state.login.userId)
 
     const dispatch = useDispatch()
     const history = useHistory()
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
-        id: '',
+        cuit: '',
         name: "",
         logoImage: '',
         timeActiveFrom: '',
         timeActiveTo: '',
-        userId:userId
         
-
     })
     function handleChange(e) {
         setInput({
@@ -57,7 +57,7 @@ export default function PostEstablishment() {
       //  console.log('soy input', input)
 
         e.preventDefault()
-        if(  errors.hasOwnProperty("id") || errors.hasOwnProperty("name") || errors.hasOwnProperty("timeActiveFrom") || 
+        if(  errors.hasOwnProperty("cuit") || errors.hasOwnProperty("name") || errors.hasOwnProperty("timeActiveFrom") || 
             errors.hasOwnProperty("timeActiveTo") ) {
 
                 Swal.fire({
@@ -65,7 +65,7 @@ export default function PostEstablishment() {
                     text: 'Faltan completar campos obligatorios'
                   })
             } else {
-        dispatch(postEstablishment(input))
+        dispatch(postEstablishment(input,userToken))
         Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -74,16 +74,17 @@ export default function PostEstablishment() {
             timer: 1500
           })
         setInput({
-            id: '',
+            cuit: '',
             name: "",
             logoImage: '',
             rating: '',
             timeActiveFrom: '',
             timeActiveTo: '',
-            userId:userId
 
                
-                })
+        })
+        dispatch(getEstablishmentByUser(userId));
+
                 history.push("/")
             }
     }
@@ -117,13 +118,23 @@ export default function PostEstablishment() {
 
     return (
         <div>
-
+        {
+            !userToken 
+            ? Swal.fire({
+                title: 'Debes iniciar sesión para crear un establecimiento',
+                timer: 3000,
+                text: 'Serás redirigido al inicio de sesión',
+                timerProgressBar:true,
+                willClose: ()=>{history.push('/login'); window.location.reload()}
+            })
+            :
+       
             <div className=" flex justify-center">
                 <form className=" md:w-3/5 lg:w-3/5 lg:mx-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3 " onSubmit={(e) => handleSubmit(e)}>
                 {input.logoImage? <img className="w-36 h-36 bg-cover rounded-full" src={input.logoImage}  alt="not found" /> : null}
                    
                         <div className="relative mt-5">
-                        <input id="cuit" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Cuit..." type="text" value={input.id} name="id" onChange={(e)=>handleChange(e)} required></input>
+                        <input id="cuit" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Cuit..." type="text" value={input.cuit} name="cuit" onChange={(e)=>handleChange(e)} required></input>
                         <label className="absolute left-0 -top-3.5 
                                             text-gray-600 text-sm 
                                             peer-placeholder-shown:text-base 
@@ -210,6 +221,7 @@ export default function PostEstablishment() {
                         </Link>
                 </form>
             </div>
+        }
         </div>
     )
 }
