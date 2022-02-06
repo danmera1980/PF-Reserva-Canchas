@@ -24,19 +24,20 @@ const registerReducer = (state = initialState, action) => {
         userId: action.payload.id,
       };
     case LOGINGOOGLE:
-      console.log(action.payload)
+      console.log(action.payload[1])
       return {
         ...state,
         userToken: action.payload[1], 
         userId: action.payload[0].id,
       };
     case EDIT_SUCCESS:
+      console.log(state)
       console.log(action.payload);
       return {
         ...state,
-        userName: action.payload.name,
-        userEmail: action.payload.email,
-        userId: action.payload.id,
+        userToken: null,
+        userId: null,
+      
       };
     case LOGOUT:
       console.log('estoy en logout');
