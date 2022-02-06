@@ -5,7 +5,7 @@ const createSite = async (req, res, next)=>{
     const {establishmentId, name, country, city, street, streetNumber, latitude, longitude} = req.body
 
     let establishmentDB = await Establishment.findOne({
-        where : {id: establishmentId}
+        where : {cuit: establishmentId}
     })
 
     if(!establishmentDB){

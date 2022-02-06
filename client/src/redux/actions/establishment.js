@@ -17,9 +17,12 @@ export const getEstablishment = (id) => {
         })
     }
 }
-export const postEstablishment = (payload) => {
+export const postEstablishment = (payload, userToken) => {
+    const headers = {
+        Authorization: `Bearer ${userToken}`,
+      };
     return async function() {
-        var establishment = await axios.post(`${SERVER_URL}/establishment`, payload)
+        var establishment = await axios.post(`${SERVER_URL}/establishment`, payload, { headers: headers })
         return establishment
     }
 }

@@ -1,4 +1,4 @@
-import {GET_ESTABLISHMENT_BY_ID, GET_SITES_BY_ESTAB_ID} from "../actions/actionNames";
+import {GET_ESTABLISHMENT_BY_ID, GET_SITES_BY_ESTAB_ID, LOGOUT} from "../actions/actionNames";
 
 const initialState = {
     establishmentId:'',
@@ -16,6 +16,11 @@ const formsReducer = (state = initialState, action) => {
             return{
                 ...state,
                 sitesByEstablishment : action.payload
+            }
+        case LOGOUT:
+            return{
+                establishmentId:'',
+                sitesByEstablishment:[]
             }
         default:
             return state;

@@ -112,6 +112,7 @@ const registerGoogle = async (req, res, next) => {
     next(e);
   }
 };
+
 const registerUser = async (req, res, next) => {
   try {
     const { name, lastName, email, password } = req.body;
