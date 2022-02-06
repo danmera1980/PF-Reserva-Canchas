@@ -6,24 +6,23 @@ import logo from '../../assets/img/logo.png';
 import userImage from '../../assets/img/user.png';
 import Profile from "../Profile/Profile.jsx";
 import './Header.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutAction } from '../../redux/actions/users';
 
 
 function Header() {
-    const [ logged, setLogged] = useState(false);
     const signinText = "Ingresar";
     const registerText = "Registrarse";
     const profileText = "Mi Perfil"
     const logoutText = "Salir"
-    
-    console.log(localStorage.getItem('key'))
-    
-    useEffect(()=>{
-        localStorage.getItem('key')!==''?setLogged(true):setLogged(false)
-    },[])
+    const userToken = useSelector ((state) => state.register.userToken)
+const dispatch  = useDispatch()
+
+
 
     const logOut = ()=> {
-        localStorage.setItem('key', '')
-        setLogged(false)
+        dispatch(logoutAction())
+
     }
 
     return (
@@ -32,7 +31,7 @@ function Header() {
                 <div className='logo'>
                     <a href="/"><img src={logo} alt='logo here'/></a>
                 </div>
-                {logged ?
+                {userToken ?
                     <div className='login'>
                         <div className='dropdown inline-block relative hover:shadow filter hover:'>
                             <button className='btn_signed_in'>
@@ -41,7 +40,7 @@ function Header() {
                             </button>
                             <ul className='dropdown-menu absolute hidden'>
                                 <li><Link to={"/profile"}>{profileText}</Link></li>
-                                <li><a href="#"  onClick={()=>logOut()}>{logoutText}</a></li>
+                                <li><a href="#"  onClick={logOut}>{logoutText}</a></li>
                             </ul>
                             {/* <button onClick={()=>logOut()}>Logout</button> */}
                         </div>

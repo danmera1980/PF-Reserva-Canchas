@@ -41,8 +41,8 @@
 }
 
 .btn-slide img {
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   pointer-events: none;
   background-color: rgba(245, 245, 245, 0.685);
   border-radius: 100%;
@@ -54,13 +54,18 @@
 
 .prev {
   top: 50%;
-  left: 20px;
+  left: 5px;
   transform: translateY(-60%);
 }
+
 .next {
   top: 50%;
-  right: 20px;
+  right: 5px;
   transform: translateY(-60%);
+}
+
+.btn-slide:hover{
+  background-color: rgba(245, 245, 245, 0.685);
 }
 
 .container-dots {
@@ -79,6 +84,11 @@
   margin: 0 5px;
   background: #f1f1f1;
 }
+
+.dot:hover{
+  background: rgb(204, 34, 34);
+}
+
 .dot.active {
   background: rgb(32, 32, 32);
 }
