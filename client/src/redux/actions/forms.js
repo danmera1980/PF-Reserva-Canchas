@@ -13,7 +13,7 @@ export function getEstablishmentByUser(userId){
             console.log(error);
             return dispatch({
                 type: GET_ESTABLISHMENT_BY_ID,
-                payload: 'No Results'
+                payload: ''
             }) 
 
         }
@@ -34,7 +34,7 @@ export function getSitesByEstablishmentId(estabId){
                 type: GET_SITES_BY_ESTAB_ID,
                 payload: [{
                     id : '',
-                    name: 'No Results',  
+                    name: '',  
                 }]
             }) 
 

@@ -5,8 +5,6 @@ import { postSite } from "../../redux/actions/site";
 
 import Swal from 'sweetalert2';
 
-import { getEstablishmentByUser} from "../../redux/actions/forms";
-
 
 function validate(input) {
  
@@ -33,6 +31,7 @@ export default function SiteCreate() {
     const dispatch = useDispatch()
     const history = useHistory()
     const establishmentId = useSelector(state => state.forms.establishmentId)
+    const userToken = useSelector((state) => state.login.userToken)
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
         establishmentId: '',
@@ -43,8 +42,6 @@ export default function SiteCreate() {
         streetNumber: "",
     })
 
-    let userId = 1;
-
     useEffect(()=>{
         setInput({
             ...input,
@@ -52,11 +49,6 @@ export default function SiteCreate() {
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[establishmentId])
-
-    useEffect(()=>{
-        dispatch((getEstablishmentByUser(userId)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[userId])
 
 
     function handleChange(e) {
@@ -80,7 +72,7 @@ export default function SiteCreate() {
                     text: 'Faltan completar campos obligatorios'
                   })
             } else {
-        dispatch(postSite(input))
+        dispatch(postSite(input,userToken))
         Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -101,6 +93,16 @@ export default function SiteCreate() {
     }
     return (
         <div>
+        {
+            !establishmentId
+            ? Swal.fire({
+                title: 'Debes crear un establecimiento antes de crear una sede',
+                timer: 3000,
+                text: 'Serás redirigido al formulario',
+                timerProgressBar:true,
+                willClose: ()=>{history.push('/establishment'); window.location.reload()}
+            })
+            :
             <div className="flex justify-center">
                 <form className="md:w-[500px] lg:w-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={(e) => handleSubmit(e)}>
                     <div className="relative">
@@ -192,6 +194,7 @@ export default function SiteCreate() {
                     </Link>
                 </form>
             </div>
+        }
         </div>
     )
 }

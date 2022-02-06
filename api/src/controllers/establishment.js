@@ -44,7 +44,7 @@ const getEstablishmentsFromDB = async(req,res,next)=>{
             console.log(establishmentDB)
             establishmentDB = establishmentDB.map(establishment => {
                 return{
-                    id: establishment.id,
+                    cuit: establishment.cuit,
                     name: establishment.name
                 }
             })
@@ -53,7 +53,7 @@ const getEstablishmentsFromDB = async(req,res,next)=>{
 
         establishmentDB = establishmentDB.map(establishment => {
             return{
-                id: establishment.id,
+                cuit: establishment.cuit,
                 name: establishment.name,
                 logoImage: establishment.logoImage,
                 timeActiveFrom: establishment.timeActiveFrom,
@@ -91,9 +91,9 @@ const getEstablishmentsName = async ( req ,res) => {
 
 const createEstablishment = async (req, res, next)=>{
 
-    const {id,name,logoImage, timeActiveFrom, timeActiveTo, userId} = req.body
+    const userId = req.user.id;
 
-
+    const {cuit,name,logoImage, timeActiveFrom, timeActiveTo} = req.body
     
     let user = await User.findOne({
         where: { 
@@ -104,7 +104,7 @@ const createEstablishment = async (req, res, next)=>{
 
     // creo el establecimiento
     let establishmentDB = await Establishment.findOne({
-        where : {id: id}
+        where : {cuit: cuit}
     })
 
     try {
@@ -113,7 +113,7 @@ const createEstablishment = async (req, res, next)=>{
         }
         else if(!establishmentDB){
             let establishmentCreated = await Establishment.create({
-                id,
+                cuit,
                 name,
                 logoImage,
                 timeActiveFrom,
@@ -147,7 +147,7 @@ const addUserToEstablishment = async (req, res, next)=>{
     })
     
     let establishmentDB = await Establishment.findOne({
-        where : {id: establishmentId}
+        where : {cuit: establishmentId}
     })
 
     try {
