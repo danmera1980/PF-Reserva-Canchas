@@ -248,7 +248,7 @@ export default function CourtCreate(){
                         <div className="relative mt-3">
                             <div className="relative">
                                 <select className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" name='sport' onChange={(e) => handleSelectSport(e)} required >
-                                    <option value=''>Seleccioná un deport</option>
+                                    <option value=''>Seleccioná un deporte</option>
                                     <option value='Basquet'>Basquet</option>
                                     <option value='Futbol 11'>Futbol 11</option>
                                     <option value='Futbol 7'>Futbol 7</option>
