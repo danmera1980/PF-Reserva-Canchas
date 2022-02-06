@@ -120,7 +120,7 @@ export default function PostEstablishment() {
 
             <div className=" flex justify-center">
                 <form className=" md:w-3/5 lg:w-3/5 lg:mx-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3 " onSubmit={(e) => handleSubmit(e)}>
-                {input.logoImage? <img className="w-36 h-36 bg-cover rounded-full" src={input.logoImage}   /> : null}
+                {input.logoImage? <img className="w-36 h-36 bg-cover rounded-full" src={input.logoImage}  alt="not found" /> : null}
                    
                         <div className="relative mt-5">
                         <input id="cuit" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Cuit..." type="text" value={input.id} name="id" onChange={(e)=>handleChange(e)} required></input>
