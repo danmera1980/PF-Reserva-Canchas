@@ -2,7 +2,6 @@ const { Court, Site, Establishment} = require ('../db');
 
 const findBySport = async (req, res) => { 
     const {sport} = req.query
-
     try {
       var courts = await Establishment.findAll({
         include:{
