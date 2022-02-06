@@ -94,7 +94,7 @@ export default function PostEstablishment() {
         Array.from(photos.files).map(async (photo) => {
           const body = new FormData();
           body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
-          body.append("image", photo.files[0]);
+          body.append("image", photo);
     
           await axios({
             method: "post",
@@ -120,7 +120,7 @@ export default function PostEstablishment() {
 
             <div className=" flex justify-center">
                 <form className=" md:w-3/5 lg:w-3/5 lg:mx-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3 " onSubmit={(e) => handleSubmit(e)}>
-                {input.logoImage? <img className="w-36 h-36 bg-cover rounded-full" src={input.logoImage}   /> : null}
+                {input.logoImage? <img className="w-36 h-36 bg-cover rounded-full" src={input.logoImage}  alt="not found" /> : null}
                    
                         <div className="relative mt-5">
                         <input id="cuit" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Cuit..." type="text" value={input.id} name="id" onChange={(e)=>handleChange(e)} required></input>
@@ -160,7 +160,7 @@ export default function PostEstablishment() {
                    
                         <div className="mb-4 relative mt-3 bg-indigo-400 text-center hover:bg-indigo-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             <input className=" absolute top-0 right-0 left-0 bottom-0 w-full h-full opacity-0"  type="file" accept="image/*" name="logoImage" id="input_img" onChange={fileChange}></input>
-                            <label className="text-white" htmlFor="input_imp">Logo-Imagen </label>
+                            <label className="text-white" htmlFor="input_imp">Añadir logo</label>
                         </div>
                     
                     

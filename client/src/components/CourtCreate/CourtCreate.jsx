@@ -179,7 +179,7 @@ export default function CourtCreate(){
              <div className="flex justify-center">
 
                 <form className="md:w-3/5 lg:w-2/5 flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={(e) => handleSubmit(e)} >
-                {input.image? <img className="w-36 h-36 bg-cover rounded-sm" src={input.image}   /> : null}
+                {input.image? <img className="w-36 h-36 bg-cover rounded-sm" src={input.image} alt="not found"  /> : null}
                         <div className=" relative mt-5">
                             <input className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" id='nombre' type='text' value={input.name} name='name' onChange={(e) => handleChange(e)} required />
                             <label className="absolute left-0 -top-3.5 
@@ -248,7 +248,7 @@ export default function CourtCreate(){
                         <div className="relative mt-3">
                             <div className="relative">
                                 <select className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" name='sport' onChange={(e) => handleSelectSport(e)} required >
-                                    <option value=''>Seleccioná un deport</option>
+                                    <option value=''>Seleccioná un deporte</option>
                                     <option value='Basquet'>Basquet</option>
                                     <option value='Futbol 11'>Futbol 11</option>
                                     <option value='Futbol 7'>Futbol 7</option>
