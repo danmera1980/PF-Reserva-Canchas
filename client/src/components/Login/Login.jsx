@@ -8,6 +8,7 @@ import { useHistory } from "react-router";
 import Swal from 'sweetalert2'
 import "./Login.scss";
 
+
 function validate(values) {
   let errors = {};
   const emailRegEx = new RegExp(
