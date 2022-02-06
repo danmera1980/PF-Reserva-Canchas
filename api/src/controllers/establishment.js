@@ -158,4 +158,4 @@ const addUserToEstablishment = async (req, res, next)=>{
 
 
 
-module.exports = {getEstablishmentsFromDB, createEstablishment, getEstablishmentsName, addUserToEstablishment, getEstabIdByUserId}
+module.exports = {getEstablishmentsFromDB, createEstablishment, addUserToEstablishment, getEstabIdByUserId}

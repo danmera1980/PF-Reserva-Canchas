@@ -30,27 +30,6 @@ function Home() {
           <SearchBar />
         </div>
       </div>
-      {cards?.map(el => {
-                    return(
-                        <div>
-                            <CardCourt
-                            info={el}
-                              // establishmentId={el.establishment.id}
-                              // siteId={el.siteId}
-                              // image={el.image}
-                              // name={el.establishment.name}
-                              // siteName={el.site.name}
-                              // street={el.site.street}
-                              // city={el.site.city}
-                              // description={el.description}
-                              // sport={el.sport}
-                              // timeActiveFrom={el.establishment.timeActiveFrom}
-                              // timeActiveTo={el.establishment.timeActiveTo}
-                              // price={el.price}
-                            />
-                        </div>
-                        )
-                })}
       <Popular />
       <Footer />
     </div>
