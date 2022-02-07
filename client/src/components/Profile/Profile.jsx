@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Card from "../Card/Card"
-import UserEdit from "../UserEdit/UserEdit"
+import Card from "../Card/Card";
+import UserEdit from "../UserEdit/UserEdit";
+import { Link } from "react-router-dom";
 import logo from "../../assets/img/logo.svg";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -15,11 +16,10 @@ import {
 function Profile() {
   const [visual, setVisual] = useState("bookings");
 
-
   const onButtonSelection = (option) => {
-    console.log(option)
-    setVisual(option)
-  }
+    console.log(option);
+    setVisual(option);
+  };
 
   return (
     <div className="dark:bg-darkPrimary dark:text-white">
@@ -40,21 +40,34 @@ function Profile() {
 
             <div className="md:grid md:grid-cols-2 md:w-max">
               <div className="grid grid-cols-2 gap-4 ml-5 md:ml-7 max-w-xs">
-                <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all" onClick={()=>onButtonSelection('bookings')}>
+                <button
+                  className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
+                  onClick={() => onButtonSelection("bookings")}
+                >
                   <FontAwesomeIcon icon={faThLarge} size={"2x"} />
                   <p>Mis Reservas</p>
                 </button>
-                <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all" onClick={()=>onButtonSelection('transactions')}>
+                <button
+                  className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
+                  onClick={() => onButtonSelection("transactions")}
+                >
                   <FontAwesomeIcon icon={faMoneyCheckAlt} size={"2x"} />
                   <p>Transacciones</p>
                 </button>
-                {/* <Link to={"/establishmentprofile"}> */}
-                  <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all" onClick={()=>onButtonSelection('establishments')}>
+                <Link to={"/establishmentprofile"}>
+                  <button
+                    className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
+                    // onClick={() => onButtonSelection("establishments")}
+                  >
                     <FontAwesomeIcon icon={faFutbol} size={"2x"} />
                     <p>Establecimiento</p>
                   </button>
-                {/* </Link> */}
-                <button className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all" onClick={()=>onButtonSelection('editProfile')}>
+                </Link>
+                
+                <button
+                  className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
+                  onClick={() => onButtonSelection("editProfile")}
+                >
                   <FontAwesomeIcon icon={faCog} size={"2x"} />
                   <p>Editar perfil</p>
                 </button>
@@ -63,17 +76,17 @@ function Profile() {
           </div>
           <div className="pt-7 md:overflow-auto md:max-h-fit">
             {(() => {
-              switch(visual) {
-                case 'bookings':
-                  return <Card />
-                case 'transactions':
-                  return <div>Mi transaccion</div>
-                case 'establishments':
-                  return <div>Mi establecimiento</div>
-                case 'editProfile':
-                  return <UserEdit />
+              switch (visual) {
+                case "bookings":
+                  return <Card />;
+                case "transactions":
+                  return <div>Mi transaccion</div>;
+                // case "establishments":
+                //   return
+                case "editProfile":
+                  return <UserEdit />;
                 default:
-                  return<div>Default</div>
+                  return <div>Default</div>;
               }
             })()}
           </div>

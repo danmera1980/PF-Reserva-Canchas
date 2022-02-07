@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import logo from "../../assets/img/logo.png";
+import logo from "../../assets/img/logo.svg";
 
 function EstablishmentProfile() {
     return (
