@@ -19,6 +19,7 @@ function Profile() {
   const [visual, setVisual] = useState("bookings");
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.login.userId);
+  const establishmentId = useSelector((state) => state.forms.establishmentId);
 
   useEffect(()=>{
     dispatch(getEstablishmentByUser(userId))
@@ -62,7 +63,9 @@ function Profile() {
                   <FontAwesomeIcon icon={faMoneyCheckAlt} size={"2x"} />
                   <p>Transacciones</p>
                 </button>
-                <Link to={"/establishmentprofile"}>
+                {
+                  (establishmentId!==null && establishmentId!=="") ?
+                  <Link to={"/establishmentprofile"}>
                   <button
                     className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
                     // onClick={() => onButtonSelection("establishments")}
@@ -71,7 +74,17 @@ function Profile() {
                     <p>Establecimiento</p>
                   </button>
                 </Link>
-
+                :
+                <Link to={"/establishment"}>
+                  <button
+                    className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
+                    // onClick={() => onButtonSelection("establishments")}
+                  >
+                    <FontAwesomeIcon icon={faFutbol} size={"2x"} />
+                    <p>Crear Establecimiento</p>
+                  </button>
+                </Link>
+                }
                 <button
                   className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
                   onClick={() => onButtonSelection("editProfile")}
@@ -99,6 +112,9 @@ function Profile() {
             })()}
           </div>
         </div>
+        <br/>
+        <br/>
+        <br/>
       </div>
 
       <Footer />
