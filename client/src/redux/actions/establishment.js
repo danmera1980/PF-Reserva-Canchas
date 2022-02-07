@@ -29,7 +29,7 @@ export const postEstablishment = (payload, userToken) => {
 
 export const allEstablishments = () => {
     return async (dispatch) => {
-        var results = await axios(`${SERVER_URL}/establishments`)
+        var results = await axios(`${SERVER_URL}/cards`)
         return dispatch({
             type: ALL_ESTABLISHMENTS,
             payload: results.data

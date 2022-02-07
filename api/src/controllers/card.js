@@ -11,7 +11,7 @@ let establishmentDB = ()=> {
 }
 
 
-const getCards = async (req,res)=>{
+const getCard = async (req,res)=>{
 
 
     const allCourts = await courtDB();
@@ -53,5 +53,23 @@ const getCards = async (req,res)=>{
         console.log(e)
     }   
 };
+
+const getCards = async ( req ,res) => {
+    try {
+        var establishments = await Establishment.findAll({
+            include:{
+              model: Site,
+              as: 'sites',
+              include:{
+                model: Court,
+                as: 'courts'
+              }
+            }
+          })
+        res.send(establishments)
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 module.exports= { getCards }

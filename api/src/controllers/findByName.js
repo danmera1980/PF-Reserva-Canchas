@@ -1,11 +1,11 @@
-const { Court, Site, Establishment} = require ('../db');
+const {Establishment, Site, Court} = require('../db');
 
-const findByLocation = async (req, res) => { 
-    const {location} = req.query
-    console.log(location)
 
+const findByName = async ( req ,res) => {
+    const name= req.query.name
+    console.log(name);
     try {
-          var courts = await Court.findAll({
+        var courts = await Court.findAll({
             attributes: { exclude: ['createdAt','updatedAt'] }
           })
         for(var i = 0; i<courts.length ; i++){
@@ -22,15 +22,11 @@ const findByLocation = async (req, res) => {
             })
             courts[i]= {...courts[i], establishment}
         }
-    
-    const results = courts.filter(el => el.site.city.toLowerCase().includes(location.toLowerCase()))
-    
-    res.send(results)
-
-    } catch (e) {
-      console.log(e)
-      res.send(e)
+        const results = courts.filter(el => el.establishment.name.toLowerCase().includes(name.toLowerCase()))
+        res.send(results)    
+    } catch (error) {
+        console.log(error)
     }
 }
 
-module.exports= { findByLocation }
+module.exports = {findByName}

@@ -7,7 +7,7 @@ const usersData = require("../TempData/usersData.json");
 const establishmentsData = require("../TempData/establishmentsData.json");
 const sitesData = require("../TempData/sitesData.json");
 const courtsData = require("../TempData/courtsData.json");
-const { use } = require("../routes/routerUser");
+// const { use } = require("../routes/routerUser");
 
 const loadDataToDB = () => {
   usersData.map(async (user) => {
@@ -91,7 +91,7 @@ const getAllUsers = async (req, res, next) => {
 const getUserProfile = async (req, res, next) => {
   try {
     // ver esta porqueria que funcione con el idea que me manda el front y el que pido
-    console.log(req.user);
+    console.log(req);
 
     const {id} = req.user.id
     const wantedUser = await User.findOne({
