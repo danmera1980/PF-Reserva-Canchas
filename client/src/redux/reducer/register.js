@@ -24,20 +24,14 @@ const registerReducer = (state = initialState, action) => {
         userId: action.payload.id,
       };
     case LOGINGOOGLE:
-      console.log(action.payload[1],action.payload[0], 'reducer google')
       return {
         ...state,
         userToken: action.payload[1], 
         userId: action.payload[0].id,
       };
     case EDIT_SUCCESS:
-      console.log(state)
-      console.log(action.payload);
       return {
         ...state,
-        userToken: null,
-        userId: null,
-      
       };
     case LOGOUT:
       console.log('estoy en logout');

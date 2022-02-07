@@ -87,6 +87,7 @@ const loadSites = async function () {
     console.log(error);
   }
 };
+
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
 }
