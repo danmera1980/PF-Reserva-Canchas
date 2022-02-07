@@ -29,7 +29,7 @@ header {
 }
 
 .btn_sign_in:hover {
-  color: var(--dark-color-bg-secondary);
+  color: white;
 }
 
 .btn_sign_in svg {
@@ -40,12 +40,21 @@ header {
   width: 114px;
   height: 44px;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    #8bfa37;
+    #14caf3;
   border-radius: 10px;
+  color: white;
+}
+
+.dark .btn_signup {
+  background: #102542;
 }
 
 .btn_signup:hover {
-  background-color: #ffffff;
+  background: #14caf3c7;
+}
+
+.dark .btn_signup:hover {
+  background: #1a427ac4;
 }
 
 .btn_signed_in {
