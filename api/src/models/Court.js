@@ -19,14 +19,14 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    image: {
-      type: DataTypes.ARRAY(DataTypes.TEXT),
-      allowNull: true
-    },
+
     sport: { 
         type: DataTypes.ENUM('Basquet', 'Futbol 11', 'Futbol 7', 'Futbol 5', 'Tenis', 'Padel', 'Handbol', 'Squash'),
         allowNull: false
     },
-
+    image: {
+      type: DataTypes.ARRAY(DataTypes.TEXT),
+      defaultValue:["https://i.ibb.co/LSVSVLG/cancha.jpg"]
+    },
   });
 };
