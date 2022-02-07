@@ -11,6 +11,7 @@ import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import './Results.scss';
 import Slider from '../Slider/Slider';
 import { counter } from '@fortawesome/fontawesome-svg-core';
+import { useSelector } from 'react-redux';
 
 
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
@@ -84,19 +85,27 @@ const markers = [
 
 
 function Results() {
+    
+    const [ selectedCard, setSelectedCard] = useState(null);
+    const estData = useSelector(state => state.establishment.establishments)
+    // setViewport({
+        //     ...viewport,
+        //     latitude: estData[0].establishment.site[0].latitude,
+        //     longitude: estData[0].establishment.site[0].latitude
+        // })
+    console.log(estData)
     const [viewport, setViewport] = useState({
-        latitude: -34.570722,
-        longitude: -58.381592,
+        latitude: estData?estData[0].establishment.site[0].latitude : -32.89463611600659,
+        longitude: estData?estData[0].establishment.site[0].longitude : -68.8574527007327,
         width: '600px',
         height: '100vh',
         zoom: 10,
         pitch: 50
     });
-
-    const [ selectedCard, setSelectedCard] = useState(null);
-
+        
     const selectedCardClick = (event, card) => {
-        setSelectedCard(card)
+        console.log(card);
+        setSelectedCard(card);
     }
 
   return (
@@ -105,17 +114,17 @@ function Results() {
         <div className='results'>
             <div className='leftResults'>
                 <SearchBar />
-                {markers?.map(m => (
+                {estData?.map(est => (
                     <Card 
-                        key= {m.id}
-                        id= {m.id}
-                        name= {m.name}
-                        images= {m.images}
-                        establishment= {m.establishment}
-                        site= {m.site}
-                        address= {m.address}
-                        price= {m.price}
-                        sport= {m.sport}
+                        key= {est.establishment.id}
+                        id= {est.establishment.id}
+                        name= {est.establishment.site[0].courts[0].name}
+                        images= {[]}
+                        establishment= {est.establishment.name}
+                        site= {est.establishment.site[0].name}
+                        address= {est.establishment.site[0].street}
+                        price= {est.establishment.site[0].courts[0].price}
+                        sport= {est.establishment.site[0].courts[0].sport}
                     />
                 ))}
             </div>
@@ -126,9 +135,17 @@ function Results() {
                     mapboxApiAccessToken={mapboxToken}
                     mapStyle={MapStyle}
                 >
-                    {markers.map(m => (
-                        <button key={m.id} onClick={e => selectedCardClick(e, m)}>
-                            <Marker latitude={m.latitude} longitude={m.longitude}>
+                    {estData.map(m => (
+                        <button key={m.establishment.id} 
+                                onClick={e => selectedCardClick(e, {establishment: m.establishment.name, 
+                                                                    site: m.establishment.site[0].name,
+                                                                    name: m.establishment.site[0].courts[0].name, 
+                                                                    address: m.establishment.site[0].street, 
+                                                                    sport: m.establishment.site[0].courts[0].sport,
+                                                                    price: m.establishment.site[0].courts[0].price,
+                                                                    latitude: m.establishment.site[0].latitude,
+                                                                    longitude: m.establishment.site[0].longitude})}>
+                            <Marker latitude={m.establishment.site[0].latitude} longitude={m.establishment.site[0].longitude}>
                                 <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
                             </Marker>
                         </button>
@@ -141,7 +158,7 @@ function Results() {
                                 <h3>{selectedCard.site} - {selectedCard.name}</h3>
                                 <h4>{selectedCard.address} <span>City</span></h4>
                                 <h4>{selectedCard.sport}</h4>
-                                <h3>{selectedCard.price}</h3>
+                                <h3>${selectedCard.price}</h3>
                             </div>
                         </Popup>
                     ):null}
