@@ -60,13 +60,6 @@ export default function UserEdit() {
         .catch((err) => {
           console.log(err);
         });
-<<<<<<< HEAD
-      setErrors(validate({
-            ...input,
-            [e.target.name]: e.target.value
-        }))
-    }
-=======
     });
   }
 
@@ -89,7 +82,6 @@ export default function UserEdit() {
     e.preventDefault();
     console.log("input del submit", input);
     dispatch(editUser(input, userToken));
->>>>>>> f0fcb7474b579091d4fc293882c4b02949ed5421
 
     Swal.fire({
       title: `Usuario modificado`,
