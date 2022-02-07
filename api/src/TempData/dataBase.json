@@ -1,0 +1,273 @@
+{
+    "user": [
+        {
+            "name": "Héctor",
+            "lastName": "Alterio",
+            "phone": "261321321",
+            "email": "hector@dominio.com"
+        },
+        {
+            "name": "Ricardo",
+            "lastName": "Darín",
+            "phone": "261321321",
+            "email": "ricardo@dominio.com"
+        },
+        {
+            "name": "Leonardo",
+            "lastName": "Sbaraglia",
+            "phone": "261321321",
+            "email": "leonardo@dominio.com"
+        },
+        {
+            "name": "José",
+            "lastName": "Soriano",
+            "phone": "261321321",
+            "email": "jose@dominio.com"
+        },
+        {
+            "name": "Darío ",
+            "lastName": "Grandinetti ",
+            "phone": "261123123",
+            "email": "dario@dominio.com"
+        },
+        {
+            "name": "Diego",
+            "lastName": "Peretti",
+            "phone": "261321321",
+            "email": "diego@dominio.com"
+        },
+        {
+            "name": "Joaquín",
+            "lastName": "Furriel",
+            "phone": "261321321",
+            "email": "joaquin@dominio.com"
+        },
+        {
+            "name": "Adrián",
+            "lastName": "Navarro ",
+            "phone": "261321321",
+            "email": "adrian@dominio.com"
+        },
+        {
+            "name": "Norma",
+            "lastName": "Leandro",
+            "phone": "261321321",
+            "email": "norma@dominio.com"
+        },
+        {
+            "name": "Cecilia",
+            "lastName": "Roth",
+            "phone": "261321321",
+            "email": "cecilia@dominio.com"
+        }
+    ],
+    "establishment": [
+        {
+            "id": "2033333338",
+            "name": "Space Jam Club",
+            "timeActiveFrom": "10:00",
+            "timeActiveTo": "22:00"
+        },
+        {
+            "id": "2011111118",
+            "name": "Canchas Cebollitas",
+            "timeActiveFrom": "10:00",
+            "timeActiveTo": "22:00"
+        },
+        {
+            "id": "",
+            "name": "Rocky siempre",
+            "timeActiveFrom": "10:00",
+            "timeActiveTo": "22:00"
+        },
+        {
+            "id": "204444448",
+            "name": "Happy Gilmore Club",
+            "timeActiveFrom": "10:00",
+            "timeActiveTo": "22:00"
+        },
+        {
+            "id": "2055555558",
+            "name": "Deportivo Dodgeball",
+            "timeActiveFrom": "10:00",
+            "timeActiveTo": "22:00"
+        },
+        {
+            "id": "2066666668",
+            "name": "Diegote Futbol",
+            "timeActiveFrom": "10:00",
+            "timeActiveTo": "22:00"
+        },
+        {
+            "id": "2077777778",
+            "name": "Recreativo Pampayasta",
+            "timeActiveFrom": "10:00",
+            "timeActiveTo": "22:00"
+        },
+        {
+            "id": "209999998",
+            "name": "Club Amazonas",
+            "timeActiveFrom": "10:00",
+            "timeActiveTo": "22:00"
+        }
+    ],
+    "site": [
+        {
+            "name": "Sede A",
+            "city": "Mendoza",
+            "street": "Carril Urquiza",
+            "streetNumber": 2137,
+            "latitude": -32.92849650236702,
+            "longitude":  -68.7957077049741
+        },
+        {
+            "name": "Sede B",
+            "city": "Mendoza",
+            "street": "Martínez de Rozas",
+            "streetNumber": 464,
+            "latitude": -32.89463611600659,
+            "longitude":  -68.8574527007327
+        },
+        {
+            "name": "Sede C",
+            "city": "Mendoza",
+            "street": "Eusebio Blanco",
+            "streetNumber": 461,
+            "latitude": -32.880129566290485,
+            "longitude":  -68.84285990258314
+        },
+        {
+            "name": "Sede F",
+            "city": "Godoy Cruz",
+            "street": " Beltrán",
+            "streetNumber": 411,
+            "latitude": -32.918794956481406, 
+            "longitude": -68.8504196332679
+        },
+        {
+            "name": "Sede Q",
+            "city": "Godoy Cruz",
+            "street": "Teniente 1 Ibañez",
+            "streetNumber": 617,
+            "latitude": -32.91252280947323, 
+            "longitude": -68.84415307374654
+        },
+        {
+            "name": "Sede W",
+            "city": "Mendoza",
+            "street": "Chile",
+            "streetNumber": 1372,
+            "latitude": -32.88641481914277,
+            "longitude": -68.84519635165792
+        },
+        {
+            "name": "Sede R",
+            "city": "Bermejo",
+            "street": "Maure",
+            "streetNumber": 1121,
+            "latitude": -32.8622786698164,
+            "longitude": -68.79261898724076
+        },
+        {
+            "name": "Sede O",
+            "city": "Dorrego",
+            "street": "Jose Marmol ",
+            "streetNumber": 766,
+            "latitude": -32.90450160440229,
+            "longitude": -68.82134381607531
+        },
+        {
+            "name": "Sede P ",
+            "city": "Luján de Cuyo",
+            "street": "San Martin",
+            "streetNumber":1253, 
+            "latitude": -33.0287263655525,
+            "longitude":  -68.87568267374321
+        },
+        {
+            "name": "Sede L",
+            "city": "Chacras de Coria",
+            "street": "Pueyrredon ",
+            "streetNumber": 2222, 
+            "latitude":  -32.993266315055514,
+            "longitude": -68.8884219872371
+        },
+        {
+            "name": "Sede AC",
+            "city": "Maipú",
+            "street": "5 de Mayo Este",
+            "streetNumber": 163,
+            "latitude": -32.99214881473605, 
+            "longitude": -68.79037996025139
+        },
+        {
+            "name": "Sede AB",
+            "city": "Maipú",
+            "street": "25 de Mayo Este",
+            "streetNumber": 989,
+            "latitude": -32.99415791879696,
+            "longitude":  -68.78003584675858
+        },
+        {
+            "name": "Sede AA",
+            "city": "Maipú",
+            "street": "Sarmiento",
+            "streetNumber": 898,
+            "latitude": -32.94915540268861, 
+            "longitude": -68.79017515840259
+        }
+    ],
+    "court":[{
+        "name": "Cancha3",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "shiftLength": 45, 
+        "price": 150,
+        "sport": "Futbol 5"
+    },{
+        "name": "Cancha1",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "shiftLength": 45, 
+        "price": 150,
+        "sport": "Futbol 5"
+    },{
+        "name": "Cancha2",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "shiftLength": 30, 
+        "price": 200,
+        "sport": "Futbol 5"
+    },
+    {
+        "name": "Cancha4",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "shiftLength": 30, 
+        "price": 150,
+        "sport": "Futbol 5"
+    },
+    {
+        "name": "Cancha34",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "shiftLength": 45, 
+        "price": 200,
+        "sport": "Padel"
+    }, {
+        "name": "Cancha42",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "shiftLength": 45, 
+        "price": 200,
+        "sport": "Padel"
+    }, {
+        "name": "Cancha14",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "shiftLength": 45, 
+        "price": 200,
+        "sport": "Padel"
+    },
+    {
+        "name": "Cancha14",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "shiftLength": 45, 
+        "price": 200,
+        "sport": "Squash"
+    }
+    ]
+}
