@@ -1,4 +1,3 @@
-import "./App.css";
 import "../src/styles/index.scss";
 import { Route } from "react-router-dom";
 import React from "react";
@@ -19,7 +18,7 @@ import AddUserToEstablishment from './components/AddUserToEstablishment/AddUserT
 function App() {
   return (
     <React.Fragment>
-      <div className="App">
+      <div>
         <Route exact path="/" component={Home} />
         <Route exact path="/court" component={CourtCreate} />
         <Route exact path="/results" component={Results} />

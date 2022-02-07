@@ -64,10 +64,6 @@
   transform: translateY(-60%);
 }
 
-.btn-slide:hover{
-  background-color: rgba(245, 245, 245, 0.685);
-}
-
 .container-dots {
   position: absolute;
   bottom: 10px;
@@ -85,10 +81,18 @@
   background: #f1f1f1;
 }
 
-.dot:hover{
-  background: rgb(204, 34, 34);
+.dot:hover {
+  background: var(--light-text-accent);
+}
+
+.dark .dot:hover {
+  background: var(--dark-color-text-accent);
 }
 
 .dot.active {
-  background: rgb(32, 32, 32);
+  background: var(--light-text-accent);
+}
+
+.dark .dot.active {
+  background: var(--dark-color-text-accent);
 }

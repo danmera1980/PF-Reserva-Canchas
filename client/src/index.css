@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "~@fontsource/poppins/index.css";
 
 *,
 *::before,
@@ -9,29 +10,36 @@
 }
 
 :root {
-   --ff-primary: 'Roboto', sans-serif;
+  --ff-primary: "Poppins", sans-serif;
 
-   --fw-reg: 300;
-   --fw-bold: 900;
+  --fw-reg: 300;
+  --fw-bold: 900;
 
-   --clr-light: white;
-   --clr-background: #FFFEE6;
-   --clr-dark: rgba(114, 110, 247, 0.46);
-   --clr-accent: #000;
-   --clr-font: #000;
-   --clr--claro: white;
-   --clr--medio: rgba(79, 70, 229);
-   --clr--fuerte: rgb(75, 85, 99);
-   --clr--intermedio: rgb(156 163 175);
+  --clr-light: #fff;
+  --clr-background: #fffee6;
+  --clr-dark: rgba(114, 110, 247, 0.46);
+  --clr-accent: #000;
+  --clr-font: #000;
 
+  --light-bg-primary: #bdd3ef;
+  --light-bg-secondary: #75c0d1;
+  --light-text-primary: #2d3748;
+  --light-text-secondary: #057276;
+  --light-text-accent: #42f2f7;
 
-   --shadow: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.25));
+  --dark-color-bg-primary: #102542;
+  --dark-color-bg-secondary: #46acc2;
+  --dark-color-text-primary: #f7fafc;
+  --dark-color-text-secondary: #498c8a;
+  --dark-color-text-accent: #42f2f7;
 
-   --fs-h1: 4.5em;
-   --fs-h2: 2.2rem;
-   --fs-h3: 1.5rem;
-   --fs-body: 1.125rem;
-   --fs-btn: .875rem
+  --shadow: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.25));
+
+  --fs-h1: 4.5em;
+  --fs-h2: 2.2rem;
+  --fs-h3: 1.5rem;
+  --fs-body: 1.125rem;
+  --fs-btn: 0.875rem;
 }
 
 body {
@@ -39,31 +47,39 @@ body {
   font-family: var(--ff-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--clr-background);
-  color: var(--clr-dark);
-  font-size: var(--fs-body);
+  background: var(--light-bg-primary);
+  /* color: var(--clr-dark); */
+  /* font-size: var(--fs-body); */
   line-height: 1.6;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
-code {
+.dark body {
+  background: var(--dark-color-bg-primary);
+}
+
+/* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
+} */
 
-h1{ 
-  font-size: var(--fs-h1); 
-  color: var(--clr-accent); 
+/* h1 {
+  font-size: var(--fs-h1);
+  color: var(--clr-accent);
   font-weight: var(--fw-bold);
 }
 
-h2{ 
-  font-size: var(--fs-h2); 
-  color: var(--clr-accent); 
+h2 {
+  font-size: var(--fs-h2);
+  color: var(--clr-accent);
   font-weight: var(--fw-bold);
 }
 
-h3{ 
-  font-size: var(--fs-h3); 
-  color: var(--clr-accent); 
+h3 {
+  font-size: var(--fs-h3);
+  color: var(--clr-accent);
   font-weight: var(--fw-bold);
-}
+} */

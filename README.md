@@ -2,7 +2,7 @@
 
 # Final Project - Sport Field Reservations Platform
 
-![App logo](client\src\assets\img\tuCanchaYa!_Logo.png)
+![App logo](client\src\assets\img\logo.svg)
 
 ## Objetivos del Proyecto
 
