@@ -17,7 +17,6 @@ function Profile() {
   const [visual, setVisual] = useState("bookings");
 
   const onButtonSelection = (option) => {
-    console.log(option);
     setVisual(option);
   };
 
@@ -63,7 +62,7 @@ function Profile() {
                     <p>Establecimiento</p>
                   </button>
                 </Link>
-                
+
                 <button
                   className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
                   onClick={() => onButtonSelection("editProfile")}
