@@ -1,0 +1,92 @@
+[
+    {
+      "id": 1,
+      "name": "Raynor, Thiel and Abshire",
+      "logoImage": "http://lorempixel.com/600/400/technics/",
+      "timeActiveFrom": "900",
+      "timeActiveTo": "2000",
+      "responsableId": 1,
+      "": ""
+    },
+    {
+      "id": 2,
+      "name": "Rogahn Ltd",
+      "logoImage": "http://lorempixel.com/600/400/technics/",
+      "timeActiveFrom": "900",
+      "timeActiveTo": "2000",
+      "responsableId": 2,
+      "": ""
+    },
+    {
+      "id": 3,
+      "name": "Willms-Bernier",
+      "logoImage": "http://lorempixel.com/600/400/technics/",
+      "timeActiveFrom": "900",
+      "timeActiveTo": "2000",
+      "responsableId": 3,
+      "": ""
+    },
+    {
+      "id": 4,
+      "name": "Muller, Franecki and Mitchell",
+      "logoImage": "http://lorempixel.com/600/400/technics/",
+      "timeActiveFrom": "900",
+      "timeActiveTo": "2000",
+      "responsableId": 4,
+      "": ""
+    },
+    {
+      "id": 5,
+      "name": "Price and Sons",
+      "logoImage": "http://lorempixel.com/600/400/technics/",
+      "timeActiveFrom": "900",
+      "timeActiveTo": "2000",
+      "responsableId": 5,
+      "": ""
+    },
+    {
+      "id": 6,
+      "name": "Kunde and Sons",
+      "logoImage": "http://lorempixel.com/600/400/technics/",
+      "timeActiveFrom": "900",
+      "timeActiveTo": "2000",
+      "responsableId": 6,
+      "": ""
+    },
+    {
+      "id": 7,
+      "name": "Brekke, Johnson and Flatley",
+      "logoImage": "http://lorempixel.com/600/400/technics/",
+      "timeActiveFrom": "900",
+      "timeActiveTo": "2000",
+      "responsableId": 7,
+      "": ""
+    },
+    {
+      "id": 8,
+      "name": "Mitchell Ltd",
+      "logoImage": "http://lorempixel.com/600/400/technics/",
+      "timeActiveFrom": "900",
+      "timeActiveTo": "2000",
+      "responsableId": 8,
+      "": ""
+    },
+    {
+      "id": 9,
+      "name": "Botsford Inc",
+      "logoImage": "http://lorempixel.com/600/400/technics/",
+      "timeActiveFrom": "900",
+      "timeActiveTo": "2000",
+      "responsableId": 9,
+      "": ""
+    },
+    {
+      "id": 10,
+      "name": "Schuster-Denesik",
+      "logoImage": "http://lorempixel.com/600/400/technics/",
+      "timeActiveFrom": "900",
+      "timeActiveTo": "2000",
+      "responsableId": 10,
+      "": ""
+    }
+  ]

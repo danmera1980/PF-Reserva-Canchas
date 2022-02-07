@@ -7,12 +7,9 @@ module.exports = (req, res, next) => {
   let token = null;
   if (authorization && authorization.toLowerCase().startsWith("bearer")) {
     token = authorization.substring(7);
-  } else {
-    next();
-    return;
   }
 
-  if (isMyToken (token)) {
+  if (token && isMyToken (token)) {
     const decodedToken = jwt.verify(token, SECRET);
     if (!token || !decodedToken.id) {
       return res.status(401).json({ error: "token missing or invalid" });
@@ -20,5 +17,7 @@ module.exports = (req, res, next) => {
     
     req.user = decodedToken;
   }
+  console.log("end auth mine")
+
   next();
 };

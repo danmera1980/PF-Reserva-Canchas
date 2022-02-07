@@ -18,26 +18,29 @@ const registerReducer = (state = initialState, action) => {
       };
     case LOGIN:
       console.log(action.payload)
+<<<<<<< HEAD
+=======
+      localStorage.setItem('key', action.payload.token);
+>>>>>>> origin/development
       return {
         ...state,
         userToken: action.payload.token,
         userId: action.payload.id,
       };
     case LOGINGOOGLE:
-      console.log(action.payload[1],action.payload[0], 'reducer google')
+      console.log(action.payload)
       return {
         ...state,
         userToken: action.payload[1], 
         userId: action.payload[0].id,
       };
     case EDIT_SUCCESS:
-      console.log(state)
       console.log(action.payload);
       return {
         ...state,
-        userToken: null,
-        userId: null,
-      
+        userName: action.payload.name,
+        userEmail: action.payload.email,
+        userId: action.payload.id,
       };
     case LOGOUT:
       console.log('estoy en logout');

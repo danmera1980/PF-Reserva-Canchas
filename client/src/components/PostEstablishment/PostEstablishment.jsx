@@ -3,15 +3,16 @@
 import React, {useState} from "react";
 import axios from 'axios';
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postEstablishment } from "../../redux/actions/establishment.js";
+import {getEstablishmentByUser} from "../../redux/actions/forms.js"
 import Swal from 'sweetalert2';
 import "./PostEstablishment.scss";
 
 function validate(input) {
  
     let errors = {};
-    if(input.id !=='' && !/^[0-9']{2,20}$/.test(input.id)) {
+    if(input.cuit !=='' && !/^[0-9']{2,20}$/.test(input.cuit)) {
         errors.cuit = "Ingrese sólo números"
     }
     if(input.name !=='' && !/^[a-zA-Z0-9_\-' ':]{1,20}$/.test(input.name)) {
@@ -28,20 +29,19 @@ function validate(input) {
 
 export default function PostEstablishment() {
 
-    const userId = 1 // acá falta ver cómo va a venir este dato (estado global, params)
+    const userToken = useSelector((state) => state.login.userToken)
+    const userId = useSelector((state) => state.login.userId)
 
     const dispatch = useDispatch()
     const history = useHistory()
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
-        id: '',
+        cuit: '',
         name: "",
         logoImage: '',
         timeActiveFrom: '',
         timeActiveTo: '',
-        userId:userId
         
-
     })
     function handleChange(e) {
         setInput({
@@ -57,7 +57,7 @@ export default function PostEstablishment() {
       //  console.log('soy input', input)
 
         e.preventDefault()
-        if(  errors.hasOwnProperty("id") || errors.hasOwnProperty("name") || errors.hasOwnProperty("timeActiveFrom") || 
+        if(  errors.hasOwnProperty("cuit") || errors.hasOwnProperty("name") || errors.hasOwnProperty("timeActiveFrom") || 
             errors.hasOwnProperty("timeActiveTo") ) {
 
                 Swal.fire({
@@ -65,7 +65,7 @@ export default function PostEstablishment() {
                     text: 'Faltan completar campos obligatorios'
                   })
             } else {
-        dispatch(postEstablishment(input))
+        dispatch(postEstablishment(input,userToken))
         Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -74,16 +74,17 @@ export default function PostEstablishment() {
             timer: 1500
           })
         setInput({
-            id: '',
+            cuit: '',
             name: "",
             logoImage: '',
             rating: '',
             timeActiveFrom: '',
             timeActiveTo: '',
-            userId:userId
 
                
-                })
+        })
+        dispatch(getEstablishmentByUser(userId));
+
                 history.push("/")
             }
     }
@@ -94,7 +95,7 @@ export default function PostEstablishment() {
         Array.from(photos.files).map(async (photo) => {
           const body = new FormData();
           body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
-          body.append("image", photo.files[0]);
+          body.append("image", photo);
     
           await axios({
             method: "post",
@@ -117,13 +118,31 @@ export default function PostEstablishment() {
 
     return (
         <div>
-
-            <div className="lg: flex justify-center">
-                <form className=" mx-5 w-full max-w-lg " onSubmit={(e) => handleSubmit(e)}>
-                    <div className="flex flex-wrap -mx-3 mb-6">
-                        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Cuit: </label>
-                        <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" placeholder="Cuit..." type="text" value={input.id} name="id" onChange={(e)=>handleChange(e)} required></input>
+        {
+            !userToken 
+            ? Swal.fire({
+                title: 'Debes iniciar sesión para crear un establecimiento',
+                timer: 3000,
+                text: 'Serás redirigido al inicio de sesión',
+                timerProgressBar:true,
+                willClose: ()=>{history.push('/login'); window.location.reload()}
+            })
+            :
+       
+            <div className=" flex justify-center">
+                <form className=" md:w-3/5 lg:w-3/5 lg:mx-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3 " onSubmit={(e) => handleSubmit(e)}>
+                {input.logoImage? <img className="w-36 h-36 bg-cover rounded-full" src={input.logoImage}  alt="not found" /> : null}
+                   
+                        <div className="relative mt-5">
+                        <input id="cuit" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Cuit..." type="text" value={input.cuit} name="cuit" onChange={(e)=>handleChange(e)} required></input>
+                        <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="cuit">Cuit </label>
 
                 
                         {errors.cuit ?
@@ -131,9 +150,16 @@ export default function PostEstablishment() {
                         }
                     </div>
 
-                    <div className="w-full md:w-1/2 px-3">
-                        <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Nombre: </label>
-                        <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)} required></input>
+                    <div className="relative mt-3">
+                        <input id="name" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"  placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)} required></input>
+                        <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="name">Nombre: </label>
 
                     
                         {errors.name ?
@@ -141,20 +167,27 @@ export default function PostEstablishment() {
                         }
                     </div>
 
-                    </div>
-                    <div className="flex flex-wrap -mx-3 mb-2">
-                        <div className="w-full md:w-full px-3 mb-6 md:mb-0">
-                            <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Logo-Imagen: </label>
-                            <input className=" appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  type="file" accept="image/*" name="logoImage" id="input_img" onChange={fileChange}></input>
+                   
+                   
+                        <div className="mb-4 relative mt-3 bg-indigo-400 text-center hover:bg-indigo-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            <input className=" absolute top-0 right-0 left-0 bottom-0 w-full h-full opacity-0"  type="file" accept="image/*" name="logoImage" id="input_img" onChange={fileChange}></input>
+                            <label className="text-white" htmlFor="input_imp">Añadir logo</label>
                         </div>
-                    </div>
-                    <div className="flex flex-wrap -mx-3 mb-2">
+                    
+                    
                             
-                            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Horario de apertura: </label>
-                            <div className="relative">
-                                <input className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Hora de apertura..." type="time" value={input.timeActiveFrom} name="timeActiveFrom" onChange={(e)=>handleChange(e)} required></input>
-                            </div>
+                            <div className="relative mt-5">
+                                <input id="abrir" className="peer placeholder-transparent h-10 w-full  border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Hora de apertura..." type="time" value={input.timeActiveFrom} name="timeActiveFrom" onChange={(e)=>handleChange(e)} required></input>
+                                <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="abrir">Horario de apertura </label>
+                            
+                           
                            
                         
                             {errors.timeActiveFrom ?
@@ -162,25 +195,33 @@ export default function PostEstablishment() {
                             }
                             </div>
 
-                            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Horario de cierre: </label>
-                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Hora de cierre..." type="time" value={input.timeActiveTo} name="timeActiveTo" onChange={(e)=>handleChange(e)} required></input>
+                            <div className="relative mt-5">
+                                <input id="cerrar" className="peer placeholder-transparent h-10 w-full  border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Hora de cierre..." type="time" value={input.timeActiveTo} name="timeActiveTo" onChange={(e)=>handleChange(e)} required></input>
+                                <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="cerrar">Horario de cierre </label>
                             </div>
 
                     
                             {errors.timeActiveTo ?
                             <p className="text-red-500 text-xs italic">{errors.timeActiveTo}</p> : null
                             }
-                    </div>
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded shadow-2xl shadow-indigo-600" type="submit">Crear Establecimiento</button> 
+                    
+                        <button className="w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Crear Establecimiento</button> 
                         <br/>
 
                         <br/>
                         <Link to="/">
-                        <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Volver</button>
+                        <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-full">Volver</button>
                         </Link>
                 </form>
             </div>
+        }
         </div>
     )
 }

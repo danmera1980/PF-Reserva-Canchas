@@ -5,8 +5,6 @@ import { postSite } from "../../redux/actions/site";
 
 import Swal from 'sweetalert2';
 
-import { getEstablishmentByUser} from "../../redux/actions/forms";
-
 
 function validate(input) {
  
@@ -33,6 +31,7 @@ export default function SiteCreate() {
     const dispatch = useDispatch()
     const history = useHistory()
     const establishmentId = useSelector(state => state.forms.establishmentId)
+    const userToken = useSelector((state) => state.login.userToken)
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
         establishmentId: '',
@@ -43,8 +42,6 @@ export default function SiteCreate() {
         streetNumber: "",
     })
 
-    let userId = 1;
-
     useEffect(()=>{
         setInput({
             ...input,
@@ -52,11 +49,6 @@ export default function SiteCreate() {
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[establishmentId])
-
-    useEffect(()=>{
-        dispatch((getEstablishmentByUser(userId)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[userId])
 
 
     function handleChange(e) {
@@ -80,7 +72,7 @@ export default function SiteCreate() {
                     text: 'Faltan completar campos obligatorios'
                   })
             } else {
-        dispatch(postSite(input))
+        dispatch(postSite(input,userToken))
         Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -101,62 +93,108 @@ export default function SiteCreate() {
     }
     return (
         <div>
-            <div className="lg: flex justify-center">
-                <form className=" mx-5 w-full max-w-lg " onSubmit={(e) => handleSubmit(e)}>
-                    <div className="flex flex-wrap -mx-3 mb-6">
-                        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Nombre: </label>
-                            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)} required></input>
+        {
+            !establishmentId
+            ? Swal.fire({
+                title: 'Debes crear un establecimiento antes de crear una sede',
+                timer: 3000,
+                text: 'Serás redirigido al formulario',
+                timerProgressBar:true,
+                willClose: ()=>{history.push('/establishment'); window.location.reload()}
+            })
+            :
+            <div className="flex justify-center">
+                <form className="md:w-[500px] lg:w-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={(e) => handleSubmit(e)}>
+                    <div className="relative">
+                        
+                            <input id="name" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)} required></input>
+                            <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="name">Nombre </label>
                             {errors.name ?
                             <p className="text-red-500 text-xs italic">{errors.name}</p> : null
                             }
-                        </div>
+                        
                     </div>
-                    <div className="w-full md:w-1/2 px-3">
-                        <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Pais: </label>
-                        <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="pais..." type="text" value={input.country} name="country" onChange={(e)=>handleChange(e)} required></input>
+                    <div className="relative mt-3">
+                        <input id="pais" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="pais..." type="text" value={input.country} name="country" onChange={(e)=>handleChange(e)} required></input>
+                        <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="pais">Pais </label>
                         {errors.country ?
                         <p className="text-red-500 text-xs italic">{errors.country}</p> : null
                         }
                     </div>
-                    <div className="flex flex-wrap -mx-3 mb-2">
-                        <div className="w-full md:w-full px-3 mb-6 md:mb-0">
-                            <label  className="tracking-wide text-gray-700 text-xs font-bold mb-2">Ciudad: </label>
-                            <input className=" appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Ciudad..." type="text" value={input.city} name="city" onChange={(e)=>handleChange(e)} required></input>
+                    
+                        <div className="relative mt-3">
+                            <input id="city" className=" w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Ciudad..." type="text" value={input.city} name="city" onChange={(e)=>handleChange(e)} required></input>
+                            <label  className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="city">Ciudad </label>
                             {errors.city ?
                             <p className="text-red-500 text-xs italic">{errors.city}</p> : null
                             }
                         </div>
-                    </div>
-                    <div className="flex flex-wrap -mx-3 mb-2">
-                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                            <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Calle: </label>
-                            <input className="md:w-full block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Calle..." type="text" value={input.street} name="street" onChange={(e)=>handleChange(e)} required></input>
+                   
+                   
+                        <div className="relative mt-3">
+                            <input id="calle" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Calle..." type="text" value={input.street} name="street" onChange={(e)=>handleChange(e)} required></input>
+                            <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="calle">Calle </label>
 
                     
                             {errors.street ?
                             <p className="text-red-500 text-xs italic">{errors.street}</p> : null
                             }
                         </div>
-                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                            <label className="tracking-wide text-gray-700 text-xs font-bold mb-2">Numero de calle: </label>
+                        <div className="relative mt-3">
                             
-                            <input className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Numero de calle..." type="text" value={input.streetNumber} name="streetNumber" onChange={(e)=>handleChange(e)} required></input>
+                            <input className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Numero de calle..." type="text" value={input.streetNumber} name="streetNumber" id="numC" onChange={(e)=>handleChange(e)} required></input>
+                            <label className="absolute left-0 -top-3.5 
+                                            text-gray-600 text-sm 
+                                            peer-placeholder-shown:text-base 
+                                            peer-placeholder-shown:text-gray-400
+                                            peer-placeholder-shown:top-2 transition-all 
+                                            peer-focus:-top-3.5 peer-focus:text-gray-600
+                                            peer-focus:text-sm
+                                            cursor-text" htmlFor="numC">Numero de calle </label>
 
                     
                             {errors.streetNumber ?
                             <p className="text-red-500 text-xs italic">{errors.streetNumber}</p> : null
                             }
                         </div>
-                    </div>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded shadow-2xl shadow-indigo-600" type="submit">Crear tu sede</button> 
+                   
+                    <button className="mt-5 w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Crear tu sede</button> 
                     <br/>
                     <br/>
-                    <Link to="/home">
-                    <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Volver</button>
+                    <Link to="/">
+                    <button className=" w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Volver</button>
                     </Link>
                 </form>
             </div>
+        }
         </div>
     )
 }
