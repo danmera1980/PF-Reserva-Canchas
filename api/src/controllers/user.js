@@ -7,7 +7,7 @@ const usersData = require("../TempData/usersData.json");
 const establishmentsData = require("../TempData/establishmentsData.json");
 const sitesData = require("../TempData/sitesData.json");
 const courtsData = require("../TempData/courtsData.json");
-const { use } = require("../routes/routerUser");
+// const { use } = require("../routes/routerUser");
 
 const loadDataToDB = () => {
   usersData.map(async (user) => {

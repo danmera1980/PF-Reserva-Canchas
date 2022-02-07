@@ -17,7 +17,6 @@ const axios = require("axios");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-
 router.use('/establishment', routerEstablishment);
 router.use('/site', routerSite);
 router.use('/court', routerCourt);
