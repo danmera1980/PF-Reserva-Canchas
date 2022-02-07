@@ -8,22 +8,15 @@ import homeImage from '../../assets/img/homeImage.jpg';
 import "./Home.scss";
 import CardCourt from "../CardCourt.js/CardCourt.jsx";
 import { allEstablishments } from "../../redux/actions/establishment.js";
-import { getEstablishmentByUser } from "../../redux/actions/forms.js";
 
 function Home() {
   const dispatch = useDispatch()
   const cards = useSelector(state => state.establishment.establishments)
-  const userId = useSelector((state) => state.login.userId)
   console.log(cards)
   
   useEffect(()=>{
     dispatch(allEstablishments())
   },[dispatch])
-
-  useEffect(()=>{
-    dispatch(getEstablishmentByUser(userId))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[userId])
 
   return (
     <div className="home">
