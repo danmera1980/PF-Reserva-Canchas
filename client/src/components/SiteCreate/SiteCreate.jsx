@@ -88,7 +88,9 @@ export default function SiteCreate() {
         street: "",
         streetNumber: "",
         })
-        history.push("/site")
+        history.push("/establishmentprofile");
+        window.location.reload();
+
     }
     }
     return (

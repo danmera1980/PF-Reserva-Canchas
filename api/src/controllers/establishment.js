@@ -73,9 +73,11 @@ const getEstablishmentsFromDB = async(req,res,next)=>{
 
 const createEstablishment = async (req, res, next)=>{
 
-    const userId = req.user.id;
+    // console.log(req.user)
 
-    const {cuit,name,logoImage, timeActiveFrom, timeActiveTo} = req.body
+    // const userId = req.user.id;
+
+    const {cuit,name,logoImage, timeActiveFrom, timeActiveTo, userId} = req.body
     
     let user = await User.findOne({
         where: { 

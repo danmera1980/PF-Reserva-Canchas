@@ -7,7 +7,6 @@ import { loginUser, loginWithGoogle } from "../../redux/actions/users";
 import { useHistory } from "react-router";
 import Swal from 'sweetalert2'
 import "./Login.scss";
-import { getEstablishmentByUser } from "../../redux/actions/forms.js";
 
 
 function validate(values) {
@@ -28,7 +27,6 @@ function validate(values) {
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const userId = useSelector((state) => state.login.userId);
   const [errors, setErrors] = useState({});
 
   const initialState = {
@@ -72,7 +70,7 @@ const Login = () => {
       dispatch(loginUser(userInfo));
       history.push("/profile");
       setUserInfo(initialState);
-      dispatch(getEstablishmentByUser(userId))
+      
     } else {
       Swal.fire({
         title: `Completar todos los datos`,

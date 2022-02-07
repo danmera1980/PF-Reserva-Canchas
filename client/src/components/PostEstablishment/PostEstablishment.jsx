@@ -40,6 +40,7 @@ export default function PostEstablishment() {
     logoImage: "",
     timeActiveFrom: "",
     timeActiveTo: "",
+    userId:userId
   });
   function handleChange(e) {
     setInput({
@@ -68,7 +69,8 @@ export default function PostEstablishment() {
         text: "Faltan completar campos obligatorios",
       });
     } else {
-      dispatch(postEstablishment(input, userToken));
+      console.log(userToken);
+      dispatch(postEstablishment(input));
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -80,13 +82,14 @@ export default function PostEstablishment() {
         cuit: "",
         name: "",
         logoImage: "",
-        rating: "",
         timeActiveFrom: "",
         timeActiveTo: "",
+        userId:userId
       });
-      dispatch(getEstablishmentByUser(userId));
 
-      history.push("/");
+      
+      history.push("/establishmentprofile");
+      window.location.reload();
     }
   }
 
@@ -278,23 +281,18 @@ export default function PostEstablishment() {
                 {errors.timeActiveTo}
               </p>
             ) : null}
-
-            <Link to={"/establishmentprofile"}>
               <button
                 className="w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
               >
                 Crear Establecimiento
               </button>
-            </Link>
             <br />
 
             <br />
-            <Link to="/profile">
               <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-full">
                 Volver
               </button>
-            </Link>
           </form>
         </div>
       )}

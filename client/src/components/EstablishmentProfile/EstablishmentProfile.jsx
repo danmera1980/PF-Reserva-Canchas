@@ -1,10 +1,26 @@
-import React from "react";
+import {React, useEffect} from "react";
 import {Link} from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import logo from "../../assets/img/logo.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms.js";
 
 function EstablishmentProfile() {
+
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.login.userId);
+  const establishmentId = useSelector((state) => state.forms.establishmentId);
+
+
+  useEffect(()=>{
+    dispatch(getEstablishmentByUser(userId))
+    if(establishmentId){
+      dispatch(getSitesByEstablishmentId(establishmentId))
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
+
     return (
         <div>
       <Header />

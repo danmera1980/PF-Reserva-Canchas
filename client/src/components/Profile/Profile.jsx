@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../Card/Card";
 import UserEdit from "../UserEdit/UserEdit";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../assets/img/logo.svg";
 import Header from "../Header/Header";
@@ -12,9 +13,17 @@ import {
   faMoneyCheckAlt,
   faThLarge,
 } from "@fortawesome/free-solid-svg-icons";
+import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms.js";
 
 function Profile() {
   const [visual, setVisual] = useState("bookings");
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.login.userId);
+
+  useEffect(()=>{
+    dispatch(getEstablishmentByUser(userId))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[userId]);
 
   const onButtonSelection = (option) => {
     setVisual(option);

@@ -166,7 +166,8 @@ export default function CourtCreate(){
                 image:[],
                 siteId:'',
             })
-             history.push('/')
+            history.push("/establishmentprofile");
+            window.location.reload();
             }
     }    
        
@@ -321,7 +322,7 @@ export default function CourtCreate(){
                             <button className='mt-5 w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type="submit" >Crear Cancha</button>
                             <br/>
                             <br/>
-                            <Link to='/establishmentprofile' ><button className='w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded' >Volver</button>  </Link>
+                            <button className='w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded' >Volver</button>
                         </div>
                     </form>
                 </div>
