@@ -30,12 +30,11 @@ const loadDataToDB = () => {
   establishmentsData.map(async (est) => {
     await Establishment.findOrCreate({
       where: {
-        id: String(est.id),
+        cuit: String(est.id),
         name: est.name,
         logoImage: est.logoImage,
         timeActiveFrom: est.timeActiveFrom,
         timeActiveTo: est.timeActiveTo,
-        responsableId: String(est.responsableId),
       },
     });
   });
@@ -50,7 +49,7 @@ const loadDataToDB = () => {
         streetNumber: site.streetNumber,
         latitude: site.latitude,
         longitude: site.longitude,
-        // establishmentId: site.establishmentId
+        establishmentId: site.establishmentId
       },
     });
   });
@@ -65,13 +64,13 @@ const loadDataToDB = () => {
         price: court.price,
         image: [court.image],
         sport: court.sport,
-        // siteId: court.siteId
+        siteId: court.siteId
       },
     });
   });
 };
 
-// loadDataToDB();
+loadDataToDB();
 
 // End temp function to load data
 

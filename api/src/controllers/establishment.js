@@ -58,7 +58,7 @@ const getEstablishmentsFromDB = async(req,res,next)=>{
                 logoImage: establishment.logoImage,
                 timeActiveFrom: establishment.timeActiveFrom,
                 timeActiveTo: establishment.timeActiveTo,
-                responsableId: establishment.responsableId,
+                //responsableId: establishment.responsableId,
             }
         })
         res.send(establishmentDB) ;
