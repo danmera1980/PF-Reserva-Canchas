@@ -2,9 +2,7 @@
 const { User } = require("../db");
 const bcrypt = require("bcrypt");
 
-loadDataToDB();
 
-// End temp function to load data
 
 // starting to code
 const getAllUsers = async (req, res, next) => {
