@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faBasketballBall, faSearchLocation } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ function SearchBar() {
     
     const dispatch= useDispatch();
     const [name, setName] = useState('');
-    const [location, setLocation] = useState('')
+    const [location, setLocation] = useState('')    
 
     function handleInput(e){
         e.preventDefault();
@@ -31,12 +31,7 @@ function SearchBar() {
         setName("")
     }
 
-    let handleClickLocation = (e)=>{
-        e.preventDefault()
-        if(!location) return alert('Ingrese nombre para la busqueda')
-        dispatch(filterByLocation(location));
-        setLocation("")
-    }
+
 
     function handleFilterBySport(e){
         dispatch(filterBySport(e.target.value))
@@ -45,16 +40,7 @@ function SearchBar() {
   return (
     <div>
         <div className='searchBar'>
-            <div className='searchSelect'>
-                <input 
-                    type= 'text'
-                    onChange={(e) => handleLocation(e)}
-                    value={location}
-                    id='establishment'
-                    placeholder='Ubicación'
-                />
-                <FontAwesomeIcon onClick={(e) => handleClickLocation(e)} icon={faMapMarkerAlt} className='faIcon'/>
-            </div>
+            
             <div className='searchSelect'>
                 <select id='sport'onChange={(e) => handleFilterBySport(e)}>
                     <option value=''>{sports}</option>
@@ -77,9 +63,11 @@ function SearchBar() {
                     value={name}
                     id='establishment'
                     placeholder={establishment}
-                /> 
+                />
+
                  <Link to={"/results"}>
-                <FontAwesomeIcon onClick={(e) => handleClickName(e)} icon={faSearchLocation} className='faIcon'/>
+                <FontAwesomeIcon icon={faSearchLocation} className='faIcon'/>¨
+                {/* <FontAwesomeIcon onClick={(e) => handleClickName(e)} icon={faSearchLocation} className='faIcon'/> */}
                   </Link>
 
             </div>

@@ -20,10 +20,10 @@ function Home() {
     dispatch(allEstablishments())
   },[dispatch])
 
-  useEffect(()=>{
-    dispatch(getEstablishmentByUser(userId))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[userId])
+  // useEffect(()=>{
+  //  // dispatch(getEstablishmentByUser(userId))
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[userId])
 
   return (
     <div className="home">

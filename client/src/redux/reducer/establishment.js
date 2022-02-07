@@ -13,6 +13,7 @@ const establishmentReducer = (state = initialState, action) => {
                 establishmentDetail: action.payload
             }
         case ALL_ESTABLISHMENTS:
+            console.log(action.payload)
             return{
                 ...state,
                 establishments: action.payload
