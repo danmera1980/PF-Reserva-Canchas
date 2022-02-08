@@ -17,7 +17,7 @@ export default function useDarkMode() {
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-    window.location.reload(true);
+    // window.location.reload(true);
   };
 
   return [darkMode, toggleDarkMode];
