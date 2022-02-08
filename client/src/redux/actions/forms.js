@@ -23,13 +23,14 @@ export function getEstablishmentByUser(userToken){
     }
 }
 
-export function getSitesById(userToken){
+export function getSitesById(establishmentId, userToken){
     const headers = {
         Authorization: `Bearer ${userToken}`,
       };
     return async function(dispatch){
         try {
-            let info = await axios.get(`${SERVER_URL}/site/userId`, { headers: headers })
+            let info = await axios.get(`${SERVER_URL}/site/${establishmentId}`, { headers: headers })
+            
             return dispatch({
                 type: GET_SITES_BY_ESTAB_ID,
                 payload: info.data 
