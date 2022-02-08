@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { postEstablishment } from "../../redux/actions/forms.js";
+import { postEstablishment } from "../../redux/actions/establishment.js";
 import Swal from "sweetalert2";
 import "./PostEstablishment.scss";
 
@@ -28,7 +28,6 @@ function validate(input) {
 
 export default function PostEstablishment() {
   const userToken = useSelector((state) => state.register.userToken);
-  //const userId = useSelector((state) => state.register.userId);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -39,7 +38,6 @@ export default function PostEstablishment() {
     logoImage: "",
     timeActiveFrom: "",
     timeActiveTo: "",
-    //userId:userId
   });
   function handleChange(e) {
     setInput({
@@ -54,7 +52,6 @@ export default function PostEstablishment() {
     );
   }
   function handleSubmit(e) {
-    //  console.log('soy input', input)
 
     e.preventDefault();
     if (
@@ -83,7 +80,6 @@ export default function PostEstablishment() {
         logoImage: "",
         timeActiveFrom: "",
         timeActiveTo: "",
-        //userId:userId
       });
 
       

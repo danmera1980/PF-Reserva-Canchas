@@ -24,7 +24,7 @@ const bodySchema = Joi.object({
 
 router.post('/', userExtractor, authGoogle,validator.body(bodySchema), createSite)
 router.get('/location', findByLocation)
-router.get('/userId', userExtractor, authGoogle, getAllSites)
+router.get('/:establishmentId', userExtractor, authGoogle, getAllSites)
 router.get('/',getAllSites)
 
 module.exports = router

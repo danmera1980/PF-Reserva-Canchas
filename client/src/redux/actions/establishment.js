@@ -1,6 +1,16 @@
 import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_NAME, FILTER_BY_SPORT, GET_ESTABLISHMENT, SERVER_URL, SORT_BY_AVAILABILITY, SORT_BY_PRICE } from "./actionNames";
 import axios from 'axios';
 
+export function postEstablishment(payload, userToken){
+    const headers = {
+        Authorization: `Bearer ${userToken}`,
+      };
+    return async function() {
+        var establishment = await axios.post(`${SERVER_URL}/establishment`, payload, { headers: headers })
+        return establishment
+    }
+}
+
 export const addUserToEstablishment = (payload) => {
     return async function() {
         var info = await axios.post(`${SERVER_URL}establishment/addUserToEstablishment`, payload)
