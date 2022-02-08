@@ -1,4 +1,4 @@
-import "../src/styles/index.scss";
+import "../src/index.css";
 import { Route } from "react-router-dom";
 import React from "react";
 import Home from "./components/Home/Home";
@@ -30,7 +30,6 @@ function App() {
         <Route exact path="/useredit" component={UserEdit} />
         <Route exact path="/establishmentprofile" component={EstablishmentProfile} />
         <Route exact path="/addUserToEstablishment" component={AddUserToEstablishment}/>
-
       </div>
     </React.Fragment>
   );

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function useDarkMode() {
   const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") === "dark" ? true : false
+    window.matchMedia("(prefers-color-scheme: dark)").matches ? true : false
   );
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function useDarkMode() {
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-    // window.location.reload(true);
+    window.location.reload(true);
   };
 
   return [darkMode, toggleDarkMode];
