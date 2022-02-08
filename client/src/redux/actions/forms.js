@@ -49,12 +49,3 @@ export function getSitesById(establishmentId, userToken){
     }
 }
 
-export function postEstablishment(payload, userToken){
-    const headers = {
-        Authorization: `Bearer ${userToken}`,
-      };
-    return async function() {
-        var establishment = await axios.post(`${SERVER_URL}/establishment`, payload, { headers: headers })
-        return establishment
-    }
-}

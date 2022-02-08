@@ -44,25 +44,11 @@ function validate(input) {
 
 export default function CourtCreate(){
     const dispatch = useDispatch();
-  //  const sites = useSelector ((state) => state.sites)
     const history = useHistory()
     const [errors,setErrors] = useState({});
     const establishmentId = useSelector(state => state.forms.establishmentId)
     const sites = useSelector(state => state.forms.sitesByEstablishment)
     const userToken = useSelector((state) => state.register.userToken)
-
-    // useEffect(()=>{
-    //     dispatch((getEstablishmentByUser(userId)))
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // },[userId])
-
-    useEffect(()=>{
-        dispatch(getSitesById(establishmentId));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[getEstablishmentByUser])
-    
-
-
 
     const [input,setInput] = useState({
         name:'',
@@ -110,14 +96,6 @@ export default function CourtCreate(){
               [e.target.name]: e.target.value
           }))
     }
-    
-    // function handleSelectEstablishment(e){
-    //     dispatch(getSitesById(e.target.value));
-    //     setErrors(validate({
-    //           ...input,
-    //           [e.target.name]: e.target.value
-    //       }))
-    // }
 
     function handleSelectSite(e){
         setInput({

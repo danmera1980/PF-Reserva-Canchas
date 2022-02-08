@@ -58,14 +58,6 @@ const findByLocation = async (req, res) =>{
 }
 
 const getAllSites = async (req, res, next) =>{
-
-    // const userId = req.user.id;
-
-    // const user = await User.findOne({
-    //     where: {id : userId}
-    // })
-
-    // const establishmentId = user.establishmentId
     
     const establishmentId = req.params.establishmentId
     
