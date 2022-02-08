@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
@@ -85,10 +85,22 @@ const markers = [
 function Results() {
     const [ selectedCard, setSelectedCard] = useState(null);
     const resultsData = useSelector(state => state.establishment.establishments);
+    console.log(resultsData)
+    const [currentLocation, setCurrentLocation ] = useState({
+        latitude: 0,
+        longitude: 0
+    })
+    
+    useEffect(()=> [
+        navigator.geolocation.getCurrentPosition(position => {
+            setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
+            console.log('My location', currentLocation)
+        })
+    ],[navigator])
 
     const [viewport, setViewport] = useState({
-        latitude: resultsData?resultsData[0].establishment.site[0].latitude: -32.89463511600659,
-        longitude: resultsData?resultsData[0].establishment.site[0].longitude: -58.381592,
+        latitude: resultsData.length?resultsData[0].sites[0].latitude: currentLocation.latitude,
+        longitude: resultsData.length?resultsData[0].sites[0].longitude: currentLocation.longitude,
         width: '600px',
         height: '100vh',
         zoom: 10,
@@ -108,36 +120,36 @@ function Results() {
                 <SearchBar />
                 {resultsData?.map(m => (
                     <Card 
-                        key= {m.establishment.id}
-                        id= {m.establishment.id}
-                        name= {m.establishment.site[0].courts[0].name}
-                        images= {m.establishment.site[0].courts[0].images}
-                        establishment= {m.establishment.name}
-                        site= {m.establishment.site[0].name}
-                        address= {m.establishment.site[0].street}
-                        price= {m.establishment.site[0].courts[0].price}
-                        sport= {m.establishment.site[0].courts[0].sport}
+                        key= {m.id}
+                        id= {m.id}
+                        name= {m.sites[0].courts[0].name}
+                        images= {m.sites[0].courts[0].images}
+                        establishment= {m.name}
+                        site= {m.sites[0].name}
+                        address= {m.sites[0].street}
+                        price= {m.sites[0].courts[0].price}
+                        sport= {m.sites[0].courts[0].sport}
                     />
                 ))}
             </div>
             <div className='rightResults'>
                 <ReactMapGL 
                     {...viewport}
-                    onViewportChange={newView => setViewport(newView)}
+                    onViewportChange={newView => {setViewport(newView); console.log(newView)}}
                     mapboxApiAccessToken={mapboxToken}
                     mapStyle={MapStyle}
                 >
                     {resultsData.map(m => (
-                        <button key={m.establishment.id} 
-                        onClick={e => selectedCardClick(e, {establishment: m.establishment.name, 
-                                                            site: m.establishment.site[0].name,
-                                                            name: m.establishment.site[0].courts[0].name, 
-                                                            address: m.establishment.site[0].street, 
-                                                            sport: m.establishment.site[0].courts[0].sport,
-                                                            price: m.establishment.site[0].courts[0].price,
-                                                            latitude: m.establishment.site[0].latitude,
-                                                            longitude: m.establishment.site[0].longitude})}>
-                            <Marker latitude={m.establishment.site[0].latitude} longitude={m.establishment.site[0].longitude}>
+                        <button key={m.id} 
+                        onClick={e => selectedCardClick(e, {establishment: m.name, 
+                                                            site: m.sites[0].name,
+                                                            name: m.sites[0].courts[0].name, 
+                                                            address: m.sites[0].street, 
+                                                            sport: m.sites[0].courts[0].sport,
+                                                            price: m.sites[0].courts[0].price,
+                                                            latitude: m.sites[0].latitude,
+                                                            longitude: m.sites[0].longitude})}>
+                            <Marker latitude={m.sites[0].latitude} longitude={m.sites[0].longitude}>
                                 <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
                             </Marker>
                         </button>
