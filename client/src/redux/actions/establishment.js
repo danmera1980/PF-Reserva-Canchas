@@ -17,15 +17,7 @@ export const getEstablishment = (id) => {
         })
     }
 }
-export const postEstablishment = (payload) => {
-    // const headers = {
-    //     Authorization: `Bearer ${userToken}`,
-    //   };
-    return async function() {
-        var establishment = await axios.post(`${SERVER_URL}/establishment`, payload/* , { headers: headers } */)
-        return establishment
-    }
-}
+
 
 export const allEstablishments = () => {
     return async (dispatch) => {

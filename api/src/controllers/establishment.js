@@ -5,7 +5,8 @@ const { createSite } = require('./site');
 
 const getEstabIdByUserId = async (req,res, next) =>{
 
-    const {userId} = req.params;
+    const userId = req.user.id;
+    
     if(userId){
         try {
 
@@ -73,11 +74,9 @@ const getEstablishmentsFromDB = async(req,res,next)=>{
 
 const createEstablishment = async (req, res, next)=>{
 
-    // console.log(req.user)
+    const userId = req.user.id;
 
-    // const userId = req.user.id;
-
-    const {cuit,name,logoImage, timeActiveFrom, timeActiveTo, userId} = req.body
+    const {cuit,name,logoImage, timeActiveFrom, timeActiveTo} = req.body
     
     let user = await User.findOne({
         where: { 
@@ -86,7 +85,6 @@ const createEstablishment = async (req, res, next)=>{
     })
     
 
-    // creo el establecimiento
     let establishmentDB = await Establishment.findOne({
         where : {cuit: cuit}
     })

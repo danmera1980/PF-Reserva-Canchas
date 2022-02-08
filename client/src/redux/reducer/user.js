@@ -1,4 +1,4 @@
-import { ALL_USERS, EDIT_SUCCESS, SET_ERRORS } from '../actions/actionNames';
+import { ALL_USERS } from '../actions/actionNames';
 
 const initialState = {
     //para el admin
@@ -6,8 +6,6 @@ const initialState = {
     //user details para enviar la info que necesita el perfil
     userDetails: [],
     //un temporal para los filtros del admin
-    userErrors:[], // se cargan los errores de login, register y edit user
-    userMessage:[] // mensajes de respuestas
 }
 
 const userReducer = (state = initialState, action) => {
@@ -17,16 +15,7 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 users: action.payload
             };
-        case EDIT_SUCCESS:
-            return {
-                ... state,
-                userMessage: action.payload
-            }
-        case SET_ERRORS:
-            return{
-                ...state,
-                userErrors: action.payload
-            }
+        
         
         default:
             return state;

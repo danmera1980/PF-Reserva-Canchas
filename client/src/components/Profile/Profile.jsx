@@ -13,16 +13,16 @@ import {
   faMoneyCheckAlt,
   faThLarge,
 } from "@fortawesome/free-solid-svg-icons";
-import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms.js";
+import { getEstablishmentByUser, getSitesById } from "../../redux/actions/forms.js";
 
 function Profile() {
   const [visual, setVisual] = useState("bookings");
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.login.userId);
+  const userToken = useSelector((state) => state.register.userToken);
   const establishmentId = useSelector((state) => state.forms.establishmentId);
 //COMENTE ESTO PORQUE TIRABA ERROR DE LA DB EN EL BACK HAY QUE VOLVER A HABILITARLO!!!!
   // useEffect(()=>{
-  //   dispatch(getEstablishmentByUser(userId))
+  //   dispatch(getEstablishmentByUser(userToken))
   // // eslint-disable-next-line react-hooks/exhaustive-deps
   // },[userId]);
 

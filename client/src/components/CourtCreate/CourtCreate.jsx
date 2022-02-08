@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from 'axios';
 import {Link, useHistory} from 'react-router-dom';
 import { postCourt } from "../../redux/actions/court";
-import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms";
+import { getEstablishmentByUser, getSitesById } from "../../redux/actions/forms";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from 'sweetalert2';
 import './CourtCreate.scss'
@@ -49,7 +49,7 @@ export default function CourtCreate(){
     const [errors,setErrors] = useState({});
     const establishmentId = useSelector(state => state.forms.establishmentId)
     const sites = useSelector(state => state.forms.sitesByEstablishment)
-    const userToken = useSelector((state) => state.login.userToken)
+    const userToken = useSelector((state) => state.register.userToken)
 
     // useEffect(()=>{
     //     dispatch((getEstablishmentByUser(userId)))
@@ -57,7 +57,7 @@ export default function CourtCreate(){
     // },[userId])
 
     useEffect(()=>{
-        dispatch(getSitesByEstablishmentId(establishmentId));
+        dispatch(getSitesById(establishmentId));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[getEstablishmentByUser])
     
@@ -112,7 +112,7 @@ export default function CourtCreate(){
     }
     
     // function handleSelectEstablishment(e){
-    //     dispatch(getSitesByEstablishmentId(e.target.value));
+    //     dispatch(getSitesById(e.target.value));
     //     setErrors(validate({
     //           ...input,
     //           [e.target.name]: e.target.value

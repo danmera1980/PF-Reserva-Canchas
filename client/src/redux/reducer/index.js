@@ -9,7 +9,6 @@ import establishmentReducer from './establishment';
 const allReducers = combineReducers({
   users: userReducer,
   register: registerReducer,
-  login: registerReducer,
   forms: formsReducer,
   establishment: establishmentReducer
 });

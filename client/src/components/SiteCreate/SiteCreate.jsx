@@ -31,7 +31,7 @@ export default function SiteCreate() {
     const dispatch = useDispatch()
     const history = useHistory()
     const establishmentId = useSelector(state => state.forms.establishmentId)
-    const userToken = useSelector((state) => state.login.userToken)
+    const userToken = useSelector((state) => state.register.userToken)
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
         establishmentId: '',
