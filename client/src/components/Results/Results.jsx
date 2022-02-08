@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import Header from '../Header/Header';
 import SearchBar from '../SearchBar/SearchBar';
 import Footer from '../Footer/Footer';
 import Card from '../Card/Card';
-// import 'mapbox-gl/dist/mapbox-gl.css';
-// import mapboxgl from 'mapbox-gl';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import './Results.scss';
 import Slider from '../Slider/Slider';
@@ -84,16 +83,18 @@ const markers = [
 
 
 function Results() {
+    const [ selectedCard, setSelectedCard] = useState(null);
+    const resultsData = useSelector(state => state.establishment.establishments);
+
     const [viewport, setViewport] = useState({
-        latitude: -34.570722,
-        longitude: -58.381592,
+        latitude: resultsData?resultsData[0].establishment.site[0].latitude: -32.89463511600659,
+        longitude: resultsData?resultsData[0].establishment.site[0].longitude: -58.381592,
         width: '600px',
         height: '100vh',
         zoom: 10,
         pitch: 50
     });
 
-    const [ selectedCard, setSelectedCard] = useState(null);
 
     const selectedCardClick = (event, card) => {
         setSelectedCard(card)
@@ -105,17 +106,17 @@ function Results() {
         <div className='results'>
             <div className='leftResults'>
                 <SearchBar />
-                {markers?.map(m => (
+                {resultsData?.map(m => (
                     <Card 
-                        key= {m.id}
-                        id= {m.id}
-                        name= {m.name}
-                        images= {m.images}
-                        establishment= {m.establishment}
-                        site= {m.site}
-                        address= {m.address}
-                        price= {m.price}
-                        sport= {m.sport}
+                        key= {m.establishment.id}
+                        id= {m.establishment.id}
+                        name= {m.establishment.site[0].courts[0].name}
+                        images= {m.establishment.site[0].courts[0].images}
+                        establishment= {m.establishment.name}
+                        site= {m.establishment.site[0].name}
+                        address= {m.establishment.site[0].street}
+                        price= {m.establishment.site[0].courts[0].price}
+                        sport= {m.establishment.site[0].courts[0].sport}
                     />
                 ))}
             </div>
@@ -126,23 +127,31 @@ function Results() {
                     mapboxApiAccessToken={mapboxToken}
                     mapStyle={MapStyle}
                 >
-                    {markers.map(m => (
-                        <button key={m.id} onClick={e => selectedCardClick(e, m)}>
-                            <Marker latitude={m.latitude} longitude={m.longitude}>
+                    {resultsData.map(m => (
+                        <button key={m.establishment.id} 
+                        onClick={e => selectedCardClick(e, {establishment: m.establishment.name, 
+                                                            site: m.establishment.site[0].name,
+                                                            name: m.establishment.site[0].courts[0].name, 
+                                                            address: m.establishment.site[0].street, 
+                                                            sport: m.establishment.site[0].courts[0].sport,
+                                                            price: m.establishment.site[0].courts[0].price,
+                                                            latitude: m.establishment.site[0].latitude,
+                                                            longitude: m.establishment.site[0].longitude})}>
+                            <Marker latitude={m.establishment.site[0].latitude} longitude={m.establishment.site[0].longitude}>
                                 <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
                             </Marker>
                         </button>
                     ))}
                     {selectedCard ? (
                         <Popup latitude={selectedCard.latitude} longitude={selectedCard.longitude} onClose={() => setSelectedCard(null)}>
-                            <div>
-                                <Slider/>
-                                <h2>{selectedCard.establishment}</h2>
-                                <h3>{selectedCard.site} - {selectedCard.name}</h3>
-                                <h4>{selectedCard.address} <span>City</span></h4>
-                                <h4>{selectedCard.sport}</h4>
-                                <h3>{selectedCard.price}</h3>
-                            </div>
+                        <div>
+                            <Slider/>
+                            <h2>{selectedCard.establishment}</h2>
+                            <h3>{selectedCard.site} - {selectedCard.name}</h3>
+                            <h4>{selectedCard.address} <span>City</span></h4>
+                            <h4>{selectedCard.sport}</h4>
+                            <h3>${selectedCard.price}</h3>
+                        </div>
                         </Popup>
                     ):null}
                 </ReactMapGL>

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const addUserToEstablishment = (payload) => {
     return async function() {
-        var info = await axios.post(`${SERVER_URL}establishment/addUserToEstablishment`, payload)
+        var info = await axios.post(`${SERVER_URL}/establishment/addUserToEstablishment`, payload)
         return info
     }
 }
@@ -57,7 +57,7 @@ export const filterByLocation = (location) => {
     }
 }
 
-export const filterByName = (name) => {
+export const searchByText = (name) => {
     return async(dispatch) =>{
         var results = await axios(`${SERVER_URL}/establishment?name=${name}`)
         return dispatch({
