@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/img/logo.svg";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import Bookings from "../Bookings/Bookings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCog,
@@ -43,7 +44,7 @@ function Profile() {
               className="-mt-28 ml-16 md:ml-20 bg-cover rounded-full w-60 h-60 bg-green-900 relative"
             />
 
-            <h1 className=" mb-5 text-center mt-5 text-2xl font-bold md:text-left md:ml-24 md:inline-block">
+            <h1 className="mb-5 text-center mt-5 text-2xl font-bold md:text-left md:ml-[4.5rem] md:inline-block">
               Nombre de usuario
             </h1>
 
@@ -77,7 +78,7 @@ function Profile() {
                 :
                 <Link to={"/establishment"}>
                   <button
-                    className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
+                    className="rounded-lg shadow-xl pt-[3px] bg-white text-black active:scale-95 transition-all"
                     // onClick={() => onButtonSelection("establishments")}
                   >
                     <FontAwesomeIcon icon={faFutbol} size={"2x"} />
@@ -99,15 +100,15 @@ function Profile() {
             {(() => {
               switch (visual) {
                 case "bookings":
-                  return <Card />;
+                  return <Bookings />;
                 case "transactions":
-                  return <div>Mi transaccion</div>;
+                  return <div>Mis transacciones</div>;
                 // case "establishments":
                 //   return
                 case "editProfile":
-                  return <UserEdit />;
+                  return <UserEdit />
                 default:
-                  return <div>Default</div>;
+                  return <Bookings />;
               }
             })()}
           </div>

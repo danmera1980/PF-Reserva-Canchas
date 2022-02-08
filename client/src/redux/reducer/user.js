@@ -19,7 +19,7 @@ const userReducer = (state = initialState, action) => {
             };
         case EDIT_SUCCESS:
             return {
-                ... state,
+                ...state,
                 userMessage: action.payload
             }
         case SET_ERRORS:
