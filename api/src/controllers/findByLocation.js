@@ -1,32 +1,25 @@
-const { Court, Site, Establishment} = require ('../db');
+const { Court, Site, Establishment, Op} = require ('../db');
 
 const findByLocation = async (req, res) => { 
     const {location} = req.query
-    console.log(location)
 
     try {
-          var courts = await Court.findAll({
-            attributes: { exclude: ['createdAt','updatedAt'] }
-          })
-        for(var i = 0; i<courts.length ; i++){
-            var site = await Site.findOne({
-                where: { id: courts[i].siteId},
-                attributes: ['name', 'id', 'establishmentId','street', 'streetNumber', 'city']
-              })
-            courts[i]= {...courts[i].dataValues, site}
+      var establishments = await Establishment.findAll({
+        include:{
+          model: Site,
+          as: 'sites',
+          include:{
+            model: Court,
+            as: 'courts'
+          }
+        },
+        where:{
+          '$sites.latitude$': {
+            [Op.lte]: location
+          },
         }
-        for(var i=0; i<courts.length ; i++){
-            var establishment = await Establishment.findOne({
-                where: { id: courts[i].site.establishmentId},
-                attributes: ['name', 'id', 'timeActiveFrom', 'timeActiveTo']
-            })
-            courts[i]= {...courts[i], establishment}
-        }
-    
-    const results = courts.filter(el => el.site.city.toLowerCase().includes(location.toLowerCase()))
-    
-    res.send(results)
-
+      })
+      res.send(establishments)
     } catch (e) {
       console.log(e)
       res.send(e)
