@@ -9,7 +9,7 @@ import { getEstablishmentByUser, getSitesById} from "../../redux/actions/forms.j
 function EstablishmentProfile() {
 
   const dispatch = useDispatch();
-  const userToken = useSelector((state) => state.login.userToken);
+  const userToken = useSelector((state) => state.register.userToken);
   const establishmentId = useSelector((state) => state.forms.establishmentId);
 
   useEffect(()=>{

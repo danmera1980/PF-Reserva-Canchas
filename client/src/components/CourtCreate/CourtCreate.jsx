@@ -49,7 +49,7 @@ export default function CourtCreate(){
     const [errors,setErrors] = useState({});
     const establishmentId = useSelector(state => state.forms.establishmentId)
     const sites = useSelector(state => state.forms.sitesByEstablishment)
-    const userToken = useSelector((state) => state.login.userToken)
+    const userToken = useSelector((state) => state.register.userToken)
 
     // useEffect(()=>{
     //     dispatch((getEstablishmentByUser(userId)))

@@ -18,7 +18,7 @@ import { getEstablishmentByUser, getSitesById } from "../../redux/actions/forms.
 function Profile() {
   const [visual, setVisual] = useState("bookings");
   const dispatch = useDispatch();
-  const userToken = useSelector((state) => state.login.userToken);
+  const userToken = useSelector((state) => state.register.userToken);
   const establishmentId = useSelector((state) => state.forms.establishmentId);
 //COMENTE ESTO PORQUE TIRABA ERROR DE LA DB EN EL BACK HAY QUE VOLVER A HABILITARLO!!!!
   // useEffect(()=>{

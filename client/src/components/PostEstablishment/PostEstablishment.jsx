@@ -27,8 +27,8 @@ function validate(input) {
 }
 
 export default function PostEstablishment() {
-  const userToken = useSelector((state) => state.login.userToken);
-  //const userId = useSelector((state) => state.login.userId);
+  const userToken = useSelector((state) => state.register.userToken);
+  //const userId = useSelector((state) => state.register.userId);
 
   const dispatch = useDispatch();
   const history = useHistory();
