@@ -17,11 +17,10 @@ const bodySchema = Joi.object({
     
 })
 
-router.get('/:userId', getEstabIdByUserId )
+router.get('/userId', userExtractor, authGoogle, getEstabIdByUserId )
 router.get('/',getEstablishmentsFromDB)
-router.post('/', validator.body(bodySchema), createEstablishment)
 router.get('/', findByName)
-router.post('/', validator.body(bodySchema), createEstablishment)
+router.post('/', userExtractor, authGoogle, validator.body(bodySchema), createEstablishment)
 router.post('/addUserToEstablishment', addUserToEstablishment)
 
 module.exports = router
