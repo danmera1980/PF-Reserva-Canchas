@@ -56,17 +56,17 @@ const getCard = async (req,res)=>{
 
 const getCards = async ( req ,res) => {
     try {
-        var establishments = await Establishment.findAll({
-            include:{
-              model: Site,
-              as: 'sites',
-              include:{
-                model: Court,
-                as: 'courts'
-              }
-            }
-          })
-        res.send(establishments)
+        // var establishments = await Establishment.findAll({
+        //     include:{
+        //       model: Site,
+        //       as: 'sites',
+        //       include:{
+        //         model: Court,
+        //         as: 'courts'
+        //       }
+        //     }
+        //   })
+        // res.send(establishments)
     } catch (error) {
         console.log(error)
     }

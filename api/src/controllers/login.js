@@ -26,8 +26,6 @@ const loginUser = async (req, res, next) => {
 
     res.send( {
       id: user.id,
-      name: user.name,
-      email: user.email,
       token
     })
   } catch (error) {

@@ -14,9 +14,9 @@ function Home() {
   const cards = useSelector(state => state.establishment.establishments)
   console.log(cards)
   
-  useEffect(()=>{
-    dispatch(allEstablishments())
-  },[dispatch])
+  // useEffect(()=>{
+  //   dispatch(allEstablishments())
+  // },[dispatch])
 
   return (
     <div className="home">

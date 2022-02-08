@@ -8,9 +8,8 @@ const loadUsers = async function () {
   try {
     const passwordHash = await bcrypt.hash("grupo7", 10);
     const allUsers = dataBase.user
-    for (let i = 0; i < allUsers.length; i++) {
-        console.log(allUsers[i], 'for')
-        
+    console.log('carga users')
+    for (let i = 0; i < allUsers.length; i++) {        
         const newUser = await User.create({
         name: allUsers[i].name,
         lastName: allUsers[i].lastName,
@@ -28,6 +27,7 @@ const loadUsers = async function () {
 const loadEstablishments = async function () {
   try {
     const allUsers = await User.findAll();
+    console.log('carga establos')
     const allEstablishments = dataBase.establishment;
     for (let i = 0; i < allEstablishments.length; i++) {
       const newEstablishment = await Establishment.create({
@@ -51,6 +51,8 @@ const loadEstablishments = async function () {
 
 const loadSites = async function () {
   try {
+    console.log('carga sites')
+
     const allEstablishments = dataBase.establishment;
     const allSites = dataBase.site;
     for (let i = 0; i < allEstablishments.length; i++) {
@@ -94,7 +96,10 @@ function getRandomArbitrary(min, max) {
 
 const loadCourts = async function () {
   try {
-    const allSites = Site.findAll()
+    console.log('carga canchas')
+
+    const allSites = await Site.findAll()
+    console.log
     const allCourts = dataBase.court;
 
     for (let i = 0; i < allSites.length; i++) {
@@ -113,6 +118,7 @@ const loadCourts = async function () {
         await siteDb.addCourt(newCourt);
 
         }
+
     }
     console.log("Courts loaded");
   } catch (error) {
@@ -133,13 +139,15 @@ const loadDataToDB = async function () {
 };
 const isDbLoaded = async function () {
   try {
-    console.log('en is loadedd')
 
     let users = await User.findAll();
 
     if (!users.length) {
       await loadDataToDB();
+      console.log("inicializada")
     }
+    console.log("db inicializada")
+
   } catch (error) {
     console.log(error);
   }

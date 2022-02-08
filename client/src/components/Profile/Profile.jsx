@@ -20,11 +20,11 @@ function Profile() {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.login.userId);
   const establishmentId = useSelector((state) => state.forms.establishmentId);
-
-  useEffect(()=>{
-    dispatch(getEstablishmentByUser(userId))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[userId]);
+//COMENTE ESTO PORQUE TIRABA ERROR DE LA DB EN EL BACK HAY QUE VOLVER A HABILITARLO!!!!
+  // useEffect(()=>{
+  //   dispatch(getEstablishmentByUser(userId))
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[userId]);
 
   const onButtonSelection = (option) => {
     setVisual(option);

@@ -2,8 +2,6 @@
 const { User } = require("../db");
 const bcrypt = require("bcrypt");
 
-
-
 // starting to code
 const getAllUsers = async (req, res, next) => {
   try {
@@ -36,6 +34,7 @@ const getUserProfile = async (req, res, next) => {
 const registerGoogle = async (req, res, next) => {
   try {
     const user = req.user;
+    console.log("entre y me vuelvo", user)
     res.status(200).json(user.id);
   } catch (e) {
     next(e);
@@ -65,13 +64,13 @@ const registerUser = async (req, res, next) => {
 const editUser = async (req, res, next) => {
   try {
     const id = req.user.id;
-    const { name, lastname, img, phone } = req.body;
+    const { name, lastName, img, phone } = req.body;
     const changedUser = await User.findOne({ where: { id } });
     if (!changedUser) {
       throw new Error("User not fund");
     }
     name && (changedUser.name = name);
-    lastname && (changedUser.lastname = lastname);
+    lastName && (changedUser.lastName = lastName);
     img && (changedUser.img = img);
     phone && (changedUser.phone = phone);
 

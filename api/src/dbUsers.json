@@ -1,6 +1,0 @@
-const newUser = await User.create({
-    name,
-    lastName,
-    email,
-    passwordHash,
-  });
