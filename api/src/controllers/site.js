@@ -1,4 +1,4 @@
-const {Establishment, Site} = require('../db');
+const {Establishment, Site, User} = require('../db');
 
 const createSite = async (req, res, next)=>{
 
@@ -59,7 +59,14 @@ const findByLocation = async (req, res) =>{
 
 const getAllSites = async (req, res, next) =>{
 
-    const estabId = req.params.estabId;
+    const userId = req.user.id;
+
+    const user = await User.findOne({
+        where: {id : userId}
+    })
+
+    const estabId = user.establishmentId
+
     let sites;
     
     try {

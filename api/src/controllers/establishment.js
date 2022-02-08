@@ -6,7 +6,7 @@ const { createSite } = require('./site');
 const getEstabIdByUserId = async (req,res, next) =>{
 
     const userId = req.user.id;
-    console.log('userId del getEstablishmentByUser', userId)
+    
     if(userId){
         try {
 
