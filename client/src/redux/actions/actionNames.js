@@ -19,3 +19,4 @@ export const GET_ESTABLISHMENT_BY_ID = 'GET_ESTABLISHMENT_BY_ID';
 export const GET_SITES_BY_ESTAB_ID = 'GET_SITES_BY_ESTAB_ID';
 export const SET_ERRORS = 'SET_ERRORS';
 export const LOGOUT = 'LOGOUT';
+export const USER_DATA = "USER_DATA";
