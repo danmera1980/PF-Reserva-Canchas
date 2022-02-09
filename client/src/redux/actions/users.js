@@ -14,6 +14,7 @@ import {
   SET_ERRORS,
   LOGOUT,
   SERVER_URL,
+  USER_DATA,
 } from "./actionNames";
 
 export const getAllUsers = () => {
@@ -45,6 +46,7 @@ export function registerUser(payload) {
   };
 }
 export function loginUser(payload) {
+
   return async function (dispatch) {
     await axios
       .post(`${SERVER_URL}/users/login`, payload)
@@ -59,7 +61,6 @@ export function loginUser(payload) {
 }
 
 export function loginWithGoogle(response) {
-
   const headers = {
     Authorization: `Bearer ${response.tokenId}`,
   };
@@ -84,13 +85,12 @@ export function editUser(payload, userToken) {
   const headers = {
     Authorization: `Bearer ${userToken}`,
   };
+
   return async function (dispatch) {
     try {
-      const response = await axios.put(
-        `${SERVER_URL}/users/edit`,
-        payload,
-        { headers: headers }
-      );
+      const response = await axios.put(`${SERVER_URL}/users/edit`, payload, {
+        headers: headers,
+      });
       return dispatch({ type: EDIT_SUCCESS, payload: response.data });
     } catch (error) {
       return dispatch({ type: SET_ERRORS, payload: error });
@@ -99,5 +99,26 @@ export function editUser(payload, userToken) {
 }
 
 export function logoutAction() {
-  return ({ type: LOGOUT });
+  return { type: LOGOUT };
+}
+
+export function getUserData(tokenId) {
+  const headers = {
+    Authorization: `Bearer ${tokenId}`,
+  };
+  return async (dispatch) => {
+    try {
+      var user = await axios.get(`${SERVER_URL}/users/profile`, {
+        headers: headers,
+      });
+      console.log(user)
+      return dispatch({
+        type: USER_DATA,
+        payload: user.data
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: SET_ERRORS, payload: err });
+    }
+  };
 }

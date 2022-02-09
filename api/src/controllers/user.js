@@ -20,11 +20,12 @@ const getUserProfile = async (req, res, next) => {
     // ver esta porqueria que funcione con el idea que me manda el front y el que pido
     console.log(req);
 
-    const { id } = req.user.id;
+    const id  = req.user.id;
     const wantedUser = await User.findOne({
       where: { id },
       attributes: { exclude: ["passwordHash"] },
     });
+   
     res.send(wantedUser);
   } catch (e) {
     next(e);
