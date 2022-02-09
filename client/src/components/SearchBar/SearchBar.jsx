@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import {useDispatch} from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faBasketballBall, faSearchLocation } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useHistory} from 'react-router-dom';
 import './SearchBar.scss';
 import { searchByText, filterBySport } from '../../redux/actions/establishment';
 
@@ -10,25 +10,41 @@ const sports = 'Deportes';
 const establishment = 'Establecimiento';
 
 function SearchBar() {
+
+    const history = useHistory();
     
     const dispatch= useDispatch();
-    const [searchText, setSearchText] = useState('');
-    const [location, setLocation] = useState('')
+    const [searchText, setSearchText] = useState({
+        latitude:-32.88641481914277,
+        longitude:-68.84519635165792,
+        sport: ''
+    });
+    const [sportType, setSportType] = useState('')
 
     function handleInput(e){
         e.preventDefault();
-        setSearchText(e.target.value);
+        // setSearchText(e.target.value);
     }
 
     let handleSearch = (e)=>{
         e.preventDefault()
-        if(!searchText) return alert('Ingrese nombre para la busqueda')
+        
+        console.log(searchText)
         dispatch(searchByText(searchText));
-        setSearchText("")
+        setSearchText({
+            latitude:-32.88641481914277,
+            longitude:-68.84519635165792,
+            sport: ''
+        })
+        history.push('/results')
     }
 
     function handleFilterBySport(e){
-        dispatch(filterBySport(e.target.value))
+        // setSportType(e.target.value)
+        setSearchText({
+            ...searchText,
+            sport: e.target.value
+        })
     }
 
   return (
@@ -53,7 +69,7 @@ function SearchBar() {
                 <input 
                     type= 'text'
                     onChange={(e) => handleInput(e)}
-                    value={searchText}
+                    value=''
                     id='establishment'
                     placeholder={establishment}
                 /> 

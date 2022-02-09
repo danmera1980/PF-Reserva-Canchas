@@ -102,7 +102,7 @@ function Results() {
         latitude: resultsData.length?resultsData[0].sites[0].latitude: currentLocation.latitude,
         longitude: resultsData.length?resultsData[0].sites[0].longitude: currentLocation.longitude,
         width: '600px',
-        height: '100vh',
+        height: '85vh',
         zoom: 10,
         pitch: 50
     });

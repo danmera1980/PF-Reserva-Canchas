@@ -1,4 +1,4 @@
-import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_NAME, FILTER_BY_SPORT, GET_ESTABLISHMENT, SERVER_URL, SORT_BY_AVAILABILITY, SORT_BY_PRICE } from "./actionNames";
+import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_SPORT, GET_ESTABLISHMENT, SERVER_URL, SORT_BY_AVAILABILITY, SORT_BY_PRICE, SEARCH_TEXT } from "./actionNames";
 import axios from 'axios';
 
 export const addUserToEstablishment = (payload) => {
@@ -49,11 +49,13 @@ export const filterByLocation = (location) => {
     }
 }
 
-export const searchByText = (name) => {
+export const searchByText = (searchText) => {
+    console.log(searchText)
+    const {latitude, longitude, sport} = searchText
     return async(dispatch) =>{
-        var results = await axios(`${SERVER_URL}/establishment?name=${name}`)
+        var results = await axios(`${SERVER_URL}/findlocation?latitude=${latitude}&longitude=${longitude}&sport=${sport}`)
         return dispatch({
-            type: FILTER_BY_NAME,
+            type: SEARCH_TEXT,
             payload: results.data
         })
     }
