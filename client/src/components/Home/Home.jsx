@@ -12,7 +12,7 @@ import { allEstablishments } from "../../redux/actions/establishment.js";
 function Home() {
   const dispatch = useDispatch()
   const cards = useSelector(state => state.establishment.establishments)
-  console.log(cards)
+  // console.log(cards)
   
   // useEffect(()=>{
   //   dispatch(allEstablishments())

@@ -46,7 +46,7 @@ export function registerUser(payload) {
   };
 }
 export function loginUser(payload) {
-  console.log(payload);
+
   return async function (dispatch) {
     await axios
       .post(`${SERVER_URL}/users/login`, payload)
@@ -85,7 +85,7 @@ export function editUser(payload, userToken) {
   const headers = {
     Authorization: `Bearer ${userToken}`,
   };
-  console.log("en action", payload, userToken);
+
   return async function (dispatch) {
     try {
       const response = await axios.put(`${SERVER_URL}/users/edit`, payload, {
