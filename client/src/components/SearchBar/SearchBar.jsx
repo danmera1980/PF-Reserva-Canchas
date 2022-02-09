@@ -2,59 +2,54 @@ import React,{useState} from 'react';
 import {useDispatch} from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faBasketballBall, faSearchLocation } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useHistory} from 'react-router-dom';
 import './SearchBar.scss';
-import { filterByLocation, filterByName, filterBySport } from '../../redux/actions/establishment';
+import { searchByText, filterBySport } from '../../redux/actions/establishment';
 
 const sports = 'Deportes';
 const establishment = 'Establecimiento';
 
 function SearchBar() {
+
+    const history = useHistory();
     
     const dispatch= useDispatch();
-    const [name, setName] = useState('');
-    const [location, setLocation] = useState('')
+    const [searchText, setSearchText] = useState({
+        latitude:-32.88641481914277,
+        longitude:-68.84519635165792,
+        sport: ''
+    });
+    const [sportType, setSportType] = useState('')
 
     function handleInput(e){
         e.preventDefault();
-        setName(e.target.value);
-    }
-    function handleLocation(e){
-        e.preventDefault();
-        setLocation(e.target.value);
+        // setSearchText(e.target.value);
     }
 
-    let handleClickName = (e)=>{
+    let handleSearch = (e)=>{
         e.preventDefault()
-        if(!name) return alert('Ingrese nombre para la busqueda')
-        dispatch(filterByName(name));
-        setName("")
-    }
-
-    let handleClickLocation = (e)=>{
-        e.preventDefault()
-        if(!location) return alert('Ingrese nombre para la busqueda')
-        dispatch(filterByLocation(location));
-        setLocation("")
+        
+        console.log(searchText)
+        dispatch(searchByText(searchText));
+        setSearchText({
+            latitude:-32.88641481914277,
+            longitude:-68.84519635165792,
+            sport: ''
+        })
+        history.push('/results')
     }
 
     function handleFilterBySport(e){
-        dispatch(filterBySport(e.target.value))
+        // setSportType(e.target.value)
+        setSearchText({
+            ...searchText,
+            sport: e.target.value
+        })
     }
 
   return (
     <div>
         <div className='searchBar'>
-            <div className='searchSelect'>
-                <input 
-                    type= 'text'
-                    onChange={(e) => handleLocation(e)}
-                    value={location}
-                    id='establishment'
-                    placeholder='Ubicación'
-                />
-                <FontAwesomeIcon onClick={(e) => handleClickLocation(e)} icon={faMapMarkerAlt} className='faIcon'/>
-            </div>
             <div className='searchSelect'>
                 <select id='sport'onChange={(e) => handleFilterBySport(e)}>
                     <option value=''>{sports}</option>
@@ -74,14 +69,13 @@ function SearchBar() {
                 <input 
                     type= 'text'
                     onChange={(e) => handleInput(e)}
-                    value={name}
+                    value=''
                     id='establishment'
                     placeholder={establishment}
                 /> 
-                 <Link to={"/results"}>
-                <FontAwesomeIcon onClick={(e) => handleClickName(e)} icon={faSearchLocation} className='faIcon'/>
-                  </Link>
-
+                <Link to={"/results"}>
+                    <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
+                </Link>
             </div>
         </div>
     </div>
