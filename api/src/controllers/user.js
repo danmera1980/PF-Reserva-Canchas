@@ -17,8 +17,6 @@ const getAllUsers = async (req, res, next) => {
 
 const getUserProfile = async (req, res, next) => {
   try {
-    // ver esta porqueria que funcione con el idea que me manda el front y el que pido
-    console.log(req);
 
     const id  = req.user.id;
     const wantedUser = await User.findOne({

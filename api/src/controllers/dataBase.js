@@ -99,7 +99,6 @@ const loadCourts = async function () {
     console.log('carga canchas')
 
     const allSites = await Site.findAll()
-    console.log
     const allCourts = dataBase.court;
 
     for (let i = 0; i < allSites.length; i++) {
