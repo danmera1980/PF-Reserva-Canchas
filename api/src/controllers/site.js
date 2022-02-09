@@ -58,21 +58,15 @@ const findByLocation = async (req, res) =>{
 }
 
 const getAllSites = async (req, res, next) =>{
-
-    const userId = req.user.id;
-
-    const user = await User.findOne({
-        where: {id : userId}
-    })
-
-    const estabId = user.establishmentId
-
+    
+    const establishmentId = req.params.establishmentId
+    
     let sites;
     
     try {
-        if(estabId){
+        if(establishmentId){
             sites = await Site.findAll({
-                where: {establishmentId: estabId}
+                where: {establishmentId: establishmentId}
             });
             sites = sites.map(site => {
                 return {

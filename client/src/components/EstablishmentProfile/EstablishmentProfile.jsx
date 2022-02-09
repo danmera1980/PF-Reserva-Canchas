@@ -15,7 +15,7 @@ function EstablishmentProfile() {
   useEffect(()=>{
     dispatch(getEstablishmentByUser(userToken))
     if(establishmentId){
-      dispatch(getSitesById(userToken))
+      dispatch(getSitesById(establishmentId, userToken))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
