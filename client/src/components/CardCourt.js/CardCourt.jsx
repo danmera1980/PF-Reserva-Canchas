@@ -29,6 +29,7 @@ function CardCourt({id, name, images, siteName, street, streetNumber,city,descri
             <p>{sport}</p>
             <p>Horario de {timeActiveFrom} a {timeActiveTo}</p>
             <p className="font-bold text-xl text-green-500">${price}</p>
+            <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded  absolute right-6 bottom-4">Reserva</button>
           </div>
         </div>
       </div>
