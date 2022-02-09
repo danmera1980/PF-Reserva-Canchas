@@ -151,7 +151,7 @@ export default function CourtCreate(){
        
 
     return(
-        <div>
+        <div className="dark:bg-darkPrimary dark:text-white">
         {
             !sites.length>0 
             ? Swal.fire({
