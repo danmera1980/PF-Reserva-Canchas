@@ -8,11 +8,11 @@ function Bookings() {
   };
   return (
     <div>
-      <div className="place-content-around lg:place-content-start flex lg:gap-10 border-b-[1px] border-black">
+      <div className="place-content-around lg:place-content-start flex lg:gap-10 border-b-[1px] border-black dark:border-white">
         <button className="inline-block" onClick={() => onButtonSelection("bookings")}>Reservas</button>
         <button className="inline-block" onClick={() => onButtonSelection("favorites")}>Favoritos</button>
       </div>
-      <div>
+      <div className="mt-5">
       {(() => {
               switch (visual) {
                 case "bookings":
