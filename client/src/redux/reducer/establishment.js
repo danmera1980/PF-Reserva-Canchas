@@ -1,4 +1,4 @@
-import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_NAME, FILTER_BY_SPORT, GET_ESTABLISHMENT, SORT_BY_AVAILABILITY, SORT_BY_PRICE } from "../actions/actionNames";
+import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, SEARCH_TEXT, FILTER_BY_SPORT, GET_ESTABLISHMENT, SORT_BY_AVAILABILITY, SORT_BY_PRICE } from "../actions/actionNames";
 
 const initialState = {
     establishments : [],
@@ -27,7 +27,7 @@ const establishmentReducer = (state = initialState, action) => {
                 ...state,
                 establishments: action.payload
             }
-        case FILTER_BY_NAME:
+        case SEARCH_TEXT:
             return{
                 ...state,
                 establishments: action.payload

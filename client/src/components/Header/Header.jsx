@@ -7,6 +7,7 @@ import { faSignInAlt, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/img/logo.svg";
 import userImage from "../../assets/img/user.png";
 import Profile from "../Profile/Profile.jsx";
+import { useHistory } from "react-router-dom";
 import "./Header.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../../redux/actions/users";
@@ -19,9 +20,11 @@ function Header() {
   const logoutText = "Salir";
   const userToken = useSelector((state) => state.register.userToken);
   const dispatch = useDispatch();
+  const history = useHistory()
 
   const logOut = () => {
     dispatch(logoutAction());
+    history.push("/")
   };
 
   return (
@@ -48,11 +51,7 @@ function Header() {
                   <li>
                     <Link to={"/profile"}>{profileText}</Link>
                   </li>
-                  <li>
-                    <a href="#" onClick={logOut}>
-                      {logoutText}
-                    </a>
-                  </li>
+                  <li onClick={logOut} className="cursor-pointer">{logoutText}</li>
                 </ul>
                 {/* <button onClick={()=>logOut()}>Logout</button> */}
               </div>
