@@ -38,19 +38,19 @@ router.post("/", async (req, res, next) => {
         binary_mode: true
     };
 
-    console.log('creé el objeto preference pero todavía no hice mercadopago.preference.create')
+ //   console.log('creé el objeto preference pero todavía no hice mercadopago.preference.create')
 
 
     mercadopago.preferences.create(preference)
 
     .then(function(response){
         
-        console.info('ahora ya hice mercadopago.preferences ')
+    //    console.info('ahora ya hice mercadopago.preferences ')
     //Este valor reemplazará el string"<%= global.id %>" en tu HTML
         global.id = response.body.id;
-        console.log('response.body', response.body)
-        console.log('global.id', global.id)
-        res.json({id: global.id});
+      //  console.log('response.body', response.body)
+     //   console.log('global.id', global.id)
+        res.send( global.id);
     })
     .catch(function(error){
         console.log(error);
@@ -119,11 +119,11 @@ router.get("/pagos", (req, res)=>{
 router.get("/pagos/:id", (req, res)=>{
   const mp = new mercadopago(ACCESS_TOKEN)
   const id = req.params.id
-  console.info("Buscando el id", id)
+ // console.info("Buscando el id", id)
   mp.get(`/v1/payments/search`, {'status': 'pending'}) //{"external_reference":id})
   .then(resultado  => {
     console.info('resultado', resultado)
-    res.json({"resultado": resultado})
+    res.jsonp({"resultado": resultado})
   })
   .catch(err => {
     console.error('No se consulto:', err)

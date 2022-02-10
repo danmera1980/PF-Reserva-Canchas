@@ -26,11 +26,12 @@ export default function MercadoPago(){
     axios
     .post("http://localhost:3001/mercadopago", input)
     .then((data)=>{
-      setDatos(data.data)
+      setDatos({id:data})
       console.info('Contenido de data:', data.data)
     })
     .catch(err => console.error(err)) 
   },[])
+  console.log('soy datos',datos)
 
   // SDK VERSION 1
   // useEffect(()=>{
@@ -73,7 +74,7 @@ export default function MercadoPago(){
         });
         const checkout = mp.checkout({
           preference: {
-            id: datos.id
+            id: datos.id.data
           },
           render: {
             container: '.cho-container',
