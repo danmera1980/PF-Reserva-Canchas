@@ -10,7 +10,7 @@ export default function MercadoPago(){
 
   const PUBLIC_KEY = 'TEST-6df9d926-e5fa-465e-9d9d-78207d113a0f';
 
-  const [datos, setDatos] = useState("") // preferenceId
+  const [preferenceId, setPreferenceId] = useState("") // preferenceId
 
   const input = [{
     userId : 7,
@@ -26,27 +26,28 @@ export default function MercadoPago(){
     axios
     .post("http://localhost:3001/mercadopago", input)
     .then((data)=>{
-      setDatos({id:data})
+      // setPreferenceId({id:data})
+      setPreferenceId(data.data)
       console.info('Contenido de data:', data.data)
     })
     .catch(err => console.error(err)) 
   },[])
-  console.log('soy datos',datos)
+  
 
   // SDK VERSION 1
   // useEffect(()=>{
 
-  //   if(datos!==""){
+  //   if(preferenceId!==""){
   //     const script = document.createElement('script'); //Crea un elemento html script
     
   //     const attr_data_preference = document.createAttribute('data-preference-id') //Crea un nodo atribute
-  //     attr_data_preference.value = datos.id  //Le asigna como valor el id que devuelve MP
+  //     attr_data_preference.value = preferenceId.id  //Le asigna como valor el id que devuelve MP
     
   //     //Agrega atributos al elemento script
   //     script.src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";  
   //     script.setAttributeNode(attr_data_preference)  
     
-  //     console.log(datos)
+  //     console.log(preferenceId)
       
   //     //Agrega el script como nodo hijo del elemento form
   //     document.getElementById('form1').appendChild(script)
@@ -56,13 +57,13 @@ export default function MercadoPago(){
   //     }
   //   }
     
-  //  },[datos])
+  //  },[preferenceId])
 
 
   // SDK VERSION 2
   useEffect(()=>{
 
-    if(datos!==""){
+    if(preferenceId!==""){
       const script = document.createElement('script'); //Crea un elemento html script
       script.type = 'text/javascript';
       script.src="https://sdk.mercadopago.com/js/v2";  
@@ -74,7 +75,7 @@ export default function MercadoPago(){
         });
         const checkout = mp.checkout({
           preference: {
-            id: datos.id.data
+            id: preferenceId
           },
           render: {
             container: '.cho-container',
@@ -85,7 +86,7 @@ export default function MercadoPago(){
       });
 
     }
-   },[datos])
+   },[preferenceId])
 
    return(
     <div>
@@ -100,7 +101,7 @@ export default function MercadoPago(){
         </div>   
       </form>
       <div className="cho-container">
-        {!datos &&
+        {!preferenceId &&
           <div className="loading"><ReactLoading type="spin" color="#159D74" height={50} width={50} className="spin" /> </div>
         }
       </div>

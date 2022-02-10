@@ -30,7 +30,7 @@ router.post("/", async (req, res, next) => {
         installments: 3  //Cantidad máximo de cuotas
         },
         back_urls: {
-            success: 'http://localhost:3000/profile',
+            success: 'http://localhost:3001/mercadopago/pagos',
             failure: 'http://localhost:3000/profile',
             pending: 'http://localhost:3000/profile',
         },
@@ -50,7 +50,7 @@ router.post("/", async (req, res, next) => {
         global.id = response.body.id;
       //  console.log('response.body', response.body)
      //   console.log('global.id', global.id)
-        res.send( global.id);
+        res.send(global.id);
     })
     .catch(function(error){
         console.log(error);
@@ -74,14 +74,15 @@ router.get("/pagos", (req, res)=>{
         payment_status:payment_status,
         merchant_order_id:merchant_order_id
     })
-    .then((_) => {
-        console.info('redirect success')
-        return res.redirect("http://localhost:3000/profile")
+    .then((order) => {
+      console.log(order)
+      console.info('redirect success')
+      return res.redirect("http://localhost:3000/profile")
     })
     .catch(err =>{
-        console.error('error al buscar', err)
-        // return res.redirect(`http://localhost:3000/?error=${err}&where=al+buscar`)
-        return res.redirect(`http://localhost:3000/payment`)
+      console.error('error al buscar', err)
+      // return res.redirect(`http://localhost:3000/?error=${err}&where=al+buscar`)
+      return res.redirect(`http://localhost:3000/payment`)
     })
 
 
