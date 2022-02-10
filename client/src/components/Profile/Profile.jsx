@@ -19,13 +19,13 @@ import {
 } from "../../redux/actions/forms.js";
 import { getUserData } from "../../redux/actions/users";
 
-function Profile() {
+function Profile(req, res) {
   const [visual, setVisual] = useState("bookings");
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.register.userToken);
   const userDetails = useSelector((state) => state.users.userDetails)
-
   const establishmentId = useSelector((state) => state.forms.establishmentId);
+
 
   useEffect(() => {
     dispatch(getEstablishmentByUser(userToken))

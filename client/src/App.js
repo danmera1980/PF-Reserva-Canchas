@@ -11,6 +11,7 @@ import SiteCreate from "./components/SiteCreate/SiteCreate";
 import Profile from "./components/Profile/Profile";
 import UserEdit from './components/UserEdit/UserEdit';
 import MercadoPago from "./components/MercadoPago/MercadoPago";
+import CreateOrder from "./components/MercadoPago/CreateOrder";
 
 import EstablishmentProfile from "./components/EstablishmentProfile/EstablishmentProfile";
 import AddUserToEstablishment from './components/AddUserToEstablishment/AddUserToEstablishment.jsx';
@@ -31,6 +32,7 @@ function App() {
         <Route exact path="/useredit" component={UserEdit} />
         <Route exact path="/establishmentprofile" component={EstablishmentProfile} />
         <Route exact path="/addUserToEstablishment" component={AddUserToEstablishment}/>
+        <Route exact path="/order" component={CreateOrder}/>
         <Route exact path="/payment" component={MercadoPago}/>
         
 
