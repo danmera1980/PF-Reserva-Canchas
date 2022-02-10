@@ -22,7 +22,7 @@ export const addUserToEstablishment = (payload) => {
 
 export const getEstablishment = (id) => {
     return async (dispatch) => {
-        var result = await axios(`${SERVER_URL}/establishments/${id}`);
+        var result = await axios(`${SERVER_URL}/establishment/${id}`);
         return dispatch({
             type: GET_ESTABLISHMENT,
             payload: result.data

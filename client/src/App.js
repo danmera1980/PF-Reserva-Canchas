@@ -13,6 +13,7 @@ import UserEdit from './components/UserEdit/UserEdit';
 
 import EstablishmentProfile from "./components/EstablishmentProfile/EstablishmentProfile";
 import AddUserToEstablishment from './components/AddUserToEstablishment/AddUserToEstablishment.jsx';
+import EstablishmentDetail from "./components/EstablishmentDetail/EstablishmentDetail";
 
 
 function App() {
@@ -30,6 +31,8 @@ function App() {
         <Route exact path="/useredit" component={UserEdit} />
         <Route exact path="/establishmentprofile" component={EstablishmentProfile} />
         <Route exact path="/addUserToEstablishment" component={AddUserToEstablishment}/>
+        <Route exact path="/establishment/1" component={EstablishmentDetail}/>
+        
 
       </div>
     </React.Fragment>

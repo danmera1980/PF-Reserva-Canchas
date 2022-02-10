@@ -156,6 +156,36 @@ const addUserToEstablishment = async (req, res, next)=>{
     
 }
 
+const getEstablishmentId = async (req, res, next) => {
+    const cuit = req.params.id
+
+    try {
+        const establishment = await Establishment.findOne({
+            where:{
+                cuit
+            },
+            include:{
+                model: Site,
+                as: 'sites',
+                include:{
+                  model: Court,
+                  as: 'courts'
+                }
+              }
+        })
+        res.send(establishment)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
-module.exports = {getEstablishmentsFromDB, createEstablishment, addUserToEstablishment, getEstabIdByUserId}
+
+module.exports = {
+    getEstablishmentsFromDB,
+    createEstablishment,
+    addUserToEstablishment,
+    getEstabIdByUserId,
+    getEstablishmentId
+}
