@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import Header from "../Header/Header";
-import SiteCreate from "../SiteCreate/SiteCreate"
-import CourtCreate from "../CourtCreate/CourtCreate"
+import SiteCreate from "../SiteCreate/SiteCreate";
+import CourtCreate from "../CourtCreate/CourtCreate";
 import Footer from "../Footer/Footer";
 import EstablishmentBookings from "../EstablishmentBookings/EstablishmentBookings";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,13 +10,18 @@ import {
   getSitesById,
 } from "../../redux/actions/forms.js";
 import { getEstablishment } from "../../redux/actions/establishment.js";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import Sites from "../Sites/Sites";
 
 function EstablishmentProfile() {
   const [visual, setVisual] = useState("bookings");
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.register.userToken);
   const establishmentId = useSelector((state) => state.forms.establishmentId);
-  const establishmentDetail = useSelector((state) => state.establishment.establishmentDetail)
+  const establishmentDetail = useSelector(
+    (state) => state.establishment.establishmentDetail
+  );
 
   useEffect(() => {
     dispatch(getEstablishmentByUser(userToken));
@@ -25,7 +30,8 @@ function EstablishmentProfile() {
     }
     dispatch(getEstablishment(establishmentId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // axios.get(`${SERVER_URL}/establishment/`)
+  }, [dispatch, establishmentId, userToken]);
 
   const onButtonSelection = (option) => {
     setVisual(option);
@@ -48,31 +54,57 @@ function EstablishmentProfile() {
               {establishmentDetail.name}
             </h1>
 
-            <div className="flex justify-center items-center mt-5">
-            <div>
+            <div className="grid grid-cols-2 gap-4 ml-5 md:ml-7 max-w-xs">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all w-28 h-20"
+                onClick={() => onButtonSelection("establishmentBookings")}
+              >
+                Mis Reservas
+              </button>
+
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all w-28 h-20"
+                onClick={() => onButtonSelection("sites")}
+              >
+                Ver sedes
+              </button>
+
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all w-28 h-20"
+                onClick={() => onButtonSelection("siteCreate")}
+              >
+                Crear sede
+              </button>
+              {establishmentDetail && establishmentDetail.sites.length ? (
                 <button
-                  className="ml-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded shadow-2xl shadow-indigo-600"
-                  onClick={() => onButtonSelection("establishmentBookings")}
-                >
-                  Mis Reservas
-                </button>
-              </div>
-              <div>
-                <button
-                  className="ml-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded shadow-2xl shadow-indigo-600"
-                  onClick={() => onButtonSelection("siteCreate")}
-                >
-                  Crear sede
-                </button>
-              </div>
-              <div>
-                <button
-                  className="ml-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded shadow-2xl shadow-indigo-600"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all w-28 h-20"
                   onClick={() => onButtonSelection("courtCreate")}
                 >
                   Crear cancha
                 </button>
-              </div>
+              ) : (
+                <button
+                  className="bg-slate-500 hover:bg-red-600 text-white font-bold border border-slate-500 rounded shadow-md shadow-red-600 active:scale-95 transition-all w-28 h-20"
+                  onClick={() =>
+                    Swal.fire({
+                      position: "top",
+                      icon: "error",
+                      title:
+                        "Necesitas tener al menos una sede antes de crear una cancha",
+                      showConfirmButton: true,
+                      timer: 2000,
+                    }) && onButtonSelection("siteCreate")
+                  }
+                >
+                  Crear cancha
+                </button>
+              )}
+
+              <Link to={"/profile"}>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-20 col-span-2 w-[17.5rem]">
+                  Volver al perfil
+                </button>
+              </Link>
             </div>
           </div>
           <div className="pt-7 md:overflow-auto md:max-h-fit">
@@ -80,6 +112,8 @@ function EstablishmentProfile() {
               switch (visual) {
                 case "siteCreate":
                   return <SiteCreate />;
+                case "sites":
+                  return <Sites/>
                 case "courtCreate":
                   return <CourtCreate />;
                 default:
