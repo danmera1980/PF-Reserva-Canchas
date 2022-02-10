@@ -114,7 +114,9 @@ function Results() {
 
   return (
     <div>
+        <div className='fixed z-10'>
         <Header />
+        </div>
         <div className='results'>
             <div className='leftResults'>
                 <SearchBar />
