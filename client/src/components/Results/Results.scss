@@ -2,8 +2,14 @@
     display: flex;
     margin: 0 auto;
     width: 1200px;
+    padding-top: 100px;
 }
 
 .leftResults, .rightResults {
     width: 50%;
+}
+
+.rightResults{
+    position: fixed;
+    left: 50%
 }

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Card from "../Card/Card";
 import UserEdit from "../UserEdit/UserEdit";
+import { SERVER_URL } from "../../redux/actions/actionNames";
+import userImage from "../../assets/img/user.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import logo from "../../assets/img/logo.svg";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Bookings from "../Bookings/Bookings";
@@ -14,18 +15,23 @@ import {
   faMoneyCheckAlt,
   faThLarge,
 } from "@fortawesome/free-solid-svg-icons";
-import { getEstablishmentByUser, getSitesByEstablishmentId } from "../../redux/actions/forms.js";
+import axios from "axios";
 
 function Profile() {
   const [visual, setVisual] = useState("bookings");
-  const dispatch = useDispatch();
-  const userId = useSelector((state) => state.login.userId);
-  const establishmentId = useSelector((state) => state.forms.establishmentId);
-//COMENTE ESTO PORQUE TIRABA ERROR DE LA DB EN EL BACK HAY QUE VOLVER A HABILITARLO!!!!
-  // useEffect(()=>{
-  //   dispatch(getEstablishmentByUser(userId))
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // },[userId]);
+  const userToken = useSelector((state) => state.register.userToken);
+  const [userDetails, setUserDetails] = useState(null);
+
+  useEffect(() => {
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
+    axios
+      .get(`${SERVER_URL}/users/profile`, { headers: headers })
+      .then((res) => {
+        setUserDetails(res.data);
+      });
+  }, [userToken]);
 
   const onButtonSelection = (option) => {
     setVisual(option);
@@ -39,13 +45,15 @@ function Profile() {
         <div className="md:grid md:grid-cols-2 xl:grid-cols-[30%,70%] h-3/4">
           <div>
             <img
-              src={logo}
+              src={userDetails && userDetails.img ? userDetails.img : userImage}
               alt="logo_img"
               className="-mt-28 ml-16 md:ml-20 bg-cover rounded-full w-60 h-60 bg-green-900 relative"
             />
 
-            <h1 className="mb-5 text-center mt-5 text-2xl font-bold md:text-left md:ml-[4.5rem] md:inline-block">
-              Nombre de usuario
+            <h1 className=" mb-5 text-center mt-5 text-2xl font-bold md:text-left md:ml-24 md:inline-block">
+              {userDetails && userDetails.name
+                ? userDetails.name + " " + userDetails.lastName
+                : "Nombre de usuario no establecido"}
             </h1>
 
             <div className="md:grid md:grid-cols-2 md:w-max">
@@ -64,28 +72,27 @@ function Profile() {
                   <FontAwesomeIcon icon={faMoneyCheckAlt} size={"2x"} />
                   <p>Transacciones</p>
                 </button>
-                {
-                  (establishmentId!==null && establishmentId!=="") ?
+                {userDetails && userDetails.hasEstablishment ? (
                   <Link to={"/establishmentprofile"}>
-                  <button
-                    className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
-                    // onClick={() => onButtonSelection("establishments")}
-                  >
-                    <FontAwesomeIcon icon={faFutbol} size={"2x"} />
-                    <p>Establecimiento</p>
-                  </button>
-                </Link>
-                :
-                <Link to={"/establishment"}>
-                  <button
-                    className="rounded-lg shadow-xl pt-[3px] bg-white text-black active:scale-95 transition-all"
-                    // onClick={() => onButtonSelection("establishments")}
-                  >
-                    <FontAwesomeIcon icon={faFutbol} size={"2x"} />
-                    <p>Crear Establecimiento</p>
-                  </button>
-                </Link>
-                }
+                    <button
+                      className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
+                      // onClick={() => onButtonSelection("establishments")}
+                    >
+                      <FontAwesomeIcon icon={faFutbol} size={"2x"} />
+                      <p>Establecimiento</p>
+                    </button>
+                  </Link>
+                ) : (
+                  <Link to={"/establishment"}>
+                    <button
+                      className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
+                      // onClick={() => onButtonSelection("establishments")}
+                    >
+                      <FontAwesomeIcon icon={faFutbol} size={"2x"} />
+                      <p>Crear Establecimiento</p>
+                    </button>
+                  </Link>
+                )}
                 <button
                   className="rounded-lg shadow-xl py-3 md:py-2 bg-white text-black active:scale-95 transition-all"
                   onClick={() => onButtonSelection("editProfile")}
@@ -113,9 +120,9 @@ function Profile() {
             })()}
           </div>
         </div>
-        <br/>
-        <br/>
-        <br/>
+        <br />
+        <br />
+        <br />
       </div>
 
       <Footer />

@@ -1,60 +1,67 @@
-import React,{useState} from 'react';
-import {useDispatch} from 'react-redux'
+import React,{useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faBasketballBall, faSearchLocation } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useHistory} from 'react-router-dom';
 import './SearchBar.scss';
-import { filterByLocation, filterByName, filterBySport } from '../../redux/actions/establishment';
+import { searchByText, filterBySport, getGeocode } from '../../redux/actions/establishment';
 
 const sports = 'Deportes';
 const establishment = 'Establecimiento';
 
 function SearchBar() {
+
+    const history = useHistory();
     
     const dispatch= useDispatch();
-    const [name, setName] = useState('');
-    const [location, setLocation] = useState('')
+    const [searchText, setSearchText] = useState({
+        latitude:-32.88641481914277,
+        longitude:-68.84519635165792,
+        sport: '',
+        text: '',
+        zoom: 10
+    });
+
+    const [sportType, setSportType] = useState('');
+    const geoCode = useSelector(state => state.establishment.geocode)
+
+    useEffect(() => {
+        dispatch(getGeocode(searchText.text))
+    }, [searchText])
 
     function handleInput(e){
         e.preventDefault();
-        setName(e.target.value);
-    }
-    function handleLocation(e){
-        e.preventDefault();
-        setLocation(e.target.value);
-    }
-
-    let handleClickName = (e)=>{
-        e.preventDefault()
-        if(!name) return alert('Ingrese nombre para la busqueda')
-        dispatch(filterByName(name));
-        setName("")
+        // dispatch(getGeocode(e.target.value))
+        setSearchText({
+            ...searchText,
+            text: e.target.value
+        });
     }
 
-    let handleClickLocation = (e)=>{
+    let handleSearch = (e)=>{
         e.preventDefault()
-        if(!location) return alert('Ingrese nombre para la busqueda')
-        dispatch(filterByLocation(location));
-        setLocation("")
+        
+        console.log(searchText)
+        dispatch(searchByText(searchText));
+        setSearchText({
+            latitude:-32.88641481914277,
+            longitude:-68.84519635165792,
+            sport: ''
+        })
+        history.push('/results')
     }
 
     function handleFilterBySport(e){
-        dispatch(filterBySport(e.target.value))
+        // setSportType(e.target.value)
+        setSearchText({
+            ...searchText,
+            sport: e.target.value
+        })
     }
 
   return (
     <div>
         <div className='searchBar'>
-            <div className='searchSelect'>
-                <input 
-                    type= 'text'
-                    onChange={(e) => handleLocation(e)}
-                    value={location}
-                    id='establishment'
-                    placeholder='Ubicación'
-                />
-                <FontAwesomeIcon onClick={(e) => handleClickLocation(e)} icon={faMapMarkerAlt} className='faIcon'/>
-            </div>
             <div className='searchSelect'>
                 <select id='sport'onChange={(e) => handleFilterBySport(e)}>
                     <option value=''>{sports}</option>
@@ -69,19 +76,26 @@ function SearchBar() {
                  </select>
                 <FontAwesomeIcon icon={faBasketballBall} className='faIcon'/>
             </div>
-            <div className='searchInput' >
-
-                <input 
-                    type= 'text'
-                    onChange={(e) => handleInput(e)}
-                    value={name}
-                    id='establishment'
-                    placeholder={establishment}
-                /> 
-                 <Link to={"/results"}>
-                <FontAwesomeIcon onClick={(e) => handleClickName(e)} icon={faSearchLocation} className='faIcon'/>
-                  </Link>
-
+            <div className='searchContainer'>
+                <div className='searchInput' >
+                    <input 
+                        type= 'text'
+                        onChange={(e) => handleInput(e)}
+                        value={searchText.text}
+                        id='establishment'
+                        placeholder={establishment}
+                    /> 
+                    <Link to={"/results"}>
+                        <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
+                    </Link>
+                </div>
+                <div className='autoContainer'>
+                    {geoCode.features.map(r => (
+                        <div key={r.id} onClick={() => setSearchText({...searchText, latitude: r.center[1], longitude: r.center[0], text: r.place_name})}>
+                            <span>{r.place_name}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     </div>

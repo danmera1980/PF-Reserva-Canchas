@@ -1,11 +1,12 @@
 /** @format */
 
-import { REGISTER, LOGIN, LOGINGOOGLE, EDIT_SUCCESS, LOGOUT } from "../actions/actionNames";
+import { REGISTER, LOGIN, LOGINGOOGLE, EDIT_SUCCESS, LOGOUT, SET_ERRORS } from "../actions/actionNames";
 
 const initialState = {
-  signUpResponse: undefined,
   userToken: null,
   userId: null,
+  userErrors:[], // se cargan los errores de login, register y edit user
+  userMessage:[] // mensaje de respuesta
 };
 
 const registerReducer = (state = initialState, action) => {
@@ -14,7 +15,6 @@ const registerReducer = (state = initialState, action) => {
       console.log(action.payload);
       return {
         ...state,
-        signUpResponse: action.payload,
       };
     case LOGIN:
       console.log(action.payload)
@@ -29,10 +29,16 @@ const registerReducer = (state = initialState, action) => {
         userToken: action.payload[1], 
         userId: action.payload[0].id,
       };
-    case EDIT_SUCCESS:
-      return {
-        ...state,
-      };
+      case EDIT_SUCCESS:
+        return {
+            ...state,
+            userMessage: action.payload
+        };
+    case SET_ERRORS:
+        return{
+            ...state,
+            userErrors: action.payload
+        };
     case LOGOUT:
       console.log('estoy en logout');
       return {

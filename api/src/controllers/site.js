@@ -1,4 +1,4 @@
-const {Establishment, Site} = require('../db');
+const {Establishment, Site, User} = require('../db');
 
 const createSite = async (req, res, next)=>{
 
@@ -58,14 +58,15 @@ const findByLocation = async (req, res) =>{
 }
 
 const getAllSites = async (req, res, next) =>{
-
-    const estabId = req.params.estabId;
+    
+    const establishmentId = req.params.establishmentId
+    
     let sites;
     
     try {
-        if(estabId){
+        if(establishmentId){
             sites = await Site.findAll({
-                where: {establishmentId: estabId}
+                where: {establishmentId: establishmentId}
             });
             sites = sites.map(site => {
                 return {

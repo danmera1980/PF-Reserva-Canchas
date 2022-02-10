@@ -3,9 +3,11 @@ const { UserRefreshClient } = require('google-auth-library');
 const {Establishment, Site, User, Court} = require('../db');
 const { createSite } = require('./site');
 
+//Revisar si no esta repetida esta funcion
 const getEstabIdByUserId = async (req,res, next) =>{
 
-    const {userId} = req.params;
+    const userId = req.user.id;
+    
     if(userId){
         try {
 
@@ -73,11 +75,9 @@ const getEstablishmentsFromDB = async(req,res,next)=>{
 
 const createEstablishment = async (req, res, next)=>{
 
-    // console.log(req.user)
+    const userId = req.user.id;
 
-    // const userId = req.user.id;
-
-    const {cuit,name,logoImage, timeActiveFrom, timeActiveTo, userId} = req.body
+    const {cuit,name,logoImage, timeActiveFrom, timeActiveTo} = req.body
     
     let user = await User.findOne({
         where: { 
@@ -86,7 +86,6 @@ const createEstablishment = async (req, res, next)=>{
     })
     
 
-    // creo el establecimiento
     let establishmentDB = await Establishment.findOne({
         where : {cuit: cuit}
     })
@@ -158,6 +157,36 @@ const addUserToEstablishment = async (req, res, next)=>{
     
 }
 
+const getEstablishmentId = async (req, res, next) => {
+    const cuit = req.params.id
+
+    try {
+        const establishment = await Establishment.findOne({
+            where:{
+                cuit
+            },
+            include:{
+                model: Site,
+                as: 'sites',
+                include:{
+                  model: Court,
+                  as: 'courts'
+                }
+              }
+        })
+        res.send(establishment)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
-module.exports = {getEstablishmentsFromDB, createEstablishment, addUserToEstablishment, getEstabIdByUserId}
+
+module.exports = {
+    getEstablishmentsFromDB,
+    createEstablishment,
+    addUserToEstablishment,
+    getEstabIdByUserId,
+    getEstablishmentId
+}

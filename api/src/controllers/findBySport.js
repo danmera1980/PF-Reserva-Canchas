@@ -3,20 +3,20 @@ const { Court, Site, Establishment} = require ('../db');
 const findBySport = async (req, res) => { 
     const {sport} = req.query
     try {
-      var courts = await Establishment.findAll({
+      var establishments = await Establishment.findAll({
         include:{
           model: Site,
           as: 'sites',
           include:{
             model: Court,
             as: 'courts',
-            where:{
-              sport: sport
-            }
           }
+        },
+        where:{
+          '$sites.courts.sport$': sport
         }
       })
-      res.send(courts)
+      res.send(establishments)
     } catch (e) {
       console.log(e)
       res.send(e)

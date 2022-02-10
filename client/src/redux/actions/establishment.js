@@ -1,31 +1,35 @@
-import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_NAME, FILTER_BY_SPORT, GET_ESTABLISHMENT, SERVER_URL, SORT_BY_AVAILABILITY, SORT_BY_PRICE } from "./actionNames";
+import { GET_GEOCODE, ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_SPORT, GET_ESTABLISHMENT, SERVER_URL, SORT_BY_AVAILABILITY, SORT_BY_PRICE, SEARCH_TEXT } from "./actionNames";
 import axios from 'axios';
+
+const mapToken = process.env.REACT_APP_MAPBOX_TOKEN;
+
+export function postEstablishment(payload, userToken){
+    const headers = {
+        Authorization: `Bearer ${userToken}`,
+      };
+    return async function() {
+        var establishment = await axios.post(`${SERVER_URL}/establishment`, payload, { headers: headers })
+        return establishment
+    }
+}
 
 export const addUserToEstablishment = (payload) => {
     return async function() {
-        var info = await axios.post(`${SERVER_URL}establishment/addUserToEstablishment`, payload)
+        var info = await axios.post(`${SERVER_URL}/establishment/addUserToEstablishment`, payload)
         return info
     }
 }
 
 export const getEstablishment = (id) => {
     return async (dispatch) => {
-        var result = await axios(`${SERVER_URL}/establishments/${id}`);
+        var result = await axios(`${SERVER_URL}/establishment/${id}`);
         return dispatch({
             type: GET_ESTABLISHMENT,
             payload: result.data
         })
     }
 }
-export const postEstablishment = (payload) => {
-    // const headers = {
-    //     Authorization: `Bearer ${userToken}`,
-    //   };
-    return async function() {
-        var establishment = await axios.post(`${SERVER_URL}/establishment`, payload/* , { headers: headers } */)
-        return establishment
-    }
-}
+
 
 export const allEstablishments = () => {
     return async (dispatch) => {
@@ -57,11 +61,13 @@ export const filterByLocation = (location) => {
     }
 }
 
-export const filterByName = (name) => {
+export const searchByText = (searchText) => {
+    console.log(searchText)
+    const {latitude, longitude, zoom, sport} = searchText
     return async(dispatch) =>{
-        var results = await axios(`${SERVER_URL}/establishment?name=${name}`)
+        var results = await axios(`${SERVER_URL}/findlocation?latitude=${latitude}&longitude=${longitude}&zoom=${zoom}&sport=${sport}`)
         return dispatch({
-            type: FILTER_BY_NAME,
+            type: SEARCH_TEXT,
             payload: results.data
         })
     }
@@ -82,6 +88,16 @@ export const sortByAvailability = () => {
         var results = await axios(`${SERVER_URL}`)
         return dispatch({
             type: SORT_BY_AVAILABILITY,
+            payload: results.data
+        })
+    }
+}
+
+export const getGeocode = (searchText) => {
+    return async(dispatch) => {
+        var results = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json?access_token=${mapToken}`);
+        return dispatch({
+            type: GET_GEOCODE,
             payload: results.data
         })
     }
