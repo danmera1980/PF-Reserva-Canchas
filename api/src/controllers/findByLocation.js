@@ -4,8 +4,8 @@ const findByLocation = async (req, res) => {
     var {latitude, longitude, sport, zoom } = req.query
     // lat: 0.273323
     // lng: 0.150562
-    const amplLat =  0.273323 * ((24-zoom)/100)
-    const amplLng =  0.150562 *((24-zoom)/100)
+    const amplLat =  0.273323 
+    const amplLng =  0.150562 
 
     console.log(amplLat, '  ' , amplLng);
 
@@ -23,15 +23,10 @@ const findByLocation = async (req, res) => {
         where:{
           [Op.and]: [
             {'$sites.latitude$': {[Op.lte]: parseFloat(latitude) + amplLat }},
-            {'$sites.latitude$': {[Op.gte]: parseFloat(latitude) - amplLat}}
-          ],
-          [Op.and]: [
+            {'$sites.latitude$': {[Op.gte]: parseFloat(latitude) - amplLat}},
             {'$sites.longitude$': {[Op.lte]: parseFloat(longitude) + amplLng }},
-            {'$sites.longitude$': {[Op.gte]: parseFloat(longitude) - amplLng }}
-          ],
-
-          [Op.and]:[
-            {'$sites.courts.sport$':  sport }
+            {'$sites.longitude$': {[Op.gte]: parseFloat(longitude) - amplLng }},
+            sport.length?{'$sites.courts.sport$':  sport }:null
            ]
           // {'$sites.courts.sport$': {[Op.like]:'%' + sport + '%'}}
           // '$sites.latitude$': {[Op.lte]: latitude},

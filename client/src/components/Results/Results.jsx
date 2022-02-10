@@ -9,78 +9,10 @@ import Card from '../Card/Card';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import './Results.scss';
 import Slider from '../Slider/Slider';
-import { counter } from '@fortawesome/fontawesome-svg-core';
 
 
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
 const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
-
-// Data needed pulled from back:
-        // court.id
-        // court.images,
-        // court.name,
-        // court.price,
-        // court,sport,
-        // site.name,
-        // site.address,
-        // site.latitude,
-        // site.longitude,
-        // establishment.name
-
-
-//temp data
-
-const markers = [
-    {
-        id: 1,
-        name: "Cancha 1",
-        latitude: -34.603722,
-        longitude: -58.381592,
-        images: [],
-        establishment: "Est 1",
-        site: "Site 1",
-        address: "home 1",
-        price: 20,
-        sport: "Futbol 11"
-    },
-    {
-        id: 2,
-        name: "Cancha 2",
-        latitude: -34.550722,
-        longitude: -58.481592,
-        images: [],
-        establishment: "Est 1",
-        site: "Site 2",
-        address: "home 1",
-        price: 45,
-        sport: "Futbol 11"
-    },
-    {
-        id: 3,
-        name: "Cancha 1",
-        latitude: -34.580722,
-        longitude: -58.421592,
-        images: [],
-        establishment: "Est 2",
-        site: "Site 1",
-        address: "home 2",
-        price: 60,
-        sport: "Futbol 11"
-    },
-    {
-        id: 4,
-        name: "Cancha 1",
-        latitude: -34.590722,
-        longitude: -58.471592,
-        images: [],
-        establishment: "Est 3",
-        site: "Site 1",
-        address: "home 11",
-        price: 70,
-        sport: "Futbol 11"
-    }
-];
-
 
 function Results() {
     const [ selectedCard, setSelectedCard] = useState(null);
@@ -118,10 +50,10 @@ function Results() {
         <div className='results'>
             <div className='leftResults'>
                 <SearchBar />
-                {resultsData?.map(m => (
+                {resultsData && resultsData?.map(m => (
                     <Card 
-                        key= {m.id}
-                        id= {m.id}
+                        key= {m.cuit}
+                        id= {m.cuit}
                         name= {m.sites[0].courts[0].name}
                         images= {m.sites[0].courts[0].images}
                         establishment= {m.name}
@@ -135,7 +67,7 @@ function Results() {
             <div className='rightResults'>
                 <ReactMapGL 
                     {...viewport}
-                    onViewportChange={newView => {setViewport(newView); console.log(newView)}}
+                    onViewportChange={newView => setViewport(newView)}
                     mapboxApiAccessToken={mapboxToken}
                     mapStyle={MapStyle}
                 >
