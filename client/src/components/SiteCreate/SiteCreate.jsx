@@ -105,8 +105,8 @@ export default function SiteCreate() {
                 willClose: ()=>{history.push('/establishment'); window.location.reload()}
             })
             :
-            <div className="flex justify-center">
-                <form className="md:w-[500px] lg:w-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={(e) => handleSubmit(e)}>
+            <div className="flex justify-center text-black">
+                <form className="w-4/5 sm:w-full lg:w-11/12 flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3" onSubmit={(e) => handleSubmit(e)}>
                     <div className="relative">
                         
                             <input id="name" className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent" placeholder="Nombre..." type="text" value={input.name} name="name" onChange={(e)=>handleChange(e)} required></input>
