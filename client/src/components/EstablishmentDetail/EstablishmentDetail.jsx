@@ -28,7 +28,7 @@ export default function EstablishmentDetail(){
                     <h1 className="font-bold text-center py-5 text-6xl dark:text-white ">{establishment.name}</h1>              
                 </div>
                     {
-                        establishment.sites.map(site =>  site.courts.map(el => {
+                        establishment?.sites.map(site =>  site.courts.map(el => {
                             return(
                                 <div>
                                     <CardCourt 
@@ -49,7 +49,7 @@ export default function EstablishmentDetail(){
                                 </div>
                             )
                         })
-                        )}
+                    )}
                 </div>
             <Footer/>
         </div>
