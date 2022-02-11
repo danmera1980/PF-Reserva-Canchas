@@ -75,11 +75,6 @@ export default function CourtCreate() {
         onUploadProgress: (ProgressEvent) => {
           const { loaded, total } = ProgressEvent;
           let percent = Math.floor((loaded * 100) / total);
-          console.log(
-            "Upload Progress " +
-              Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-              "%"
-          );
 
           if (percent < 100) {
             setInput({
