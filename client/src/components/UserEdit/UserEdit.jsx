@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { editUser } from "../../redux/actions/users";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -7,29 +6,23 @@ import "./UserEdit.scss";
 import Swal from "sweetalert2";
 import Login from "../Login/Login";
 import ReactLoading from "react-loading";
-import { useEffect } from "react";
 
 function validate(input) {
   let errors = {};
-  console.log(errors);
   if (!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.name)) {
     errors.name =
-      "Se requieren entre 2 y 20 caracteres, no se permiten simbolos";
+      "El nombre no puede ser menor a 2 caracteres ni ser mayor a 20 caracteres, ni contener símbolos";
   }
 
-  if (!input.lastName) {
-    errors.lastName = "Se requiere un Apellido";
+  if (!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.lastName)) {
+    errors.lastName =
+      "El apellido no puede ser menor a 2 caracteres ni ser mayor a 20 caracteres, ni contener símbolos";
   }
-  if (!input.phone) {
-    errors.phone = "Se requiere un numero de contacto";
-  }
-
   return errors;
 }
 
-export default function UserEdit() {
+export default function UserEdit({userDetails}) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [errors, setErrors] = useState({});
   const userToken = useSelector((state) => state.register.userToken);
 
@@ -90,16 +83,14 @@ export default function UserEdit() {
   }
 
   function handleSubmit(e) {
-    console.log(input);
     e.preventDefault();
-    console.log("input del submit", input);
     dispatch(editUser(input, userToken));
 
     Swal.fire({
       title: `Usuario modificado`,
-      icon: 'success',
+      icon: "success",
       showConfirmButton: false,
-      timer: 2000
+      timer: 2000,
     });
     setInput({
       name: "",
@@ -151,7 +142,7 @@ export default function UserEdit() {
             />
 
             <label
-              className="  absolute left-0 -top-3.5 
+              className="absolute left-0 -top-3.5 
                                             text-gray-600 text-sm 
                                             peer-placeholder-shown:text-base 
                                             peer-placeholder-shown:text-gray-400
@@ -161,7 +152,7 @@ export default function UserEdit() {
                                             cursor-text"
               htmlFor="nombre"
             >
-              Nombre de Usuario
+              {"Nombre actual: " + userDetails.name}
             </label>
             {errors.name && (
               <p className=" text-xs text-red-500">{errors.name}</p>
@@ -179,16 +170,16 @@ export default function UserEdit() {
             />
             <label
               className="absolute left-0 -top-3.5 
-                                            text-gray-600 text-sm 
-                                            peer-placeholder-shown:text-base 
-                                            peer-placeholder-shown:text-gray-400
-                                            peer-placeholder-shown:top-2 transition-all 
-                                            peer-focus:-top-3.5 peer-focus:text-gray-600
-                                            peer-focus:text-sm
-                                            cursor-text"
+              text-gray-600 text-sm 
+              peer-placeholder-shown:text-base 
+              peer-placeholder-shown:text-gray-400
+              peer-placeholder-shown:top-2 transition-all 
+              peer-focus:-top-3.5 peer-focus:text-gray-600
+              peer-focus:text-sm
+              cursor-text"
               htmlFor="lastName"
             >
-              Apellido
+              {"Apellido actual: " + userDetails.lastName}
             </label>
             {errors.lastName && (
               <p className="text-xs text-red-500">{errors.lastName}</p>
@@ -216,7 +207,10 @@ export default function UserEdit() {
                                             cursor-text"
               htmlFor="telefono"
             >
-              Telefono de contacto
+              {"Número de teléfono actual: " +
+                (userDetails.phone
+                  ? userDetails.phone
+                  : "Número de teléfono no provisto")}
             </label>
             {errors.phone && (
               <p className="text-xs text-red-500">{errors.phone}</p>
@@ -234,7 +228,7 @@ export default function UserEdit() {
               onChange={fileChange}
             />
             <label className="text-white " htmlFor="input_img">
-              Añadir Imagen
+              {userDetails.img ? "Cambiar imagen" : "Añadir Imagen"}
             </label>
           </div>
 

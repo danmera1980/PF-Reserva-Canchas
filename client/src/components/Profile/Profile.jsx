@@ -21,7 +21,6 @@ function Profile() {
   const userToken = useSelector((state) => state.register.userToken);
   const [userDetails, setUserDetails] = useState(null);
 
-
   useEffect(() => {
     const headers = {
       Authorization: `Bearer ${userToken}`,
@@ -39,7 +38,7 @@ function Profile() {
 
   return (
     <div className="dark:bg-darkPrimary dark:text-white">
-      <Header />
+      <Header userDetails={userDetails}/>
       <div className="md:max-w-[1200px] m-auto">
         <div className="h-36 bg-[#498C8A] dark:bg-[#057276]"></div>
         <div className="grid place-content-center md:grid-cols-2 xl:grid-cols-[30%,70%]">
@@ -105,7 +104,7 @@ function Profile() {
                 case "transactions":
                   return <div>Mi transaccion</div>;
                 case "editProfile":
-                  return <UserEdit />;
+                  return <UserEdit userDetails={userDetails}/>;
                 default:
                   return <div>Default</div>;
               }
