@@ -16,7 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
-function Profile(req, res) {
+function Profile() {
   const [visual, setVisual] = useState("bookings");
   const userToken = useSelector((state) => state.register.userToken);
   const [userDetails, setUserDetails] = useState(null);
