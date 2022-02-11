@@ -1,4 +1,13 @@
-import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, SEARCH_TEXT, FILTER_BY_SPORT, GET_ESTABLISHMENT, SORT_BY_AVAILABILITY, SORT_BY_PRICE, GET_GEOCODE } from "../actions/actionNames";
+import { 
+    ALL_ESTABLISHMENTS, 
+    FILTER_BY_LOCATION, 
+    SEARCH_TEXT, 
+    FILTER_BY_SPORT, 
+    GET_ESTABLISHMENT, 
+    SORT_BY_AVAILABILITY, 
+    SORT_BY_PRICE, 
+    GET_GEOCODE 
+} from "../actions/actionNames";
 
 const initialState = {
     establishments : [],
