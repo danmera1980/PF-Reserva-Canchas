@@ -1,5 +1,7 @@
-import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_SPORT, GET_ESTABLISHMENT, SERVER_URL, SORT_BY_AVAILABILITY, SORT_BY_PRICE, SEARCH_TEXT } from "./actionNames";
+import { GET_GEOCODE, ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_SPORT, GET_ESTABLISHMENT, SERVER_URL, SORT_BY_AVAILABILITY, SORT_BY_PRICE, SEARCH_TEXT } from "./actionNames";
 import axios from 'axios';
+
+const mapToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 export function postEstablishment(payload, userToken){
     const headers = {
@@ -20,7 +22,7 @@ export const addUserToEstablishment = (payload) => {
 
 export const getEstablishment = (id) => {
     return async (dispatch) => {
-        var result = await axios(`${SERVER_URL}/establishments/${id}`);
+        var result = await axios(`${SERVER_URL}/establishment/${id}`);
         return dispatch({
             type: GET_ESTABLISHMENT,
             payload: result.data
@@ -61,9 +63,9 @@ export const filterByLocation = (location) => {
 
 export const searchByText = (searchText) => {
     console.log(searchText)
-    const {latitude, longitude, sport} = searchText
+    const {latitude, longitude, zoom, sport} = searchText
     return async(dispatch) =>{
-        var results = await axios(`${SERVER_URL}/findlocation?latitude=${latitude}&longitude=${longitude}&sport=${sport}`)
+        var results = await axios(`${SERVER_URL}/findlocation?latitude=${latitude}&longitude=${longitude}&zoom=${zoom}&sport=${sport}`)
         return dispatch({
             type: SEARCH_TEXT,
             payload: results.data
@@ -86,6 +88,16 @@ export const sortByAvailability = () => {
         var results = await axios(`${SERVER_URL}`)
         return dispatch({
             type: SORT_BY_AVAILABILITY,
+            payload: results.data
+        })
+    }
+}
+
+export const getGeocode = (searchText) => {
+    return async(dispatch) => {
+        var results = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json?access_token=${mapToken}`);
+        return dispatch({
+            type: GET_GEOCODE,
             payload: results.data
         })
     }

@@ -17,9 +17,6 @@ const getAllUsers = async (req, res, next) => {
 
 const getUserProfile = async (req, res, next) => {
   try {
-    // ver esta porqueria que funcione con el idea que me manda el front y el que pido
-    console.log(req);
-
     const id  = req.user.id;
     const wantedUser = await User.findOne({
       where: { id },
@@ -35,7 +32,6 @@ const getUserProfile = async (req, res, next) => {
 const registerGoogle = async (req, res, next) => {
   try {
     const user = req.user;
-    console.log("entre y me vuelvo", user)
     res.status(200).json(user.id);
   } catch (e) {
     next(e);
