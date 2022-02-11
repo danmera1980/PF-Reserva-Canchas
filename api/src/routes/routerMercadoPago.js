@@ -30,7 +30,7 @@ router.post("/", async (req, res, next) => {
         installments: 3  //Cantidad máximo de cuotas
         },
         back_urls: {
-            success: 'http://localhost:3001/mercadopago/pagos',
+            success: `http://localhost:3001/mercadopago/pagos/${userId}`,
             failure: 'http://localhost:3000/profile',
             pending: 'http://localhost:3000/profile',
         },
@@ -59,16 +59,18 @@ router.post("/", async (req, res, next) => {
 
 
 //Ruta que recibe la información del pago
-router.get("/pagos", (req, res)=>{
+router.get("/pagos/:userId", (req, res)=>{
     console.info("EN LA RUTA PAGOS ", req)
-    const payment_id= req.query.payment_id
-    const payment_status= req.query.status
-    const external_reference = req.query.external_reference
-    const merchant_order_id= req.query.merchant_order_id
-    console.log("EXTERNAL REFERENCE ", external_reference)
+    const userId = req.params.userId;
+    console.log('soy el userId de pagos',userId)
+    const payment_id= req.query.payment_id;
+    const payment_status= req.query.status;
+    const external_reference = req.query.external_reference;
+    const merchant_order_id= req.query.merchant_order_id;
+    console.log("EXTERNAL REFERENCE ", external_reference);
 
     Order.create({
-        userId: 7,
+        userId: userId,
         status: 'completed',
         payment_id: payment_id,
         payment_status:payment_status,

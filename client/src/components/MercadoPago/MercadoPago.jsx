@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from "react-router-dom";
 import axios from 'axios';
 import ReactLoading from 'react-loading';
+import { useSelector } from 'react-redux';
 const {SERVER_URL} = require('../../redux/actions/actionNames.js')
+
 
 
 
@@ -10,10 +11,11 @@ export default function MercadoPago(){
 
   const PUBLIC_KEY = 'TEST-6df9d926-e5fa-465e-9d9d-78207d113a0f';
 
+  const userId = useSelector(state => state.users.userDetails.id)
   const [preferenceId, setPreferenceId] = useState("") // preferenceId
 
   const input = [{
-    userId : 7,
+    userId : userId,
     courtId : 1,
     courtName: 'Cancha 3', 
     courtPrice: 150,
@@ -33,32 +35,6 @@ export default function MercadoPago(){
     .catch(err => console.error(err)) 
   },[])
   
-
-  // SDK VERSION 1
-  // useEffect(()=>{
-
-  //   if(preferenceId!==""){
-  //     const script = document.createElement('script'); //Crea un elemento html script
-    
-  //     const attr_data_preference = document.createAttribute('data-preference-id') //Crea un nodo atribute
-  //     attr_data_preference.value = preferenceId.id  //Le asigna como valor el id que devuelve MP
-    
-  //     //Agrega atributos al elemento script
-  //     script.src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";  
-  //     script.setAttributeNode(attr_data_preference)  
-    
-  //     console.log(preferenceId)
-      
-  //     //Agrega el script como nodo hijo del elemento form
-  //     document.getElementById('form1').appendChild(script)
-  //     return () =>{
-  //       //Elimina el script como nodo hijo del elemento form
-  //       document.getElementById('form1').removeChild(script);
-  //     }
-  //   }
-    
-  //  },[preferenceId])
-
 
   // SDK VERSION 2
   useEffect(()=>{
