@@ -18,15 +18,15 @@ export default function MercadoPago(){
     userId : userId,
     courtId : 3,
     courtName: 'Cancha 3', 
-    courtPrice: 180,
+    courtPrice: 200,
     timeActiveTo: '16:00',
-    date: '03-04-2022',
+    date: '02-03-2022',
     status : 'created'
   }]
 
   useEffect(()=>{
     axios
-    .post("http://localhost:3001/mercadopago", input)
+    .post(`${SERVER_URL}/mercadopago`, input)
     .then((data)=>{
       // setPreferenceId({id:data})
       setPreferenceId(data.data)
@@ -55,7 +55,7 @@ export default function MercadoPago(){
           },
           render: {
             container: '.cho-container',
-            label: 'Pagar Reserva',
+            label: 'Pagar',
           },
           openMode: 'modal',
         })
