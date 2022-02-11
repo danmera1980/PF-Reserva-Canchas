@@ -10,7 +10,6 @@ const routerFindSport = require('./routerFindSport')
 const routerFindLocation = require('./routerFindLocation')
 const routerFindName = require('./routerFindName')
 const routerMercadoPago = require('./routerMercadoPago')
-const routerOrder = require('./routerOrder');
 
 const router = Router();
 
@@ -26,7 +25,6 @@ router.use('/users', userRoute);
 router.use('/cards', routerCard);
 router.use('/findsport', routerFindSport);
 router.use('/findlocation', routerFindLocation);
-router.use('/order', routerOrder);
 router.use('/mercadopago', routerMercadoPago);
 
 
