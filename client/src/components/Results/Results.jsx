@@ -26,16 +26,21 @@ function Results() {
     useEffect(()=> [
         navigator.geolocation.getCurrentPosition(position => {
             setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
+            setViewport({
+                ...viewport,
+                latitude: position.coords.latitude, 
+                longitude: position.coords.longitude 
+            })
             console.log('My location', currentLocation)
         })
-    ],[navigator])
+    ],[])
 
     const [viewport, setViewport] = useState({
         latitude: resultsData.length?resultsData[0].sites[0].latitude: currentLocation.latitude,
         longitude: resultsData.length?resultsData[0].sites[0].longitude: currentLocation.longitude,
         width: '600px',
         height: '85vh',
-        zoom: 10,
+        zoom: 12,
         pitch: 50
     });
 
@@ -46,10 +51,11 @@ function Results() {
 
   return (
     <div>
-        <div className='fixed z-10'>
-        <Header />
+        <div className='fixed w-full z-50'>
+            <Header />
+            <SearchBar />
         </div>
-        <div className='results'>
+        <div className='results p-32'>
             <div className='leftResults'>
                 <SearchBar />
                 {resultsData && resultsData?.map(m => m.sites.map(site => site.courts.map( court => (

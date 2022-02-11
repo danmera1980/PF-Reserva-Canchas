@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faBasketballBall, faSearchLocation } from '@fortawesome/free-solid-svg-icons';
 import { Link, useHistory} from 'react-router-dom';
 import './SearchBar.scss';
-import { searchByText, filterBySport, getGeocode } from '../../redux/actions/establishment';
+import { searchByText, filterBySport, getGeocode, clearGeocode } from '../../redux/actions/establishment';
 
 const sports = 'Deportes';
 const establishment = 'Establecimiento';
@@ -26,12 +26,12 @@ function SearchBar() {
     const geoCode = useSelector(state => state.establishment.geocode)
 
     useEffect(() => {
-        dispatch(getGeocode(searchText.text))
+        dispatch(getGeocode(searchText.text));
+        
     }, [searchText])
 
     function handleInput(e){
         e.preventDefault();
-        // dispatch(getGeocode(e.target.value))
         setSearchText({
             ...searchText,
             text: e.target.value
@@ -57,6 +57,10 @@ function SearchBar() {
             ...searchText,
             sport: e.target.value
         })
+    }
+
+    const suggestionHandler = (r)=>{
+        setSearchText({...searchText, latitude: r.center[1], longitude: r.center[0], text: r.place_name}); 
     }
 
   return (
@@ -89,9 +93,9 @@ function SearchBar() {
                         <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
                     </Link>
                 </div>
-                <div className='autoContainer'>
-                    {geoCode.features.map(r => (
-                        <div key={r.id} onClick={() => setSearchText({...searchText, latitude: r.center[1], longitude: r.center[0], text: r.place_name})}>
+                <div className='autoContainer' hidden={geoCode?false:true}>
+                    {geoCode && geoCode.features.map(r => (
+                        <div className='optionContainer' key={r.id} onClick={() => suggestionHandler(r)}>
                             <span>{r.place_name}</span>
                         </div>
                     ))}

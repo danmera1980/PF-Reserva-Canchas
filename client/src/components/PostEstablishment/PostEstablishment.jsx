@@ -1,33 +1,46 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postEstablishment } from "../../redux/actions/establishment.js";
 import Swal from "sweetalert2";
 import "./PostEstablishment.scss";
-
-function validate(input) {
-  let errors = {};
-  if (input.cuit !== "" && !/^[0-9']{2,20}$/.test(input.cuit)) {
-    errors.cuit = "Ingrese sólo números";
-  }
-  if (input.name !== "" && !/^[a-zA-Z0-9_\-' ':]{1,20}$/.test(input.name)) {
-    errors.name = "No se permiten simbolos";
-  }
-  if (
-    input.timeActiveFrom !== "" &&
-    (input.timeActiveFrom < 0 || input.timeActiveFrom > 24)
-  ) {
-    errors.timeActiveFrom = "Se requiere un horario entre 0 y 24";
-  }
-  if (input.timeActiveTo !== "" && input.timeActiveTo < input.timeActiveFrom) {
-    errors.timeActiveTo = "No puede ser menor que el horario de apertura";
-  }
-  return errors;
-}
+import Header from "../Header/Header.jsx";
+import { useEffect } from "react";
 
 export default function PostEstablishment() {
+  function validate(input) {
+  
+    let errors = {};
+  
+    if (input.cuit !== "" && !/^[0-9']{2,20}$/.test(input.cuit)) {
+      errors.cuit = "Ingrese sólo números";
+    }
+    if (input.cuit.length > 11){
+        errors.cuit = "El cuit no puede ser mayor a 11 dígitos"
+    }
+    if (establishments.find((e) => e.cuit === input.cuit)) {
+      errors.cuit = "Cuit ya ingresado en la base de datos";
+    }
+    if (input.name !== "" && !/^[a-zA-Z0-9_\-' ':]{1,20}$/.test(input.name)) {
+      errors.name = "No se permiten simbolos";
+    }
+    if (
+      input.timeActiveFrom !== "" &&
+      (input.timeActiveFrom < 0 || input.timeActiveFrom > 24)
+    ) {
+      errors.timeActiveFrom = "Se requiere un horario entre 0 y 24";
+    }
+    if (input.timeActiveTo !== "" && input.timeActiveTo < input.timeActiveFrom) {
+      errors.timeActiveTo = "No puede ser menor que el horario de apertura";
+    }
+    return errors;
+  }
+
   const userToken = useSelector((state) => state.register.userToken);
+  const establishments = useSelector(
+    (state) => state.establishment.establishments
+  );
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -52,10 +65,10 @@ export default function PostEstablishment() {
     );
   }
   function handleSubmit(e) {
-
     e.preventDefault();
     if (
       errors.hasOwnProperty("cuit") ||
+      establishments.find((e) => e.cuit === input.cuit) ||
       errors.hasOwnProperty("name") ||
       errors.hasOwnProperty("timeActiveFrom") ||
       errors.hasOwnProperty("timeActiveTo")
@@ -82,7 +95,6 @@ export default function PostEstablishment() {
         timeActiveTo: "",
       });
 
-      
       history.push("/establishmentprofile");
       window.location.reload();
     }
@@ -114,6 +126,7 @@ export default function PostEstablishment() {
 
   return (
     <div>
+      <Header />
       {!userToken ? (
         Swal.fire({
           title: "Debes iniciar sesión para crear un establecimiento",
@@ -128,7 +141,7 @@ export default function PostEstablishment() {
       ) : (
         <div className=" flex justify-center">
           <form
-            className=" md:w-3/5 lg:w-3/5 lg:mx-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3 "
+            className="w-4/5 lg:w-2/5 flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3 "
             onSubmit={(e) => handleSubmit(e)}
           >
             {input.logoImage ? (
@@ -142,7 +155,7 @@ export default function PostEstablishment() {
             <div className="relative mt-5">
               <input
                 id="cuit"
-                className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
+                className="w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 placeholder="Cuit..."
                 type="text"
                 value={input.cuit}
@@ -276,18 +289,20 @@ export default function PostEstablishment() {
                 {errors.timeActiveTo}
               </p>
             ) : null}
-              <button
-                className="w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Crear Establecimiento
-              </button>
+            <button
+              className="w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Crear Establecimiento
+            </button>
             <br />
 
             <br />
+            <Link to={"/profile"}>
               <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-full">
                 Volver
               </button>
+            </Link>
           </form>
         </div>
       )}
