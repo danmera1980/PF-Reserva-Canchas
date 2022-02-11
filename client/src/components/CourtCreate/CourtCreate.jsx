@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { postCourt } from "../../redux/actions/court";
-import {
-  getEstablishmentByUser,
-  getSitesById,
-} from "../../redux/actions/forms";
+// import {
+//   getEstablishmentByUser,
+//   getSitesById,
+// } from "../../redux/actions/forms";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import "./CourtCreate.scss";
+import ReactLoading from "react-loading";
 
 function validate(input) {
   let errors = {};
@@ -48,7 +49,7 @@ export default function CourtCreate() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
-  const establishmentId = useSelector((state) => state.forms.establishmentId);
+  // const establishmentId = useSelector((state) => state.forms.establishmentId);
   const sites = useSelector((state) => state.forms.sitesByEstablishment);
   const userToken = useSelector((state) => state.register.userToken);
 
@@ -60,6 +61,7 @@ export default function CourtCreate() {
     sport: "",
     image: [],
     siteId: "",
+    uploadPercentage: 0
   });
 
   function fileChange() {
@@ -69,14 +71,31 @@ export default function CourtCreate() {
       body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
       body.append("image", photo);
 
-      await axios({
-        method: "post",
-        url: "https://api.imgbb.com/1/upload",
-        data: body,
-      })
+      const options = {
+        onUploadProgress: (ProgressEvent) => {
+          const { loaded, total } = ProgressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          console.log(
+            "Upload Progress " +
+              Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
+              "%"
+          );
+
+          if (percent < 100) {
+            setInput({
+              ...input,
+              uploadPercentage: percent,
+            });
+          }
+        },
+      };
+
+      await axios
+        .post("https://api.imgbb.com/1/upload", body, options)
         .then((response) => {
           setInput((prevInput) => ({
             ...input,
+            uploadPercentage: 0,
             image: [...prevInput.image, response.data.data.url],
           }));
         })
@@ -125,6 +144,13 @@ export default function CourtCreate() {
     );
   }
 
+  function handleDeleteImage(e) {
+    setInput({
+      ...input,
+      image: input.image.filter((image) => image !== e),
+    });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     setErrors(
@@ -151,6 +177,7 @@ export default function CourtCreate() {
         sport: "",
         image: [],
         siteId: "",
+        uploadPercentage: 0,
       });
       history.push("/establishmentprofile");
       window.location.reload();
@@ -158,23 +185,41 @@ export default function CourtCreate() {
   }
 
   return (
-    <div className="">
+    <div>
       <div className="containerCreateCourt">
         <div className="flex justify-center text-black">
           <form
-            className="w-4/5 sm:w-full flex-col justify-center items-center border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
+            className="w-full flex-col justify-center items-center border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
             onSubmit={(e) => handleSubmit(e)}
           >
-            {input.image ? (
-              <div className="flex place-content-center">
-                <img
-                  className="w-36 h-36 bg-cover rounded-sm"
-                  src={input.image}
-                  alt="not found"
+            
+            <div className="flex gap-2 overflow-x-auto overflow-y-hidden">
+              {input.image.length
+                ? input.image.map((e) => {
+                    return (
+                      <div key={e}>
+                        <img
+                          className="w-36 h-36 object-cover rounded-full"
+                          src={e}
+                          alt="not found"
+                          key={e}
+                        />
+                        <button onClick={() => handleDeleteImage(e)} className="sticky cursor-pointer text-red-400 hover:text-red-600 hover:scale-150 transition-all ml-[8.5rem] bottom-40 scale-125">X</button>
+                      </div>
+                    );
+                  })
+                : null}
+              {input.uploadPercentage > 0 && (
+                <ReactLoading
+                  type={"spin"}
+                  color={"#000000"}
+                  height={"8.5rem"}
+                  width={"8.5rem"}
                 />
-              </div>
-            ) : null}
-            <div className=" relative mt-5">
+              )}
+            </div>
+
+            <div className=" relative mt-10">
               <input
                 className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 id="nombre"
@@ -374,9 +419,6 @@ export default function CourtCreate() {
               </button>
               <br />
               <br />
-              <button className="w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                Volver
-              </button>
             </div>
           </form>
         </div>
