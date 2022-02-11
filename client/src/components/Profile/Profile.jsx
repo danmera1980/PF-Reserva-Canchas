@@ -21,6 +21,7 @@ function Profile() {
   const userToken = useSelector((state) => state.register.userToken);
   const [userDetails, setUserDetails] = useState(null);
 
+
   useEffect(() => {
     const headers = {
       Authorization: `Bearer ${userToken}`,
