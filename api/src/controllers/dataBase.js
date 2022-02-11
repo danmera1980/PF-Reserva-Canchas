@@ -27,7 +27,6 @@ const loadUsers = async function () {
 const loadEstablishments = async function () {
   try {
     const allUsers = await User.findAll();
-    console.log('carga establos')
     const allEstablishments = dataBase.establishment;
     for (let i = 0; i < allEstablishments.length; i++) {
       const newEstablishment = await Establishment.create({

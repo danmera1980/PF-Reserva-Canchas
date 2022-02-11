@@ -13,7 +13,7 @@ const getEstabIdByUserId = async (req,res, next) =>{
             let user = await User.findOne({
                 where:{id : userId}
             })
-            
+            console.log(user)
             res.send(user)
 
         } catch (error) {
