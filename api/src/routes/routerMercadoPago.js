@@ -30,26 +30,20 @@ router.post("/", async (req, res, next) => {
         installments: 3  //Cantidad máximo de cuotas
         },
         back_urls: {
-            success: `http://localhost:3001/mercadopago/pagos/${userId}`,
-            failure: 'http://localhost:3000/profile',
+            success: `http://localhost:3001/mercadopago/pagos/${userId}/${courtId}`,
+            failure: `http://localhost:3001/mercadopago/pagos/${userId}/${courtId}`,
             pending: 'http://localhost:3000/profile',
         },
         auto_return: 'approved',
         binary_mode: true
     };
 
- //   console.log('creé el objeto preference pero todavía no hice mercadopago.preference.create')
-
-
     mercadopago.preferences.create(preference)
 
     .then(function(response){
-        
-    //    console.info('ahora ya hice mercadopago.preferences ')
+    
     //Este valor reemplazará el string"<%= global.id %>" en tu HTML
         global.id = response.body.id;
-      //  console.log('response.body', response.body)
-     //   console.log('global.id', global.id)
         res.send(global.id);
     })
     .catch(function(error){
@@ -59,10 +53,9 @@ router.post("/", async (req, res, next) => {
 
 
 //Ruta que recibe la información del pago
-router.get("/pagos/:userId", (req, res)=>{
+router.get("/pagos/:userId/:courtId", (req, res)=>{
     console.info("EN LA RUTA PAGOS ", req)
-    const userId = req.params.userId;
-    console.log('soy el userId de pagos',userId)
+    const {userId, courtId} = req.params;
     const payment_id= req.query.payment_id;
     const payment_status= req.query.status;
     const external_reference = req.query.external_reference;
@@ -70,6 +63,7 @@ router.get("/pagos/:userId", (req, res)=>{
     console.log("EXTERNAL REFERENCE ", external_reference);
 
     Order.create({
+      courtId:courtId,
         userId: userId,
         status: 'completed',
         payment_id: payment_id,

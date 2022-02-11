@@ -16,9 +16,9 @@ export default function MercadoPago(){
 
   const input = [{
     userId : userId,
-    courtId : 1,
+    courtId : 3,
     courtName: 'Cancha 3', 
-    courtPrice: 150,
+    courtPrice: 180,
     timeActiveTo: '16:00',
     date: '03-04-2022',
     status : 'created'
