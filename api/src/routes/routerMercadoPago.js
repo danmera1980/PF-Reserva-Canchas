@@ -1,6 +1,7 @@
 
 const { Order} = require('../db.js');
 const router = require('express').Router();
+const {DB_HOST} = process.ev
 
 // SDK de Mercado Pago
 const mercadopago = require ('mercadopago');
@@ -30,9 +31,9 @@ router.post("/", async (req, res, next) => {
         installments: 3  //Cantidad máximo de cuotas
         },
         back_urls: {
-            success: `http://localhost:3001/mercadopago/pagos/${userId}/${courtId}`,
-            failure: `http://localhost:3001/mercadopago/pagos/${userId}/${courtId}`,
-            pending: 'http://localhost:3000/profile',
+            success: `http://${DB_HOST}:3001/mercadopago/pagos/${userId}/${courtId}`,
+            failure: `http://${DB_HOST}:3000/payment`,
+            pending: `http://${DB_HOST}:3000/payment`,
         },
         auto_return: 'approved',
         binary_mode: true
@@ -64,21 +65,21 @@ router.get("/pagos/:userId/:courtId", (req, res)=>{
 
     Order.create({
       courtId:courtId,
-        userId: userId,
-        status: 'completed',
-        payment_id: payment_id,
-        payment_status:payment_status,
-        merchant_order_id:merchant_order_id
+      userId: userId,
+      status: 'completed',
+      payment_id: payment_id,
+      payment_status:payment_status,
+      merchant_order_id:merchant_order_id
     })
     .then((order) => {
       console.log(order)
       console.info('redirect success')
-      return res.redirect("http://localhost:3000/profile")
+      return res.redirect(`http://${DB_HOST}:3000/profile`)
     })
     .catch(err =>{
       console.error('error al buscar', err)
       // return res.redirect(`http://localhost:3000/?error=${err}&where=al+buscar`)
-      return res.redirect(`http://localhost:3000/payment`)
+      return res.redirect(`http://${DB_HOST}:3000/payment`)
     })
 
 
