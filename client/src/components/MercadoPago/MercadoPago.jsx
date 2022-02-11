@@ -10,17 +10,16 @@ const {SERVER_URL} = require('../../redux/actions/actionNames.js')
 export default function MercadoPago(){
 
   const PUBLIC_KEY = 'TEST-6df9d926-e5fa-465e-9d9d-78207d113a0f';
-
-  const userId = useSelector(state => state.users.userDetails.id)
+  const userId = useSelector(state=> state.users.userDetails.id)
   const [preferenceId, setPreferenceId] = useState("") // preferenceId
 
   const input = [{
-    userId : userId,
-    courtId : 3,
-    courtName: 'Cancha 3', 
-    courtPrice: 200,
-    timeActiveTo: '16:00',
-    date: '02-03-2022',
+    userId: userId,
+    courtId : 1,
+    courtName: 'Cancha 5', 
+    price: 200,
+    startTime: new Date("2022-02-13T18:30:00.000"),
+    endTime: new Date("2022-02-13T19:30:00.000"),
     status : 'created'
   }]
 
@@ -71,8 +70,10 @@ export default function MercadoPago(){
         <div > Detalle de la reserva 
                   <ul>
                     <li>{input[0].courtName}</li>
-                    <li>{'$' + input[0].courtPrice}</li> 
-                    <li>{input[0].date+''+input[0].timeActiveTo}</li>
+                    <li>{'$' + input[0].price}</li> 
+                    <li>{input[0].startTime.toLocaleDateString()}</li>
+                    <li>{input[0].startTime.getHours()+':'+input[0].startTime.getMinutes()+'-'+input[0].endTime.getHours()+':'+input[0].endTime.getMinutes()
+}</li>
                   </ul>
         </div>   
       </form>

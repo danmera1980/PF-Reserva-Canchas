@@ -11,16 +11,16 @@ module.exports = (sequelize) => {
     },
     title:{
       type: DataTypes.STRING,
-      allowNull: false,
+      //allowNull: false,
 
     },
     startTime: {
       type: DataTypes.DATE,
-      allowNull: false,
+      // allowNull: false,
     },
     endTime: {
       type: DataTypes.DATE,
-      allowNull: false,
+      // allowNull: false,
     },
 
     description: {
@@ -30,5 +30,21 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    status:{  
+      type: DataTypes.ENUM('created', 'processing', 'cancelled', 'completed'),
+      allowNull: false
+    },
+    payment_id:{
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
+    payment_status:{
+        type: DataTypes.STRING,
+        defaultValue: ""
+    },
+    merchant_order_id: {
+        type: DataTypes.BIGINT,
+        defaultValue: 0
+    }
   });
 };
