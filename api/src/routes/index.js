@@ -11,6 +11,7 @@ const routerFindLocation = require('./routerFindLocation')
 const routerFindName = require('./routerFindName')
 const bookingRoute = require('./booking')
 
+const routerMercadoPago = require('./routerMercadoPago')
 
 const router = Router();
 
@@ -27,7 +28,10 @@ router.use('/cards', cardsRoute);
 router.use('/findsport', routerFindSport);
 router.use('/findlocation', routerFindLocation)
 router.use('/findname', routerFindName)
+router.use('/findlocation', routerFindLocation);
+router.use('/mercadopago', routerMercadoPago);
 router.use('/booking', bookingRoute)
+
 
 
 

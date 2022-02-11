@@ -3,6 +3,7 @@ const { UserRefreshClient } = require('google-auth-library');
 const {Establishment, Site, User, Court} = require('../db');
 const { createSite } = require('./site');
 
+//Revisar si no esta repetida esta funcion
 const getEstabIdByUserId = async (req,res, next) =>{
 
     const userId = req.user.id;

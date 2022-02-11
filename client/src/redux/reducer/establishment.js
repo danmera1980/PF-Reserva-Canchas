@@ -1,8 +1,18 @@
-import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, SEARCH_TEXT, FILTER_BY_SPORT, GET_ESTABLISHMENT, SORT_BY_AVAILABILITY, SORT_BY_PRICE } from "../actions/actionNames";
+import { 
+    ALL_ESTABLISHMENTS, 
+    FILTER_BY_LOCATION, 
+    SEARCH_TEXT, 
+    FILTER_BY_SPORT, 
+    GET_ESTABLISHMENT, 
+    SORT_BY_AVAILABILITY, 
+    SORT_BY_PRICE, 
+    GET_GEOCODE 
+} from "../actions/actionNames";
 
 const initialState = {
     establishments : [],
-    establishmentDetail : []
+    establishmentDetail : [],
+    geocode: []
 }
 
 const establishmentReducer = (state = initialState, action) => {
@@ -41,6 +51,12 @@ const establishmentReducer = (state = initialState, action) => {
             return{
                 ...state,
                 establishments: action.payload
+            }
+
+        case GET_GEOCODE:
+            return {
+                ...state,
+                geocode: action.payload
             }
         default: 
             return state

@@ -23,17 +23,22 @@ const newBooking = async (req, res, next) => {
 
     infoBooking.userId = userId;
     // si horario de inicio y cancha coinciden con alguno creado dar error
-    console.log(infoBooking.startTime)
-    const itsNotAvailable = await Booking.findOne({
-      where: {
-        startTime: infoBooking.startTime,
-        courtId: infoBooking.courtId
-      } 
-    });
-    console.log(itsNotAvailable);
-    if (itsNotAvailable) {
-      res.status(409).send("Conflict - There is a previous booking scheduled");
-    }
+    // console.log(infoBooking.startTime)
+    // const itsNotAvailable = await Booking.findOne({
+    //   where: {
+    //     startTime: infoBooking.startTime,
+    //     courtId: infoBooking.courtId
+    //   } 
+    // });
+    // console.log(itsNotAvailable);
+    // if (itsNotAvailable) {
+    //   res.status(409).send("Conflict - There is a previous booking scheduled");
+    // // 
+    // "startTime": "2022-02-13T18:30:00.000Z",
+    // "endTime": "2022-02-13T19:00:00.000Z",
+    // "description": "aca van las aclaraciones q quiera hacer el user",
+    // "courtId": 1,
+    // "finalAmount": 50
 
     const newBooking = await Booking.create(infoBooking);
     console.log(newBooking.startTime.getHours());

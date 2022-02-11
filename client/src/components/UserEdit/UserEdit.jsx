@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { editUser } from "../../redux/actions/users";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../Header/Header";
 import axios from "axios";
 import "./UserEdit.scss";
 import Swal from "sweetalert2";
 import Login from "../Login/Login";
+import ReactLoading from "react-loading";
+import { useEffect } from "react";
 
 function validate(input) {
   let errors = {};
@@ -37,6 +38,7 @@ export default function UserEdit() {
     lastName: "",
     img: "",
     phone: "",
+    uploadPercentage: 0,
   });
 
   function fileChange() {
@@ -46,14 +48,31 @@ export default function UserEdit() {
       body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
       body.append("image", photo);
 
-      await axios({
-        method: "post",
-        url: "https://api.imgbb.com/1/upload",
-        data: body,
-      })
+      const options = {
+        onUploadProgress: (ProgressEvent) => {
+          const { loaded, total } = ProgressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          console.log(
+            "Upload Progress " +
+              Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
+              "%"
+          );
+
+          if (percent < 100) {
+            setInput({
+              ...input,
+              uploadPercentage: percent,
+            });
+          }
+        },
+      };
+
+      await axios
+        .post("https://api.imgbb.com/1/upload", body, options)
         .then((response) => {
           setInput({
             ...input,
+            uploadPercentage: 0,
             img: response.data.data.url,
           });
         })
@@ -74,7 +93,6 @@ export default function UserEdit() {
         [e.target.name]: e.target.value,
       })
     );
-    //  console.log(input)
   }
 
   function handleSubmit(e) {
@@ -85,6 +103,9 @@ export default function UserEdit() {
 
     Swal.fire({
       title: `Usuario modificado`,
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 2000
     });
     setInput({
       name: "",
@@ -93,19 +114,35 @@ export default function UserEdit() {
       phone: "",
       hasEstablishment: false,
     });
-    history.push("/profile");
+    window.location.reload();
   }
 
   return userToken ? (
-    <div className="">
-      <div className="flex justify-center">
+    <div>
+      <div className="flex justify-center text-black">
         <form
-          className="w-full md:mx-56 lg:w-full lg:mx-[500px] flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
+          className="w-4/5 flex-col justify-center items-center mx-5 border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
           onSubmit={handleSubmit}
         >
-          {input.img ? (
-            <img className="w-36 h-36 bg-cover rounded-full" src={input.img} alt="logo_usr" />
-          ) : null}
+          <div className="flex place-content-center">
+            {input.img ? (
+              <img
+                className="w-36 h-36 bg-cover rounded-full"
+                src={input.img}
+                alt="logo_usr"
+              />
+            ) : null}
+
+            {input.uploadPercentage > 0 && (
+              <ReactLoading
+                type={"spin"}
+                color={"#000000"}
+                height={"8.5rem"}
+                width={"8.5rem"}
+              />
+            )}
+          </div>
+
           <input type="hidden" value={userToken} />
           <div className="relative mt-10">
             <input
