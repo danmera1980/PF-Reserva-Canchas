@@ -52,20 +52,22 @@ const createPreference = async (req, res, next) => {
 
   let {userId, courtId, courtName, price, startTime, endTime, status} = req.body[0]
 
-  
+  console.log('creando la preferencia, aca esta lo q recibo por body',req.body)
   startTime = new Date(startTime)
   endTime = new Date(endTime)
   const day = startTime.toLocaleDateString().split('/').join('-')
-
+console.log('hora de inicio y de final', startTime,endTime)
 
   const date =day+', '+startTime.getHours()+':'+startTime.getMinutes()+'-'+endTime.getHours()+':'+endTime.getMinutes()
 
   const bookingId = Math.floor(1000 + Math.random() * 9000)
-
+//   startTime = startTime.toString()
+//   endTime = endTime.toString()
+//   console.log('hora de inicio y de final', startTime,endTime)
   // Crea un objeto de preferencia
   let preference = {
       items: [{title: courtName+': '+date, unit_price: price, quantity:1  }],
-      external_reference : bookingId+'-'+courtName+' '+date,
+      external_reference : bookingId.toString(),
       payment_methods: {
       excluded_payment_types: [
           {id: "atm"},
@@ -74,7 +76,7 @@ const createPreference = async (req, res, next) => {
       installments: 1  //Cantidad máximo de cuotas
       },
       back_urls: {
-          success: `http://${DB_HOST}:3001/booking/new/${userId}/${courtId}/${price}`,
+          success: `http://${DB_HOST}:3001/booking/new/${userId}/${courtId}/${price}/`,
           failure: `http://${DB_HOST}:3000/establishmentProfile`, //corregir para que redireccione al componente donde elije horario
           pending: `http://${DB_HOST}:3000/`, //corregir para que redireccione al componente donde elije horario
       },

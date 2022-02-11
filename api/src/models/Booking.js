@@ -28,11 +28,11 @@ module.exports = (sequelize) => {
     },
     finalAmount: {
       type: DataTypes.INTEGER,
-      allowNull: false
+    //  allowNull: false
     },
     status:{  
       type: DataTypes.ENUM('created', 'processing', 'cancelled', 'completed'),
-      allowNull: false
+    //  allowNull: false
     },
     payment_id:{
         type: DataTypes.INTEGER,

@@ -14,10 +14,10 @@ export default function MercadoPago(){
   const [preferenceId, setPreferenceId] = useState("") // preferenceId
 
   const input = [{
-    userId: userId,
+    userId: 1,
     courtId : 1,
     courtName: 'Cancha 5', 
-    price: 200,
+    price: 250,
     startTime: new Date("2022-02-13T18:30:00.000"),
     endTime: new Date("2022-02-13T19:30:00.000"),
     status : 'created'
@@ -28,6 +28,7 @@ export default function MercadoPago(){
     .post(`${SERVER_URL}/mercadopago`, input)
     .then((data)=>{
       // setPreferenceId({id:data})
+      console.log('recibo el data', data)
       setPreferenceId(data.data)
       console.info('Contenido de data:', data.data)
     })

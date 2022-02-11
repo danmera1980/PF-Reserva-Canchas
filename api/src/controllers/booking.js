@@ -51,26 +51,26 @@ const getAllBookings = async (req, res, next) => {
 
 const newBooking = async (req, res, next) => {
 
-    console.info("EN LA RUTA PAGOS ", req)
+    console.log(' soy req.params',req.params)
 
     const userId = req.params.userId;    
     const courtId = req.params.courtId
     const price = req.params.price
-    // const startTime = req.query.startTime
-    // const endTime = req.query.endTime
+   // const startTime = req.query.startTime
+  //  const endTime = req.query.endTime
     const payment_id= req.query.payment_id;
     const payment_status= req.query.status;
     const external_reference = req.query.external_reference;
     const merchant_order_id= req.query.merchant_order_id;
-    console.log("EXTERNAL REFERENCE ", external_reference);
-
+   // console.log("EXTERNAL REFERENCE ", external_reference);
+ // console.log('soy startTime',startTime)
     Booking.create({
       courtId: courtId,
       userId: userId,
       status: 'completed',
       finalAmount : price,
-      // startTime : startTime,
-      // endTime : endTime,
+     // startTime : startTime,
+     // endTime : endTime,
       payment_id: payment_id,
       payment_status: payment_status,
       merchant_order_id: merchant_order_id
@@ -81,7 +81,7 @@ const newBooking = async (req, res, next) => {
       return res.redirect(`http://${DB_HOST}:3000/profile`)
     })
     .catch(err =>{
-      console.error('error al buscar', err)
+      console.log('error al buscar', err)
       return res.redirect(`http://${DB_HOST}:3000/payment`)
     })
 
