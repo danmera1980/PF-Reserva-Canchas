@@ -25,13 +25,12 @@ const Calendario = () => {
     ]
    
     return (
-        <div className="flex ">
-      <DtCalendar
-        onChange={setDate}
-        disabledDates={disabledDates}
-        />
-       {date? <Hours/> : null}
-    
+      <div className="flex">
+        <DtCalendar
+          onChange={setDate}
+          disabledDates={disabledDates}
+      />
+      {date? <Hours/> : null}
       </div>
 
     )

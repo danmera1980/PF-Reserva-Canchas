@@ -3,17 +3,16 @@ import React from "react";
 const Hours = () => {
     var horas = Array.from(Array(24).keys())
     return (
-        horas.map((h)=> (
-            <div className="bg-white inline-table">
-            <div className="box-border container grid grid-cols-4 grid-rows-6 gap-3">
-                <div className="box-border h-10 w-14 p-4 border-4 flex justify-center items-center">
-                    <ul>
+        <div className="drop-shadow-md">
+            <div className=" text-white bg-[#009a17] h-[78px] ">HORARIOS</div>
+            <div className="grid grid-rows-6 gap-4 grid-flow-col bg-white p-4 h-[283px]">
+                {horas.map((h)=> (
+                    <span key={h} className="inline-block align-baseline hover:bg-[#009a17] hover:text-white text-center w-16 items-center rounded-2xl">
                         {h}:00
-                    </ul>
-                </div>
+                    </span>
+                ))}
             </div>
-            </div>
-        ))
+        </div>
     )
 }
 
