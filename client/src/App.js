@@ -31,7 +31,7 @@ function App() {
         <Route exact path="/useredit" component={UserEdit} />
         <Route exact path="/establishmentprofile" component={EstablishmentProfile} />
         <Route exact path="/addUserToEstablishment" component={AddUserToEstablishment}/>
-        <Route exact path="/establishment/1" component={EstablishmentDetail}/>
+        <Route exact path="/establishment/:id/:court" component={EstablishmentDetail}/>
         
 
       </div>

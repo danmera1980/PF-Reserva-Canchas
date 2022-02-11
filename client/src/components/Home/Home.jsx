@@ -6,8 +6,6 @@ import SearchBar from "../SearchBar/SearchBar.jsx";
 import Popular from "../Popular/Popular.jsx";
 import homeImage from '../../assets/img/homeImage.jpg';
 import "./Home.scss";
-import CardCourt from "../CardCourt.js/CardCourt.jsx";
-import { allEstablishments } from "../../redux/actions/establishment.js";
 
 function Home() {
   const dispatch = useDispatch()
