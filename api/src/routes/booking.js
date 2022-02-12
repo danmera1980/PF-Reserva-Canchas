@@ -7,6 +7,6 @@ const router = Router();
 
 router.get("/", getAllBookings);
 router.get("/availability/:id", getCourtAvailability);
-
+// tratar de ver esto con Dan
 router.get('/new/:userId/:courtId/:price/:startTime/:endTime', newBooking)
 module.exports = router;

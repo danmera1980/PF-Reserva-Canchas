@@ -12,6 +12,11 @@ export default function MercadoPago(){
   const PUBLIC_KEY = 'TEST-6df9d926-e5fa-465e-9d9d-78207d113a0f';
   const [preferenceId, setPreferenceId] = useState("") // preferenceId
 
+
+
+  /*
+  chicos aca la info de la fecha mandenla como esta en el objeto que les pasa el back y en la ruta de crear el objeto les cuento como se hace para que se guarde bien la fecha sin tener problema con los time zones
+  */
   const input = [{
     userId: 1,
     courtId : 1,
