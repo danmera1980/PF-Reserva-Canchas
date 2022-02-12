@@ -1,4 +1,4 @@
-import { ALL_USERS, LOGOUT, USER_DATA } from '../actions/actionNames';
+import { ALL_USERS, USER_DATA } from '../actions/actionNames';
 
 const initialState = {
     //para el admin
@@ -21,12 +21,6 @@ const userReducer = (state = initialState, action) => {
             ...state,
             userDetails: action.payload 
         }
-        
-        case LOGOUT:
-            return {
-                ...state,
-                userDetails: []
-            }
         
         default:
             return state;

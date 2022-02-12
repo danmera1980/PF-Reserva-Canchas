@@ -7,11 +7,6 @@ import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import EstablishmentBookings from "../EstablishmentBookings/EstablishmentBookings";
 import { useSelector } from "react-redux";
-// import {
-//   getEstablishmentByUser,
-//   getSitesById,
-// } from "../../redux/actions/forms.js";
-// import { getEstablishment } from "../../redux/actions/establishment.js";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Sites from "../Sites/Sites";
@@ -19,25 +14,19 @@ import defaultEstablishmentLogo from "../../assets/img/defaultEstablishmentLogo.
 
 function EstablishmentProfile() {
   const [visual, setVisual] = useState("bookings");
-  // const dispatch = useDispatch();
-  // const userToken = useSelector((state) => state.register.userToken);
-  const establishmentId = useSelector((state) => state.forms.establishmentId);
-  const [establishmentDetail, setEstablishmentDetail] = useState(null)
+  const userToken = useSelector((state) => state.register.userToken);
+  const [establishmentDetail, setEstablishmentDetail] = useState(null);
 
   useEffect(() => {
-    // dispatch(getEstablishmentByUser(userToken));
-    // if (establishmentId) {
-    //   dispatch(getSitesById(establishmentId, userToken));
-    // }
-    // dispatch(getEstablishment(establishmentId));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // axios.get(`${SERVER_URL}/establishment/`)
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
     axios
-      .get(`${SERVER_URL}/establishment/${establishmentId}`)
+      .get(`${SERVER_URL}/establishment/idUser`, { headers: headers })
       .then((res) => {
         setEstablishmentDetail(res.data);
       });
-  }, [establishmentId]);
+  }, [userToken]);
 
   const onButtonSelection = (option) => {
     setVisual(option);
@@ -51,13 +40,19 @@ function EstablishmentProfile() {
         <div className="grid place-content-center md:grid-cols-2 xl:grid-cols-[30%,70%]">
           <div>
             <img
-              src={establishmentDetail && establishmentDetail.logoImage ? establishmentDetail.logoImage : defaultEstablishmentLogo}
+              src={
+                establishmentDetail && establishmentDetail.logoImage
+                  ? establishmentDetail.logoImage
+                  : defaultEstablishmentLogo
+              }
               alt="logo_img"
               className="-mt-28 ml-[2.8rem] md:ml-[3.5rem] object-cover rounded-full w-60 h-60 bg-green-900"
             />
 
             <h1 className="mb-5 text-center mt-5 text-2xl font-bold">
-              {establishmentDetail && establishmentDetail.name ? establishmentDetail.name : "Sin nombre de establecimiento"}
+              {establishmentDetail && establishmentDetail.name
+                ? establishmentDetail.name
+                : "Sin nombre de establecimiento"}
             </h1>
 
             <div className="grid grid-cols-2 gap-4 max-w-xs">
@@ -119,9 +114,9 @@ function EstablishmentProfile() {
                 case "siteCreate":
                   return <SiteCreate />;
                 case "sites":
-                  return <Sites/>
+                  return <Sites />;
                 case "courtCreate":
-                  return <CourtCreate />;
+                  return <CourtCreate sites={establishmentDetail.sites}/>;
                 default:
                   return <EstablishmentBookings />;
               }

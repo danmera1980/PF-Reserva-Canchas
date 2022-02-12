@@ -17,14 +17,14 @@ function validate(input) {
     errors.name = "Completar nombre";
   }
   if (!/^[a-zA-Z0-9' ':]{0,20}$/.test(input.name)) {
-    errors.name = "No se permiten simbolos";
+    errors.name = "No se permiten símbolos";
   }
 
   if (!/^[a-zA-Z0-9_\-' ',.]{1,40}$/.test(input.description)) {
     errors.description = "Completar la descripcion";
   }
   if (!/^[a-zA-Z0-9_\-' ',.:]{0,100}$/.test(input.description)) {
-    errors.description = "No se permiten simbolos";
+    errors.description = "No se permiten símbolos";
   }
   if (!input.sport) {
     errors.sport = "Selecciona un deporte";
@@ -35,7 +35,7 @@ function validate(input) {
     (input.shiftLength < 15 || input.shiftLength > 120)
   ) {
     errors.shiftLength =
-      "La duracion del turno tiene que ser entre 15 y 120 mins";
+      "La duración del turno tiene que ser entre 15 y 120 mins";
   }
 
   if (input.price !== "" && input.price < 10) {
@@ -45,12 +45,11 @@ function validate(input) {
   return errors;
 }
 
-export default function CourtCreate() {
+export default function CourtCreate({sites}) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
   // const establishmentId = useSelector((state) => state.forms.establishmentId);
-  const sites = useSelector((state) => state.forms.sitesByEstablishment);
   const userToken = useSelector((state) => state.register.userToken);
 
   const [input, setInput] = useState({
@@ -75,11 +74,6 @@ export default function CourtCreate() {
         onUploadProgress: (ProgressEvent) => {
           const { loaded, total } = ProgressEvent;
           let percent = Math.floor((loaded * 100) / total);
-          console.log(
-            "Upload Progress " +
-              Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-              "%"
-          );
 
           if (percent < 100) {
             setInput({
@@ -165,7 +159,7 @@ export default function CourtCreate() {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Cancha creada con exito",
+        title: "Cancha creada con éxito",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -373,7 +367,7 @@ export default function CourtCreate() {
                 multiple
               />
               <label className="text-white" htmlFor="input_img">
-                Imágenes
+                Agregar Imágenes
               </label>
               {errors.image && (
                 <p className="'text-xs text-red-500">{errors.image}</p>
@@ -381,13 +375,13 @@ export default function CourtCreate() {
             </div>
             <div className="relative mt-3">
               <select
-                className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
+                className="w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 name="sites"
                 onChange={(e) => handleSelectSite(e)}
                 required
               >
                 <option value="">Seleccioná una sede</option>
-                {sites.map((c) => (
+                {sites === null ? "" : sites.map((c) => (
                   <option value={c.id} key={c.id}>
                     {c.name}
                   </option>
