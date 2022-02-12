@@ -8,5 +8,5 @@ const router = Router();
 router.get("/", getAllBookings);
 router.get("/availability/:id", getCourtAvailability);
 
-router.post('/new', userExtractor, authGoogle, newBooking)
+router.get('/new/:userId/:courtId/:price/:startTime/:endTime', newBooking)
 module.exports = router;

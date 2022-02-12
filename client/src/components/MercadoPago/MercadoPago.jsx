@@ -10,17 +10,15 @@ const {SERVER_URL} = require('../../redux/actions/actionNames.js')
 export default function MercadoPago(){
 
   const PUBLIC_KEY = 'TEST-6df9d926-e5fa-465e-9d9d-78207d113a0f';
-
-  const userId = useSelector(state => state.users.userDetails.id)
   const [preferenceId, setPreferenceId] = useState("") // preferenceId
 
   const input = [{
-    userId : userId,
-    courtId : 3,
-    courtName: 'Cancha 3', 
-    courtPrice: 200,
-    timeActiveTo: '16:00',
-    date: '02-03-2022',
+    userId: 1,
+    courtId : 1,
+    courtName: 'Cancha 6', 
+    price: 250,
+    startTime: "2022-02-22T15:30:00.000",
+    endTime: "2022-02-22T16:30:00.000",
     status : 'created'
   }]
 
@@ -28,9 +26,7 @@ export default function MercadoPago(){
     axios
     .post(`${SERVER_URL}/mercadopago`, input)
     .then((data)=>{
-      // setPreferenceId({id:data})
       setPreferenceId(data.data)
-      console.info('Contenido de data:', data.data)
     })
     .catch(err => console.error(err)) 
   },[])
@@ -71,8 +67,7 @@ export default function MercadoPago(){
         <div > Detalle de la reserva 
                   <ul>
                     <li>{input[0].courtName}</li>
-                    <li>{'$' + input[0].courtPrice}</li> 
-                    <li>{input[0].date+''+input[0].timeActiveTo}</li>
+                    <li>{'$' + input[0].price}</li> 
                   </ul>
         </div>   
       </form>
