@@ -67,6 +67,7 @@ function Results() {
                         establishment= {m.name}
                         cuit={m.cuit}
                         court= {court.name}
+                        courtId={court.id}
                         address= {site.street}
                         price= {court.price}
                         sport= {court.sport}

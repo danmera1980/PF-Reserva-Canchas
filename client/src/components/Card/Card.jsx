@@ -4,10 +4,10 @@ import React from "react";
 import Slider from "../Slider/Slider";
 import {useHistory} from "react-router-dom"
 
-function Card({id, name, images,button, establishment, court, address, price, sport}) {
+function Card({id, name, images,button, establishment, court, courtId, address, price, sport}) {
   const history = useHistory()
   function handleClick(){
-    history.push(`/establishment/${id}/${court}`)
+    history.push(`/establishment/${id}/${courtId}`)
   }
   return (
     <div className="flex flex-wrap -m-3">

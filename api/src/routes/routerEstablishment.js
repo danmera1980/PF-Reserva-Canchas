@@ -22,6 +22,6 @@ router.get('/',getEstablishmentsFromDB)
 router.get('/', findByName)
 router.post('/', userExtractor, authGoogle, validator.body(bodySchema), createEstablishment)
 router.post('/addUserToEstablishment', addUserToEstablishment)
-router.get('/:id', getEstablishmentId)
+router.get('/:id/:courtId', getEstablishmentId)
 
 module.exports = router
