@@ -44,10 +44,10 @@ const { User, Establishment, Site, Court, Booking, Order } = sequelize.models;
 
 Establishment.hasMany(User, { as: "user", foreignKey: "establishmentId" });
 
-Establishment.hasMany(Site, { as: "site", foreignKey: "establishmentId" });
-Site.hasMany(Court, { as: "court", foreignKey: "siteId" });
-Site.belongsTo(Establishment);
+Establishment.hasMany(Site, { as: "sites", foreignKey: "establishmentId" });
+Site.hasMany(Court, { as: "courts", foreignKey: "siteId" });
 
+Site.belongsTo(Establishment);
 Court.belongsTo(Site);
 
 User.hasMany(Booking, { as: "booking", foreignKey: "userId" });

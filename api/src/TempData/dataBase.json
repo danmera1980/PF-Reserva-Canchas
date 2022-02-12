@@ -71,25 +71,25 @@
         {
             "cuit": "2011111118",
             "name": "Canchas Cebollitas",
-            "timeActiveFrom": "10:00",
+            "timeActiveFrom": "12:00",
             "timeActiveTo": "22:00"
         },
         {
             "cuit": "20356467454",
             "name": "Rocky siempre",
-            "timeActiveFrom": "10:00",
-            "timeActiveTo": "22:00"
+            "timeActiveFrom": "16:00",
+            "timeActiveTo": "23:00"
         },
         {
             "cuit": "204444448",
             "name": "Happy Gilmore Club",
-            "timeActiveFrom": "10:00",
-            "timeActiveTo": "22:00"
+            "timeActiveFrom": "08:00",
+            "timeActiveTo": "23:00"
         },
         {
             "cuit": "2055555558",
             "name": "Deportivo Dodgeball",
-            "timeActiveFrom": "10:00",
+            "timeActiveFrom": "14:00",
             "timeActiveTo": "22:00"
         },
         {
@@ -101,14 +101,14 @@
         {
             "cuit": "2077777778",
             "name": "Recreativo Pampayasta",
-            "timeActiveFrom": "10:00",
-            "timeActiveTo": "22:00"
+            "timeActiveFrom": "12:00",
+            "timeActiveTo": "23:00"
         },
         {
             "cuit": "209999998",
             "name": "Club Amazonas",
-            "timeActiveFrom": "10:00",
-            "timeActiveTo": "22:00"
+            "timeActiveFrom": "08:00",
+            "timeActiveTo": "21:00"
         }
     ],
     "site": [
@@ -220,52 +220,52 @@
     "court":[{
         "name": "Cancha3",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 45, 
+        "shiftLength": 60, 
         "price": 150,
         "sport": "Futbol 5"
     },{
         "name": "Cancha1",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 45, 
+        "shiftLength": 60, 
         "price": 150,
         "sport": "Futbol 5"
     },{
         "name": "Cancha2",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 30, 
+        "shiftLength": 60, 
         "price": 200,
         "sport": "Futbol 5"
     },
     {
         "name": "Cancha4",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 30, 
+        "shiftLength": 60, 
         "price": 150,
         "sport": "Futbol 5"
     },
     {
         "name": "Cancha34",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 45, 
+        "shiftLength": 60, 
         "price": 200,
         "sport": "Padel"
     }, {
         "name": "Cancha42",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 45, 
+        "shiftLength": 60, 
         "price": 200,
         "sport": "Padel"
     }, {
         "name": "Cancha14",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 45, 
+        "shiftLength": 60, 
         "price": 200,
         "sport": "Padel"
     },
     {
         "name": "Cancha14",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 45, 
+        "shiftLength": 60, 
         "price": 200,
         "sport": "Squash"
     }
