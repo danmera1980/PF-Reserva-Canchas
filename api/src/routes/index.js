@@ -26,7 +26,7 @@ router.use('/users', userRoute);
 router.use('/cards', cardsRoute);
 router.use('/findsport', routerFindSport);
 router.use('/findlocation', routerFindLocation)
-router.use('/findname', routerFindName)
+//router.use('/findname', routerFindName)
 router.use('/findlocation', routerFindLocation);
 router.use('/mercadopago', routerMercadoPago);
 router.use('/booking', bookingRoute)

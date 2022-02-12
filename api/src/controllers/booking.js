@@ -63,17 +63,16 @@ const getCourtAvailability = async (req, res, next) => {
         },
       ],
     });
-    console.log("precio", infoCourt.id,  infoCourt.site.establishment.timeActiveFrom);
 
     let [activeFromHour, activeFromMin] =
       infoCourt.site.establishment.timeActiveFrom.split(":");
     let [activeToHour, activeToMin] =
       infoCourt.site.establishment.timeActiveTo.split(":");
-    
-      //calculo el largo del dia de trabajo en minutos de inicio y de fin
+
+    //calculo el largo del dia de trabajo en minutos de inicio y de fin
     activeTo = parseInt(activeToHour) * 60 + parseInt(activeToMin);
     activeFrom = parseInt(activeFromHour) * 60 - parseInt(activeFromMin);
-
+    console.log(activeTo, 'activeto')
     //     la duracion del dia de trabajo del court en minutos
     let businessHoursInMinutes = activeTo - activeFrom;
     //     dividir las horas abiertas por la duracion de los turno y me da cuantos slots son
@@ -82,7 +81,7 @@ const getCourtAvailability = async (req, res, next) => {
     let [year, month, day] = dateToCheck.split("-");
     let searchFromDate = new Date(year, month - 1, day);
     let searchToDate = new Date(year, month - 1, day, 23, 59);
-
+    console.log(searchFromDate, searchToDate)
     const dayBookings = await Booking.findAll({
       where: {
         [Op.and]: [
@@ -97,47 +96,52 @@ const getCourtAvailability = async (req, res, next) => {
         ],
       },
     });
-    console.log("reservas del dia", dayBookings.length);
-    let slotsQuantity = businessHoursInMinutes/infoCourt.shiftLength
-    console.log('cantidad de turnos en el dia',slotsQuantity)
-    let availability = []
-    
-        // console.log(dayBookings)
-    for(let i = 0; i < slotsQuantity; i++) {
-      let startSlotMin = activeFrom + (i * infoCourt.shiftLength)
-      let endSlotMin = startSlotMin + infoCourt.shiftLength
+    console.log("reservas del dia", dayBookings);
+    let slotsQuantity = businessHoursInMinutes / infoCourt.shiftLength;
+    console.log("cantidad de turnos en el dia", slotsQuantity);
+    let availability = [];
 
-      let start = minutesToHour(startSlotMin)
-      let end = minutesToHour(endSlotMin)
-      let [stHour, stMin] = start.split(':') 
+    // console.log(dayBookings)
+    for (let i = 0; i < slotsQuantity; i++) {
+      let startSlotMin = activeFrom + i * infoCourt.shiftLength;
+      let endSlotMin = startSlotMin + infoCourt.shiftLength;
 
-      let compareDate = new Date (year, month-1, day, stHour, stMin, 00)
+      let start = minutesToHour(startSlotMin);
+      let end = minutesToHour(endSlotMin);
+      let [stHour, stMin] = start.split(":");
+
+      let compareDate = new Date(year, month - 1, day, stHour, stMin, 00);
       //console.log('comparo aca', (compareDate.getTime()) === dayBookings[0].startTime.getTime())
 
-      let available = dayBookings.filter(el => el.startTime.getTime() === compareDate.getTime())
+      let available = dayBookings.filter(
+        (el) => el.startTime.getTime() === compareDate.getTime()
+      );
       //calcular inicio fin crear fecha ver si esta disponivble y  pushear el objeto con las 3 cosas
-     // slots.push({})
+      // slots.push({})
       let isAvailable = available.length ? false : true;
       availability.push({
-        date: dateToCheck,
+        date: {
+          year,
+          month,
+          day,
+        },
         startTime: start,
         endTime: end,
-        isAvailable: isAvailable 
-      })
-      
+        isAvailable: isAvailable,
+      });
     }
-    
+
     res.status(200).json([dayBookings, availability]);
   } catch (e) {
     next(e);
   }
 };
 
-function minutesToHour(min){
-  let newMin = min%60 ? min%60 : '00'
-  let newHour = (min-newMin)/60
-  
-  return newHour + ':' + newMin
+function minutesToHour(min) {
+  let newMin = min % 60 ? min % 60 : "00";
+  let newHour = (min - newMin) / 60;
+
+  return newHour + ":" + newMin;
 }
 module.exports = {
   getAllBookings,
