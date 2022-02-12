@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserToEstablishment } from "../../redux/actions/establishment";
-import { getEstablishmentByUser} from "../../redux/actions/forms";
+import { getEstablishmentById} from "../../redux/actions/forms";
 import Swal from 'sweetalert2';
 
 
@@ -31,7 +31,7 @@ export default function AddUserToEstablishment(){
     })
 
     useEffect(()=>{
-        dispatch((getEstablishmentByUser(userId)))
+        dispatch((getEstablishmentById(userId)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[userId])
 
