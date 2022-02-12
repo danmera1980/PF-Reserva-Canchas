@@ -10,7 +10,6 @@ const routerFindSport = require('./routerFindSport')
 const routerFindLocation = require('./routerFindLocation')
 const routerFindName = require('./routerFindName')
 const bookingRoute = require('./booking')
-
 const routerMercadoPago = require('./routerMercadoPago')
 
 const router = Router();

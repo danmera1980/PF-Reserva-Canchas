@@ -22,22 +22,24 @@ function Header() {
   const logoutText = "Salir";
   const userToken = useSelector((state) => state.register.userToken);
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
 
   const logOut = () => {
     dispatch(logoutAction());
-    history.push("/")
+    history.push("/");
   };
 
   useEffect(() => {
-    const headers = {
-      Authorization: `Bearer ${userToken}`,
-    };
-    axios
-      .get(`${SERVER_URL}/users/profile`, { headers: headers })
-      .then((res) => {
-        setUserDetails(res.data);
-      });
+    if (userToken) {
+      const headers = {
+        Authorization: `Bearer ${userToken}`,
+      };
+      axios
+        .get(`${SERVER_URL}/users/profile`, { headers: headers })
+        .then((res) => {
+          setUserDetails(res.data);
+        });
+    }
   }, [userToken]);
 
   return (
@@ -55,7 +57,11 @@ function Header() {
                 <button className="btn_signed_in">
                   <img
                     className="userLoggedImage"
-                    src={userDetails && userDetails.img ? userDetails.img : userImage}
+                    src={
+                      userDetails && userDetails.img
+                        ? userDetails.img
+                        : userImage
+                    }
                     alt="user here"
                   />
                   <FontAwesomeIcon icon={faAngleDown} />
@@ -64,7 +70,9 @@ function Header() {
                   <li>
                     <Link to={"/profile"}>{profileText}</Link>
                   </li>
-                  <li onClick={logOut} className="cursor-pointer">{logoutText}</li>
+                  <li onClick={logOut} className="cursor-pointer">
+                    {logoutText}
+                  </li>
                 </ul>
                 {/* <button onClick={()=>logOut()}>Logout</button> */}
               </div>

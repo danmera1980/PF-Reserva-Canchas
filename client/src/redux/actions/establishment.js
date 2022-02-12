@@ -39,7 +39,6 @@ export const getEstablishment = (id) => {
     }
 }
 
-
 export const allEstablishments = () => {
     return async (dispatch) => {
         var results = await axios(`${SERVER_URL}/cards`)
