@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "../Card/Card";
 import UserEdit from "../UserEdit/UserEdit";
 import { SERVER_URL } from "../../redux/actions/actionNames";
-import userImage from "../../assets/img/user.png";
+import ReactLoading from "react-loading";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
@@ -38,13 +38,24 @@ function Profile() {
 
   return (
     <div className="dark:bg-darkPrimary dark:text-white">
-      <Header userDetails={userDetails}/>
+      <Header userDetails={userDetails} />
       <div className="md:max-w-[1200px] m-auto">
         <div className="h-36 bg-[#498C8A] dark:bg-[#057276]"></div>
         <div className="grid place-content-center md:grid-cols-2 xl:grid-cols-[30%,70%]">
           <div>
             <img
-              src={userDetails && userDetails.img ? userDetails.img : userImage}
+              src={
+                userDetails && userDetails.img ? (
+                  userDetails.img
+                ) : (
+                  <ReactLoading
+                    type={"spin"}
+                    color={"#000000"}
+                    height={"8.5rem"}
+                    width={"8.5rem"}
+                  />
+                )
+              }
               alt="logo_img"
               className="-mt-28 ml-[2.8rem] md:ml-[3.5rem] object-cover rounded-full w-60 h-60 bg-green-900"
             />
@@ -80,7 +91,7 @@ function Profile() {
                   </Link>
                 ) : (
                   <Link to={"/establishment"}>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-sm text-white font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]">
                       <FontAwesomeIcon icon={faFutbol} size={"2x"} />
                       <p>Crear Establecimiento</p>
                     </button>
@@ -104,7 +115,7 @@ function Profile() {
                 case "transactions":
                   return <div>Mi transaccion</div>;
                 case "editProfile":
-                  return <UserEdit userDetails={userDetails}/>;
+                  return <UserEdit userDetails={userDetails} />;
                 default:
                   return <div>Default</div>;
               }
