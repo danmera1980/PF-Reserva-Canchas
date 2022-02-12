@@ -17,13 +17,29 @@ module.exports = (sequelize) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
-
-    description: {
-      type: DataTypes.STRING,
-    },
     finalAmount: {
       type: DataTypes.INTEGER,
-      allowNull: false
+     allowNull: false
     },
+    status:{  
+      type: DataTypes.ENUM('created', 'processing', 'cancelled', 'completed'),
+     allowNull: false
+    },
+    payment_id:{
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
+    payment_status:{
+        type: DataTypes.STRING,
+        defaultValue: ""
+    },
+    merchant_order_id: {
+        type: DataTypes.BIGINT,
+        defaultValue: 0
+    },
+    external_reference:{
+      type: DataTypes.INTEGER,
+      allowNull:false
+    }
   });
 };
