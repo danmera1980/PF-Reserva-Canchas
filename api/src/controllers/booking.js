@@ -72,7 +72,7 @@ const getCourtAvailability = async (req, res, next) => {
     //calculo el largo del dia de trabajo en minutos de inicio y de fin
     activeTo = parseInt(activeToHour) * 60 + parseInt(activeToMin);
     activeFrom = parseInt(activeFromHour) * 60 - parseInt(activeFromMin);
-    console.log(activeTo, 'activeto')
+    console.log(activeTo, "activeto");
     //     la duracion del dia de trabajo del court en minutos
     let businessHoursInMinutes = activeTo - activeFrom;
     //     dividir las horas abiertas por la duracion de los turno y me da cuantos slots son
@@ -81,7 +81,7 @@ const getCourtAvailability = async (req, res, next) => {
     let [year, month, day] = dateToCheck.split("-");
     let searchFromDate = new Date(year, month - 1, day);
     let searchToDate = new Date(year, month - 1, day, 23, 59);
-    console.log(searchFromDate, searchToDate)
+    console.log(searchFromDate, searchToDate);
     const dayBookings = await Booking.findAll({
       where: {
         [Op.and]: [
