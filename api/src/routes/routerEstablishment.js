@@ -2,7 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const validator = require('express-joi-validation').createValidator({})
 const Joi = require('joi')
-const {getEstablishmentsFromDB, createEstablishment, addUserToEstablishment, getEstabIdByUserId, getEstablishmentId} = require('../controllers/establishment.js');
+const {getEstablishmentsFromDB, createEstablishment, addUserToEstablishment, getEstabIdByUserId, getEstablishmentIdCourId} = require('../controllers/establishment.js');
 const userExtractor = require("../middleware/userExtractor");
 const authGoogle = require('../middleware/auth')
 const {findByName} = require('../controllers/findByName')
@@ -22,6 +22,6 @@ router.get('/',getEstablishmentsFromDB)
 router.get('/', findByName)
 router.post('/', userExtractor, authGoogle, validator.body(bodySchema), createEstablishment)
 router.post('/addUserToEstablishment', addUserToEstablishment)
-router.get('/:id/:courtId', getEstablishmentId)
+router.get('/:id/:courtId', getEstablishmentIdCourId)
 
 module.exports = router

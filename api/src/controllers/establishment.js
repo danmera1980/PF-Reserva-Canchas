@@ -157,7 +157,7 @@ const addUserToEstablishment = async (req, res, next)=>{
     
 }
 
-const getEstablishmentId = async (req, res, next) => {
+const getEstablishmentIdCourId = async (req, res, next) => {
     const {id, courtId} = req.params
     try {
         const establishment = await Establishment.findOne({
@@ -190,5 +190,5 @@ module.exports = {
     createEstablishment,
     addUserToEstablishment,
     getEstabIdByUserId,
-    getEstablishmentId
+    getEstablishmentIdCourId
 }

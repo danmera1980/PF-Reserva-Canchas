@@ -52,7 +52,7 @@ export default function BookingCourt(){
         })
     },[])
     
-    console.log(establishment.sites[0].latitude)
+    console.log(establishment)
     return(
         <div>
             <Header/>
@@ -65,9 +65,14 @@ export default function BookingCourt(){
                         /> 
                     <h1 className="font-bold text-center py-5 text-6xl dark:text-white ">{establishment.name}</h1>              
                 </div>
-                <h1 className="font-bold py-5 text-4xl dark:text-white ">{establishment.sites[0].name}</h1>
-                <h1 className="font-bold py-5 text-3x1 dark:text-white ">{establishment.sites[0].courts[0].name}</h1>
-                <h5 className="max-w-2xl place-content-center font-bold text-center py-5 text-2xl dark:text-white">{establishment.sites[0].courts[0].description}</h5>
+                <h1 className="font-bold py-5 text-5xl dark:text-white ">{establishment.sites[0].name}</h1>
+                <p className="font-bold py-5 text-2xl dark:text-white ">{establishment.sites[0].courts[0].name}</p>
+                <p className="font-bold py-2  dark:text-white">Descripcion de cancha</p>
+                <p className="font-bold py-2  dark:text-white">Deporte {establishment.sites[0].courts[0].sport}</p>
+                <p className="max-w-2xl place-content-center font-bold text-center py-3 dark:text-white">{establishment.sites[0].courts[0].description}</p>
+                <p className="font-bold py-2  dark:text-white">Ubicación {establishment.sites[0].city}, {establishment.sites[0].street}, {establishment.sites[0].streetNumber}</p>
+                <p className="font-bold py-2  dark:text-white">Precio ${establishment.sites[0].courts[0].price}</p>
+                <p className="font-bold py-2  dark:text-white">Horario de {establishment.timeActiveFrom} a {establishment.timeActiveTo}</p>
                 <div>
                 <ReactMapGL 
                     {...viewport}
