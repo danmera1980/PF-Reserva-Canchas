@@ -4,11 +4,11 @@ const { DataTypes, DATEONLY } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("establishment", {
+
     cuit: {
       // Este sería el CUIT/CUIL, correcto?
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,

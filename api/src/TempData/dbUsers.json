@@ -63,19 +63,19 @@
     ],
     "Establishment": [
         {
-            "id": "2033333338",
+            "cuit": "2033333338",
             "name": "Space Jam Club",
             "timeActiveFrom": "10:00",
             "timeActiveTo": "22:00"
         },
         {
-            "id": "2011111118",
+            "cuit": "2011111118",
             "name": "Canchas Cebollitas",
             "timeActiveFrom": "10:00",
             "timeActiveTo": "22:00"
         },
         {
-            "id": "",
+            "cuit": "",
             "name": "Rocky siempre",
             "timeActiveFrom": "10:00",
             "timeActiveTo": "22:00"
@@ -87,25 +87,25 @@
             "timeActiveTo": "22:00"
         },
         {
-            "id": "2055555558",
+            "cuit": "2055555558",
             "name": "Deportivo Dodgeball",
             "timeActiveFrom": "10:00",
             "timeActiveTo": "22:00"
         },
         {
-            "id": "2066666668",
+            "cuit": "2066666668",
             "name": "Diegote Futbol",
             "timeActiveFrom": "10:00",
             "timeActiveTo": "22:00"
         },
         {
-            "id": "2077777778",
+            "cuit": "2077777778",
             "name": "Recreativo Pampayasta",
             "timeActiveFrom": "10:00",
             "timeActiveTo": "22:00"
         },
         {
-            "id": "209999998",
+            "cuit": "209999998",
             "name": "Club Amazonas",
             "timeActiveFrom": "10:00",
             "timeActiveTo": "22:00"

@@ -30,7 +30,7 @@ const loadEstablishments = async function () {
     const allEstablishments = dataBase.establishment;
     for (let i = 0; i < allEstablishments.length; i++) {
       const newEstablishment = await Establishment.create({
-        cuit: allEstablishments[i].id,
+        cuit: allEstablishments[i].cuit,
         name: allEstablishments[i].name,
         timeActiveFrom: allEstablishments[i].timeActiveFrom,
         timeActiveTo: allEstablishments[i].timeActiveTo,
@@ -56,7 +56,7 @@ const loadSites = async function () {
     const allSites = dataBase.site;
     for (let i = 0; i < allEstablishments.length; i++) {
         let establishmentDB = await Establishment.findOne({
-            where : {cuit: allEstablishments[i].id}
+            where : {cuit: allEstablishments[i].cuit}
         })
       const newSite = await Site.create({
         name: allSites[i].name,
@@ -70,7 +70,7 @@ const loadSites = async function () {
     }
     for (let i = 0; i < (allSites.length - allEstablishments.length); i++) {
         let establishmentDB = await Establishment.findOne({
-            where : {cuit: allEstablishments[i].id}
+            where : {cuit: allEstablishments[i].cuit}
         })
       const newSite = await Site.create({
         name: allSites[i].name,

@@ -6,7 +6,7 @@ const { getAllBookings, newBooking, getCourtAvailability } = require("../control
 const router = Router();
 
 router.get("/", getAllBookings);
-router.get("/avail", getCourtAvailability);
+router.get("/availability/:id", getCourtAvailability);
 
 router.post('/new', userExtractor, authGoogle, newBooking)
 module.exports = router;
