@@ -8,5 +8,5 @@ const router = Router();
 router.get("/", getAllBookings);
 router.get("/avail", getCourtAvailability);
 
-router.get('/new/:userId/:courtId/:price', newBooking)
+router.get('/new/:userId/:courtId/:price/:startTime/:endTime', newBooking)
 module.exports = router;

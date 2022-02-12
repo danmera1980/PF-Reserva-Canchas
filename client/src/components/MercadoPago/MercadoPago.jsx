@@ -10,16 +10,15 @@ const {SERVER_URL} = require('../../redux/actions/actionNames.js')
 export default function MercadoPago(){
 
   const PUBLIC_KEY = 'TEST-6df9d926-e5fa-465e-9d9d-78207d113a0f';
-  const userId = useSelector(state=> state.users.userDetails.id)
   const [preferenceId, setPreferenceId] = useState("") // preferenceId
 
   const input = [{
     userId: 1,
     courtId : 1,
-    courtName: 'Cancha 5', 
+    courtName: 'Cancha 6', 
     price: 250,
-    startTime: new Date("2022-02-13T18:30:00.000"),
-    endTime: new Date("2022-02-13T19:30:00.000"),
+    startTime: "2022-02-22T15:30:00.000",
+    endTime: "2022-02-22T16:30:00.000",
     status : 'created'
   }]
 
@@ -27,10 +26,7 @@ export default function MercadoPago(){
     axios
     .post(`${SERVER_URL}/mercadopago`, input)
     .then((data)=>{
-      // setPreferenceId({id:data})
-      console.log('recibo el data', data)
       setPreferenceId(data.data)
-      console.info('Contenido de data:', data.data)
     })
     .catch(err => console.error(err)) 
   },[])
@@ -72,9 +68,6 @@ export default function MercadoPago(){
                   <ul>
                     <li>{input[0].courtName}</li>
                     <li>{'$' + input[0].price}</li> 
-                    <li>{input[0].startTime.toLocaleDateString()}</li>
-                    <li>{input[0].startTime.getHours()+':'+input[0].startTime.getMinutes()+'-'+input[0].endTime.getHours()+':'+input[0].endTime.getMinutes()
-}</li>
                   </ul>
         </div>   
       </form>

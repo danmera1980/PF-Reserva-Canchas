@@ -9,30 +9,21 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    title:{
-      type: DataTypes.STRING,
-      //allowNull: false,
-
-    },
     startTime: {
       type: DataTypes.DATE,
-      // allowNull: false,
+      allowNull: false,
     },
     endTime: {
       type: DataTypes.DATE,
-      // allowNull: false,
-    },
-
-    description: {
-      type: DataTypes.STRING,
+      allowNull: false,
     },
     finalAmount: {
       type: DataTypes.INTEGER,
-    //  allowNull: false
+     allowNull: false
     },
     status:{  
       type: DataTypes.ENUM('created', 'processing', 'cancelled', 'completed'),
-    //  allowNull: false
+     allowNull: false
     },
     payment_id:{
         type: DataTypes.INTEGER,
@@ -45,6 +36,10 @@ module.exports = (sequelize) => {
     merchant_order_id: {
         type: DataTypes.BIGINT,
         defaultValue: 0
+    },
+    external_reference:{
+      type: DataTypes.INTEGER,
+      allowNull:false
     }
   });
 };
