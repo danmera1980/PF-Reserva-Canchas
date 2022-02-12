@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postSite } from "../../redux/actions/site";
+import { getEstablishmentById } from "../../redux/actions/forms";
 
 import Swal from "sweetalert2";
 
@@ -27,8 +27,7 @@ function validate(input) {
 
 export default function SiteCreate() {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const establishmentId = useSelector((state) => state.forms.establishmentId);
+  const establishmentId = useSelector((state) => state.establishment.establishmentId);
   const userToken = useSelector((state) => state.register.userToken);
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
@@ -41,6 +40,7 @@ export default function SiteCreate() {
   });
 
   useEffect(() => {
+    dispatch(getEstablishmentById(userToken))
     setInput({
       ...input,
       establishmentId: establishmentId,
