@@ -11,6 +11,7 @@ import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import Calendar from '../Calendar/Calendar'
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
+import MercadoPago from '../MercadoPago/MercadoPago'
 
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
 const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
@@ -90,6 +91,14 @@ export default function BookingCourt(){
     const [userDetails, setUserDetails] = useState(null);
   
     
+
+    const [booking, setBooking] = useState([])
+
+    const selectedBooking = (data) => {
+        console.log(data)
+        setBooking(data)
+    }
+
     useEffect(()=> [
         dispatch(getEstablishment(id,courtId)),
         navigator.geolocation.getCurrentPosition(position => {
@@ -151,8 +160,10 @@ export default function BookingCourt(){
                 <div>
                 <Calendar 
                     disabledDates={disabledDates}
-                    scheduledTime={scheduledTime}/>
-                
+                    scheduledTime={scheduledTime}
+                    selectedBooking={selectedBooking}
+                />
+                <MercadoPago booking={booking}/>
                 <ReactMapGL 
                     {...viewport}
                     onViewportChange={newView => setViewport(newView)}
