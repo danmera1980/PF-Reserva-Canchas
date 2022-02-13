@@ -39,8 +39,15 @@ const Register = () => {
     if (!emailRegEx.test(input.email)) {
       errors.email = "Se requiere un email valido";
     }
-    if (emailsDb.find((e) => e === input.email)) {
-      errors.email = <p>Email ya ingresado en la base de datos, ¿Quieres <Link to={"/login"} className="underline">iniciar sesión?</Link></p>
+    if (emailsDb) {
+      errors.email = (
+        <p>
+          Email ya ingresado en la base de datos, ¿Quieres{" "}
+          <Link to={"/login"} className="underline">
+            iniciar sesión?
+          </Link>
+        </p>
+      );
     }
     if (!input.password) {
       errors.password = "La contraseña es requerida!";
@@ -75,11 +82,17 @@ const Register = () => {
   const [emailsDb, setEmailsDb] = useState(null);
 
   useEffect(() => {
-    axios.get(`${SERVER_URL}/users`).then((res) => {
-      setEmailsDb(res.data.map((e) => e.email));
-    });
-  }, []);
-  
+    if (userInfo.email) {
+      axios
+        .get(`${SERVER_URL}/users/checkedEmail`, {
+          params: { email: userInfo.email },
+        })
+        .then((res) => {
+          setEmailsDb(res.data);
+        });
+    }
+  }, [userInfo.email]);
+
   const responseSuccess = (response) => {
     dispatch(loginWithGoogle(response));
     Swal.fire({
@@ -111,17 +124,30 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(registerUser(userInfo));
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "Registro exitoso",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    if (
+      errors.hasOwnProperty("name") ||
+      errors.hasOwnProperty("lastName") ||
+      errors.hasOwnProperty("email") ||
+      errors.hasOwnProperty("password") ||
+      errors.hasOwnProperty("confirmPassword")
+    ) {
+      Swal.fire({
+        icon: "error",
+        text: "Faltan completar campos obligatorios",
+      });
+    } else {
+      dispatch(registerUser(userInfo));
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Registro exitoso",
+        showConfirmButton: false,
+        timer: 1500,
+      });
 
-    history.push("/login");
-    setUserInfo(initialState);
+      history.push("/login");
+      setUserInfo(initialState);
+    }
   };
 
   return (
