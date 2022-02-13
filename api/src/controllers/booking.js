@@ -1,6 +1,5 @@
 const { date } = require("joi");
 const { User, Establishment, Site, Court, Booking, Op } = require("../db");
-const { Booking } = require("../db");
 const { DB_HOST } = process.env;
 
 const getAllBookings = async (req, res, next) => {
@@ -14,7 +13,7 @@ const getAllBookings = async (req, res, next) => {
 };
 
 const newBooking = async (req, res, next) => {
-  console.log(" soy req.params", req.params);
+  console.log("soy req.params", req.params);
 
   const userId = req.params.userId;
   const courtId = req.params.courtId;
@@ -30,12 +29,12 @@ const newBooking = async (req, res, next) => {
      ESTO ES IMPORTANTE PARA CREAR BIEN LA RESERVA CON EL FORMATO DATE EN LA BASE DE DATOS
      posiblemente les haya funcionado porque el string que tienen se los pase como debe ser pero no esta bueno mandarle asi y aca los meses se enumeran distinto es una cosa loca lo que van a tener que hacer es lo que sigue:
      
-  CUANDO RECIBAN EL OBJETO QUE MANDA EL FRON CON year, month, date, y startTime hay que separar si o si el estar time en hora y minutos con un split y crear la fecha asi:
+  CUANDO RECIBAN EL OBJETO QUE MANDA EL FRONT CON year, month, date, y startTime hay que separar si o si el estar time en hora y minutos con un split y crear la fecha asi:
   
   let startTime = new Date (year, month, date, hour, minute, 00)
 
-  agreguen los ceros que son re importantes para la comparacion de si hay canchas disponibles
-  lo mismo para el endTime si les falla manden mensaje y vemos que onda eso si o si tiene que ser en el backen porque el servidor es el que hace eso
+  agreguen los ceros que son re importantes para la comparación de si hay canchas disponibles
+  lo mismo para el endTime si les falla manden mensaje y vemos que onda eso si o si tiene que ser en el backend porque el servidor es el que hace eso
      
      */
 
@@ -64,7 +63,7 @@ const newBooking = async (req, res, next) => {
 
 const getCourtAvailability = async (req, res, next) => {
   try {
-    //     buscar el horarios apertura y cierre del establ
+    //     buscar el horarios apertura y cierre del establecimiento
     const courtId = req.params.id;
     const dateToCheck = req.query.date;
     const infoCourt = await Court.findOne({
@@ -92,9 +91,9 @@ const getCourtAvailability = async (req, res, next) => {
     activeTo = parseInt(activeToHour) * 60 + parseInt(activeToMin);
     activeFrom = parseInt(activeFromHour) * 60 - parseInt(activeFromMin);
     console.log(activeTo, "activeto");
-    //     la duracion del dia de trabajo del court en minutos
+    //     la duración del dia de trabajo del court en minutos
     let businessHoursInMinutes = activeTo - activeFrom;
-    //     dividir las horas abiertas por la duracion de los turno y me da cuantos slots son
+    //     dividir las horas abiertas por la duración de los turno y me da cuantos slots son
     //2022-02-12 con esta fecha traer las reservas de esa cancha
     //traer el el dia completo de reservas de esa cancha
     let [year, month, day] = dateToCheck.split("-");
@@ -135,7 +134,7 @@ const getCourtAvailability = async (req, res, next) => {
       let available = dayBookings.filter(
         (el) => el.startTime.getTime() === compareDate.getTime()
       );
-      //calcular inicio fin crear fecha ver si esta disponivble y  pushear el objeto con las 3 cosas
+      //calcular inicio fin crear fecha ver si esta disponible y  pushear el objeto con las 3 cosas
       // slots.push({})
       let isAvailable = available.length ? false : true;
       availability.push({
