@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const userExtractor = require("../middleware/userExtractor");
-const authGoogle = require('../middleware/auth')
+const authGoogle = require("../middleware/auth");
 const {
   getAllUsers,
   getUserProfile,
@@ -8,26 +8,19 @@ const {
   editUser,
   registerGoogle,
 } = require("../controllers/user");
-const { loginUser } = require("../controllers/login");
+const { loginUser, checkedEmail } = require("../controllers/login");
 
 const router = Router();
 
 router.get("/", getAllUsers);
+router.get("/checkedEmail", checkedEmail);
 
-router.get("/profile", userExtractor, authGoogle,  getUserProfile);
-router.post("/googleRegister", userExtractor, authGoogle,  registerGoogle);
+router.get("/profile", userExtractor, authGoogle, getUserProfile);
+router.post("/googleRegister", userExtractor, authGoogle, registerGoogle);
 
 router.post("/register", registerUser);
-router.post(
-  "/login",
-  loginUser
-);
+router.post("/login", loginUser);
 
-
-router.put(
-  "/edit",
-  userExtractor, authGoogle,
-  editUser
-);
+router.put("/edit", userExtractor, authGoogle, editUser);
 
 module.exports = router;

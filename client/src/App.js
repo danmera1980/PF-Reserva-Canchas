@@ -5,18 +5,16 @@ import Home from "./components/Home/Home";
 import CourtCreate from "./components/CourtCreate/CourtCreate";
 import Results from "./components/Results/Results";
 import PostEstablishment from "./components/PostEstablishment/PostEstablishment";
-import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import SiteCreate from "./components/SiteCreate/SiteCreate";
 import Profile from "./components/Profile/Profile";
-import UserEdit from './components/UserEdit/UserEdit';
+import UserEdit from "./components/UserEdit/UserEdit";
 import MercadoPago from "./components/MercadoPago/MercadoPago";
 // import CreateOrder from "./components/MercadoPago/CreateOrder";
-
 import EstablishmentProfile from "./components/EstablishmentProfile/EstablishmentProfile";
-import AddUserToEstablishment from './components/AddUserToEstablishment/AddUserToEstablishment.jsx';
+import AddUserToEstablishment from "./components/AddUserToEstablishment/AddUserToEstablishment.jsx";
 import EstablishmentDetail from "./components/EstablishmentDetail/EstablishmentDetail";
-
+import Login from "./components/Login/Login";
 
 function App() {
   return (
@@ -31,12 +29,18 @@ function App() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/useredit" component={UserEdit} />
-        <Route exact path="/establishmentprofile" component={EstablishmentProfile} />
-        <Route exact path="/addUserToEstablishment" component={AddUserToEstablishment}/>
-        <Route exact path="/payment" component={MercadoPago}/>
-        <Route exact path="/establishment/1" component={EstablishmentDetail}/>
-        
-
+        <Route
+          exact
+          path="/establishmentprofile"
+          component={EstablishmentProfile}
+        />
+        <Route
+          exact
+          path="/addUserToEstablishment"
+          component={AddUserToEstablishment}
+        />
+        <Route exact path="/payment" component={MercadoPago} />
+        <Route exact path="/establishment/1" component={EstablishmentDetail} />
       </div>
     </React.Fragment>
   );

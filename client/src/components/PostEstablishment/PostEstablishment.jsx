@@ -4,9 +4,10 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postEstablishment } from "../../redux/actions/establishment.js";
 import Swal from "sweetalert2";
+import ReactLoading from "react-loading";
 import "./PostEstablishment.scss";
 import Header from "../Header/Header.jsx";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 export default function PostEstablishment() {
   function validate(input) {
@@ -23,7 +24,7 @@ export default function PostEstablishment() {
       errors.cuit = "Cuit ya ingresado en la base de datos";
     }
     if (input.name !== "" && !/^[a-zA-Z0-9_\-' ':]{1,20}$/.test(input.name)) {
-      errors.name = "No se permiten simbolos";
+      errors.name = "No se permiten símbolos";
     }
     if (
       input.timeActiveFrom !== "" &&
@@ -51,6 +52,7 @@ export default function PostEstablishment() {
     logoImage: "",
     timeActiveFrom: "",
     timeActiveTo: "",
+    uploadPercentage: 0,
   });
   function handleChange(e) {
     setInput({
@@ -78,12 +80,11 @@ export default function PostEstablishment() {
         text: "Faltan completar campos obligatorios",
       });
     } else {
-      console.log(userToken);
       dispatch(postEstablishment(input, userToken));
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Establecimiento creado con exito",
+        title: "Establecimiento creado con éxito",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -107,14 +108,25 @@ export default function PostEstablishment() {
       body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
       body.append("image", photo);
 
-      await axios({
-        method: "post",
-        url: "https://api.imgbb.com/1/upload",
-        data: body,
-      })
+      const options = {
+        onUploadProgress: (ProgressEvent) => {
+          const { loaded, total } = ProgressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          if (percent < 100) {
+            setInput({
+              ...input,
+              uploadPercentage: percent,
+            });
+          }
+        },
+      };
+
+      await axios
+      .post("https://api.imgbb.com/1/upload", body, options)
         .then((response) => {
           setInput({
             ...input,
+            uploadPercentage: 0,
             logoImage: response.data.data.url,
           });
         })
@@ -144,13 +156,24 @@ export default function PostEstablishment() {
             className="w-4/5 lg:w-2/5 flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3 "
             onSubmit={(e) => handleSubmit(e)}
           >
+            <div className="flex place-content-center">
             {input.logoImage ? (
               <img
                 className="w-36 h-36 bg-cover rounded-full"
                 src={input.logoImage}
-                alt="not found"
+                alt="logo_usr"
               />
             ) : null}
+
+            {input.uploadPercentage > 0 && (
+              <ReactLoading
+                type={"spin"}
+                color={"#000000"}
+                height={"8.5rem"}
+                width={"8.5rem"}
+              />
+            )}
+          </div>
 
             <div className="relative mt-5">
               <input
@@ -222,7 +245,7 @@ export default function PostEstablishment() {
                 onChange={fileChange}
               ></input>
               <label className="text-white" htmlFor="input_imp">
-                Añadir logo
+                {input.logoImage ? "Cambiar logo" : "Añadir logo"}
               </label>
             </div>
 
