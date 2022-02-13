@@ -8,9 +8,55 @@ import { useParams } from "react-router-dom";
 import { getEstablishment } from "../../redux/actions/establishment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import Calendar from '../Calendar/Calendar'
 
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
 const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
+const disabledDates = [
+    {
+      year: 2022,
+      month: 2,
+      day: 23
+    },
+    {
+      year: 2022,
+      month: 6,
+      day: 16
+    },
+    {
+      year: 2022,
+      month: 2,
+      day: 12
+    }
+  ]
+  const scheduledTime = [
+    {
+      year: 2022,
+      month: 2,
+      day: 18,
+      times: [
+        10,
+        13,
+        14,
+        17,
+        18
+      ]
+    },
+    {
+      year: 2022,
+      month: 2,
+      day: 19,
+      times:[
+        9,
+        10,
+        12,
+        13,
+        18,
+        19,
+        20
+      ]
+    }
+  ]
 
 
 export default function BookingCourt(){
@@ -74,6 +120,9 @@ export default function BookingCourt(){
                 <p className="font-bold py-2  dark:text-white">Precio ${establishment.sites[0].courts[0].price}</p>
                 <p className="font-bold py-2  dark:text-white">Horario de {establishment.timeActiveFrom} a {establishment.timeActiveTo}</p>
                 <div>
+                <Calendar 
+                    disabledDates={disabledDates}
+                    scheduledTime={scheduledTime}/>
                 <ReactMapGL 
                     {...viewport}
                     onViewportChange={newView => setViewport(newView)}

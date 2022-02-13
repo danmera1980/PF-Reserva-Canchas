@@ -57,7 +57,6 @@ function Results() {
         </div>
         <div className='results p-32'>
             <div className='leftResults'>
-                <SearchBar />
                 {resultsData && resultsData?.map(m => m.sites.map(site => site.courts.map( court => (
                     <Card 
                         key= {court.id}
