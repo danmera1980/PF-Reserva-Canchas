@@ -1,6 +1,5 @@
 const { date } = require("joi");
 const { User, Establishment, Site, Court, Booking, Op } = require("../db");
-const { Booking } = require("../db");
 const { DB_HOST } = process.env;
 
 const getAllBookings = async (req, res, next) => {
