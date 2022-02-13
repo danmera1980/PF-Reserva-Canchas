@@ -3,7 +3,6 @@ import { useEffect } from "react";
 
 const Hours = ({currentDate, disabledTime, selectedBooking}) => {
     const [hours, setHours] = useState([])
-    var [timeSelected, setTimeSelected] = useState('text-gray-700')
 
     useEffect(()=> {
         setHours([])
@@ -13,7 +12,8 @@ const Hours = ({currentDate, disabledTime, selectedBooking}) => {
                 ...prevHours,
                 {
                     hour: i,
-                    disabled: true
+                    disabled: true,
+                    selected: false
                 }
             ])
             :
@@ -21,7 +21,8 @@ const Hours = ({currentDate, disabledTime, selectedBooking}) => {
                 ...prevHours,
                 {
                     hour: i,
-                    disabled: false
+                    disabled: false,
+                    selected: false
                 }
             ])
         }
@@ -30,9 +31,29 @@ const Hours = ({currentDate, disabledTime, selectedBooking}) => {
 
     const handleClick = (date, time) => {
         selectedBooking({
-            startTime: `${date.year}-${date.month}-${date.day}T${time}:00.000`,
+            startTime: `${date.year}-${date.month}-${date.day}T${time}:00.000`, 
             endTime: `${date.year}-${date.month}-${date.day}T${time+1}:00.000`
         })
+
+        for (let i = 0; i < hours.length; i++) {
+            if(i === time){
+                setHours(hours => {
+                    return [
+                        ...hours.slice(0, i), 
+                        hours[i]= {hour: i, disabled: false, selected: true},
+                        ...hours.slice(i+1)
+                    ]
+                })  
+            } else {
+                setHours(hours => {
+                    return [
+                        ...hours.slice(0, i), 
+                        hours[i]= {hour: i, disabled: false, selected: false},
+                        ...hours.slice(i+1)
+                    ]
+                })
+            }
+        }
     }
 
     return (
@@ -45,7 +66,7 @@ const Hours = ({currentDate, disabledTime, selectedBooking}) => {
                 {hours?.map((h)=> (
                     <span 
                         key={h.hour} 
-                        className={`${timeSelected} flex items-center justify-center align-baseline text-gray-700 ${h.disabled?"pointer-events-none text-gray-700 text-opacity-25":"hover:bg-[#03bf1f] hover:text-white"} text-center w-16 items-center rounded-2xl cursor-pointer`}
+                        className={`${h.selected?"bg-[#03bf1f] text-white":"text-gray-700"} flex items-center justify-center align-baseline ${h.disabled?"pointer-events-none text-gray-700 text-opacity-25":"hover:bg-[#03bf1f] hover:text-white"} text-center w-16 items-center rounded-2xl cursor-pointer`}
                         onClick={() => handleClick(currentDate, h.hour)}
                     >
                         {h.hour}:00
