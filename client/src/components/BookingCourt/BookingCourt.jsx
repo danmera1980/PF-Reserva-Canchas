@@ -9,6 +9,8 @@ import { getEstablishment } from "../../redux/actions/establishment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import Calendar from '../Calendar/Calendar'
+import axios from "axios";
+import { SERVER_URL } from "../../redux/actions/actionNames";
 import MercadoPago from '../MercadoPago/MercadoPago'
 
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
@@ -63,6 +65,15 @@ const disabledDates = [
 export default function BookingCourt(){
     const {id, courtId} = useParams()
     const dispatch = useDispatch()
+    const [input, setInput] = useState({
+        userId: null,
+        courtId : null,
+        courtName: '', 
+        price: null,
+        startTime: "",
+        endTime: "",
+        status : ''
+    })
     const establishment = useSelector(state => state.establishment.establishmentDetail)
     const [currentLocation, setCurrentLocation ] = useState({
         latitude: 0,
@@ -76,6 +87,10 @@ export default function BookingCourt(){
         zoom: 12,
         pitch: 50
     });
+    const userToken = useSelector((state) => state.register.userToken);
+    const [userDetails, setUserDetails] = useState(null);
+  
+    
 
     const [booking, setBooking] = useState([])
 
@@ -93,19 +108,34 @@ export default function BookingCourt(){
                 latitude: establishment.sites[0].latitude, 
                 longitude: establishment.sites[0].longitude 
             })
-            console.log('My location', currentLocation)
-        })
-    ],[])
+        }),
+    ],[dispatch])
+    
+    useEffect(() => {
+      const headers = {
+        Authorization: `Bearer ${userToken}`,
+      };
+      axios
+        .get(`${SERVER_URL}/users/profile`, { headers: headers })
+        .then((res) => {
+            setInput({
+                ...input,
+                userId: res.data.id,
+                courtId : establishment.sites[0].courts[0].id,
+                courtName: establishment.sites[0].courts[0].name, 
+                price: establishment.sites[0].courts[0].price,
+            })
+        });
+    }, [userToken])
+    console.log(input);
     
     useEffect(()=>{
-
         setViewport({
             ...viewport,
             latitude: establishment.sites[0].latitude, 
             longitude: establishment.sites[0].longitude 
         })
     },[])
-    
     // console.log(establishment)
     return(
         <div>
@@ -149,6 +179,7 @@ export default function BookingCourt(){
                         </button>
                    
                 </ReactMapGL>
+                
                 </div>
                 </div>
               
