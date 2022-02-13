@@ -17,8 +17,8 @@ export default function PostEstablishment() {
     if (input.cuit !== "" && !/^[0-9']{2,20}$/.test(input.cuit)) {
       errors.cuit = "Ingrese sólo números";
     }
-    if (input.cuit.length > 11) {
-      errors.cuit = "El cuit no puede ser mayor a 11 dígitos";
+    if (input.cuit.length !== 11) {
+      errors.cuit = "El cuit debe tener 11 dígitos";
     }
     if (cuitInDb) {
       errors.cuit = "Cuit ya ingresado en la base de datos";
@@ -52,6 +52,8 @@ export default function PostEstablishment() {
     logoImage: "",
     timeActiveFrom: "",
     timeActiveTo: "",
+  });
+  const [uploadPercentage, setUploadPercentage] = useState({
     uploadPercentage: 0,
   });
   const [cuitInDb, setCuitInDb] = useState(null);
@@ -108,10 +110,10 @@ export default function PostEstablishment() {
         timeActiveFrom: "",
         timeActiveTo: "",
       });
-
-      history.push("/establishmentprofile");
-      window.location.reload();
     }
+    //   history.push("/establishmentprofile");
+    //   window.location.reload();
+    // }
   }
 
   function fileChange() {
@@ -126,8 +128,8 @@ export default function PostEstablishment() {
           const { loaded, total } = ProgressEvent;
           let percent = Math.floor((loaded * 100) / total);
           if (percent < 100) {
-            setInput({
-              ...input,
+            setUploadPercentage({
+              ...uploadPercentage,
               uploadPercentage: percent,
             });
           }
@@ -139,9 +141,9 @@ export default function PostEstablishment() {
         .then((response) => {
           setInput({
             ...input,
-            uploadPercentage: 0,
             logoImage: response.data.data.url,
           });
+          setUploadPercentage({ uploadPercentage: 0 });
         })
         .catch((err) => {
           console.log(err);
@@ -178,7 +180,7 @@ export default function PostEstablishment() {
                 />
               ) : null}
 
-              {input.uploadPercentage > 0 && (
+              {uploadPercentage.uploadPercentage > 0 && (
                 <ReactLoading
                   type={"spin"}
                   color={"#000000"}

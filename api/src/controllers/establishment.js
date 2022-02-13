@@ -190,7 +190,7 @@ const getEstablishmentByUser = async (req, res, next) => {
   try {
     const establishment = await Establishment.findOne({
       where: {
-        cuit: user.establishmentId,
+        id: user.establishmentId,
       },
       include: {
         model: Site,

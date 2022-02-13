@@ -60,7 +60,9 @@ export default function CourtCreate({sites}) {
     sport: "",
     image: [],
     siteId: "",
-    uploadPercentage: 0
+  });
+  const [uploadPercentage, setUploadPercentage] = useState({
+    uploadPercentage: 0,
   });
 
   function fileChange() {
@@ -76,8 +78,8 @@ export default function CourtCreate({sites}) {
           let percent = Math.floor((loaded * 100) / total);
 
           if (percent < 100) {
-            setInput({
-              ...input,
+            setUploadPercentage({
+              ...uploadPercentage,
               uploadPercentage: percent,
             });
           }
@@ -89,9 +91,9 @@ export default function CourtCreate({sites}) {
         .then((response) => {
           setInput((prevInput) => ({
             ...input,
-            uploadPercentage: 0,
             image: [...prevInput.image, response.data.data.url],
-          }));
+          }))
+          setUploadPercentage({ uploadPercentage: 0 });
         })
         .catch((err) => {
           console.log(err);
@@ -171,7 +173,6 @@ export default function CourtCreate({sites}) {
         sport: "",
         image: [],
         siteId: "",
-        uploadPercentage: 0,
       });
       history.push("/establishmentprofile");
       window.location.reload();
@@ -203,7 +204,7 @@ export default function CourtCreate({sites}) {
                     );
                   })
                 : null}
-              {input.uploadPercentage > 0 && (
+              {uploadPercentage.uploadPercentage > 0 && (
                 <ReactLoading
                   type={"spin"}
                   color={"#000000"}
