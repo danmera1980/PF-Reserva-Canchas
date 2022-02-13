@@ -7,20 +7,20 @@ import Swal from "sweetalert2";
 import ReactLoading from "react-loading";
 import "./PostEstablishment.scss";
 import Header from "../Header/Header.jsx";
-// import { useEffect } from "react";
+import { useEffect } from "react";
+import { SERVER_URL } from "../../redux/actions/actionNames.js";
 
 export default function PostEstablishment() {
   function validate(input) {
-  
     let errors = {};
-  
+
     if (input.cuit !== "" && !/^[0-9']{2,20}$/.test(input.cuit)) {
       errors.cuit = "Ingrese sólo números";
     }
-    if (input.cuit.length > 11){
-        errors.cuit = "El cuit no puede ser mayor a 11 dígitos"
+    if (input.cuit.length > 11) {
+      errors.cuit = "El cuit no puede ser mayor a 11 dígitos";
     }
-    if (establishments.find((e) => e.cuit === input.cuit)) {
+    if (cuitInDb) {
       errors.cuit = "Cuit ya ingresado en la base de datos";
     }
     if (input.name !== "" && !/^[a-zA-Z0-9_\-' ':]{1,20}$/.test(input.name)) {
@@ -32,16 +32,16 @@ export default function PostEstablishment() {
     ) {
       errors.timeActiveFrom = "Se requiere un horario entre 0 y 24";
     }
-    if (input.timeActiveTo !== "" && input.timeActiveTo < input.timeActiveFrom) {
+    if (
+      input.timeActiveTo !== "" &&
+      input.timeActiveTo < input.timeActiveFrom
+    ) {
       errors.timeActiveTo = "No puede ser menor que el horario de apertura";
     }
     return errors;
   }
 
   const userToken = useSelector((state) => state.register.userToken);
-  const establishments = useSelector(
-    (state) => state.establishment.establishments
-  );
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -54,6 +54,20 @@ export default function PostEstablishment() {
     timeActiveTo: "",
     uploadPercentage: 0,
   });
+  const [cuitInDb, setCuitInDb] = useState(null);
+
+  useEffect(() => {
+    if (input.cuit) {
+      axios
+        .get(`${SERVER_URL}/establishment/cuitInDb`, {
+          params: { cuit: input.cuit },
+        })
+        .then((res) => {
+          setCuitInDb(res.data);
+        });
+    }
+  }, [input.cuit]);
+
   function handleChange(e) {
     setInput({
       ...input,
@@ -70,7 +84,6 @@ export default function PostEstablishment() {
     e.preventDefault();
     if (
       errors.hasOwnProperty("cuit") ||
-      establishments.find((e) => e.cuit === input.cuit) ||
       errors.hasOwnProperty("name") ||
       errors.hasOwnProperty("timeActiveFrom") ||
       errors.hasOwnProperty("timeActiveTo")
@@ -122,7 +135,7 @@ export default function PostEstablishment() {
       };
 
       await axios
-      .post("https://api.imgbb.com/1/upload", body, options)
+        .post("https://api.imgbb.com/1/upload", body, options)
         .then((response) => {
           setInput({
             ...input,
@@ -157,23 +170,23 @@ export default function PostEstablishment() {
             onSubmit={(e) => handleSubmit(e)}
           >
             <div className="flex place-content-center">
-            {input.logoImage ? (
-              <img
-                className="w-36 h-36 bg-cover rounded-full"
-                src={input.logoImage}
-                alt="logo_usr"
-              />
-            ) : null}
+              {input.logoImage ? (
+                <img
+                  className="w-36 h-36 bg-cover rounded-full"
+                  src={input.logoImage}
+                  alt="logo_usr"
+                />
+              ) : null}
 
-            {input.uploadPercentage > 0 && (
-              <ReactLoading
-                type={"spin"}
-                color={"#000000"}
-                height={"8.5rem"}
-                width={"8.5rem"}
-              />
-            )}
-          </div>
+              {input.uploadPercentage > 0 && (
+                <ReactLoading
+                  type={"spin"}
+                  color={"#000000"}
+                  height={"8.5rem"}
+                  width={"8.5rem"}
+                />
+              )}
+            </div>
 
             <div className="relative mt-5">
               <input

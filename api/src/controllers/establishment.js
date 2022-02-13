@@ -207,7 +207,20 @@ const getEstablishmentByUser = async (req, res, next) => {
   }
 };
 
-
+const cuitInDb = async (req, res, next) => {
+    try {
+        const { cuit } = req.query;
+    
+        const establishmentCuit = await Establishment.findOne({ where: { cuit } });
+        if (!establishmentCuit) {
+          res.status(200).send(false);
+        } else {
+          res.status(200).send(true);
+        }
+      } catch (err) {
+        next(err);
+      }
+    };
 
 module.exports = {
     getEstablishmentsFromDB,
@@ -215,5 +228,6 @@ module.exports = {
     addUserToEstablishment,
     getEstabIdByUserId,
     getEstablishmentId,
-    getEstablishmentByUser
+    getEstablishmentByUser,
+    cuitInDb
 }
