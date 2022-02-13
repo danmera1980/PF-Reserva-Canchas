@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "../Card/Card";
 import UserEdit from "../UserEdit/UserEdit";
 import { SERVER_URL } from "../../redux/actions/actionNames";
+import defaultUserImage from "../../assets/img/user.png";
 import ReactLoading from "react-loading";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -45,16 +46,9 @@ function Profile() {
           <div>
             <img
               src={
-                userDetails && userDetails.img ? (
-                  userDetails.img
-                ) : (
-                  <ReactLoading
-                    type={"spin"}
-                    color={"#000000"}
-                    height={"8.5rem"}
-                    width={"8.5rem"}
-                  />
-                )
+                userDetails && userDetails.img
+                  ? userDetails.img
+                  : defaultUserImage
               }
               alt="logo_img"
               className="-mt-28 ml-[2.8rem] md:ml-[3.5rem] object-cover rounded-full w-60 h-60 bg-green-900"
