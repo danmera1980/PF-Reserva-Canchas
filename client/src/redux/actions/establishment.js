@@ -1,4 +1,13 @@
-import { GET_GEOCODE, ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, FILTER_BY_SPORT, GET_ESTABLISHMENT, SERVER_URL, SORT_BY_AVAILABILITY, SORT_BY_PRICE, SEARCH_TEXT } from "./actionNames";
+import {
+        GET_GEOCODE, 
+        ALL_ESTABLISHMENTS, 
+        FILTER_BY_LOCATION, 
+        FILTER_BY_SPORT, 
+        GET_ESTABLISHMENT, 
+        SERVER_URL, 
+        SORT_BY_AVAILABILITY, 
+        SORT_BY_PRICE, 
+        SEARCH_TEXT } from "./actionNames";
 import axios from 'axios';
 
 const mapToken = process.env.REACT_APP_MAPBOX_TOKEN;
@@ -22,14 +31,13 @@ export const addUserToEstablishment = (payload) => {
 
 export const getEstablishment = (id) => {
     return async (dispatch) => {
-        var result = await axios(`${SERVER_URL}/establishment/${id}`);
+        var result = await axios.get(`${SERVER_URL}/establishment/${id}`);
         return dispatch({
             type: GET_ESTABLISHMENT,
             payload: result.data
         })
     }
 }
-
 
 export const allEstablishments = () => {
     return async (dispatch) => {
@@ -95,7 +103,11 @@ export const sortByAvailability = () => {
 
 export const getGeocode = (searchText) => {
     return async(dispatch) => {
-        var results = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json?access_token=${mapToken}`);
+        if(searchText !== ''){
+            var results = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json?access_token=${mapToken}`);
+        } else {
+            var results = {data:''}
+        }
         return dispatch({
             type: GET_GEOCODE,
             payload: results.data

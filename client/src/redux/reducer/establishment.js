@@ -1,6 +1,17 @@
-import { ALL_ESTABLISHMENTS, FILTER_BY_LOCATION, SEARCH_TEXT, FILTER_BY_SPORT, GET_ESTABLISHMENT, SORT_BY_AVAILABILITY, SORT_BY_PRICE, GET_GEOCODE } from "../actions/actionNames";
+import { 
+    ALL_ESTABLISHMENTS, 
+    FILTER_BY_LOCATION, 
+    SEARCH_TEXT, 
+    FILTER_BY_SPORT, 
+    GET_ESTABLISHMENT, 
+    SORT_BY_AVAILABILITY, 
+    SORT_BY_PRICE, 
+    GET_GEOCODE,
+    GET_ESTABLISHMENT_BY_ID
+} from "../actions/actionNames";
 
 const initialState = {
+    establishmentId : "",
     establishments : [],
     establishmentDetail : [],
     geocode: []
@@ -8,6 +19,11 @@ const initialState = {
 
 const establishmentReducer = (state = initialState, action) => {
     switch(action.type){
+        case GET_ESTABLISHMENT_BY_ID:
+            return {
+                ...state,
+                establishmentId: action.payload
+            }
         case GET_ESTABLISHMENT:
             return{
                 ...state,

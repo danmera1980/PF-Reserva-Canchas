@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/img/logo.svg";
 import userImage from "../../assets/img/user.png";
-import Profile from "../Profile/Profile.jsx";
+import axios from "axios";
+import { SERVER_URL } from "../../redux/actions/actionNames";
 import { useHistory } from "react-router-dom";
 import "./Header.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,18 +15,32 @@ import { logoutAction } from "../../redux/actions/users";
 
 function Header() {
   const [darkMode] = useDarkMode();
+  const [userDetails, setUserDetails] = useState(null);
   const signinText = "Ingresar";
   const registerText = "Registrarse";
   const profileText = "Mi Perfil";
   const logoutText = "Salir";
   const userToken = useSelector((state) => state.register.userToken);
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
 
   const logOut = () => {
     dispatch(logoutAction());
-    history.push("/")
+    history.push("/");
   };
+
+  useEffect(() => {
+    if (userToken) {
+      const headers = {
+        Authorization: `Bearer ${userToken}`,
+      };
+      axios
+        .get(`${SERVER_URL}/users/profile`, { headers: headers })
+        .then((res) => {
+          setUserDetails(res.data);
+        });
+    }
+  }, [userToken]);
 
   return (
     <div className="head bg-lightSecondary dark:bg-darkSecondary w-full">
@@ -42,7 +57,11 @@ function Header() {
                 <button className="btn_signed_in">
                   <img
                     className="userLoggedImage"
-                    src={userImage}
+                    src={
+                      userDetails && userDetails.img
+                        ? userDetails.img
+                        : userImage
+                    }
                     alt="user here"
                   />
                   <FontAwesomeIcon icon={faAngleDown} />
@@ -51,7 +70,9 @@ function Header() {
                   <li>
                     <Link to={"/profile"}>{profileText}</Link>
                   </li>
-                  <li onClick={logOut} className="cursor-pointer">{logoutText}</li>
+                  <li onClick={logOut} className="cursor-pointer">
+                    {logoutText}
+                  </li>
                 </ul>
                 {/* <button onClick={()=>logOut()}>Logout</button> */}
               </div>

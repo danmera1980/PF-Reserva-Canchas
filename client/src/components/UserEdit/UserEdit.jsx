@@ -1,34 +1,28 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { editUser } from "../../redux/actions/users";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../Header/Header";
 import axios from "axios";
 import "./UserEdit.scss";
 import Swal from "sweetalert2";
 import Login from "../Login/Login";
+import ReactLoading from "react-loading";
 
 function validate(input) {
   let errors = {};
-  console.log(errors);
   if (!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.name)) {
     errors.name =
-      "Se requieren entre 2 y 20 caracteres, no se permiten simbolos";
+      "El nombre no puede ser menor a 2 caracteres ni ser mayor a 20 caracteres, ni contener símbolos";
   }
 
-  if (!input.lastName) {
-    errors.lastName = "Se requiere un Apellido";
+  if (!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.lastName)) {
+    errors.lastName =
+      "El apellido no puede ser menor a 2 caracteres ni ser mayor a 20 caracteres, ni contener símbolos";
   }
-  if (!input.phone) {
-    errors.phone = "Se requiere un numero de contacto";
-  }
-
   return errors;
 }
 
-export default function UserEdit() {
+export default function UserEdit({userDetails}) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [errors, setErrors] = useState({});
   const userToken = useSelector((state) => state.register.userToken);
 
@@ -37,6 +31,7 @@ export default function UserEdit() {
     lastName: "",
     img: "",
     phone: "",
+    uploadPercentage: 0,
   });
 
   function fileChange() {
@@ -46,14 +41,25 @@ export default function UserEdit() {
       body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
       body.append("image", photo);
 
-      await axios({
-        method: "post",
-        url: "https://api.imgbb.com/1/upload",
-        data: body,
-      })
+      const options = {
+        onUploadProgress: (ProgressEvent) => {
+          const { loaded, total } = ProgressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          if (percent < 100) {
+            setInput({
+              ...input,
+              uploadPercentage: percent,
+            });
+          }
+        },
+      };
+
+      await axios
+        .post("https://api.imgbb.com/1/upload", body, options)
         .then((response) => {
           setInput({
             ...input,
+            uploadPercentage: 0,
             img: response.data.data.url,
           });
         })
@@ -74,17 +80,17 @@ export default function UserEdit() {
         [e.target.name]: e.target.value,
       })
     );
-    //  console.log(input)
   }
 
   function handleSubmit(e) {
-    console.log(input);
     e.preventDefault();
-    console.log("input del submit", input);
     dispatch(editUser(input, userToken));
 
     Swal.fire({
       title: `Usuario modificado`,
+      icon: "success",
+      showConfirmButton: false,
+      timer: 2000,
     });
     setInput({
       name: "",
@@ -93,19 +99,35 @@ export default function UserEdit() {
       phone: "",
       hasEstablishment: false,
     });
-    history.push("/profile");
+    window.location.reload();
   }
 
   return userToken ? (
-    <div className="">
-      <div className="flex justify-center">
+    <div>
+      <div className="flex justify-center text-black">
         <form
           className="w-4/5 flex-col justify-center items-center mx-5 border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
           onSubmit={handleSubmit}
         >
-          {input.img ? (
-            <img className="w-36 h-36 bg-cover rounded-full" src={input.img} alt="logo_usr" />
-          ) : null}
+          <div className="flex place-content-center">
+            {input.img ? (
+              <img
+                className="w-36 h-36 bg-cover rounded-full"
+                src={input.img}
+                alt="logo_usr"
+              />
+            ) : null}
+
+            {input.uploadPercentage > 0 && (
+              <ReactLoading
+                type={"spin"}
+                color={"#000000"}
+                height={"8.5rem"}
+                width={"8.5rem"}
+              />
+            )}
+          </div>
+
           <input type="hidden" value={userToken} />
           <div className="relative mt-10">
             <input
@@ -120,7 +142,7 @@ export default function UserEdit() {
             />
 
             <label
-              className="  absolute left-0 -top-3.5 
+              className="absolute left-0 -top-3.5 
                                             text-gray-600 text-sm 
                                             peer-placeholder-shown:text-base 
                                             peer-placeholder-shown:text-gray-400
@@ -130,7 +152,7 @@ export default function UserEdit() {
                                             cursor-text"
               htmlFor="nombre"
             >
-              Nombre de Usuario
+              {"Nombre actual: " + userDetails.name}
             </label>
             {errors.name && (
               <p className=" text-xs text-red-500">{errors.name}</p>
@@ -148,16 +170,16 @@ export default function UserEdit() {
             />
             <label
               className="absolute left-0 -top-3.5 
-                                            text-gray-600 text-sm 
-                                            peer-placeholder-shown:text-base 
-                                            peer-placeholder-shown:text-gray-400
-                                            peer-placeholder-shown:top-2 transition-all 
-                                            peer-focus:-top-3.5 peer-focus:text-gray-600
-                                            peer-focus:text-sm
-                                            cursor-text"
+              text-gray-600 text-sm 
+              peer-placeholder-shown:text-base 
+              peer-placeholder-shown:text-gray-400
+              peer-placeholder-shown:top-2 transition-all 
+              peer-focus:-top-3.5 peer-focus:text-gray-600
+              peer-focus:text-sm
+              cursor-text"
               htmlFor="lastName"
             >
-              Apellido
+              {"Apellido actual: " + userDetails.lastName}
             </label>
             {errors.lastName && (
               <p className="text-xs text-red-500">{errors.lastName}</p>
@@ -185,7 +207,10 @@ export default function UserEdit() {
                                             cursor-text"
               htmlFor="telefono"
             >
-              Telefono de contacto
+              {"Número de teléfono actual: " +
+                (userDetails.phone
+                  ? userDetails.phone
+                  : "Número de teléfono no provisto")}
             </label>
             {errors.phone && (
               <p className="text-xs text-red-500">{errors.phone}</p>
@@ -203,7 +228,7 @@ export default function UserEdit() {
               onChange={fileChange}
             />
             <label className="text-white " htmlFor="input_img">
-              Añadir Imagen
+              {userDetails.img ? "Cambiar imagen" : "Añadir Imagen"}
             </label>
           </div>
 

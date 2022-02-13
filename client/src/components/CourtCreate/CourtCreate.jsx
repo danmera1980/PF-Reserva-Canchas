@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { postCourt } from "../../redux/actions/court";
-import {
-  getEstablishmentByUser,
-  getSitesById,
-} from "../../redux/actions/forms";
+// import {
+//   getEstablishmentByUser,
+//   getSitesById,
+// } from "../../redux/actions/forms";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import "./CourtCreate.scss";
+import ReactLoading from "react-loading";
 
 function validate(input) {
   let errors = {};
@@ -16,14 +17,14 @@ function validate(input) {
     errors.name = "Completar nombre";
   }
   if (!/^[a-zA-Z0-9' ':]{0,20}$/.test(input.name)) {
-    errors.name = "No se permiten simbolos";
+    errors.name = "No se permiten símbolos";
   }
 
   if (!/^[a-zA-Z0-9_\-' ',.]{1,40}$/.test(input.description)) {
     errors.description = "Completar la descripcion";
   }
   if (!/^[a-zA-Z0-9_\-' ',.:]{0,100}$/.test(input.description)) {
-    errors.description = "No se permiten simbolos";
+    errors.description = "No se permiten símbolos";
   }
   if (!input.sport) {
     errors.sport = "Selecciona un deporte";
@@ -34,7 +35,7 @@ function validate(input) {
     (input.shiftLength < 15 || input.shiftLength > 120)
   ) {
     errors.shiftLength =
-      "La duracion del turno tiene que ser entre 15 y 120 mins";
+      "La duración del turno tiene que ser entre 15 y 120 mins";
   }
 
   if (input.price !== "" && input.price < 10) {
@@ -44,12 +45,11 @@ function validate(input) {
   return errors;
 }
 
-export default function CourtCreate() {
+export default function CourtCreate({sites}) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
-  const establishmentId = useSelector((state) => state.forms.establishmentId);
-  const sites = useSelector((state) => state.forms.sitesByEstablishment);
+  // const establishmentId = useSelector((state) => state.forms.establishmentId);
   const userToken = useSelector((state) => state.register.userToken);
 
   const [input, setInput] = useState({
@@ -60,6 +60,7 @@ export default function CourtCreate() {
     sport: "",
     image: [],
     siteId: "",
+    uploadPercentage: 0
   });
 
   function fileChange() {
@@ -69,14 +70,26 @@ export default function CourtCreate() {
       body.set("key", "64fe53bca6f3b1fbb64af506992ef957");
       body.append("image", photo);
 
-      await axios({
-        method: "post",
-        url: "https://api.imgbb.com/1/upload",
-        data: body,
-      })
+      const options = {
+        onUploadProgress: (ProgressEvent) => {
+          const { loaded, total } = ProgressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+
+          if (percent < 100) {
+            setInput({
+              ...input,
+              uploadPercentage: percent,
+            });
+          }
+        },
+      };
+
+      await axios
+        .post("https://api.imgbb.com/1/upload", body, options)
         .then((response) => {
           setInput((prevInput) => ({
             ...input,
+            uploadPercentage: 0,
             image: [...prevInput.image, response.data.data.url],
           }));
         })
@@ -125,6 +138,13 @@ export default function CourtCreate() {
     );
   }
 
+  function handleDeleteImage(e) {
+    setInput({
+      ...input,
+      image: input.image.filter((image) => image !== e),
+    });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     setErrors(
@@ -139,7 +159,7 @@ export default function CourtCreate() {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Cancha creada con exito",
+        title: "Cancha creada con éxito",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -151,6 +171,7 @@ export default function CourtCreate() {
         sport: "",
         image: [],
         siteId: "",
+        uploadPercentage: 0,
       });
       history.push("/establishmentprofile");
       window.location.reload();
@@ -158,23 +179,41 @@ export default function CourtCreate() {
   }
 
   return (
-    <div className="">
+    <div>
       <div className="containerCreateCourt">
         <div className="flex justify-center text-black">
           <form
-            className="w-4/5 sm:w-full flex-col justify-center items-center border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
+            className="w-full flex-col justify-center items-center border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
             onSubmit={(e) => handleSubmit(e)}
           >
-            {input.image ? (
-              <div className="flex place-content-center">
-                <img
-                  className="w-36 h-36 bg-cover rounded-sm"
-                  src={input.image}
-                  alt="not found"
+            
+            <div className="flex gap-2 overflow-x-auto overflow-y-hidden">
+              {input.image.length
+                ? input.image.map((e) => {
+                    return (
+                      <div key={e}>
+                        <img
+                          className="w-36 h-36 object-cover rounded-full"
+                          src={e}
+                          alt="not found"
+                          key={e}
+                        />
+                        <button onClick={() => handleDeleteImage(e)} className="sticky cursor-pointer text-red-400 hover:text-red-600 hover:scale-150 transition-all ml-[8.5rem] bottom-40 scale-125">X</button>
+                      </div>
+                    );
+                  })
+                : null}
+              {input.uploadPercentage > 0 && (
+                <ReactLoading
+                  type={"spin"}
+                  color={"#000000"}
+                  height={"8.5rem"}
+                  width={"8.5rem"}
                 />
-              </div>
-            ) : null}
-            <div className=" relative mt-5">
+              )}
+            </div>
+
+            <div className=" relative mt-10">
               <input
                 className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 id="nombre"
@@ -328,7 +367,7 @@ export default function CourtCreate() {
                 multiple
               />
               <label className="text-white" htmlFor="input_img">
-                Imágenes
+                Agregar Imágenes
               </label>
               {errors.image && (
                 <p className="'text-xs text-red-500">{errors.image}</p>
@@ -336,13 +375,13 @@ export default function CourtCreate() {
             </div>
             <div className="relative mt-3">
               <select
-                className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
+                className="w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 name="sites"
                 onChange={(e) => handleSelectSite(e)}
                 required
               >
                 <option value="">Seleccioná una sede</option>
-                {sites.map((c) => (
+                {sites === null ? "" : sites.map((c) => (
                   <option value={c.id} key={c.id}>
                     {c.name}
                   </option>
@@ -374,9 +413,6 @@ export default function CourtCreate() {
               </button>
               <br />
               <br />
-              <button className="w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                Volver
-              </button>
             </div>
           </form>
         </div>

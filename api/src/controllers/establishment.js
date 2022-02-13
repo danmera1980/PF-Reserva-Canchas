@@ -181,6 +181,32 @@ const getEstablishmentId = async (req, res, next) => {
     }
 }
 
+const getEstablishmentByUser = async (req, res, next) => {
+    const userId = req.user.id;
+	let user = await User.findOne({
+        where: { id: userId },
+      });
+
+  try {
+    const establishment = await Establishment.findOne({
+      where: {
+        cuit: user.establishmentId,
+      },
+      include: {
+        model: Site,
+        as: "sites",
+        include: {
+          model: Court,
+          as: "courts",
+        },
+      },
+    });
+    res.send(establishment);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 
 module.exports = {
@@ -188,5 +214,6 @@ module.exports = {
     createEstablishment,
     addUserToEstablishment,
     getEstabIdByUserId,
-    getEstablishmentId
+    getEstablishmentId,
+    getEstablishmentByUser
 }
