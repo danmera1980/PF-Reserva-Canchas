@@ -16,7 +16,6 @@ function EstablishmentProfile() {
   const [visual, setVisual] = useState("bookings");
   const userToken = useSelector((state) => state.register.userToken);
   const [establishmentDetail, setEstablishmentDetail] = useState(null);
-  console.log(establishmentDetail)
 
   useEffect(() => {
     const headers = {
