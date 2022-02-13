@@ -1,5 +1,4 @@
-
-const { User } = require("../db");
+const { User, Booking, Court, Site, Establishment } = require("../db");
 const bcrypt = require("bcrypt");
 
 // starting to code
@@ -17,12 +16,12 @@ const getAllUsers = async (req, res, next) => {
 
 const getUserProfile = async (req, res, next) => {
   try {
-    const id  = req.user.id;
+    const id = req.user.id;
     const wantedUser = await User.findOne({
       where: { id },
       attributes: { exclude: ["passwordHash"] },
     });
-   
+
     res.send(wantedUser);
   } catch (e) {
     next(e);
@@ -79,6 +78,47 @@ const editUser = async (req, res, next) => {
     next(e);
   }
 };
+const getUserBookingHistory = async (req, res, next) => {
+  try {
+    console.log("entre", req.user.id);
+    const userHistory = await Booking.findAll({
+      where: {
+        userId: req.user.id,
+      },
+      attributes: {
+        exclude: [
+          "payment_status",
+          "merchant_order_id",
+          "external_reference",
+          "createdAt",
+          "updatedAt",
+          "userId",
+        ],
+      },
+      include: [
+        {
+          model: Court,
+          as: "court",
+          attributes: ["name", "sport"],
+          include: {
+            model: Site,
+            as: "site",
+            attributes: ["name", "street", "streetNumber"],
+            include: {
+              model: Establishment,
+              as: "establishment",
+              attributes: ["name"],
+            },
+          },
+        },
+      ],
+    });
+
+    res.send(userHistory);
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
   getAllUsers,
@@ -86,4 +126,5 @@ module.exports = {
   registerUser,
   editUser,
   registerGoogle,
-  };
+  getUserBookingHistory,
+};
