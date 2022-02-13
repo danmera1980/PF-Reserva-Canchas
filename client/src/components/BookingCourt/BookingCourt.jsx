@@ -80,7 +80,7 @@ export default function BookingCourt(){
     const [booking, setBooking] = useState([])
 
     const selectedBooking = (data) => {
-        console.log(data)
+        // console.log(data)
         setBooking(data)
     }
 
@@ -106,7 +106,7 @@ export default function BookingCourt(){
         })
     },[])
     
-    console.log(establishment)
+    // console.log(establishment)
     return(
         <div>
             <Header/>
