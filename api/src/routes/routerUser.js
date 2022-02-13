@@ -7,6 +7,7 @@ const {
   registerUser,
   editUser,
   registerGoogle,
+  getUserBookingHistory,
 } = require("../controllers/user");
 const { loginUser, checkedEmail } = require("../controllers/login");
 
@@ -14,6 +15,7 @@ const router = Router();
 
 router.get("/", getAllUsers);
 router.get("/checkedEmail", checkedEmail);
+router.get("/bookings", userExtractor, authGoogle, getUserBookingHistory);
 
 router.get("/profile", userExtractor, authGoogle, getUserProfile);
 router.post("/googleRegister", userExtractor, authGoogle, registerGoogle);
