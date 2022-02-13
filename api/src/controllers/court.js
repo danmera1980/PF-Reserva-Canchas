@@ -57,7 +57,6 @@ const getAllCourts = async function (req, res, next) {
   try {
 
     let courtDB = await Court.findAll()
-    console.log("pase", courtDB);
     res.send(courtDB);
   } catch (error) {
     console.log(error);
