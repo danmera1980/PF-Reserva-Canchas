@@ -5,7 +5,7 @@ import { SERVER_URL } from "../../redux/actions/actionNames";
 import axios from "axios";
 import Hours from "./Hours"
 
-const Calendario = ({disabledDates, scheduledTime}) => {
+const Calendario = ({disabledDates, scheduledTime, selectedBooking}) => {
     const [date, setDate] = useState(null)
     // console.log(date)
     
@@ -32,6 +32,7 @@ const Calendario = ({disabledDates, scheduledTime}) => {
         <Hours
           currentDate={date}
           disabledTime={getSchedule(scheduledTime)}
+          selectedBooking={selectedBooking}
         /> 
       : null}
       </div>
