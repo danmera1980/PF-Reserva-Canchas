@@ -29,8 +29,10 @@ const Hours = ({currentDate, disabledTime, selectedBooking}) => {
 
 
     const handleClick = (date, time) => {
-        selectedBooking({date: date, time: time})
-        setTimeSelected('bg-[#03bf1f] text-white')
+        selectedBooking({
+            startTime: `${date.year}-${date.month}-${date.day}T${time}:00.000`,
+            endTime: `${date.year}-${date.month}-${date.day}T${time+1}:00.000`
+        })
     }
 
     return (

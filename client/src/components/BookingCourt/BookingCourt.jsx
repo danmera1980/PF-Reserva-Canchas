@@ -96,7 +96,11 @@ export default function BookingCourt(){
 
     const selectedBooking = (data) => {
         console.log(data)
-        setBooking(data)
+        setInput({
+            ...input,
+            startTime: data.startTime,
+            endTime: data.endTime
+        })
     }
 
     useEffect(()=> [
@@ -163,7 +167,11 @@ export default function BookingCourt(){
                     scheduledTime={scheduledTime}
                     selectedBooking={selectedBooking}
                 />
-                <MercadoPago booking={booking}/>
+                {
+                    input.startTime.length && input.endTime.length ?
+                    <MercadoPago booking={input}/> :
+                    null 
+                }
                 <ReactMapGL 
                     {...viewport}
                     onViewportChange={newView => setViewport(newView)}
