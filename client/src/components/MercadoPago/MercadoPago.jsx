@@ -37,7 +37,9 @@ export default function MercadoPago({booking}){
     .catch(err => console.error(err)) 
   },[])
   
-
+  const [dateStart, hourStart] = input[0].startTime.split('T')
+  const [dateEnd, hourEnd] = input[0].endTime.split('T')
+ 
   // SDK VERSION 2
   useEffect(()=>{
 
@@ -68,7 +70,12 @@ export default function MercadoPago({booking}){
 
    return(
     <div>
-      <form id='form1'>
+      <h4 className="font-bold py-1 text-xl dark:text-white ">Detalle de la reserva</h4>
+      <h2 className="font-bold py-1 text-l dark:text-white ">{input[0].courtName}</h2>
+      <h1 className="font-bold py-2  dark:text-white ">Fecha y Horario</h1>
+      <h1 className="font-bold py-2  dark:text-white ">{hourStart.split('.',1)} a {hourEnd.split('.',1)} {dateStart}</h1>
+      <h1 className="font-bold py-2  dark:text-white ">Total a pagar  {'$' + input[0].price}</h1>
+      <form hidden={true} id='form1'>
         <h4>Checkout</h4>
         <div > Detalle de la reserva 
                   <ul>
