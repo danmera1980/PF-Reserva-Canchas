@@ -10,12 +10,21 @@ mercadopago.configure({
 });
 
 const createPreference = async (req, res, next) => {
-  let { userId, courtId, courtName, price, startTime, endTime, status } =
+  let { userId, courtId, courtName, price, startTime, endTime } =
     req.body[0];
 
+  console.log(req.body)
+
+  console.log('startTime',startTime)
+  console.log('typeof startTime',typeof startTime)
+
   startTimeDate = new Date(startTime);
+  console.log('startTimeDate',startTimeDate)
   endTimeDate = new Date(endTime);
   const day = startTimeDate.toLocaleDateString().split("/").join("-");
+
+  console.log('day', day)
+  console.log('typeof day',typeof day)
 
   const date =
     day +

@@ -12,8 +12,8 @@ import UserEdit from "./components/UserEdit/UserEdit";
 import MercadoPago from "./components/MercadoPago/MercadoPago";
 // import CreateOrder from "./components/MercadoPago/CreateOrder";
 import EstablishmentProfile from "./components/EstablishmentProfile/EstablishmentProfile";
-import AddUserToEstablishment from "./components/AddUserToEstablishment/AddUserToEstablishment.jsx";
-import EstablishmentDetail from "./components/EstablishmentDetail/EstablishmentDetail";
+import AddUserToEstablishment from './components/AddUserToEstablishment/AddUserToEstablishment.jsx';
+import BookingCourt from "./components/BookingCourt/BookingCourt";
 import Calendario from "./components/Calendar/Calendar";
 import Login from "./components/Login/Login";
 
@@ -32,8 +32,8 @@ function App() {
         <Route exact path="/useredit" component={UserEdit} />
         <Route exact path="/establishmentprofile" component={EstablishmentProfile} />
         <Route exact path="/addUserToEstablishment" component={AddUserToEstablishment}/>
+        <Route exact path="/establishment/:id/:courtId" component={BookingCourt}/>
         <Route exact path="/payment" component={MercadoPago}/>
-        <Route exact path="/establishment/1" component={EstablishmentDetail}/>
         <Route exact path="/calendar" component={Calendario} />
       </div>
     </React.Fragment>
