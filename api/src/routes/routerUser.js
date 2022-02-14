@@ -9,11 +9,12 @@ const {
   registerGoogle,
   getUserBookingHistory,
 } = require("../controllers/user");
-const { loginUser } = require("../controllers/login");
+const { loginUser, checkedEmail } = require("../controllers/login");
 
 const router = Router();
 
 router.get("/", getAllUsers);
+router.get("/checkedEmail", checkedEmail);
 router.get("/bookings", userExtractor, authGoogle, getUserBookingHistory);
 
 router.get("/profile", userExtractor, authGoogle, getUserProfile);

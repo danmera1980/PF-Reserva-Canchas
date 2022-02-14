@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/img/logo.svg";
-import userImage from "../../assets/img/user.png";
+import defaultUserImage from "../../assets/img/user.png";
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import { useHistory } from "react-router-dom";
@@ -37,7 +37,7 @@ function Header() {
       axios
         .get(`${SERVER_URL}/users/profile`, { headers: headers })
         .then((res) => {
-          setUserDetails(res.data);
+          setUserDetails(res.data.img);
         });
     }
   }, [userToken]);
@@ -58,9 +58,8 @@ function Header() {
                   <img
                     className="userLoggedImage"
                     src={
-                      userDetails && userDetails.img
-                        ? userDetails.img
-                        : userImage
+                      userDetails ? userDetails
+                        : defaultUserImage
                     }
                     alt="user here"
                   />
