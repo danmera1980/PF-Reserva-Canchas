@@ -5,13 +5,7 @@ const postCourt = async (req, res, next) => {
   const { name, description, shiftLength, price, image, sport, siteId } =
     req.body;
 
-  let siteDB = await Site.findOne({
-    where: { id: siteId },
-  });
-
-  if (!siteDB) {
-    res.status(400).send("site does not exist");
-  } else {
+  try {
     let courtDB = await Court.findOne({
       where: {
         name: name,
@@ -19,28 +13,24 @@ const postCourt = async (req, res, next) => {
         siteId: siteId,
       },
     });
-    console.log(courtDB);
 
-    try {
-      if (!courtDB) {
-        let courtCreated = await Court.create({
-          name,
-          description,
-          shiftLength,
-          price,
-          image,
-          sport,
-        });
+    if (!courtDB) {
+      let courtCreated = await Court.create({
+        name,
+        description,
+        shiftLength,
+        price,
+        image,
+        sport,
+        siteId
+      });
 
-        await siteDB.addCourt(courtCreated);
-
-        res.send("court created");
-      } else {
-        res.status(404).send("court already exist");
-      }
-    } catch (e) {
-      next(e);
+      res.status(200).json(courtCreated);
+    } else {
+      res.status(404).send("court already exist");
     }
+  } catch (e) {
+    next(e);
   }
 };
 
@@ -55,8 +45,7 @@ const sortByPrice = async (req, res) => {
 
 const getAllCourts = async function (req, res, next) {
   try {
-
-    let courtDB = await Court.findAll()
+    let courtDB = await Court.findAll();
     res.send(courtDB);
   } catch (error) {
     console.log(error);

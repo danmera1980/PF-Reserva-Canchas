@@ -5,19 +5,17 @@ import Home from "./components/Home/Home";
 import CourtCreate from "./components/CourtCreate/CourtCreate";
 import Results from "./components/Results/Results";
 import PostEstablishment from "./components/PostEstablishment/PostEstablishment";
-import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import SiteCreate from "./components/SiteCreate/SiteCreate";
 import Profile from "./components/Profile/Profile";
-import UserEdit from './components/UserEdit/UserEdit';
+import UserEdit from "./components/UserEdit/UserEdit";
 import MercadoPago from "./components/MercadoPago/MercadoPago";
 // import CreateOrder from "./components/MercadoPago/CreateOrder";
-
 import EstablishmentProfile from "./components/EstablishmentProfile/EstablishmentProfile";
 import AddUserToEstablishment from './components/AddUserToEstablishment/AddUserToEstablishment.jsx';
 import BookingCourt from "./components/BookingCourt/BookingCourt";
 import Calendario from "./components/Calendar/Calendar";
-
+import Login from "./components/Login/Login";
 
 function App() {
   return (
@@ -37,8 +35,6 @@ function App() {
         <Route exact path="/establishment/:id/:courtId" component={BookingCourt}/>
         <Route exact path="/payment" component={MercadoPago}/>
         <Route exact path="/calendar" component={Calendario} />
-        
-
       </div>
     </React.Fragment>
   );

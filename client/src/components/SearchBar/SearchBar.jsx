@@ -10,6 +10,7 @@ const sports = 'Deportes';
 const establishment = 'Establecimiento';
 
 function SearchBar() {
+    const geoCode = useSelector(state => state.establishment.geocode)
 
     const history = useHistory();
     
@@ -23,7 +24,6 @@ function SearchBar() {
     });
 
     const [sportType, setSportType] = useState('');
-    const geoCode = useSelector(state => state.establishment.geocode)
 
     useEffect(() => {
         dispatch(getGeocode(searchText.text));
@@ -46,7 +46,8 @@ function SearchBar() {
         setSearchText({
             latitude:-32.88641481914277,
             longitude:-68.84519635165792,
-            sport: ''
+            sport: '',
+            text: ''
         })
         history.push('/results')
     }
@@ -61,6 +62,7 @@ function SearchBar() {
 
     const suggestionHandler = (r)=>{
         setSearchText({...searchText, latitude: r.center[1], longitude: r.center[0], text: r.place_name}); 
+        dispatch(clearGeocode())
     }
 
   return (
@@ -93,13 +95,17 @@ function SearchBar() {
                         <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
                     </Link>
                 </div>
-                <div className='autoContainer' hidden={geoCode?false:true}>
-                    {geoCode && geoCode.features.map(r => (
-                        <div className='optionContainer' key={r.id} onClick={() => suggestionHandler(r)}>
-                            <span>{r.place_name}</span>
-                        </div>
-                    ))}
-                </div>
+                {/* {console.log(geoCode)}
+                { geoCode !== undefined && geoCode !== '' ?
+                    <div className='autoContainer' hidden={geoCode?false:true}>
+                        {geoCode && geoCode.features.map(r => (
+                            <div className='optionContainer' key={r.id} onClick={() => suggestionHandler(r)}>
+                                <span>{r.place_name}</span>
+                            </div>
+                        ))}
+                    </div>
+                : null
+                } */}
             </div>
         </div>
     </div>

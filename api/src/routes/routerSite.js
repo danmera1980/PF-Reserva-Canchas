@@ -10,7 +10,7 @@ const authGoogle = require('../middleware/auth')
 
 
 const bodySchema = Joi.object({
-    establishmentId: Joi.string().regex(/^[0-9]+$/).required(),
+    establishmentId: Joi.number().required(),
     name: Joi.string().regex(/^[a-zA-Z0-9 :]+$/).min(1).max(40).required(),
     country: Joi.string().regex(/^[a-zA-Z0-9 :.]+$/).min(1).max(40).required(),
     city: Joi.string().regex(/^[a-zA-Z0-9 :.]+$/).min(1).max(40).required(),

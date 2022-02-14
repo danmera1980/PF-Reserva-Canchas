@@ -1,4 +1,5 @@
 import {
+        CLEAR_GEOCODE,
         GET_GEOCODE, 
         ALL_ESTABLISHMENTS, 
         FILTER_BY_LOCATION, 
@@ -111,6 +112,15 @@ export const getGeocode = (searchText) => {
         return dispatch({
             type: GET_GEOCODE,
             payload: results.data
+        })
+    }
+}
+
+export const clearGeocode = (searchText) => {
+    return async(dispatch) => {
+        return dispatch({
+            type: CLEAR_GEOCODE,
+            payload: ''
         })
     }
 }
