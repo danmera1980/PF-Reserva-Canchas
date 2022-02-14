@@ -57,19 +57,22 @@ function Results() {
         </div>
         <div className='results p-32'>
             <div className='leftResults'>
-                {resultsData && resultsData?.map(m => (
+                {resultsData && resultsData?.map(m => m.sites.map(site => site.courts.map( court => (
                     <Card 
-                        key= {m.cuit}
+                        key= {court.id}
                         id= {m.cuit}
-                        name= {m.sites[0].courts[0].name}
-                        images= {m.sites[0].courts[0].images}
+                        name= {site.name}
+                        images= {court.images}
                         establishment= {m.name}
-                        site= {m.sites[0].name}
-                        address= {m.sites[0].street}
-                        price= {m.sites[0].courts[0].price}
-                        sport= {m.sites[0].courts[0].sport}
+                        cuit={m.cuit}
+                        court= {court.name}
+                        courtId={court.id}
+                        address= {site.street}
+                        price= {court.price}
+                        sport= {court.sport}
+                        button={true}
                     />
-                ))}
+                ))))}
             </div>
             <div className='rightResults'>
                 <ReactMapGL 
