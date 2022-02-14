@@ -96,7 +96,7 @@ function SearchBar() {
                     </Link>
                 </div>
                 {console.log(geoCode)}
-                {/* { geoCode !== undefined && geoCode !== '' ?
+                { geoCode !== undefined && geoCode !== '' ?
                     <div className='autoContainer' hidden={geoCode?false:true}>
                         {geoCode && geoCode.features.map(r => (
                             <div className='optionContainer' key={r.id} onClick={() => suggestionHandler(r)}>
@@ -105,7 +105,7 @@ function SearchBar() {
                         ))}
                     </div>
                 : null
-                } */}
+                }
             </div>
         </div>
     </div>
