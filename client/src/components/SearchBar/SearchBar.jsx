@@ -96,13 +96,16 @@ function SearchBar() {
                         <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
                     </Link>
                 </div>
-                <div className='autoContainer' hidden={geoCode?false:true}>
-                    {geoCode && geoCode.features.map(r => (
-                        <div className='optionContainer' key={r.id} onClick={() => suggestionHandler(r)}>
-                            <span>{r.place_name}</span>
-                        </div>
-                    ))}
-                </div>
+                { geoCode?
+                    <div className='autoContainer' hidden={geoCode?false:true}>
+                        {geoCode && geoCode.features.map(r => (
+                            <div className='optionContainer' key={r.id} onClick={() => suggestionHandler(r)}>
+                                <span>{r.place_name}</span>
+                            </div>
+                        ))}
+                    </div>
+                : null
+                }
             </div>
         </div>
     </div>
