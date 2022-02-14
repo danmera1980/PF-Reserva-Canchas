@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postSite } from "../../redux/actions/site";
 import { getEstablishmentById } from "../../redux/actions/forms";
-
+import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+
+const MapStyle = 'mapbox://styles/mapbox/streets-v11';
+const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 function validate(input) {
   let errors = {};
@@ -37,14 +42,44 @@ export default function SiteCreate() {
     city: "",
     street: "",
     streetNumber: "",
+    latitude: 0,
+    longitude: 0
   });
+
+  const [viewport, setViewport] = useState({
+    latitude: 0,
+    longitude: 0,
+    width: '300px',
+    height: '300px',
+    zoom: 12,
+    pitch: 50
+  });
+
+  function handleDrag(getLngLat){
+    setInput({
+      ...input,
+      longitude: getLngLat.lngLat[0],
+      latitude: getLngLat.lngLat[1]
+    })
+  }
+
+  console.log(input);
 
   useEffect(() => {
     dispatch(getEstablishmentById(userToken))
-    setInput({
-      ...input,
-      establishmentId: establishmentId,
-    });
+    navigator.geolocation.getCurrentPosition(position => {
+      setViewport({
+          ...viewport,
+          latitude: position.coords.latitude, 
+          longitude: position.coords.longitude 
+      })
+      setInput({
+        ...input,
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+        establishmentId: establishmentId,
+      })
+  })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [establishmentId]);
 
@@ -102,6 +137,18 @@ export default function SiteCreate() {
   return (
     <div>
         <div className="flex justify-center text-black">
+          <div>
+            <ReactMapGL
+              {...viewport}
+              onViewportChange={newView => setViewport(newView)}
+              mapboxApiAccessToken={mapboxToken}
+              mapStyle={MapStyle}
+            >
+              <Marker draggable={true} onDragEnd={getLngLat => handleDrag(getLngLat)} latitude={input.latitude} longitude={input.longitude}>
+                <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
+              </Marker>
+            </ReactMapGL>
+          </div>
           <form
             className="w-full flex-col justify-center items-center border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
             onSubmit={(e) => handleSubmit(e)}

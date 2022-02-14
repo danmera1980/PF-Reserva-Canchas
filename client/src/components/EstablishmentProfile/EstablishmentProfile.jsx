@@ -16,6 +16,7 @@ function EstablishmentProfile() {
   const [visual, setVisual] = useState("bookings");
   const userToken = useSelector((state) => state.register.userToken);
   const [establishmentDetail, setEstablishmentDetail] = useState(null);
+  console.log(establishmentDetail)
 
   useEffect(() => {
     const headers = {
@@ -114,7 +115,7 @@ function EstablishmentProfile() {
                 case "siteCreate":
                   return <SiteCreate />;
                 case "sites":
-                  return <Sites />;
+                  return <Sites establishmentDetail={establishmentDetail.sites}/>;
                 case "courtCreate":
                   return <CourtCreate sites={establishmentDetail.sites}/>;
                 default:

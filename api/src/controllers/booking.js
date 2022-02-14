@@ -25,6 +25,8 @@ const newBooking = async (req, res, next) => {
   const external_reference = req.query.external_reference;
   const merchant_order_id = req.query.merchant_order_id;
 
+  console.log(userId)
+
   /*
      ESTO ES IMPORTANTE PARA CREAR BIEN LA RESERVA CON EL FORMATO DATE EN LA BASE DE DATOS
      posiblemente les haya funcionado porque el string que tienen se los pase como debe ser pero no esta bueno mandarle asi y aca los meses se enumeran distinto es una cosa loca lo que van a tener que hacer es lo que sigue:

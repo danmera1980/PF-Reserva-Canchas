@@ -112,7 +112,7 @@ const getUserBookingHistory = async (req, res, next) => {
           },
         },
       ],
-      order: ["startTime", "DESC"]
+      order: [["startTime", "DESC"]]
     });
 
     res.send(userHistory);
