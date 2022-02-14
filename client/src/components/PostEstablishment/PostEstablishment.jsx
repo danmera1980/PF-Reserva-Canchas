@@ -110,10 +110,9 @@ export default function PostEstablishment() {
         timeActiveFrom: "",
         timeActiveTo: "",
       });
+      history.push("/establishmentprofile");
+      window.location.reload();
     }
-    //   history.push("/establishmentprofile");
-    //   window.location.reload();
-    // }
   }
 
   function fileChange() {

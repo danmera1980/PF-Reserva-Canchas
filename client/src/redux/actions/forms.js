@@ -10,7 +10,7 @@ export function getEstablishmentById(userToken){
             let user = await axios.get(`${SERVER_URL}/establishment/idUser`, { headers: headers })
             return dispatch({
                 type: GET_ESTABLISHMENT_BY_ID,
-                payload: user.data.cuit
+                payload: user.data.id
             })    
         } catch (error) {
             console.log(error);
