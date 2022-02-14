@@ -10,6 +10,8 @@ const sports = 'Deportes';
 const establishment = 'Establecimiento';
 
 function SearchBar() {
+    const geoCode = useSelector(state => state.establishment.geocode)
+    // const geoCode =''
 
     const history = useHistory();
     
@@ -23,7 +25,6 @@ function SearchBar() {
     });
 
     const [sportType, setSportType] = useState('');
-    const geoCode = useSelector(state => state.establishment.geocode)
 
     useEffect(() => {
         dispatch(getGeocode(searchText.text));
