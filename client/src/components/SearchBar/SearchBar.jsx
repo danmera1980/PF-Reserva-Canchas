@@ -46,7 +46,8 @@ function SearchBar() {
         setSearchText({
             latitude:-32.88641481914277,
             longitude:-68.84519635165792,
-            sport: ''
+            sport: '',
+            text: ''
         })
         history.push('/results')
     }
@@ -61,6 +62,7 @@ function SearchBar() {
 
     const suggestionHandler = (r)=>{
         setSearchText({...searchText, latitude: r.center[1], longitude: r.center[0], text: r.place_name}); 
+        dispatch(clearGeocode())
     }
 
   return (

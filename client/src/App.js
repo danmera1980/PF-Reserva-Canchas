@@ -14,6 +14,7 @@ import MercadoPago from "./components/MercadoPago/MercadoPago";
 import EstablishmentProfile from "./components/EstablishmentProfile/EstablishmentProfile";
 import AddUserToEstablishment from "./components/AddUserToEstablishment/AddUserToEstablishment.jsx";
 import EstablishmentDetail from "./components/EstablishmentDetail/EstablishmentDetail";
+import Calendario from "./components/Calendar/Calendar";
 import Login from "./components/Login/Login";
 
 function App() {
@@ -29,18 +30,11 @@ function App() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/useredit" component={UserEdit} />
-        <Route
-          exact
-          path="/establishmentprofile"
-          component={EstablishmentProfile}
-        />
-        <Route
-          exact
-          path="/addUserToEstablishment"
-          component={AddUserToEstablishment}
-        />
-        <Route exact path="/payment" component={MercadoPago} />
-        <Route exact path="/establishment/1" component={EstablishmentDetail} />
+        <Route exact path="/establishmentprofile" component={EstablishmentProfile} />
+        <Route exact path="/addUserToEstablishment" component={AddUserToEstablishment}/>
+        <Route exact path="/payment" component={MercadoPago}/>
+        <Route exact path="/establishment/1" component={EstablishmentDetail}/>
+        <Route exact path="/calendar" component={Calendario} />
       </div>
     </React.Fragment>
   );
