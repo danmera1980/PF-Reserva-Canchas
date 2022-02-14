@@ -99,7 +99,7 @@ const getUserBookingHistory = async (req, res, next) => {
         {
           model: Court,
           as: "court",
-          attributes: ["name", "sport"],
+          attributes: ["name", "sport", "image"],
           include: {
             model: Site,
             as: "site",
@@ -112,6 +112,7 @@ const getUserBookingHistory = async (req, res, next) => {
           },
         },
       ],
+      order: ["startTime", "DESC"]
     });
 
     res.send(userHistory);

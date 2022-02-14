@@ -89,7 +89,7 @@ const Register = () => {
         })
         .then((res) => {
           setEmailsDb(res.data);
-        });
+        })
     }
   }, [userInfo.email]);
 
