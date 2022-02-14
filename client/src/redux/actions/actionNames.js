@@ -1,6 +1,5 @@
 /** @format */
-export const SERVER_URL = process.env.REACT_APP_SERVER_HOST;
-// export const SERVER_URL = 'http://localhost:3001'
+export const SERVER_URL = process.env.REACT_APP_SERVER_HOST; //no cambiar esto!!
 
 export const ALL_USERS = 'ALL_USERS';
 export const GET_ESTABLISHMENT = 'GET_ESTABLISHMENT';
