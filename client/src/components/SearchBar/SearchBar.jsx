@@ -11,7 +11,6 @@ const establishment = 'Establecimiento';
 
 function SearchBar() {
     const geoCode = useSelector(state => state.establishment.geocode)
-    // const geoCode =''
 
     const history = useHistory();
     
@@ -96,7 +95,8 @@ function SearchBar() {
                         <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
                     </Link>
                 </div>
-                { geoCode !== undefined?
+                {console.log(geoCode)}
+                {/* { geoCode !== undefined && geoCode !== '' ?
                     <div className='autoContainer' hidden={geoCode?false:true}>
                         {geoCode && geoCode.features.map(r => (
                             <div className='optionContainer' key={r.id} onClick={() => suggestionHandler(r)}>
@@ -105,7 +105,7 @@ function SearchBar() {
                         ))}
                     </div>
                 : null
-                }
+                } */}
             </div>
         </div>
     </div>
