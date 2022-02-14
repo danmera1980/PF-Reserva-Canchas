@@ -31,8 +31,8 @@ const Hours = ({currentDate, disabledTime, selectedBooking}) => {
 
     const handleClick = (date, time) => {
         selectedBooking({
-            startTime: `${date.year}-${date.month}-${date.day}T${time}:00.000`, 
-            endTime: `${date.year}-${date.month}-${date.day}T${time+1}:00.000`
+            startTime: new Date(date.year,date.month-1,date.day,time,"00","00"), 
+            endTime: new Date(date.year,date.month-1,date.day,time+1,"00","00"),
         })
 
         for (let i = 0; i < hours.length; i++) {

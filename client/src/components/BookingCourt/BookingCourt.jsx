@@ -92,14 +92,14 @@ export default function BookingCourt(){
   
     
 
-    const [booking, setBooking] = useState([])
+    // const [booking, setBooking] = useState([])
 
     const selectedBooking = (data) => {
         console.log(data)
         setInput({
             ...input,
-            startTime: data.startTime,
-            endTime: data.endTime
+            startTime: data.startTime.toString(),
+            endTime: data.endTime.toString()
         })
     }
 
