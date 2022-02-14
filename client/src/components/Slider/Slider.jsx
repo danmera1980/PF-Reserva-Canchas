@@ -4,6 +4,7 @@ import BtnSlider from "./BtnSlider";
 import dataSlider from "./dataSlider";
 
 export default function Slider({images}) {
+  console.log(images)
   const [slideIndex, setSlideIndex] = useState(1);
 
   const nextSlide = () => {
@@ -35,7 +36,7 @@ export default function Slider({images}) {
             className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
           >
             <img
-              src={process.env.PUBLIC_URL + `/Imgs/img${index + 1}.jpg`}
+              src={images}
               alt="img"
             />
           </div>
@@ -45,7 +46,7 @@ export default function Slider({images}) {
       <BtnSlider moveSlide={prevSlide} direction={"prev"} />
 
       <div className="container-dots">
-        {Array.from({ length: 5 }).map((item, index) => (
+        {Array.from({ length: images.length }).map((item, index) => (
           <div
             key={index}
             onClick={() => moveDot(index + 1)}

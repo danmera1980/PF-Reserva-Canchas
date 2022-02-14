@@ -25,7 +25,6 @@ function Bookings() {
       });
   }, [userToken]);
 
-  console.log(booking);
 
   return (
     <div>
@@ -72,7 +71,7 @@ function Bookings() {
                 })
               );
             case "favorites":
-              return <Card />;
+              return <h1>No hay favoritos</h1>;
             default:
               return "bookings";
           }
