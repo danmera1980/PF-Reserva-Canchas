@@ -96,7 +96,7 @@ function SearchBar() {
                         <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
                     </Link>
                 </div>
-                { geoCode?
+                { geoCode !== undefined?
                     <div className='autoContainer' hidden={geoCode?false:true}>
                         {geoCode && geoCode.features.map(r => (
                             <div className='optionContainer' key={r.id} onClick={() => suggestionHandler(r)}>
