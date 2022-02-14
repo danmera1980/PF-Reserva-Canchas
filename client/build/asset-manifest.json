@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6d2f3e90.css",
+    "main.js": "/static/js/main.bfb91788.js",
+    "static/media/homeImage.jpg": "/static/media/homeImage.06115b8a60a1db436624.jpg",
+    "static/media/defaultEstablishmentLogo.jpg": "/static/media/defaultEstablishmentLogo.8ebc6a3ba5e093887324.jpg",
+    "static/media/logo.svg": "/static/media/logo.7acd1ef0f85ae1adba3086b273566e74.svg",
+    "static/media/poppins-all-400-normal.woff": "/static/media/poppins-all-400-normal.6fbfdac99c274b77fe96.woff",
+    "static/media/user.png": "/static/media/user.56378ec7f0b10d7a8ee5.png",
+    "static/media/poppins-devanagari-400-normal.woff2": "/static/media/poppins-devanagari-400-normal.64d5f06ee726edd58ca3.woff2",
+    "static/media/next-removebg-preview.png": "/static/media/next-removebg-preview.338bbba5c7c4ce44cd50.png",
+    "static/media/back-removebg-preview.png": "/static/media/back-removebg-preview.107c3727240557187379.png",
+    "static/media/poppins-latin-400-normal.woff2": "/static/media/poppins-latin-400-normal.405055dd680fa1dcdfa2.woff2",
+    "static/media/poppins-latin-ext-400-normal.woff2": "/static/media/poppins-latin-ext-400-normal.4f38b4331448d2313adc.woff2",
+    "index.html": "/index.html",
+    "main.6d2f3e90.css.map": "/static/css/main.6d2f3e90.css.map",
+    "main.bfb91788.js.map": "/static/js/main.bfb91788.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6d2f3e90.css",
+    "static/js/main.bfb91788.js"
+  ]
+}
