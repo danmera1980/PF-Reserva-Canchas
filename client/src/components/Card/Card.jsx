@@ -7,7 +7,7 @@ function Card({id, name, images, establishment, site, address, price, sport}) {
   return (
     <div className="flex flex-wrap -m-3">
       <div className="w-full flex flex-col p-3 max-w-3xl">
-        <div className=" dark:text-darkPrimary bg-white rounded-lg shadow-lg overflow-hidden flex flex-1 flex-col sm:grid sm:grid-cols-2">
+        <div className=" dark:text-darkPrimary bg-white dark:bg-slate-600 rounded-lg shadow-lg overflow-hidden flex flex-1 flex-col sm:grid sm:grid-cols-2">
           <Slider images={images} />
 
           <div className="flex flex-1 flex-col p-1 relative">
