@@ -4,61 +4,72 @@
             "name": "Héctor",
             "lastName": "Alterio",
             "phone": "261321321",
-            "email": "hector@dominio.com"
+            "email": "hector@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Ricardo",
             "lastName": "Darín",
             "phone": "261321321",
-            "email": "ricardo@dominio.com"
+            "email": "ricardo@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Leonardo",
             "lastName": "Sbaraglia",
             "phone": "261321321",
-            "email": "leonardo@dominio.com"
+            "email": "leonardo@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "José",
             "lastName": "Soriano",
             "phone": "261321321",
-            "email": "jose@dominio.com"
+            "email": "jose@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Darío ",
             "lastName": "Grandinetti ",
             "phone": "261123123",
-            "email": "dario@dominio.com"
+            "email": "dario@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Diego",
             "lastName": "Peretti",
             "phone": "261321321",
-            "email": "diego@dominio.com"
+            "email": "diego@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Joaquín",
             "lastName": "Furriel",
             "phone": "261321321",
-            "email": "joaquin@dominio.com"
+            "email": "joaquin@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Adrián",
             "lastName": "Navarro ",
             "phone": "261321321",
-            "email": "adrian@dominio.com"
+            "email": "adrian@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Norma",
             "lastName": "Leandro",
             "phone": "261321321",
-            "email": "norma@dominio.com"
+            "email": "norma@dominio.com",
+            "isAdmin": false
+
         },
         {
             "name": "Cecilia",
             "lastName": "Roth",
             "phone": "261321321",
-            "email": "cecilia@dominio.com"
+            "email": "cecilia@dominio.com",
+            "isAdmin": true
         }
     ],
     "establishment": [

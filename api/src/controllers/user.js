@@ -8,6 +8,9 @@ const getAllUsers = async (req, res, next) => {
     if (!allUsers.length) {
       throw new Error("No users available");
     }
+
+    console.log((Math.random()*1e32).toString(36))
+
     res.send(allUsers);
   } catch (e) {
     next(e);
@@ -80,7 +83,6 @@ const editUser = async (req, res, next) => {
 };
 const getUserBookingHistory = async (req, res, next) => {
   try {
-    console.log("entre", req.user.id);
     const userHistory = await Booking.findAll({
       where: {
         userId: req.user.id,

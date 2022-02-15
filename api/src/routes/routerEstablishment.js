@@ -9,7 +9,8 @@ const {
   getEstabIdByUserId,
   getEstablishmentIdCourtId,
   getEstablishmentByUser,
-  cuitInDb
+  cuitInDb,
+  editStatus,
 } = require("../controllers/establishment.js");
 const userExtractor = require("../middleware/userExtractor");
 const authGoogle = require("../middleware/auth");
@@ -39,10 +40,10 @@ const bodySchema = Joi.object({
 });
 
 router.get("/idUser", userExtractor, authGoogle, getEstablishmentByUser);
-router.get('/userId', userExtractor, authGoogle, getEstabIdByUserId )
-router.get('/',getEstablishmentsFromDB)
-router.get('/:id/:courtId', getEstablishmentIdCourtId)
-router.get("/cuitInDb", cuitInDb)
+router.get("/userId", userExtractor, authGoogle, getEstabIdByUserId);
+router.get("/", getEstablishmentsFromDB);
+router.get("/:id/:courtId", getEstablishmentIdCourtId);
+router.get("/cuitInDb", cuitInDb);
 router.get("/", getEstablishmentsFromDB);
 router.post(
   "/",
@@ -52,5 +53,5 @@ router.post(
   createEstablishment
 );
 router.post("/addUserToEstablishment", addUserToEstablishment);
-
+router.put("/editStatus", userExtractor, authGoogle, editStatus);
 module.exports = router;
