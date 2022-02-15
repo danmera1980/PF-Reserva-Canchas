@@ -54,8 +54,7 @@ export function loginUser(payload) {
         return dispatch({ type: LOGIN, payload: user.data });
       })
       .catch((err) => {
-        console.log(err);
-        dispatch({ type: SET_ERRORS, payload: err });
+        dispatch({ type: SET_ERRORS, payload: "Contraseña o email incorrecto" });
       });
   };
 }
@@ -77,6 +76,7 @@ export function loginWithGoogle(response) {
       })
       .catch((err) => {
         console.log(err);
+        dispatch({ type: SET_ERRORS, payload: err });
       });
   };
 }
@@ -91,7 +91,7 @@ export function editUser(payload, userToken) {
       const response = await axios.put(`${SERVER_URL}/users/edit`, payload, {
         headers: headers,
       });
-      return dispatch({ type: EDIT_SUCCESS, payload: response.data });
+      return dispatch({ type: EDIT_SUCCESS, payload: "Se editó correctamente el usuario" });
     } catch (error) {
       return dispatch({ type: SET_ERRORS, payload: error });
     }

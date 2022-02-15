@@ -2,7 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const validator = require('express-joi-validation').createValidator({})
 const Joi = require('joi')
-const { postCourt, getAllCourts} = require('../controllers/court');
+const { postCourt, getAllCourts, getCourtById} = require('../controllers/court');
 const userExtractor = require("../middleware/userExtractor");
 const authGoogle = require('../middleware/auth')
 
@@ -18,5 +18,6 @@ const bodySchema = Joi.object({
 
 router.post('/', userExtractor, authGoogle, validator.body(bodySchema), postCourt)
 router.get('/', getAllCourts)
+router.get('/:id', getCourtById)
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const { Court, Site } = require("../db");
+const { Court, Site, Establishment } = require("../db");
 // cambiar nombre de sede cuando sepa el nombre de la tabla de sede
 
 const postCourt = async (req, res, next) => {
@@ -34,15 +34,6 @@ const postCourt = async (req, res, next) => {
   }
 };
 
-const sortByPrice = async (req, res) => {
-  const range = req.query.range;
-
-  const courts = await Court.findAll();
-
-  if (range === "max") {
-  }
-};
-
 const getAllCourts = async function (req, res, next) {
   try {
     let courtDB = await Court.findAll();
@@ -51,4 +42,30 @@ const getAllCourts = async function (req, res, next) {
     console.log(error);
   }
 };
-module.exports = { postCourt, getAllCourts };
+const getCourtById = async (req, res, next) => {
+  const {id} = req.params
+  try {
+      const establishment = await Court.findOne({
+          where:{
+              id
+          },
+          include:{
+              model: Site,
+              as: 'site',
+              include:{
+                model: Establishment,
+                as: 'establishment',
+                attributes: {
+                  exclude: ['cuit']
+                }
+              }
+            }
+      })
+      res.send(establishment)
+
+  } catch (error) {
+      console.log(error)
+  }
+}
+
+module.exports = { postCourt, getAllCourts, getCourtById };
