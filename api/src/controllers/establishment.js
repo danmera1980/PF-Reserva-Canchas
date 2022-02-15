@@ -206,7 +206,7 @@ const cuitInDb = async (req, res, next) => {
   }
 };
 
-const editStatus = async (req, res, next) => {
+const statusUpdate = async (req, res, next) => {
   const { establishmentId } = req.body;
   try {
     const loggedUser = await User.findOne({
@@ -236,5 +236,5 @@ module.exports = {
   getEstablishmentByUser,
   cuitInDb,
   getEstablishmentIdCourtId,
-  editStatus,
+  statusUpdate,
 };

@@ -11,6 +11,7 @@ const {
   editUser,
   registerGoogle,
   getUserBookingHistory,
+  updateStatus,
 } = require("../controllers/user");
 const { loginUser, checkedEmail } = require("../controllers/login");
 const router = Router();
@@ -58,5 +59,8 @@ router.post("/register", validator.body(registerSchema), registerUser);
 router.post("/login", validator.body(loginSchema), loginUser);
 
 router.put("/edit", userExtractor, authGoogle, editUser);
+router.put("/updateStatus", userExtractor, authGoogle, updateStatus);
+
+
 
 module.exports = router;

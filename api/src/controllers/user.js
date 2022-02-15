@@ -123,6 +123,28 @@ const getUserBookingHistory = async (req, res, next) => {
   }
 };
 
+const updateStatus = async (req, res, next) => {
+  const { userId } = req.body;
+  try {
+    const loggedUser = await User.findOne({
+      where: {
+        id: req.user.id,
+      },
+    });
+    if (!loggedUser.isAdmin) {
+      res.status(401).send("Unauthorized");
+    } else {
+       const updated = await User.findOne({ where: { id: userId }});
+       updated.isActive = !updated.isActive;
+       await updated.save();
+
+      res.json(updated)
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserProfile,
@@ -130,4 +152,5 @@ module.exports = {
   editUser,
   registerGoogle,
   getUserBookingHistory,
+  updateStatus
 };
