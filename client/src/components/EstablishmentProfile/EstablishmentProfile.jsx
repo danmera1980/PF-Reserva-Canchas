@@ -118,7 +118,7 @@ function EstablishmentProfile() {
                 case "courtCreate":
                   return <CourtCreate sites={establishmentDetail.sites}/>;
                 default:
-                  return <EstablishmentBookings />;
+                  return <EstablishmentBookings establishmentDetails={establishmentDetail}/>;
               }
             })()}
           </div>
