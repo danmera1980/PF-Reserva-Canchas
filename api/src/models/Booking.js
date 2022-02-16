@@ -40,6 +40,12 @@ module.exports = (sequelize) => {
     external_reference:{
       type: DataTypes.INTEGER,
       allowNull:false
+    },
+    details: {
+      type: DataTypes.TEXT,
+    },
+    code: {
+      type: DataTypes.STRING,
     }
   });
 };

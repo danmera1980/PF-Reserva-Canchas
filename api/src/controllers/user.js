@@ -8,6 +8,9 @@ const getAllUsers = async (req, res, next) => {
     if (!allUsers.length) {
       throw new Error("No users available");
     }
+
+    console.log((Math.random()*1e32).toString(36))
+
     res.send(allUsers);
   } catch (e) {
     next(e);
@@ -80,7 +83,6 @@ const editUser = async (req, res, next) => {
 };
 const getUserBookingHistory = async (req, res, next) => {
   try {
-    console.log("entre", req.user.id);
     const userHistory = await Booking.findAll({
       where: {
         userId: req.user.id,
@@ -121,6 +123,28 @@ const getUserBookingHistory = async (req, res, next) => {
   }
 };
 
+const updateStatus = async (req, res, next) => {
+  const { userId } = req.body;
+  try {
+    const loggedUser = await User.findOne({
+      where: {
+        id: req.user.id,
+      },
+    });
+    if (!loggedUser.isAdmin) {
+      res.status(401).send("Unauthorized");
+    } else {
+       const updated = await User.findOne({ where: { id: userId }});
+       updated.isActive = !updated.isActive;
+       await updated.save();
+
+      res.json(updated)
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserProfile,
@@ -128,4 +152,5 @@ module.exports = {
   editUser,
   registerGoogle,
   getUserBookingHistory,
+  updateStatus
 };

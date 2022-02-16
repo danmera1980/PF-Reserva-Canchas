@@ -72,10 +72,7 @@ const Register = () => {
     password: "",
     name: "",
     lastName: "",
-    phoneNumber: "",
     confirmPassword: "",
-    hasEstablishment: false,
-    isAdmin: false,
   };
   const [userInfo, setUserInfo] = useState(initialState);
   const [errors, setErrors] = useState({});

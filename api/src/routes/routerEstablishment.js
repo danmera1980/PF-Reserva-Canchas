@@ -8,7 +8,8 @@ const {
   addUserToEstablishment,
   getEstabIdByUserId,
   getEstablishmentByUser,
-  cuitInDb
+  cuitInDb,
+  statusUpdate,
 } = require("../controllers/establishment.js");
 const userExtractor = require("../middleware/userExtractor");
 const authGoogle = require("../middleware/auth");
@@ -49,5 +50,5 @@ router.post(
   createEstablishment
 );
 router.post("/addUserToEstablishment", addUserToEstablishment);
-
+router.put("/updateStatus", userExtractor, authGoogle, statusUpdate);
 module.exports = router;
