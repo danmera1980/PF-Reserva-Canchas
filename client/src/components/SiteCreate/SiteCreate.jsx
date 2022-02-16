@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postSite } from "../../redux/actions/site";
 import { getEstablishmentById } from "../../redux/actions/forms";
-import ReactMapGL, { Marker, Popup } from 'react-map-gl';
+import ReactMapGL, { Marker } from 'react-map-gl';
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
@@ -49,8 +49,8 @@ export default function SiteCreate() {
   const [viewport, setViewport] = useState({
     latitude: 0,
     longitude: 0,
-    width: '300px',
-    height: '300px',
+    width: '100%',
+    height: '20rem',
     zoom: 12,
     pitch: 50
   });
@@ -62,8 +62,6 @@ export default function SiteCreate() {
       latitude: getLngLat.lngLat[1]
     })
   }
-
-  console.log(input);
 
   useEffect(() => {
     dispatch(getEstablishmentById(userToken))
@@ -135,28 +133,17 @@ export default function SiteCreate() {
     }
   }
   return (
-    <div>
-        <div className="flex justify-center text-black">
-          <div>
-            <ReactMapGL
-              {...viewport}
-              onViewportChange={newView => setViewport(newView)}
-              mapboxApiAccessToken={mapboxToken}
-              mapStyle={MapStyle}
-            >
-              <Marker draggable={true} onDragEnd={getLngLat => handleDrag(getLngLat)} latitude={input.latitude} longitude={input.longitude}>
-                <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
-              </Marker>
-            </ReactMapGL>
-          </div>
+    <div className="max-w-xs sm:max-w-none m-auto">
+        <div className="flex flex-col justify-center text-black">
+          
           <form
-            className="w-full flex-col justify-center items-center border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
+            className="w-full justify-center items-center border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
             onSubmit={(e) => handleSubmit(e)}
           >
             <div className="relative">
               <input
                 id="name"
-                className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
+                className="w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 placeholder="Nombre..."
                 type="text"
                 value={input.name}
@@ -213,7 +200,7 @@ export default function SiteCreate() {
             <div className="relative mt-3">
               <input
                 id="city"
-                className=" w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
+                className=" w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 placeholder="Ciudad..."
                 type="text"
                 value={input.city}
@@ -242,7 +229,7 @@ export default function SiteCreate() {
             <div className="relative mt-3">
               <input
                 id="calle"
-                className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
+                className="w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 placeholder="Calle..."
                 type="text"
                 value={input.street}
@@ -270,7 +257,7 @@ export default function SiteCreate() {
             </div>
             <div className="relative mt-3">
               <input
-                className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
+                className="w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 placeholder="Numero de calle..."
                 type="text"
                 value={input.streetNumber}
@@ -301,15 +288,30 @@ export default function SiteCreate() {
             </div>
 
             <button
-              className="mt-5 w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="mt-[3rem] w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Crear tu sede
             </button>
             <br />
             <br />
+            <div className="">
+            <h1 className="dark:text-white border-2 border-cyan-200 text-center dark:bg-darkSecondary py-2 mb-3">Selecciona la ubicación de la sede en el mapa</h1>
+            <ReactMapGL
+              {...viewport}
+              onViewportChange={newView => setViewport(newView)}
+              mapboxApiAccessToken={mapboxToken}
+              mapStyle={MapStyle}
+            >
+              <Marker draggable={true} onDragEnd={getLngLat => handleDrag(getLngLat)} latitude={input.latitude} longitude={input.longitude}>
+                <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
+              </Marker>
+            </ReactMapGL>
+            </div>
           </form>
         </div>
+          
+          
     </div>
   );
 }
