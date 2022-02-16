@@ -33,7 +33,7 @@ function App() {
         <Route exact path="/useredit" component={UserEdit} />
         <Route exact path="/establishmentprofile" component={EstablishmentProfile} />
         <Route exact path="/addUserToEstablishment" component={AddUserToEstablishment}/>
-        <Route exact path="/establishment/:id/:courtId" component={BookingCourt}/>
+        <Route exact path="/establishment/:courtId" component={BookingCourt}/>
         <Route exact path="/payment" component={MercadoPago}/>
         <Route exact path="/calendar" component={Calendario} />
         <Route eaxct path="/admin" component={AdminProfile} />

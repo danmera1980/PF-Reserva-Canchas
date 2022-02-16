@@ -2,10 +2,9 @@ import React, {useEffect, useState} from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import logo from "../../assets/img/logo.svg";
-import ReactMapGL, { Marker, Popup } from 'react-map-gl';
-import { useDispatch, useSelector } from "react-redux";
+import ReactMapGL, { Marker } from 'react-map-gl';
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getEstablishment } from "../../redux/actions/establishment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import Calendar from '../Calendar/Calendar'
@@ -63,8 +62,8 @@ const disabledDates = [
 
 
 export default function BookingCourt(){
-    const {id, courtId} = useParams()
-    const dispatch = useDispatch()
+    const {courtId} = useParams()
+    const [court, setCourt] = useState([])
     const [input, setInput] = useState({
         userId: null,
         courtId : null,
@@ -74,46 +73,51 @@ export default function BookingCourt(){
         endTime: "",
         status : ''
     })
-    const establishment = useSelector(state => state.establishment.establishmentDetail)
     const [currentLocation, setCurrentLocation ] = useState({
         latitude: 0,
         longitude: 0
     })
     const [viewport, setViewport] = useState({
-        latitude: establishment?establishment.sites.latitude: currentLocation.latitude,
-        longitude: establishment?establishment.sites.longitude: currentLocation.longitude,
+        latitude: currentLocation.latitude,
+        longitude:  currentLocation.longitude,
         width: '600px',
-        height: '85vh',
+        height: '400px',
         zoom: 12,
         pitch: 50
     });
     const userToken = useSelector((state) => state.register.userToken);
-    const [userDetails, setUserDetails] = useState(null);
-  
-    
-
-    // const [booking, setBooking] = useState([])
+    const [userId, setUserId] = useState('')
 
     const selectedBooking = (data) => {
-        console.log(data)
         setInput({
             ...input,
             startTime: data.startTime.toString(),
-            endTime: data.endTime.toString()
+            endTime: data.endTime.toString(),
+            userId: userId.id
         })
     }
 
     useEffect(()=> [
-        dispatch(getEstablishment(id,courtId)),
+        axios
+            .get(`${SERVER_URL}/court/${courtId}`)
+            .then(res => {
+                setCourt(res.data)
+                setInput({
+                    ...input,
+                    courtId : res.data.id,
+                    courtName: res.data.name, 
+                    price: res.data.price,
+                })
+                setViewport({
+                    ...viewport,
+                    latitude: res.data.site.latitude, 
+                    longitude: res.data.site.longitude 
+                })
+            }),
         navigator.geolocation.getCurrentPosition(position => {
             setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
-            setViewport({
-                ...viewport,
-                latitude: establishment.sites[0].latitude, 
-                longitude: establishment.sites[0].longitude 
-            })
         }),
-    ],[dispatch])
+    ],[courtId])
     
     useEffect(() => {
       const headers = {
@@ -122,45 +126,32 @@ export default function BookingCourt(){
       axios
         .get(`${SERVER_URL}/users/profile`, { headers: headers })
         .then((res) => {
-            setInput({
-                ...input,
-                userId: res.data.id,
-                courtId : establishment.sites[0].courts[0].id,
-                courtName: establishment.sites[0].courts[0].name, 
-                price: establishment.sites[0].courts[0].price,
-            })
+            setUserId(res.data)
         });
     }, [userToken])
-    console.log(input);
     
-    useEffect(()=>{
-        setViewport({
-            ...viewport,
-            latitude: establishment.sites[0].latitude, 
-            longitude: establishment.sites[0].longitude 
-        })
-    },[])
-    // console.log(establishment)
     return(
         <div>
             <Header/>
-            <div className="grid place-content-center  ">
+            {court.name ? <div className="grid place-content-center  ">
                 <div className="grid place-content-center ">
                     <img
-                        src={logo}
+                        src={court.site.establishment.logoImage ? court.site.establishment.logoImage : logo}
                         alt="logo_establecimiento"
-                        className=" rounded-xl max-w-3xl place-content-center "
+                        className=" rounded-xl max-w-3xl place-content-center pb-5 "
                         /> 
-                    <h1 className="font-bold text-center py-5 text-6xl dark:text-white ">{establishment?.name}</h1>              
                 </div>
-                <h1 className="font-bold py-5 text-5xl dark:text-white ">{establishment?.sites[0].name}</h1>
-                <p className="font-bold py-5 text-2xl dark:text-white ">{establishment?.sites[0].courts[0].name}</p>
-                <p className="font-bold py-2  dark:text-white">Descripcion de cancha</p>
-                <p className="font-bold py-2  dark:text-white">Deporte {establishment?.sites[0].courts[0].sport}</p>
-                <p className="max-w-2xl place-content-center font-bold text-center py-3 dark:text-white">{establishment?.sites[0].courts[0].description}</p>
-                <p className="font-bold py-2  dark:text-white">Ubicación {establishment?.sites[0].city}, {establishment?.sites[0].street}, {establishment?.sites[0].streetNumber}</p>
-                <p className="font-bold py-2  dark:text-white">Precio ${establishment?.sites[0].courts[0].price}</p>
-                <p className="font-bold py-2  dark:text-white">Horario de {establishment?.timeActiveFrom} a {establishment?.timeActiveTo}</p>
+                <div className="bg-white dark:bg-slate-600 p-5 content-center">
+                    <h1 className="font-bold text-center py-5 text-6xl dark:text-white ">{court?.site.establishment.name}</h1>              
+                    <h1 className="font-bold py-5 text-5xl dark:text-white ">{court?.site.name}</h1>
+                    <p className="font-bold py-5 text-2xl dark:text-white ">{court?.name}</p>
+                    <p className="font-bold py-2  dark:text-white">Descripcion de cancha</p>
+                    <p className="font-bold py-2  dark:text-white">Deporte:  {court?.sport}</p>
+                    <p className="max-w-2xl place-content-center font-bold text-center py-3 dark:text-white">{court?.description}</p>
+                    <p className="font-bold py-2  dark:text-white">Ubicación {court?.site.city}, {court?.site.street}, {court?.site.streetNumber}</p>
+                    <p className="font-bold py-2  dark:text-white">Precio ${court.price}</p>
+                    <p className="font-bold py-2  dark:text-white">Horario de {court?.site.establishment.timeActiveFrom} a {court?.site.establishment.timeActiveTo}</p>
+                </div>
                 <div>
                 <Calendar 
                     disabledDates={disabledDates}
@@ -178,18 +169,14 @@ export default function BookingCourt(){
                     mapboxApiAccessToken={mapboxToken}
                     mapStyle={MapStyle}
                     className="place-content-center"
-                >
-                    
-                        <button key={establishment?.sites[0].id}>
-                            <Marker latitude={establishment?.sites[0].latitude} longitude={establishment?.sites[0].longitude}>
+                >                    
+                            <Marker latitude={court?.site.latitude} longitude={court?.site.longitude}>
                                 <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
-                            </Marker>
-                        </button>
-                   
+                            </Marker>                   
                 </ReactMapGL>
                 
                 </div>
-                </div>
+                </div> : null}
               
             <Footer/>
         </div>
