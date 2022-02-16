@@ -1,11 +1,31 @@
 import { React } from "react";
 import "./Sites.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteSite } from "../../redux/actions/site";
 
 function Sites({ establishmentDetail }) {
-  console.log(establishmentDetail)
+ console.log('soyestablishmentdetail',establishmentDetail)
+ const dispatch = useDispatch();
+ const userToken = useSelector((state) => state.register.userToken);
 
+ function handleClick(event,site) {
+   console.log('soy e',site)
+   console.log('soy event',event)
+  event.preventDefault();
+  dispatch(deleteSite(site.id, userToken));
+  window.location.reload();
+
+}
+let sitesActive=[]
   return (
     <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
+      {establishmentDetail.map((e) => (e.isActive===true?
+      sitesActive.push(e):<></>))}
+      
+      {establishmentDetail.map((e) => (!sitesActive.length?
+      <span></span>:
+  
+      <div>
       <table className="w-full border-collapse border border-slate-500">
         <thead className="bg-slate-600">
           <tr>
@@ -18,7 +38,6 @@ function Sites({ establishmentDetail }) {
           </tr>
         </thead>
         <tbody className="text-center">
-          {establishmentDetail.map((e) => (
             <tr key={e.id}>
               <td className="border border-slate-700 py-2">{e.name}</td>
               <td className="border border-slate-700 py-2">{e.city}</td>
@@ -34,10 +53,12 @@ function Sites({ establishmentDetail }) {
                   Ver canchas
                 </td>
               )}
+             <td className="border border-slate-700 py-2"> <button value={e} onClick={(event)=>handleClick(event,e)}>eliminar sede</button> </td>
             </tr>
-          ))}
         </tbody>
       </table>
+      </div>
+          ))}
 
       <div className="py-2 listHolder">
         <table className="w-full border-collapse border border-slate-500">
