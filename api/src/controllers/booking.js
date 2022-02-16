@@ -1,6 +1,6 @@
-const { date } = require("joi");
 const { User, Establishment, Site, Court, Booking, Op } = require("../db");
-const { DB_HOST } = process.env;
+const { DB_HOST, TUCANCHAYAMAIL, TUCANCHAYAMAILPASS } = process.env;
+const nodemailer = require("nodemailer");
 
 const getAllBookings = async (req, res, next) => {
   try {
@@ -13,8 +13,6 @@ const getAllBookings = async (req, res, next) => {
 };
 
 const newBooking = async (req, res, next) => {
-  console.log("soy req.params", req.params);
-
   const userId = req.params.userId;
   const courtId = req.params.courtId;
   const price = req.params.price;
@@ -25,7 +23,7 @@ const newBooking = async (req, res, next) => {
   const external_reference = req.query.external_reference;
   const merchant_order_id = req.query.merchant_order_id;
 
-  console.log(userId)
+  console.log(userId);
 
   /*
      ESTO ES IMPORTANTE PARA CREAR BIEN LA RESERVA CON EL FORMATO DATE EN LA BASE DE DATOS
@@ -39,6 +37,7 @@ const newBooking = async (req, res, next) => {
   lo mismo para el endTime si les falla manden mensaje y vemos que onda eso si o si tiene que ser en el backend porque el servidor es el que hace eso
      
      */
+  let code = randomString(8);
 
   Booking.create({
     courtId: courtId,
@@ -51,18 +50,20 @@ const newBooking = async (req, res, next) => {
     payment_status: payment_status,
     merchant_order_id: merchant_order_id,
     external_reference: external_reference,
+    code: code,
   })
     .then((booking) => {
       console.log(booking);
       console.info("redirect success");
-      return res.redirect(`http://${DB_HOST}:3000/profile`);
+      return res.redirect(`http://localhost:3000/profile`);
     })
     .catch((err) => {
       console.log("error al buscar", err);
-      return res.redirect(`http://${DB_HOST}:3000/payment`);
+      return res.redirect(`http://localhost:3000/payment`);
     });
 };
 
+//this code needs reviewing and modularizing (i know ill get to it when i get to it)
 const getCourtAvailability = async (req, res, next) => {
   try {
     //     buscar el horarios apertura y cierre del establecimiento
@@ -163,8 +164,52 @@ function minutesToHour(min) {
 
   return newHour + ":" + newMin;
 }
+
+function randomString(length) {
+  var result = Array(length)
+    .fill(0)
+    .map((x) => Math.random().toString(32).charAt(2))
+    .join("");
+  return result;
+}
+
+async function emailSender(userId, code) {
+  const userData = await User.findOne({ where: { id: userId } });
+
+  let contentHTML = `
+  <h3>Hola, ${userData.name}!</h3>
+
+  <p> Gracias por usar nuestro servicio de reservas. Acercate con tu codigo de reserva a la cancha</p>
+  <h2>&#9917; ${code} &#9917;</h2>
+  `;
+  let transporter = nodemailer.createTransport({
+    host: "smtp.mailgun.org",
+    port: 587,
+    secure: false, // sin SSL
+    auth: {
+      user: TUCANCHAYAMAIL, // generated ethereal user
+      pass: TUCANCHAYAMAILPASS, // generated ethereal password
+    },
+  });
+
+  const response = await transporter.sendMail({
+    from: "'Tu Cancha YA!' <tucanchaya@noresponse.com>",
+    to: `${userData.email}`,
+    subject: "Codigo de reserva",
+    html: contentHTML,
+  });
+
+  console.log(response);
+}
+const prueba = async (req, res, next) => {
+  let code = randomString(8);
+  emailSender(1, code);
+  res.send("funciona");
+};
+
 module.exports = {
   getAllBookings,
   newBooking,
   getCourtAvailability,
+  prueba,
 };
