@@ -108,7 +108,7 @@ function Profile() {
                 case "bookings":
                   return <Bookings />;
                 case "transactions":
-                  return <div>Mi transaccion</div>;
+                  return <div>Transacciones</div>;
                 case "editProfile":
                   return <UserEdit userDetails={userDetails} />;
                 default:
