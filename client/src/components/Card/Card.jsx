@@ -7,7 +7,7 @@ import {useHistory} from "react-router-dom"
 function Card({id, name, images,button, establishment, court, courtId, address, price, sport}) {
   const history = useHistory()
   function handleClick(){
-    history.push(`/establishment/${id}/${courtId}`)
+    history.push(`/establishment/${courtId}`)
   }
   
   return (
