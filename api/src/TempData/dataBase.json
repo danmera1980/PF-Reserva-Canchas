@@ -285,13 +285,330 @@
             "sport": "Squash"
         }
     ],
-    "booking": [{
-        "courtId": "INTERGER QUE EXISTA SINO VA A DAR ERROR",
-        "userId": "INTERGER QUE EXISTA SINO VA A DAR ERROR",
+    "booking": [
+        {
+        "courtId": 1,
+        "userId": 9,
         "status": "completed", 
-        "finalAmount": "INTERGER",
-        "startTime": "FORMATO FECHA",
-        "endTime": "FORMATO FECHA",
-        "external_reference": "INTERGER"
-    }]
+        "finalAmount": 2000,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":1
+    },
+    {
+        "courtId": 5,
+        "userId": 9,
+        "status": "completed", 
+        "finalAmount": 2000,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":2
+    },
+    {
+        "courtId": 9,
+        "userId": 9,
+        "status": "completed", 
+        "finalAmount": 2000,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":3
+    },
+    {
+        "courtId": 13,
+        "userId": 9,
+        "status": "completed", 
+        "finalAmount": 2500,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":4
+    },
+    {
+        "courtId": 17,
+        "userId": 8,
+        "status": "completed", 
+        "finalAmount": 2500,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":5
+    },
+    {
+        "courtId": 21,
+        "userId": 8,
+        "status": "completed", 
+        "finalAmount": 2500,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":6
+    },
+    {
+        "courtId": 25,
+        "userId": 8,
+        "status": "completed", 
+        "finalAmount": 2500,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":7
+    },
+    {
+        "courtId": 29,
+        "userId": 8,
+        "status": "completed", 
+        "finalAmount":  2300,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":8
+    },
+    {
+        "courtId": 33,
+        "userId": 7,
+        "status": "completed", 
+        "finalAmount":  2300,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":9
+    },
+    {
+        "courtId": 37,
+        "userId": 7,
+        "status": "completed", 
+        "finalAmount":  2300,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":10
+    },
+    {
+        "courtId": 41,
+        "userId": 7,
+        "status": "completed", 
+        "finalAmount":  2300,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":11
+    },
+    {
+        "courtId": 45,
+        "userId": 7,
+        "status": "completed", 
+        "finalAmount":  2250,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":12
+    },
+    {
+        "courtId": 49,
+        "userId": 6,
+        "status": "completed", 
+        "finalAmount":  2250,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":13
+    },
+    {
+        "courtId": 53,
+        "userId": 6,
+        "status": "completed", 
+        "finalAmount":  2250,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":14
+    },
+    {
+        "courtId": 57,
+        "userId": 6,
+        "status": "completed", 
+        "finalAmount":  2250,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":15
+    },
+    {
+        "courtId": 61,
+        "userId": 6,
+        "status": "completed", 
+        "finalAmount":  2600,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":16
+    },
+    {
+        "courtId": 65,
+        "userId": 5,
+        "status": "completed", 
+        "finalAmount":  2600,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":17
+    },
+    {
+        "courtId": 2,
+        "userId": 5,
+        "status": "completed", 
+        "finalAmount":  2600,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":18
+    },
+    {
+        "courtId": 6,
+        "userId": 5,
+        "status": "completed", 
+        "finalAmount":  2600,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":20
+    },
+    {
+        "courtId": 10,
+        "userId": 5,
+        "status": "completed", 
+        "finalAmount":  3000,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":19
+    },
+    {
+        "courtId": 14,
+        "userId": 4,
+        "status": "completed", 
+        "finalAmount":  3000,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":37
+    },
+    {
+        "courtId": 18,
+        "userId": 4,
+        "status": "completed", 
+        "finalAmount":  3000,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":22
+    },
+    {
+        "courtId": 22,
+        "userId": 4,
+        "status": "completed", 
+        "finalAmount":  3000,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":23
+    },
+    {
+        "courtId": 26,
+        "userId": 4,
+        "status": "completed", 
+        "finalAmount":  2350,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":24
+    },
+    {
+        "courtId": 30,
+        "userId": 3,
+        "status": "completed", 
+        "finalAmount":  2350,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":25
+    },
+    {
+        "courtId": 34,
+        "userId": 3,
+        "status": "completed", 
+        "finalAmount":  2350,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":26
+    },
+    {
+        "courtId": 38,
+        "userId": 3,
+        "status": "completed", 
+        "finalAmount":  2350,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":27
+    },
+    {
+        "courtId": 42,
+        "userId": 3,
+        "status": "completed", 
+        "finalAmount":  2100,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":28
+    },
+    {
+        "courtId": 46,
+        "userId": 2,
+        "status": "completed", 
+        "finalAmount":  2100,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":29
+    },
+    {
+        "courtId": 50,
+        "userId": 2,
+        "status": "completed", 
+        "finalAmount":  2100,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":30
+    },
+    {
+        "courtId": 54,
+        "userId": 2,
+        "status": "completed", 
+        "finalAmount":  2100,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":31
+    },
+    {
+        "courtId": 58,
+        "userId": 2,
+        "status": "completed", 
+        "finalAmount":  2700,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":32
+    },
+    {
+        "courtId": 62,
+        "userId": 1,
+        "status": "completed", 
+        "finalAmount":  2700,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":33
+    },
+    {
+        "courtId": 66,
+        "userId": 1,
+        "status": "completed", 
+        "finalAmount":  2700,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":34
+    },
+    {
+        "courtId": 3,
+        "userId": 1,
+        "status": "completed", 
+        "finalAmount":  2700,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":35
+    },
+    {
+        "courtId": 7,
+        "userId": 8,
+        "status": "completed", 
+        "finalAmount":  2050,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":36
+    }
+    ]
 }
