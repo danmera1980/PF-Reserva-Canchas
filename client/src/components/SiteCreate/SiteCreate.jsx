@@ -66,7 +66,6 @@ export default function SiteCreate() {
   console.log(input);
 
   useEffect(() => {
-    dispatch(getEstablishmentById(userToken))
     navigator.geolocation.getCurrentPosition(position => {
       setViewport({
           ...viewport,
@@ -77,11 +76,21 @@ export default function SiteCreate() {
         ...input,
         longitude: position.coords.longitude,
         latitude: position.coords.latitude,
-        establishmentId: establishmentId,
       })
   })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [establishmentId]);
+  },[input.establishmentId]);
+
+  useEffect(() => {
+    dispatch(getEstablishmentById(userToken))
+    setInput({
+       ...input,
+       establishmentId: establishmentId,
+    })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[establishmentId])
+    
+
 
   function handleChange(e) {
     setInput({
