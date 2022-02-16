@@ -123,7 +123,7 @@
     ],
     "site": [
         {
-            "name": "Sede A",
+            "name": "Sede El Carril",
             "city": "Mendoza",
             "street": "Carril Urquiza",
             "streetNumber": 2137,
@@ -131,7 +131,7 @@
             "longitude": -68.7957077049741
         },
         {
-            "name": "Sede B",
+            "name": "Sede Morada",
             "city": "Mendoza",
             "street": "Martínez de Rozas",
             "streetNumber": 464,
@@ -139,7 +139,7 @@
             "longitude": -68.8574527007327
         },
         {
-            "name": "Sede C",
+            "name": "Sede Celeste",
             "city": "Mendoza",
             "street": "Eusebio Blanco",
             "streetNumber": 461,
@@ -147,7 +147,7 @@
             "longitude": -68.84285990258314
         },
         {
-            "name": "Sede F",
+            "name": "Sede Frambuesa",
             "city": "Godoy Cruz",
             "street": " Beltrán",
             "streetNumber": 411,
@@ -155,7 +155,7 @@
             "longitude": -68.8504196332679
         },
         {
-            "name": "Sede Q",
+            "name": "Sede Quinta",
             "city": "Godoy Cruz",
             "street": "Teniente 1 Ibañez",
             "streetNumber": 617,
@@ -163,7 +163,7 @@
             "longitude": -68.84415307374654
         },
         {
-            "name": "Sede W",
+            "name": "Sede Wimbledon",
             "city": "Mendoza",
             "street": "Chile",
             "streetNumber": 1372,
@@ -171,7 +171,7 @@
             "longitude": -68.84519635165792
         },
         {
-            "name": "Sede R",
+            "name": "Sede Rio de la Plata",
             "city": "Bermejo",
             "street": "Maure",
             "streetNumber": 1121,
@@ -179,7 +179,7 @@
             "longitude": -68.79261898724076
         },
         {
-            "name": "Sede O",
+            "name": "Sede Orange",
             "city": "Dorrego",
             "street": "Jose Marmol ",
             "streetNumber": 766,
@@ -187,7 +187,7 @@
             "longitude": -68.82134381607531
         },
         {
-            "name": "Sede P ",
+            "name": "Sede Premier",
             "city": "Luján de Cuyo",
             "street": "San Martin",
             "streetNumber": 1253,
@@ -195,7 +195,7 @@
             "longitude": -68.87568267374321
         },
         {
-            "name": "Sede L",
+            "name": "Sede Pueyrredon",
             "city": "Chacras de Coria",
             "street": "Pueyrredon ",
             "streetNumber": 2222,
@@ -203,7 +203,7 @@
             "longitude": -68.8884219872371
         },
         {
-            "name": "Sede AC",
+            "name": "Sede El Valle",
             "city": "Maipú",
             "street": "5 de Mayo Este",
             "streetNumber": 163,
@@ -211,7 +211,7 @@
             "longitude": -68.79037996025139
         },
         {
-            "name": "Sede AB",
+            "name": "Sede El ciclón",
             "city": "Maipú",
             "street": "25 de Mayo Este",
             "streetNumber": 989,
@@ -219,7 +219,7 @@
             "longitude": -68.78003584675858
         },
         {
-            "name": "Sede AA",
+            "name": "Sede La Posta",
             "city": "Maipú",
             "street": "Sarmiento",
             "streetNumber": 898,
