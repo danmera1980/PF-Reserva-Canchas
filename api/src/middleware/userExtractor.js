@@ -17,7 +17,6 @@ module.exports = (req, res, next) => {
     
     req.user = decodedToken;
   }
-  console.log("end auth mine")
 
   next();
 };
