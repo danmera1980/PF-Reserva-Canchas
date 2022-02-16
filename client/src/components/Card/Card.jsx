@@ -7,8 +7,9 @@ import {useHistory} from "react-router-dom"
 function Card({id, name, images,button, establishment, court, courtId, address, price, sport}) {
   const history = useHistory()
   function handleClick(){
-    history.push(`/establishment/${id}/${courtId}`)
+    history.push(`/establishment/${courtId}`)
   }
+  
   return (
     <div className="flex flex-wrap -m-3">
       <div className="w-full flex flex-col p-3 max-w-3xl">

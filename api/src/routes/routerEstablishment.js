@@ -7,7 +7,6 @@ const {
   createEstablishment,
   addUserToEstablishment,
   getEstabIdByUserId,
-  getEstablishmentIdCourtId,
   getEstablishmentByUser,
   cuitInDb
 } = require("../controllers/establishment.js");
@@ -41,9 +40,7 @@ const bodySchema = Joi.object({
 router.get("/idUser", userExtractor, authGoogle, getEstablishmentByUser);
 router.get('/userId', userExtractor, authGoogle, getEstabIdByUserId )
 router.get('/',getEstablishmentsFromDB)
-router.get('/:id/:courtId', getEstablishmentIdCourtId)
 router.get("/cuitInDb", cuitInDb)
-router.get("/", getEstablishmentsFromDB);
 router.post(
   "/",
   userExtractor,

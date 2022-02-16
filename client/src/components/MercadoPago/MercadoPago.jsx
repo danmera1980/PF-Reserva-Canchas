@@ -28,6 +28,9 @@ export default function MercadoPago({booking}){
   //   status : 'created'
   // }]
 
+  const date = input[0].startTime.split(' ' , 5)
+  const hour = parseInt(date[4].split(':' , 1))
+
   useEffect(()=>{
     axios
     .post(`${SERVER_URL}/mercadopago`, input)
@@ -36,12 +39,6 @@ export default function MercadoPago({booking}){
     })
     .catch(err => console.error(err)) 
   },[])
-
-
-  
-  
-  const [dateStart, hourStart] = input[0].startTime.split('T')
-  const [dateEnd, hourEnd] = input[0].endTime.split('T')
  
   // SDK VERSION 2
   useEffect(()=>{
@@ -72,13 +69,13 @@ export default function MercadoPago({booking}){
    },[preferenceId])
 
    return(
-    <div>
-      <h4 className="font-bold py-1 text-xl dark:text-white ">Detalle de la reserva</h4>
-      <h2 className="font-bold py-1 text-l dark:text-white ">{input[0].courtName}</h2>
-      {/* <h1 className="font-bold py-2  dark:text-white ">Fecha y Horario</h1>
-      <h1 className="font-bold py-2  dark:text-white ">{hourStart.split('.',1)} a {hourEnd.split('.',1)} {dateStart}</h1> */}
+    <div className=' grid place-content-center max-w-xs bg-white dark:bg-slate-600 p-5 content-center my-4 mx-auto'>
+      <h4 className="font-bold py-1 text-xl text-center dark:text-white ">Detalle de reserva</h4>
+      <h2 className="font-bold py-1 text-l  dark:text-white ">{input[0].courtName}</h2>
+      <h1 className="font-bold py-2 text-s dark:text-white ">Fecha y Horario</h1>
+      <h1 className="font-bold py-2  dark:text-white ">{date[2]}-{date[1]}-{date[3]} de {hour} a {hour+1}</h1>
       <h1 className="font-bold py-2  dark:text-white ">Total a pagar  {'$' + input[0].price}</h1>
-      <div className="cho-container">
+      <div className="cho-container place-content-center ">
         {!preferenceId &&
           <div className="loading"><ReactLoading type="spin" color="#159D74" height={50} width={50} className="spin" /> </div>
         }

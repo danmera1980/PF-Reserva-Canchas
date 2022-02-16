@@ -5,12 +5,14 @@ import { faMapMarkerAlt, faBasketballBall, faSearchLocation } from '@fortawesome
 import { Link, useHistory} from 'react-router-dom';
 import './SearchBar.scss';
 import { searchByText, filterBySport, getGeocode, clearGeocode } from '../../redux/actions/establishment';
+import axios from 'axios';
 
 const sports = 'Deportes';
-const establishment = 'Establecimiento';
+const mapToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
-function SearchBar() {
-    const geoCode = useSelector(state => state.establishment.geocode)
+function SearchBar({getViewPort}) {
+    const [ geoCode, setGeoCode] = useState('')
+    const [establishment, setEstablishment] = useState('Establecimiento');
 
     const history = useHistory();
     
@@ -26,8 +28,16 @@ function SearchBar() {
     const [sportType, setSportType] = useState('');
 
     useEffect(() => {
-        dispatch(getGeocode(searchText.text));
-        
+        // dispatch(getGeocode(searchText.text));
+        if(searchText.text !== ''){
+            axios
+                .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText.text}.json?access_token=${mapToken}`)
+                .then(res => {
+                    setGeoCode(res.data)
+                })
+        } else {
+            setGeoCode('')
+        }
     }, [searchText])
 
     function handleInput(e){
@@ -42,6 +52,14 @@ function SearchBar() {
         e.preventDefault()
         
         console.log(searchText)
+        getViewPort({
+            latitude: searchText.latitude,
+            longitude: searchText.longitude,
+            width: '600px',
+            height: '85vh',
+            zoom: 12,
+            pitch: 50
+        })
         dispatch(searchByText(searchText));
         setSearchText({
             latitude:-32.88641481914277,
@@ -53,7 +71,6 @@ function SearchBar() {
     }
 
     function handleFilterBySport(e){
-        // setSportType(e.target.value)
         setSearchText({
             ...searchText,
             sport: e.target.value
@@ -61,8 +78,9 @@ function SearchBar() {
     }
 
     const suggestionHandler = (r)=>{
-        setSearchText({...searchText, latitude: r.center[1], longitude: r.center[0], text: r.place_name}); 
-        dispatch(clearGeocode())
+        setSearchText({...searchText, latitude: r.center[1], longitude: r.center[0], text: ''}); 
+        setEstablishment(r.place_name)
+        setGeoCode('')
     }
 
   return (
@@ -95,7 +113,7 @@ function SearchBar() {
                         <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
                     </Link>
                 </div>
-                {console.log(geoCode)}
+                {console.log(geoCode.features)}
                 { geoCode !== undefined && geoCode !== '' ?
                     <div className='autoContainer' hidden={geoCode?false:true}>
                         {geoCode && geoCode.features.map(r => (
