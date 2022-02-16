@@ -20,7 +20,7 @@ const bodySchema = Joi.object({
   userId: Joi.number(),
   name: Joi.string()
     .regex(/^[a-zA-Z0-9 :]+$/)
-    .min(2)
+    .min(1)
     .max(40)
     .required(),
   logoImage: Joi.string()
