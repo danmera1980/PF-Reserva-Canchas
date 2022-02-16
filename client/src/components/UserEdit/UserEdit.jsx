@@ -103,10 +103,10 @@ export default function UserEdit({userDetails}) {
   }
 
   return userToken ? (
-    <div>
-      <div className="flex justify-center text-black">
+    <div className="max-w-md sm:max-w-none m-auto">
+      <div className="w-full flex justify-center text-black">
         <form
-          className="w-4/5 flex-col justify-center items-center mx-5 border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
+          className="w-full flex-col justify-center items-center border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
           onSubmit={handleSubmit}
         >
           <div className="flex place-content-center">
@@ -210,7 +210,7 @@ export default function UserEdit({userDetails}) {
               {"Número de teléfono actual: " +
                 (userDetails.phone
                   ? userDetails.phone
-                  : "Número de teléfono no provisto")}
+                  : "Ninguno")}
             </label>
             {errors.phone && (
               <p className="text-xs text-red-500">{errors.phone}</p>

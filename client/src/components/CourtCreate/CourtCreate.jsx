@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { postCourt } from "../../redux/actions/court";
-// import {
-//   getEstablishmentByUser,
-//   getSitesById,
-// } from "../../redux/actions/forms";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import "./CourtCreate.scss";
@@ -30,14 +26,6 @@ function validate(input) {
     errors.sport = "Selecciona un deporte";
   }
 
-  if (
-    input.shiftLength !== "" &&
-    (input.shiftLength < 15 || input.shiftLength > 120)
-  ) {
-    errors.shiftLength =
-      "La duración del turno tiene que ser entre 15 y 120 mins";
-  }
-
   if (input.price !== "" && input.price < 10) {
     errors.price = "El precio tiene que ser igual o mayor a 10";
   }
@@ -45,7 +33,7 @@ function validate(input) {
   return errors;
 }
 
-export default function CourtCreate({sites}) {
+export default function CourtCreate({ sites }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
@@ -55,7 +43,7 @@ export default function CourtCreate({sites}) {
   const [input, setInput] = useState({
     name: "",
     description: "",
-    shiftLength: "",
+    shiftLength: "60",
     price: "",
     sport: "",
     image: [],
@@ -92,7 +80,7 @@ export default function CourtCreate({sites}) {
           setInput((prevInput) => ({
             ...input,
             image: [...prevInput.image, response.data.data.url],
-          }))
+          }));
           setUploadPercentage({ uploadPercentage: 0 });
         })
         .catch((err) => {
@@ -168,7 +156,7 @@ export default function CourtCreate({sites}) {
       setInput({
         name: "",
         description: "",
-        shiftLength: "",
+        shiftLength: "60",
         price: "",
         sport: "",
         image: [],
@@ -181,13 +169,12 @@ export default function CourtCreate({sites}) {
 
   return (
     <div>
-      <div className="containerCreateCourt">
+      <div className="max-w-xs sm:max-w-none m-auto">
         <div className="flex justify-center text-black">
           <form
             className="w-full flex-col justify-center items-center border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
             onSubmit={(e) => handleSubmit(e)}
           >
-            
             <div className="flex gap-2 overflow-x-auto overflow-y-hidden">
               {input.image.length
                 ? input.image.map((e) => {
@@ -199,7 +186,12 @@ export default function CourtCreate({sites}) {
                           alt="not found"
                           key={e}
                         />
-                        <button onClick={() => handleDeleteImage(e)} className="sticky cursor-pointer text-red-400 hover:text-red-600 hover:scale-150 transition-all ml-[8.5rem] bottom-40 scale-125">X</button>
+                        <button
+                          onClick={() => handleDeleteImage(e)}
+                          className="sticky cursor-pointer text-red-400 hover:text-red-600 hover:scale-150 transition-all ml-[8.5rem] bottom-40 scale-125"
+                        >
+                          X
+                        </button>
                       </div>
                     );
                   })
@@ -264,32 +256,6 @@ export default function CourtCreate({sites}) {
 
               {errors.description && (
                 <p className="text-xs text-red-500">{errors.description}</p>
-              )}
-            </div>
-
-            <div className="relative mt-3">
-              <input
-                className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
-                type="number"
-                value={input.shiftLength}
-                name="shiftLength"
-                onChange={(e) => handleChange(e)}
-                required
-              />
-              <label
-                className="absolute left-0 -top-3.5 
-                                                text-gray-600 text-sm 
-                                                peer-placeholder-shown:text-base 
-                                                peer-placeholder-shown:text-gray-400
-                                                peer-placeholder-shown:top-2 transition-all 
-                                                peer-focus:-top-3.5 peer-focus:text-gray-600
-                                                peer-focus:text-sm
-                                                cursor-text"
-              >
-                Duración del turno (minutos):
-              </label>
-              {errors.shiftLength && (
-                <p className="text-xs text-red-500">{errors.shiftLength}</p>
               )}
             </div>
 
@@ -382,11 +348,13 @@ export default function CourtCreate({sites}) {
                 required
               >
                 <option value="">Seleccioná una sede</option>
-                {sites === null ? "" : sites.map((c) => (
-                  <option value={c.id} key={c.id}>
-                    {c.name}
-                  </option>
-                ))}
+                {sites === null
+                  ? ""
+                  : sites.map((c) => (
+                      <option value={c.id} key={c.id}>
+                        {c.name}
+                      </option>
+                    ))}
               </select>
               <label
                 className="absolute left-0 -top-3.5 
@@ -414,6 +382,11 @@ export default function CourtCreate({sites}) {
               </button>
               <br />
               <br />
+            </div>
+            <div className="relative">
+              <h1 className="bg-transparent italic">
+                La duración del turno es de 60 minutos
+              </h1>
             </div>
           </form>
         </div>

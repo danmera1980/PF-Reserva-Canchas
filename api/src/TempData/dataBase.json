@@ -4,61 +4,71 @@
             "name": "Héctor",
             "lastName": "Alterio",
             "phone": "261321321",
-            "email": "hector@dominio.com"
+            "email": "hector@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Ricardo",
             "lastName": "Darín",
             "phone": "261321321",
-            "email": "ricardo@dominio.com"
+            "email": "ricardo@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Leonardo",
             "lastName": "Sbaraglia",
             "phone": "261321321",
-            "email": "leonardo@dominio.com"
+            "email": "leonardo@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "José",
             "lastName": "Soriano",
             "phone": "261321321",
-            "email": "jose@dominio.com"
+            "email": "jose@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Darío ",
             "lastName": "Grandinetti ",
             "phone": "261123123",
-            "email": "dario@dominio.com"
+            "email": "dario@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Diego",
             "lastName": "Peretti",
             "phone": "261321321",
-            "email": "diego@dominio.com"
+            "email": "diego@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Joaquín",
             "lastName": "Furriel",
             "phone": "261321321",
-            "email": "joaquin@dominio.com"
+            "email": "joaquin@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Adrián",
             "lastName": "Navarro ",
             "phone": "261321321",
-            "email": "adrian@dominio.com"
+            "email": "adrian@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Norma",
             "lastName": "Leandro",
             "phone": "261321321",
-            "email": "norma@dominio.com"
+            "email": "norma@dominio.com",
+            "isAdmin": false
         },
         {
             "name": "Cecilia",
             "lastName": "Roth",
             "phone": "261321321",
-            "email": "cecilia@dominio.com"
+            "email": "cecilia@dominio.com",
+            "isAdmin": true
         }
     ],
     "establishment": [
@@ -118,7 +128,7 @@
             "street": "Carril Urquiza",
             "streetNumber": 2137,
             "latitude": -32.92849650236702,
-            "longitude":  -68.7957077049741
+            "longitude": -68.7957077049741
         },
         {
             "name": "Sede B",
@@ -126,7 +136,7 @@
             "street": "Martínez de Rozas",
             "streetNumber": 464,
             "latitude": -32.89463611600659,
-            "longitude":  -68.8574527007327
+            "longitude": -68.8574527007327
         },
         {
             "name": "Sede C",
@@ -134,14 +144,14 @@
             "street": "Eusebio Blanco",
             "streetNumber": 461,
             "latitude": -32.880129566290485,
-            "longitude":  -68.84285990258314
+            "longitude": -68.84285990258314
         },
         {
             "name": "Sede F",
             "city": "Godoy Cruz",
             "street": " Beltrán",
             "streetNumber": 411,
-            "latitude": -32.918794956481406, 
+            "latitude": -32.918794956481406,
             "longitude": -68.8504196332679
         },
         {
@@ -149,7 +159,7 @@
             "city": "Godoy Cruz",
             "street": "Teniente 1 Ibañez",
             "streetNumber": 617,
-            "latitude": -32.91252280947323, 
+            "latitude": -32.91252280947323,
             "longitude": -68.84415307374654
         },
         {
@@ -180,16 +190,16 @@
             "name": "Sede P ",
             "city": "Luján de Cuyo",
             "street": "San Martin",
-            "streetNumber":1253, 
+            "streetNumber": 1253,
             "latitude": -33.0287263655525,
-            "longitude":  -68.87568267374321
+            "longitude": -68.87568267374321
         },
         {
             "name": "Sede L",
             "city": "Chacras de Coria",
             "street": "Pueyrredon ",
-            "streetNumber": 2222, 
-            "latitude":  -32.993266315055514,
+            "streetNumber": 2222,
+            "latitude": -32.993266315055514,
             "longitude": -68.8884219872371
         },
         {
@@ -197,7 +207,7 @@
             "city": "Maipú",
             "street": "5 de Mayo Este",
             "streetNumber": 163,
-            "latitude": -32.99214881473605, 
+            "latitude": -32.99214881473605,
             "longitude": -68.79037996025139
         },
         {
@@ -206,68 +216,82 @@
             "street": "25 de Mayo Este",
             "streetNumber": 989,
             "latitude": -32.99415791879696,
-            "longitude":  -68.78003584675858
+            "longitude": -68.78003584675858
         },
         {
             "name": "Sede AA",
             "city": "Maipú",
             "street": "Sarmiento",
             "streetNumber": 898,
-            "latitude": -32.94915540268861, 
+            "latitude": -32.94915540268861,
             "longitude": -68.79017515840259
         }
     ],
-    "court":[{
-        "name": "Cancha3",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 60, 
-        "price": 150,
-        "sport": "Futbol 5"
-    },{
-        "name": "Cancha1",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 60, 
-        "price": 150,
-        "sport": "Futbol 5"
-    },{
-        "name": "Cancha2",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 60, 
-        "price": 200,
-        "sport": "Futbol 5"
-    },
-    {
-        "name": "Cancha4",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 60, 
-        "price": 150,
-        "sport": "Futbol 5"
-    },
-    {
-        "name": "Cancha34",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 60, 
-        "price": 200,
-        "sport": "Padel"
-    }, {
-        "name": "Cancha42",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 60, 
-        "price": 200,
-        "sport": "Padel"
-    }, {
-        "name": "Cancha14",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 60, 
-        "price": 200,
-        "sport": "Padel"
-    },
-    {
-        "name": "Cancha14",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "shiftLength": 60, 
-        "price": 200,
-        "sport": "Squash"
-    }
-    ]
+    "court": [
+        {
+            "name": "CanchaA",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "shiftLength": 60,
+            "price": 150,
+            "sport": "Futbol 5"
+        },
+        {
+            "name": "CanchaB",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "shiftLength": 60,
+            "price": 150,
+            "sport": "Futbol 5"
+        },
+        {
+            "name": "CanchaC",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "shiftLength": 60,
+            "price": 200,
+            "sport": "Futbol 5"
+        },
+        {
+            "name": "CanchaD",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "shiftLength": 60,
+            "price": 150,
+            "sport": "Futbol 5"
+        },
+        {
+            "name": "CanchaE",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "shiftLength": 60,
+            "price": 200,
+            "sport": "Padel"
+        },
+        {
+            "name": "CanchaF",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "shiftLength": 60,
+            "price": 200,
+            "sport": "Padel"
+        },
+        {
+            "name": "CanchaG",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "shiftLength": 60,
+            "price": 200,
+            "sport": "Padel"
+        },
+        {
+            "name": "CanchaH",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "shiftLength": 60,
+            "price": 200,
+            "sport": "Squash"
+        }
+    ],
+    "booking": [{
+        "courtId": "INTERGER QUE EXISTA SINO VA A DAR ERROR",
+        "userId": "INTERGER QUE EXISTA SINO VA A DAR ERROR",
+        "status": "completed", 
+        "finalAmount": "INTERGER",
+        "startTime": "FORMATO FECHA",
+        "endTime": "FORMATO FECHA",
+        "external_reference": "INTERGER"
+    }]
 }

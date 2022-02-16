@@ -28,5 +28,9 @@ module.exports = (sequelize) => {
       type: DataTypes.ARRAY(DataTypes.TEXT),
       defaultValue:["https://i.ibb.co/LSVSVLG/cancha.jpg"]
     },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
   });
 };
