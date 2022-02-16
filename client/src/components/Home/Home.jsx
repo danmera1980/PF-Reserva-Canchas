@@ -1,4 +1,4 @@
-import {React, useEffect} from "react";
+import {React, useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
@@ -9,12 +9,27 @@ import "./Home.scss";
 
 function Home() {
   const dispatch = useDispatch()
-  const cards = useSelector(state => state.establishment.establishments)
-  // console.log(cards)
+  const [ currentLocation, setCurrentLocation ] = useState({
+    latitude: -32.88641481914277, 
+    longitude: -68.84519635165792,
+    zoom: 10,
+    sport: ''
+  })
   
-  // useEffect(()=>{
-  //   dispatch(allEstablishments())
-  // },[dispatch])
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition(position => {
+      setCurrentLocation({
+        latitude: position.coords.latitude, 
+        longitude: position.coords.longitude,
+        zoom: 10,
+        sport: ''
+      })
+    })
+  },[currentLocation])
+
+  const getViewPort = (viewport) => {
+    console.log(viewport)
+  }
 
   return (
     <div className="home">
@@ -25,10 +40,10 @@ function Home() {
           <img src={homeImage} alt="home here" className="homeImage h-72 w-[90%] md:w-[690px] md:h-[400px] xl:w-[1200px] xl:h-[460px]" />
         </div>
         <div className='search'>
-          <SearchBar />
+          <SearchBar getViewPort={getViewPort}/>
         </div>
       </div>
-      <Popular />
+      <Popular currentLocation={currentLocation}/>
       <Footer />
     </div>
   );
