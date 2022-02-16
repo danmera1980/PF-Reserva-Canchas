@@ -17,7 +17,7 @@ const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 function Results() {
     const [ selectedCard, setSelectedCard] = useState(null);
     const resultsData = useSelector(state => state.establishment.establishments);
-    console.log(resultsData)
+    // console.log(resultsData)
     const [currentLocation, setCurrentLocation ] = useState({
         latitude: 0,
         longitude: 0
@@ -31,7 +31,7 @@ function Results() {
                 latitude: position.coords.latitude, 
                 longitude: position.coords.longitude 
             })
-            console.log('My location', currentLocation)
+            // console.log('My location', currentLocation)
         })
     ],[])
 

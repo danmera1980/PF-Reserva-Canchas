@@ -13,7 +13,6 @@ const getAllBookings = async (req, res, next) => {
 };
 
 const newBooking = async (req, res, next) => {
-  console.log("soy req.params", req.params);
 
   const userId = req.params.userId;
   const courtId = req.params.courtId;
@@ -24,21 +23,6 @@ const newBooking = async (req, res, next) => {
   const payment_status = req.query.status;
   const external_reference = req.query.external_reference;
   const merchant_order_id = req.query.merchant_order_id;
-
-  console.log(userId)
-
-  /*
-     ESTO ES IMPORTANTE PARA CREAR BIEN LA RESERVA CON EL FORMATO DATE EN LA BASE DE DATOS
-     posiblemente les haya funcionado porque el string que tienen se los pase como debe ser pero no esta bueno mandarle asi y aca los meses se enumeran distinto es una cosa loca lo que van a tener que hacer es lo que sigue:
-     
-  CUANDO RECIBAN EL OBJETO QUE MANDA EL FRONT CON year, month, date, y startTime hay que separar si o si el estar time en hora y minutos con un split y crear la fecha asi:
-  
-  let startTime = new Date (year, month, date, hour, minute, 00)
-
-  agreguen los ceros que son re importantes para la comparación de si hay canchas disponibles
-  lo mismo para el endTime si les falla manden mensaje y vemos que onda eso si o si tiene que ser en el backend porque el servidor es el que hace eso
-     
-     */
 
   Booking.create({
     courtId: courtId,
@@ -92,7 +76,7 @@ const getCourtAvailability = async (req, res, next) => {
     //calculo el largo del dia de trabajo en minutos de inicio y de fin
     activeTo = parseInt(activeToHour) * 60 + parseInt(activeToMin);
     activeFrom = parseInt(activeFromHour) * 60 - parseInt(activeFromMin);
-    console.log(activeTo, "activeto");
+    // console.log(activeTo, "activeto");
     //     la duración del dia de trabajo del court en minutos
     let businessHoursInMinutes = activeTo - activeFrom;
     //     dividir las horas abiertas por la duración de los turno y me da cuantos slots son
@@ -116,9 +100,9 @@ const getCourtAvailability = async (req, res, next) => {
         ],
       },
     });
-    console.log("reservas del dia", dayBookings);
+    // console.log("reservas del dia", dayBookings);
     let slotsQuantity = businessHoursInMinutes / infoCourt.shiftLength;
-    console.log("cantidad de turnos en el dia", slotsQuantity);
+    // console.log("cantidad de turnos en el dia", slotsQuantity);
     let availability = [];
 
     // console.log(dayBookings)

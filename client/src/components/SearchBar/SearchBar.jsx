@@ -41,7 +41,7 @@ function SearchBar() {
     let handleSearch = (e)=>{
         e.preventDefault()
         
-        console.log(searchText)
+        // console.log(searchText)
         dispatch(searchByText(searchText));
         setSearchText({
             latitude:-32.88641481914277,
@@ -95,7 +95,7 @@ function SearchBar() {
                         <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
                     </Link>
                 </div>
-                {console.log(geoCode)}
+                {/* {console.log(geoCode)} */}
                 { geoCode !== undefined && geoCode !== '' ?
                     <div className='autoContainer' hidden={geoCode?false:true}>
                         {geoCode && geoCode.features.map(r => (
