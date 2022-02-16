@@ -24,15 +24,15 @@ function Results() {
     })
     
     useEffect(()=> [
-        navigator.geolocation.getCurrentPosition(position => {
-            setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
-            setViewport({
-                ...viewport,
-                latitude: position.coords.latitude, 
-                longitude: position.coords.longitude 
-            })
-            console.log('My location', currentLocation)
-        })
+        // navigator.geolocation.getCurrentPosition(position => {
+        //     setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
+        //     setViewport({
+        //         ...viewport,
+        //         latitude: position.coords.latitude, 
+        //         longitude: position.coords.longitude 
+        //     })
+        //     console.log('My location', currentLocation)
+        // })
     ],[])
 
     const [viewport, setViewport] = useState({
@@ -49,11 +49,15 @@ function Results() {
         setSelectedCard(card)
     }
 
+    const getViewPort = (viewport) => {
+        setViewport(viewport)
+    }
+
   return (
     <div>
         <div className='fixed w-full z-50'>
             <Header />
-            <SearchBar />
+            <SearchBar getViewPort={getViewPort}/>
         </div>
         <div className='results p-32'>
             <div className='leftResults'>
@@ -62,7 +66,7 @@ function Results() {
                         key= {court.id}
                         id= {m.cuit}
                         name= {site.name}
-                        images= {court.images}
+                        images= {court.image}
                         establishment= {m.name}
                         cuit={m.cuit}
                         court= {court.name}
