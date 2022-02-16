@@ -140,27 +140,6 @@ const addUserToEstablishment = async (req, res, next) => {
   }
 };
 
-const getEstablishmentIdCourtId = async (req, res, next) => {
-    const {id, courtId} = req.params
-    try {
-        const establishment = await Establishment.findOne({
-            where:{
-                cuit: id
-            },
-            include:{
-                model: Site,
-                as: 'sites',
-                include:{
-                  model: Court,
-                  as: 'courts',
-                  where:{
-                    id: courtId
-                }
-                }
-              }
-        })
-        res.send(establishment)
-
 const getEstablishmentByUser = async (req, res, next) => {
   const userId = req.user.id;
   let user = await User.findOne({
@@ -231,6 +210,5 @@ module.exports = {
   getEstabIdByUserId,
   getEstablishmentByUser,
   cuitInDb,
-  getEstablishmentIdCourtId,
-  statusUpdate,
-};
+  statusUpdate
+}
