@@ -23,7 +23,7 @@ export default function PostEstablishment() {
     if (cuitInDb) {
       errors.cuit = "Cuit ya ingresado en la base de datos";
     }
-    if (input.name !== "" && !/^[a-zA-Z0-9_\-' ':]{1,20}$/.test(input.name)) {
+    if (input.name !== "" && !/^[a-zA-Z0-9_\-' ':]{1,40}$/.test(input.name)) {
       errors.name = "No se permiten símbolos";
     }
     if (

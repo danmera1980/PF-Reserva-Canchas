@@ -17,27 +17,28 @@ const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 function Results() {
     const [ selectedCard, setSelectedCard] = useState(null);
     const resultsData = useSelector(state => state.establishment.establishments);
-    console.log(resultsData)
     const [currentLocation, setCurrentLocation ] = useState({
         latitude: 0,
         longitude: 0
     })
     
     useEffect(()=> [
-        // navigator.geolocation.getCurrentPosition(position => {
-        //     setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
-        //     setViewport({
-        //         ...viewport,
-        //         latitude: position.coords.latitude, 
-        //         longitude: position.coords.longitude 
-        //     })
-        //     console.log('My location', currentLocation)
-        // })
+        navigator.geolocation.getCurrentPosition(position => {
+            setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
+            setViewport({
+                ...viewport,
+                latitude: position.coords.latitude, 
+                longitude: position.coords.longitude 
+            })
+            console.log('My location', currentLocation)
+        })
     ],[])
 
     const [viewport, setViewport] = useState({
-        latitude: resultsData.length?resultsData[0].sites[0].latitude: currentLocation.latitude,
-        longitude: resultsData.length?resultsData[0].sites[0].longitude: currentLocation.longitude,
+        // latitude: resultsData?resultsData[0].sites[0].latitude: currentLocation.latitude,
+        // longitude: resultsData?resultsData[0].sites[0].longitude: currentLocation.longitude,
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude,
         width: '600px',
         height: '85vh',
         zoom: 12,
