@@ -291,8 +291,8 @@
         "userId": 9,
         "status": "completed", 
         "finalAmount": 2000,
-        "startTime": [2022, 2, 21, 16, 0, 0],
-        "endTime": [2022, 2, 21, 17, 0, 0],
+        "startTime": [2022, 2, 21, 16],
+        "endTime": [2022, 2, 21, 17],
         "external_reference":1
     },
     {

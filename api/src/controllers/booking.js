@@ -1,6 +1,7 @@
 const { User, Establishment, Site, Court, Booking, Op } = require("../db");
 const { DB_HOST, TUCANCHAYAMAIL, TUCANCHAYAMAILPASS } = process.env;
 const nodemailer = require("nodemailer");
+const { randomString, minutesToHour } = require("./utils/utils");
 
 const getAllBookings = async (req, res, next) => {
   try {
@@ -37,7 +38,6 @@ const newBooking = async (req, res, next) => {
   lo mismo para el endTime si les falla manden mensaje y vemos que onda eso si o si tiene que ser en el backend porque el servidor es el que hace eso
      
      */
-  let code = randomString(8);
 
   Booking.create({
     courtId: courtId,
@@ -50,7 +50,6 @@ const newBooking = async (req, res, next) => {
     payment_status: payment_status,
     merchant_order_id: merchant_order_id,
     external_reference: external_reference,
-    code: code,
   })
     .then((booking) => {
       console.log(booking);
@@ -158,19 +157,7 @@ const getCourtAvailability = async (req, res, next) => {
   }
 };
 
-function minutesToHour(min) {
-  let newMin = min % 60 ? min % 60 : "00";
-  let newHour = (min - newMin) / 60;
 
-  return newHour + ":" + newMin;
-}
-function randomString(length) {
-  var result = Array(length)
-    .fill(0)
-    .map((x) => Math.random().toString(32).charAt(2))
-    .join("");
-  return result;
-}
 
 async function emailSender(userId, code) {
   const userData = await User.findOne({ where: { id: userId } });
