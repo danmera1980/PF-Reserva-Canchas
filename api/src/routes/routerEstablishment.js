@@ -9,7 +9,8 @@ const {
   getEstabIdByUserId,
   getEstablishmentByUser,
   cuitInDb,
-  statusUpdate,
+  establishmentBookings,
+  statusUpdate
 } = require("../controllers/establishment.js");
 const userExtractor = require("../middleware/userExtractor");
 const authGoogle = require("../middleware/auth");
@@ -21,7 +22,7 @@ const bodySchema = Joi.object({
   userId: Joi.number(),
   name: Joi.string()
     .regex(/^[a-zA-Z0-9 :]+$/)
-    .min(2)
+    .min(1)
     .max(40)
     .required(),
   logoImage: Joi.string()
@@ -42,6 +43,7 @@ router.get("/idUser", userExtractor, authGoogle, getEstablishmentByUser);
 router.get('/userId', userExtractor, authGoogle, getEstabIdByUserId )
 router.get('/',getEstablishmentsFromDB)
 router.get("/cuitInDb", cuitInDb)
+
 router.post(
   "/",
   userExtractor,

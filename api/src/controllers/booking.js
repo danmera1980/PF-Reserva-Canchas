@@ -164,7 +164,6 @@ function minutesToHour(min) {
 
   return newHour + ":" + newMin;
 }
-
 function randomString(length) {
   var result = Array(length)
     .fill(0)
@@ -206,10 +205,23 @@ const prueba = async (req, res, next) => {
   emailSender(1, code);
   res.send("funciona");
 };
+const courtBookings = async (req, res, next) => {
+  const { courtId } = req.params;
+  try {
+    const courtBooking = await Court.findAll({
+      where: { id: courtId },
+    });
+
+    res.send(courtBooking)
+  } catch (error) {
+    next(error);
+  }
+}
+;
 
 module.exports = {
   getAllBookings,
   newBooking,
   getCourtAvailability,
-  prueba,
+  courtBookings
 };
