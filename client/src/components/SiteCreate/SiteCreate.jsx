@@ -122,6 +122,7 @@ export default function SiteCreate() {
         text: "Faltan completar campos obligatorios",
       });
     } else {
+      console.log('input del sitecreate',input)
       dispatch(postSite(input, userToken));
       Swal.fire({
         position: "top-end",
