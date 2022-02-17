@@ -16,6 +16,7 @@ const loadUsers = async function () {
         email: allUsers[i].email,
         passwordHash: passwordHash,
         phone: allUsers[i].phone,
+        isAdmin: allUsers[i].isAdmin
       });
     }
     console.log("users loaded");

@@ -34,5 +34,9 @@ module.exports = (sequelize) => {
     longitude: {
       type: DataTypes.FLOAT,
     },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
   });
 };

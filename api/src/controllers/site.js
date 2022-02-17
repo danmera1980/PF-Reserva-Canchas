@@ -63,12 +63,16 @@ const getAllSites = async (req, res, next) => {
   try {
     if (establishmentId) {
       sites = await Site.findAll({
-        where: { establishmentId: establishmentId },
+        where: { 
+                establishmentId: establishmentId,
+                isActive:true
+                },
       });
       sites = sites.map((site) => {
         return {
           id: site.id,
           name: site.name,
+    
         };
       });
       return res.send(sites);
@@ -81,4 +85,21 @@ const getAllSites = async (req, res, next) => {
   }
 };
 
-module.exports = { createSite, getAllSites, findByLocation };
+const updateStatusSite = async (req, res, next) => {
+
+  console.log('soy req.body',req.body)
+  const {siteId}= req.body
+  console.log('sooy siteId',siteId)
+  try {
+    
+      const updated = await Site.findOne({ where: { id: siteId }});
+      updated.isActive = !updated.isActive;
+      await updated.save();
+
+     res.json(updated)
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+module.exports = { createSite, getAllSites, findByLocation,updateStatusSite };
