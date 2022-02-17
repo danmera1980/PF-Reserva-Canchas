@@ -2,7 +2,6 @@ import { React } from "react";
 import "./Sites.scss";
 
 function Sites({ establishmentDetail }) {
-  console.log(establishmentDetail)
 
   return (
     <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
