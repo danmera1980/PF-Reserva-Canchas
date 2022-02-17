@@ -16,6 +16,7 @@ import AddUserToEstablishment from './components/AddUserToEstablishment/AddUserT
 import BookingCourt from "./components/BookingCourt/BookingCourt";
 import Calendario from "./components/Calendar/Calendar";
 import Login from "./components/Login/Login";
+import ReportingForm from "./components/Reporting/ReportingForm";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route exact path="/establishment/:courtId" component={BookingCourt}/>
         <Route exact path="/payment" component={MercadoPago}/>
         <Route exact path="/calendar" component={Calendario} />
+        <Route exact path="/reporting" component={ReportingForm} />
       </div>
     </React.Fragment>
   );

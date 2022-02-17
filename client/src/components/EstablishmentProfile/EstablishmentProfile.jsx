@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import Header from "../Header/Header";
 import SiteCreate from "../SiteCreate/SiteCreate";
 import CourtCreate from "../CourtCreate/CourtCreate";
+import ReportingForm from "../Reporting/ReportingForm";
 import Footer from "../Footer/Footer";
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
@@ -33,7 +34,7 @@ function EstablishmentProfile() {
   const onButtonSelection = (option) => {
     setVisual(option);
   };
-  console.log('soyestablishmentdetail',establishmentDetail)
+  // console.log('soyestablishmentdetail',establishmentDetail)
 
   return (
     <div className="dark:bg-darkPrimary dark:text-white">
@@ -125,6 +126,8 @@ function EstablishmentProfile() {
                   return <Sites establishmentDetail={establishmentDetail.sites} />;
                 case "courtCreate":
                   return <CourtCreate sites={establishmentDetail.sites}/>;
+                case "reporting":
+                  return <ReportingForm establishmentDetail={establishmentDetail}/>;
                 default:
                   return <EstablishmentBookings establishmentDetail={establishmentDetail}/>;
               }

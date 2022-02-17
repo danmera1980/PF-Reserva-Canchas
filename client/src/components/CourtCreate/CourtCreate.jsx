@@ -366,7 +366,7 @@ export default function CourtCreate({ sites }) {
                                                 peer-focus:text-sm
                                                 cursor-text"
               >
-                Site:
+                Sedes:
               </label>
               {errors.siteId && (
                 <p className="text-red-500 text-xs italic">{errors.siteId}</p>
