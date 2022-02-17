@@ -5,9 +5,11 @@ import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import UsersTable from "./UsersTable";
 import { useSelector } from "react-redux";
+import EstablihsmentTable from "./EstablishmentTable";
 
 function AdminProfile() {
   const [users, setUsers] = useState(null);
+  const [establishment, setEstablishment] = useState(null);
   const [visual, setVisual] = useState("");
   const userToken = useSelector((state) => state.register.userToken);
 
@@ -24,6 +26,17 @@ function AdminProfile() {
     });
   }, [userToken]);
 
+  useEffect(() => {
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
+    axios
+      .get(`${SERVER_URL}/establishment`, { headers: headers })
+      .then((res) => {
+        setEstablishment(res.data);
+      });
+  }, [userToken]);
+
   return (
     <div>
       <Header />
@@ -33,12 +46,20 @@ function AdminProfile() {
       >
         Ver usuarios
       </button>
+      <button
+        className="mt-5 ml-40 h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all "
+        onClick={() => onButtonSelection("establishments")}
+      >
+        Ver Establecimientos
+      </button>
 
       <div>
         {(() => {
           switch (visual) {
             case "users":
               return <UsersTable users={users} />;
+            case "establishments":
+              return <EstablihsmentTable establishment={establishment} />;
             default:
               return (
                 <h1 className="text-indigo-500 flex justify-center text-2xl">
