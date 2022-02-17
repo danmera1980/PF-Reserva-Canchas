@@ -3,7 +3,6 @@ const userExtractor = require("../middleware/userExtractor");
 const authGoogle = require('../middleware/auth')
 const timeIp = require("../middleware/timeIp");
 const { getAllBookings, newBooking, getCourtAvailability, courtBookings } = require("../controllers/booking");
-const { getAllBookings, newBooking, getCourtAvailability } = require("../controllers/booking");
 
 const router = Router();
 
