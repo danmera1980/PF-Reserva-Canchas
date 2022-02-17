@@ -17,13 +17,14 @@ function Sites({ establishmentDetail }) {
 
 }
 let sitesActive=[]
+establishmentDetail.map((e) => (e.isActive===true?
+  sitesActive.push(e):null))
   return (
+    
     <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
-      {establishmentDetail.map((e) => (e.isActive===true?
-      sitesActive.push(e):<></>))}
-      
-      {establishmentDetail.map((e) => (!sitesActive.length?
-      <span></span>:
+   
+      {!sitesActive.length?
+      <span>No hay sedes</span>: establishmentDetail.map((e) => (e.isActive===false?<span></span>:
   
       <div>
       <table className="w-full border-collapse border border-slate-500">
