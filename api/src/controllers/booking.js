@@ -163,8 +163,60 @@ function minutesToHour(min) {
 
   return newHour + ":" + newMin;
 }
+
+const getBookingsByEstablishment = async (req,res)=>{
+  var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
+  var dateTo = req.query.dateTo ? new Date(req.query.dateTo):null;
+  var sport = req.query.sport;
+  var siteName = req.query.siteName;
+  const establishmentId = req.params.establishmentId;
+
+  console.log('dateTo',dateTo);
+  console.log('dateFrom',dateFrom);
+
+  var establishment = await Establishment.findOne({
+    where:{
+      id: establishmentId
+    },
+    attributes: ['id'],
+    include:{
+      model: Site,
+      as: 'sites',
+      attributes: ['id','name'],
+      where:{
+        [Op.and]: [
+        siteName? {name:siteName}:null
+        ]
+      },
+      include:{
+        model: Court,
+        as: 'courts',
+        attributes: ['id','sport'],
+        where:{
+          [Op.and]: [
+          sport? {sport:sport}:null
+          ]
+        },
+        include:{
+          model:Booking,
+          as: 'booking',
+          where:{
+            [Op.and]: [
+              dateTo?{startTime: {[Op.lte]: dateTo }}:null,
+              dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
+             ]
+          }
+        }
+      }
+    }
+  })
+
+  res.send(establishment)
+}
+
 module.exports = {
   getAllBookings,
   newBooking,
   getCourtAvailability,
+  getBookingsByEstablishment
 };
