@@ -36,7 +36,7 @@ export default function SiteCreate() {
   const userToken = useSelector((state) => state.register.userToken);
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
-    establishmentId: "",
+    establishmentId: establishmentId?establishmentId:"",
     name: "",
     country: "",
     city: "",
@@ -64,6 +64,15 @@ export default function SiteCreate() {
   }
 
   useEffect(() => {
+    dispatch(getEstablishmentById(userToken))
+    setInput({
+       ...input,
+       establishmentId: establishmentId,
+    })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[establishmentId])
+
+  useEffect(() => {
     navigator.geolocation.getCurrentPosition(position => {
       setViewport({
           ...viewport,
@@ -79,14 +88,7 @@ export default function SiteCreate() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[input.establishmentId]);
 
-  useEffect(() => {
-    dispatch(getEstablishmentById(userToken))
-    setInput({
-       ...input,
-       establishmentId: establishmentId,
-    })
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[establishmentId])
+  
     
 
 
@@ -122,6 +124,7 @@ export default function SiteCreate() {
         text: "Faltan completar campos obligatorios",
       });
     } else {
+      console.log('input del sitecreate',input)
       dispatch(postSite(input, userToken));
       Swal.fire({
         position: "top-end",
