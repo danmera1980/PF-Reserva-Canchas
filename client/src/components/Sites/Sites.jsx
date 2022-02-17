@@ -11,7 +11,7 @@ function Sites({ establishmentDetail }) {
   const handleSites = (sites) => {
     setCourts(() => sites.courts);
   };
-  function handleDelete(event, site) {
+  function handleDeleteSite(event, site) {
     event.preventDefault();
     new Swal({
       title: "Estas seguro de eliminar la sede?",
@@ -78,7 +78,7 @@ function Sites({ establishmentDetail }) {
                     {" "}
                     <button
                       value={e}
-                      onClick={(event) => handleDelete(event, e)}
+                      onClick={(event) => handleDeleteSite(event, e)}
                       className="bg-red-500 px-1 hover:bg-red-600 transition-all active:scale-95"
                     >
                       X
@@ -100,6 +100,9 @@ function Sites({ establishmentDetail }) {
                 <th className="border border-slate-600 px-10">Precio</th>
                 <th className="border border-slate-600">Duración del turno</th>
                 <th className="border border-slate-600 px-10">Deporte</th>
+                <th className="border border-slate-600 text-center">
+                  Eliminar Cancha
+                </th>
               </tr>
             </thead>
             {courts.map((e) => (
@@ -111,6 +114,16 @@ function Sites({ establishmentDetail }) {
                     {e.shiftLength} Minutos
                   </td>
                   <td className="border border-slate-700">{e.sport}</td>
+                  <td className="border border-slate-700 py-2">
+                    {" "}
+                    <button
+                      value={e}
+                      // onClick={(event) => handleDeleteCourt(event, e)}
+                      className="bg-red-500 px-1 hover:bg-red-600 transition-all active:scale-95"
+                    >
+                      X
+                    </button>{" "}
+                  </td>
                 </tr>
               </tbody>
             ))}
