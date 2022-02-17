@@ -12,6 +12,9 @@ const {
   registerGoogle,
   getUserBookingHistory,
   updateStatus,
+  addfavorite,
+  findFavorite,
+  delFavorite,
 } = require("../controllers/user");
 const { loginUser, checkedEmail } = require("../controllers/login");
 const router = Router();
@@ -38,29 +41,29 @@ const registerSchema = Joi.object({
 });
 const loginSchema = Joi.object({
   email: Joi.string()
-  .regex(
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  )
-  .required(),
+    .regex(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    )
+    .required(),
   password: Joi.string().required(),
+});
 
-})
-
-
+router.delete("/fav/:courtId", userExtractor, authGoogle, delFavorite);
 
 router.get("/", getAllUsers);
 router.get("/checkedEmail", checkedEmail);
 router.get("/bookings", userExtractor, authGoogle, getUserBookingHistory);
 
 router.get("/profile", userExtractor, authGoogle, getUserProfile);
+router.get("/fav", userExtractor, authGoogle, findFavorite);
+
 router.post("/googleRegister", userExtractor, authGoogle, registerGoogle);
 
 router.post("/register", validator.body(registerSchema), registerUser);
 router.post("/login", validator.body(loginSchema), loginUser);
+router.put("/fav", userExtractor, authGoogle, addfavorite);
 
 router.put("/edit", userExtractor, authGoogle, editUser);
 router.put("/updateStatus", userExtractor, authGoogle, updateStatus);
-
-
 
 module.exports = router;
