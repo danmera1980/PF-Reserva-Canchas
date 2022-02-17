@@ -4,7 +4,8 @@ const validator = require('express-joi-validation').createValidator({})
 const Joi = require('joi')
 const { postCourt, getAllCourts, getCourtById, updateStatusCourt} = require('../controllers/court');
 const userExtractor = require("../middleware/userExtractor");
-const authGoogle = require('../middleware/auth')
+const authGoogle = require('../middleware/auth');
+const timeIp = require('../middleware/timeIp');
 
 const bodySchema = Joi.object({
     siteId: Joi.string().regex(/^[a-zA-Z0-9-]+$/).min(2).max(40).required(),
@@ -16,9 +17,9 @@ const bodySchema = Joi.object({
     image: Joi.array().items(Joi.string().regex(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/).min(8)).allow(null),
 })
 
-router.post('/', userExtractor, authGoogle, validator.body(bodySchema), postCourt)
-router.get('/', getAllCourts)
-router.get('/:id', getCourtById)
-router.put('/updateStatusCourt',updateStatusCourt)
+router.post('/', timeIp, userExtractor, authGoogle, validator.body(bodySchema), postCourt)
+router.get('/', timeIp, getAllCourts)
+router.get('/:id', timeIp, getCourtById)
+router.put('/updateStatusCourt',timeIp, updateStatusCourt)
 
 module.exports = router;

@@ -3,6 +3,7 @@ const userExtractor = require("../middleware/userExtractor");
 const authGoogle = require("../middleware/auth");
 const Joi = require("joi");
 const validator = require("express-joi-validation").createValidator({});
+const timeIp = require("../middleware/timeIp");
 
 const {
   getAllUsers,
@@ -48,19 +49,16 @@ const loginSchema = Joi.object({
 
 
 
-router.get("/", getAllUsers);
-router.get("/checkedEmail", checkedEmail);
-router.get("/bookings", userExtractor, authGoogle, getUserBookingHistory);
+router.get("/", timeIp, getAllUsers);
+router.get("/checkedEmail", timeIp, checkedEmail);
+router.get("/bookings", timeIp, userExtractor, authGoogle, getUserBookingHistory);
 
-router.get("/profile", userExtractor, authGoogle, getUserProfile);
-router.post("/googleRegister", userExtractor, authGoogle, registerGoogle);
+router.get("/profile", timeIp, userExtractor, authGoogle, getUserProfile);
+router.post("/googleRegister", timeIp, userExtractor, authGoogle, registerGoogle);
+router.post("/register", timeIp, validator.body(registerSchema), registerUser);
+router.post("/login", timeIp, validator.body(loginSchema), loginUser);
 
-router.post("/register", validator.body(registerSchema), registerUser);
-router.post("/login", validator.body(loginSchema), loginUser);
-
-router.put("/edit", userExtractor, authGoogle, editUser);
-router.put("/updateStatus", userExtractor, authGoogle, updateStatus);
-
-
+router.put("/edit", timeIp, userExtractor, authGoogle, editUser);
+router.put("/updateStatus", timeIp, userExtractor, authGoogle, updateStatus);
 
 module.exports = router;
