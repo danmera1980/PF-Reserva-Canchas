@@ -87,9 +87,7 @@ const getAllSites = async (req, res, next) => {
 
 const updateStatusSite = async (req, res, next) => {
 
-  console.log('soy req.body',req.body)
   const {siteId}= req.body
-  console.log('sooy siteId',siteId)
   try {
     
       const updated = await Site.findOne({ where: { id: siteId }});
