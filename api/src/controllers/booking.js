@@ -167,8 +167,8 @@ function minutesToHour(min) {
 const getBookingsByEstablishment = async (req,res)=>{
   var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
   var dateTo = req.query.dateTo ? new Date(req.query.dateTo):null;
-  var sport = req.query.sport;
-  var siteName = req.query.siteName;
+  var siteId = req.query.siteId;
+  var sport = req.query.sport
   const establishmentId = req.params.establishmentId;
 
   console.log('dateTo',dateTo);
@@ -182,24 +182,25 @@ const getBookingsByEstablishment = async (req,res)=>{
     include:{
       model: Site,
       as: 'sites',
-      attributes: ['id','name'],
+      attributes: ['name'],
       where:{
         [Op.and]: [
-        siteName? {name:siteName}:null
+        siteId? {id:siteId}:null
         ]
       },
       include:{
         model: Court,
         as: 'courts',
-        attributes: ['id','sport'],
+        attributes: ['name','sport'],
         where:{
           [Op.and]: [
-          sport? {sport:sport}:null
+          sport? {sport:sport} : null
           ]
         },
         include:{
           model:Booking,
           as: 'booking',
+          attributes:['startTime', 'external_reference', 'payment_status'],
           where:{
             [Op.and]: [
               dateTo?{startTime: {[Op.lte]: dateTo }}:null,
