@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteSite } from "../../redux/actions/site";
+import { deleteCourt } from "../../redux/actions/court";
 import Swal from "sweetalert2";
 
 function Sites({ establishmentDetail }) {
@@ -26,6 +27,24 @@ function Sites({ establishmentDetail }) {
         window.location.reload();
       } else if (result.isDenied) {
         Swal.fire("La sede no se elimino");
+      }
+    });
+  }
+  function handleDeleteCourt(event, court) {
+    event.preventDefault();
+    new Swal({
+      title: "Estas seguro de eliminar la cancha?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Si",
+      denyButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteCourt(court.id, userToken));
+        Swal.fire("Cancha eliminada");
+        window.location.reload();
+      } else if (result.isDenied) {
+        Swal.fire("La cancha no se elimino");
       }
     });
   }
@@ -105,7 +124,7 @@ function Sites({ establishmentDetail }) {
                 </th>
               </tr>
             </thead>
-            {courts.map((e) => (
+            {courts.map((e) => (e.isActive===true?
               <tbody className="text-center" key={e.id}>
                 <tr key={e.id}>
                   <td className="border border-slate-700">{e.name}</td>
@@ -118,14 +137,14 @@ function Sites({ establishmentDetail }) {
                     {" "}
                     <button
                       value={e}
-                      // onClick={(event) => handleDeleteCourt(event, e)}
+                      onClick={(event) => handleDeleteCourt(event, e)}
                       className="bg-red-500 px-1 hover:bg-red-600 transition-all active:scale-95"
                     >
                       X
                     </button>{" "}
                   </td>
                 </tr>
-              </tbody>
+              </tbody>:<></>
             ))}
           </table>
         ) : null}
