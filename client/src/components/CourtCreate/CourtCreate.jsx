@@ -350,7 +350,7 @@ export default function CourtCreate({ sites }) {
                 <option value="">Seleccioná una sede</option>
                 {sites === null
                   ? ""
-                  : sites.map((c) => (
+                  : sites.map((c) => (c.isActive===false?null:
                       <option value={c.id} key={c.id}>
                         {c.name}
                       </option>

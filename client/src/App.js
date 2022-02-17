@@ -17,6 +17,7 @@ import BookingCourt from "./components/BookingCourt/BookingCourt";
 import Calendario from "./components/Calendar/Calendar";
 import Login from "./components/Login/Login";
 import ReportingForm from "./components/Reporting/ReportingForm";
+import AdminProfile from "./components/AdminProfile/AdminProfile";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route exact path="/payment" component={MercadoPago}/>
         <Route exact path="/calendar" component={Calendario} />
         <Route exact path="/reporting" component={ReportingForm} />
+        <Route eaxct path="/admin" component={AdminProfile} />
       </div>
     </React.Fragment>
   );

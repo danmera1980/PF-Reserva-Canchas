@@ -14,6 +14,7 @@ const {
 } = require("../controllers/establishment.js");
 const userExtractor = require("../middleware/userExtractor");
 const authGoogle = require("../middleware/auth");
+const timeIp = require("../middleware/timeIp.js");
 
 const bodySchema = Joi.object({
   cuit: Joi.string()
@@ -38,19 +39,18 @@ const bodySchema = Joi.object({
     .regex(/^([0-9]{2})\:([0-9]{2})$/)
     .required(),
 });
-
-router.get("/idUser", userExtractor, authGoogle, getEstablishmentByUser);
-router.get('/userId', userExtractor, authGoogle, getEstabIdByUserId )
-router.get('/',getEstablishmentsFromDB)
-router.get("/cuitInDb", cuitInDb)
-
+router.get("/idUser",  timeIp, userExtractor, authGoogle, getEstablishmentByUser);
+router.get('/userId', timeIp, userExtractor, authGoogle, getEstabIdByUserId )
+router.get('/', timeIp, getEstablishmentsFromDB)
+router.get("/cuitInDb", timeIp, cuitInDb)
 router.post(
   "/",
+  timeIp,
   userExtractor,
   authGoogle,
   validator.body(bodySchema),
   createEstablishment
 );
-router.post("/addUserToEstablishment", addUserToEstablishment);
-router.put("/updateStatus", userExtractor, authGoogle, statusUpdate);
+router.post("/addUserToEstablishment", timeIp, addUserToEstablishment);
+router.put("/updateStatus", timeIp, userExtractor, authGoogle, statusUpdate);
 module.exports = router;
