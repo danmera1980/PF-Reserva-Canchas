@@ -1,7 +1,14 @@
-import { React } from "react";
+import { React, useState } from "react";
 import "./Sites.scss";
 
 function Sites({ establishmentDetail }) {
+  const [ courts, setCourts ] = useState([])
+
+  const handleSites = (sites) => {
+    console.log(sites.courts)
+    setCourts(() => sites.courts)
+    console.log(courts)
+  }
 
   return (
     <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
@@ -18,7 +25,7 @@ function Sites({ establishmentDetail }) {
         </thead>
         <tbody className="text-center">
           {establishmentDetail.map((e) => (
-            <tr key={e.id}>
+            <tr key={e.id} className='hover:bg-black' onClick={() => handleSites(e)}>
               <td className="border border-slate-700 py-2">{e.name}</td>
               <td className="border border-slate-700 py-2">{e.city}</td>
               <td className="border border-slate-700 py-2">{e.country}</td>
@@ -48,16 +55,14 @@ function Sites({ establishmentDetail }) {
               <th className="border border-slate-600 px-10">Deporte</th>
             </tr>
           </thead>
-          {establishmentDetail.map((e) => (
+          {courts.map((e) => (
             <tbody className="text-center" key={e.id}>
-              {e.courts.map((e) => (
                 <tr key={e.id}>
                   <td className="border border-slate-700">{e.name}</td>
                   <td className="border border-slate-700">${e.price}</td>
                   <td className="border border-slate-700">{e.shiftLength} Minutos</td>
                   <td className="border border-slate-700">{e.sport}</td>
                 </tr>
-              ))}
             </tbody>
           ))}
         </table>
