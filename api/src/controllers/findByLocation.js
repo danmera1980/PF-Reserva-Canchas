@@ -1,6 +1,7 @@
 const { Court, Site, Establishment, Op} = require ('../db');
 
 const findByLocation = async (req, res) => { 
+  
     var {latitude, longitude, sport, zoom } = req.query
     // lat: 0.273323
     // lng: 0.150562
@@ -8,8 +9,6 @@ const findByLocation = async (req, res) => {
     // const amplLng =  0.150562 
     const amplLat =  0.573323 
     const amplLng =  0.550562 
-
-    console.log(amplLat, '  ' , amplLng);
 
     try {
       var establishments = await Establishment.findAll({
