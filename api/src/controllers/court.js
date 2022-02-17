@@ -68,4 +68,22 @@ const getCourtById = async (req, res, next) => {
   }
 }
 
-module.exports = { postCourt, getAllCourts, getCourtById };
+const updateStatusCourt = async (req, res, next) => {
+
+  console.log('soy req.body',req.body)
+  const {courtId}= req.body
+  console.log('soy courtId',courtId)
+  try {
+    
+      const updated = await Court.findOne({ where: { id: courtId }});
+      updated.isActive = !updated.isActive;
+      await updated.save();
+
+     res.json(updated)
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+
+module.exports = { postCourt, getAllCourts, getCourtById, updateStatusCourt };

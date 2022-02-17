@@ -53,8 +53,7 @@ const getEstablishmentsFromDB = async (req, res, next) => {
         timeActiveFrom: establishment.timeActiveFrom,
         timeActiveTo: establishment.timeActiveTo,
         isActive: establishment.isActive,
-
-        //responsableId: establishment.responsableId,
+        id: establishment.id,
       };
     });
     res.send(establishmentDB);
@@ -199,11 +198,13 @@ const statusUpdate = async (req, res, next) => {
     if (!loggedUser.isAdmin) {
       res.status(401).send("Unauthorized");
     } else {
-       const updated = await Establishment.findOne({ where: { id: establishmentId }});
-       updated.isActive = !updated.isActive;
-       await updated.save();
+      const updated = await Establishment.findOne({
+        where: { id: establishmentId },
+      });
+      updated.isActive = !updated.isActive;
+      await updated.save();
 
-      res.json(updated)
+      res.json(updated);
     }
   } catch (error) {
     next(error);
@@ -217,5 +218,5 @@ module.exports = {
   getEstabIdByUserId,
   getEstablishmentByUser,
   cuitInDb,
-  statusUpdate
-}
+  statusUpdate,
+};
