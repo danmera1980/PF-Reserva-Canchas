@@ -151,9 +151,16 @@ const getEstablishmentByUser = async (req, res, next) => {
       where: {
         id: user.establishmentId,
       },
+
+      // where:{
+      //   [Op.and]: [
+      //     {'$sites.isActive$': true},
+      //     { id: user.establishmentId},
+      //    ]
       include: {
         model: Site,
         as: "sites",
+      //  where:{isActive:true},
         include: {
           model: Court,
           as: "courts",
