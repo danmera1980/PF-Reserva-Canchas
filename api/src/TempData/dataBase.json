@@ -123,7 +123,7 @@
     ],
     "site": [
         {
-            "name": "Sede A",
+            "name": "Sede El Carril",
             "city": "Mendoza",
             "street": "Carril Urquiza",
             "streetNumber": 2137,
@@ -131,7 +131,7 @@
             "longitude": -68.7957077049741
         },
         {
-            "name": "Sede B",
+            "name": "Sede Morada",
             "city": "Mendoza",
             "street": "Martínez de Rozas",
             "streetNumber": 464,
@@ -139,7 +139,7 @@
             "longitude": -68.8574527007327
         },
         {
-            "name": "Sede C",
+            "name": "Sede Celeste",
             "city": "Mendoza",
             "street": "Eusebio Blanco",
             "streetNumber": 461,
@@ -147,7 +147,7 @@
             "longitude": -68.84285990258314
         },
         {
-            "name": "Sede F",
+            "name": "Sede Frambuesa",
             "city": "Godoy Cruz",
             "street": " Beltrán",
             "streetNumber": 411,
@@ -155,7 +155,7 @@
             "longitude": -68.8504196332679
         },
         {
-            "name": "Sede Q",
+            "name": "Sede Quinta",
             "city": "Godoy Cruz",
             "street": "Teniente 1 Ibañez",
             "streetNumber": 617,
@@ -163,7 +163,7 @@
             "longitude": -68.84415307374654
         },
         {
-            "name": "Sede W",
+            "name": "Sede Wimbledon",
             "city": "Mendoza",
             "street": "Chile",
             "streetNumber": 1372,
@@ -171,7 +171,7 @@
             "longitude": -68.84519635165792
         },
         {
-            "name": "Sede R",
+            "name": "Sede Rio de la Plata",
             "city": "Bermejo",
             "street": "Maure",
             "streetNumber": 1121,
@@ -179,7 +179,7 @@
             "longitude": -68.79261898724076
         },
         {
-            "name": "Sede O",
+            "name": "Sede Orange",
             "city": "Dorrego",
             "street": "Jose Marmol ",
             "streetNumber": 766,
@@ -187,7 +187,7 @@
             "longitude": -68.82134381607531
         },
         {
-            "name": "Sede P ",
+            "name": "Sede Premier",
             "city": "Luján de Cuyo",
             "street": "San Martin",
             "streetNumber": 1253,
@@ -195,7 +195,7 @@
             "longitude": -68.87568267374321
         },
         {
-            "name": "Sede L",
+            "name": "Sede Pueyrredon",
             "city": "Chacras de Coria",
             "street": "Pueyrredon ",
             "streetNumber": 2222,
@@ -203,7 +203,7 @@
             "longitude": -68.8884219872371
         },
         {
-            "name": "Sede AC",
+            "name": "Sede El Valle",
             "city": "Maipú",
             "street": "5 de Mayo Este",
             "streetNumber": 163,
@@ -211,7 +211,7 @@
             "longitude": -68.79037996025139
         },
         {
-            "name": "Sede AB",
+            "name": "Sede El ciclón",
             "city": "Maipú",
             "street": "25 de Mayo Este",
             "streetNumber": 989,
@@ -219,7 +219,7 @@
             "longitude": -68.78003584675858
         },
         {
-            "name": "Sede AA",
+            "name": "Sede La Posta",
             "city": "Maipú",
             "street": "Sarmiento",
             "streetNumber": 898,
@@ -285,13 +285,330 @@
             "sport": "Squash"
         }
     ],
-    "booking": [{
-        "courtId": "INTERGER QUE EXISTA SINO VA A DAR ERROR",
-        "userId": "INTERGER QUE EXISTA SINO VA A DAR ERROR",
+    "booking": [
+        {
+        "courtId": 1,
+        "userId": 9,
         "status": "completed", 
-        "finalAmount": "INTERGER",
-        "startTime": "FORMATO FECHA",
-        "endTime": "FORMATO FECHA",
-        "external_reference": "INTERGER"
-    }]
+        "finalAmount": 2000,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":1
+    },
+    {
+        "courtId": 5,
+        "userId": 9,
+        "status": "completed", 
+        "finalAmount": 2000,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":2
+    },
+    {
+        "courtId": 9,
+        "userId": 9,
+        "status": "completed", 
+        "finalAmount": 2000,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":3
+    },
+    {
+        "courtId": 13,
+        "userId": 9,
+        "status": "completed", 
+        "finalAmount": 2500,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":4
+    },
+    {
+        "courtId": 17,
+        "userId": 8,
+        "status": "completed", 
+        "finalAmount": 2500,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":5
+    },
+    {
+        "courtId": 21,
+        "userId": 8,
+        "status": "completed", 
+        "finalAmount": 2500,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":6
+    },
+    {
+        "courtId": 25,
+        "userId": 8,
+        "status": "completed", 
+        "finalAmount": 2500,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":7
+    },
+    {
+        "courtId": 29,
+        "userId": 8,
+        "status": "completed", 
+        "finalAmount":  2300,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":8
+    },
+    {
+        "courtId": 2,
+        "userId": 7,
+        "status": "completed", 
+        "finalAmount":  2300,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":9
+    },
+    {
+        "courtId": 6,
+        "userId": 7,
+        "status": "completed", 
+        "finalAmount":  2300,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":10
+    },
+    {
+        "courtId": 10,
+        "userId": 7,
+        "status": "completed", 
+        "finalAmount":  2300,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":11
+    },
+    {
+        "courtId": 14,
+        "userId": 7,
+        "status": "completed", 
+        "finalAmount":  2250,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":12
+    },
+    {
+        "courtId": 18,
+        "userId": 6,
+        "status": "completed", 
+        "finalAmount":  2250,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":13
+    },
+    {
+        "courtId": 22,
+        "userId": 6,
+        "status": "completed", 
+        "finalAmount":  2250,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":14
+    },
+    {
+        "courtId": 26,
+        "userId": 6,
+        "status": "completed", 
+        "finalAmount":  2250,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":15
+    },
+    {
+        "courtId": 3,
+        "userId": 6,
+        "status": "completed", 
+        "finalAmount":  2600,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":16
+    },
+    {
+        "courtId": 7,
+        "userId": 5,
+        "status": "completed", 
+        "finalAmount":  2600,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":17
+    },
+    {
+        "courtId": 11,
+        "userId": 5,
+        "status": "completed", 
+        "finalAmount":  2600,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":18
+    },
+    {
+        "courtId": 15,
+        "userId": 5,
+        "status": "completed", 
+        "finalAmount":  2600,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":20
+    },
+    {
+        "courtId": 19,
+        "userId": 5,
+        "status": "completed", 
+        "finalAmount":  3000,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":19
+    },
+    {
+        "courtId": 23,
+        "userId": 4,
+        "status": "completed", 
+        "finalAmount":  3000,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":37
+    },
+    {
+        "courtId": 27,
+        "userId": 4,
+        "status": "completed", 
+        "finalAmount":  3000,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":22
+    },
+    {
+        "courtId": 4,
+        "userId": 4,
+        "status": "completed", 
+        "finalAmount":  3000,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":23
+    },
+    {
+        "courtId": 8,
+        "userId": 4,
+        "status": "completed", 
+        "finalAmount":  2350,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":24
+    },
+    {
+        "courtId": 12,
+        "userId": 3,
+        "status": "completed", 
+        "finalAmount":  2350,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":25
+    },
+    {
+        "courtId": 16,
+        "userId": 3,
+        "status": "completed", 
+        "finalAmount":  2350,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":26
+    },
+    {
+        "courtId": 20,
+        "userId": 3,
+        "status": "completed", 
+        "finalAmount":  2350,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":27
+    },
+    {
+        "courtId": 24,
+        "userId": 3,
+        "status": "completed", 
+        "finalAmount":  2100,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":28
+    },
+    {
+        "courtId": 28,
+        "userId": 2,
+        "status": "completed", 
+        "finalAmount":  2100,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":29
+    },
+    {
+        "courtId": 30,
+        "userId": 2,
+        "status": "completed", 
+        "finalAmount":  2100,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":30
+    },
+    {
+        "courtId": 34,
+        "userId": 2,
+        "status": "completed", 
+        "finalAmount":  2100,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":31
+    },
+    {
+        "courtId": 38,
+        "userId": 2,
+        "status": "completed", 
+        "finalAmount":  2700,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":32
+    },
+    {
+        "courtId": 35,
+        "userId": 1,
+        "status": "completed", 
+        "finalAmount":  2700,
+        "startTime": [2022, 2, 21, 16, 0, 0],
+        "endTime": [2022, 2, 21, 17, 0, 0],
+        "external_reference":33
+    },
+    {
+        "courtId": 32,
+        "userId": 1,
+        "status": "completed", 
+        "finalAmount":  2700,
+        "startTime": [2022, 2, 22, 18, 0, 0],
+        "endTime": [2022, 2, 22, 19, 0, 0],
+        "external_reference":34
+    },
+    {
+        "courtId": 39,
+        "userId": 1,
+        "status": "completed", 
+        "finalAmount":  2700,
+        "startTime": [2022, 2, 23, 20, 0, 0],
+        "endTime": [2022, 2, 23, 21, 0, 0],
+        "external_reference":35
+    },
+    {
+        "courtId": 31,
+        "userId": 8,
+        "status": "completed", 
+        "finalAmount":  2050,
+        "startTime": [2022, 2, 24, 17, 0, 0],
+        "endTime": [2022, 2, 24, 18, 0, 0],
+        "external_reference":36
+    }
+    ]
 }
