@@ -41,6 +41,7 @@ function UsersTable({ users }) {
 
   function handleFilter(e) {
     if (e.target.value !== "all") {
+      console.log(e.target.value);
       if (e.target.value === "true") {
         setUsersTemp(users.filter((u) => u.hasEstablishment === true));
       } else {
