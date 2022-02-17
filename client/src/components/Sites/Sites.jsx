@@ -1,13 +1,10 @@
 import { React, useState } from "react";
-import "./Sites.scss";
 
 function Sites({ establishmentDetail }) {
   const [ courts, setCourts ] = useState([])
 
   const handleSites = (sites) => {
-    console.log(sites.courts)
     setCourts(() => sites.courts)
-    console.log(courts)
   }
 
   return (
@@ -25,7 +22,7 @@ function Sites({ establishmentDetail }) {
         </thead>
         <tbody className="text-center">
           {establishmentDetail.map((e) => (
-            <tr key={e.id} className='hover:bg-black' onClick={() => handleSites(e)}>
+            <tr key={e.id} className='hover:bg-black'>
               <td className="border border-slate-700 py-2">{e.name}</td>
               <td className="border border-slate-700 py-2">{e.city}</td>
               <td className="border border-slate-700 py-2">{e.country}</td>
@@ -36,7 +33,7 @@ function Sites({ establishmentDetail }) {
                   Sin canchas cargadas
                 </td>
               ) : (
-                <td className="border border-slate-700 py-2 underline cursor-pointer btn">
+                <td className="border border-slate-700 py-2 underline cursor-pointer"  onClick={() => handleSites(e)}>
                   Ver canchas
                 </td>
               )}
@@ -45,7 +42,8 @@ function Sites({ establishmentDetail }) {
         </tbody>
       </table>
 
-      <div className="py-2 listHolder">
+      <div className="py-2">
+        {courts.length?
         <table className="w-full border-collapse border border-slate-500">
           <thead className="bg-slate-600">
             <tr>
@@ -66,6 +64,7 @@ function Sites({ establishmentDetail }) {
             </tbody>
           ))}
         </table>
+        :null}
       </div>
     </div>
   );
