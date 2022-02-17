@@ -25,7 +25,7 @@ const newBooking = async (req, res, next) => {
   const external_reference = req.query.external_reference;
   const merchant_order_id = req.query.merchant_order_id;
 
-  console.log(userId)
+  console.log(userId);
 
   /*
      ESTO ES IMPORTANTE PARA CREAR BIEN LA RESERVA CON EL FORMATO DATE EN LA BASE DE DATOS
@@ -217,10 +217,23 @@ const getBookingsByEstablishment = async (req,res)=>{
 
   res.send(establishment)
 }
+const courtBookings = async (req, res, next) => {
+  const { courtId } = req.params;
+  try {
+    const courtBooking = await Court.findAll({
+      where: { id: courtId },
+    });
+
+    res.send(courtBooking)
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
   getAllBookings,
   newBooking,
   getCourtAvailability,
-  getBookingsByEstablishment
+  getBookingsByEstablishment,
+  courtBookings
 };
