@@ -100,9 +100,14 @@ function EstablishmentProfile() {
                   Crear cancha
                 </button>
               )}
-
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]"
+                onClick={() => onButtonSelection("reporting")}
+              >
+                Reportes
+              </button>
               <Link to={"/profile"}>
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem] w-[20.1rem]">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem] w-[9.5rem]">
                   Volver al perfil
                 </button>
               </Link>
