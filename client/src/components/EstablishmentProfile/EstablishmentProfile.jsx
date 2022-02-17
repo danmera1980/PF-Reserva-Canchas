@@ -13,10 +13,11 @@ import Sites from "../Sites/Sites";
 import defaultEstablishmentLogo from "../../assets/img/defaultEstablishmentLogo.jpg";
 
 function EstablishmentProfile() {
+  
   const [visual, setVisual] = useState("bookings");
   const userToken = useSelector((state) => state.register.userToken);
   const [establishmentDetail, setEstablishmentDetail] = useState(null);
-  console.log(establishmentDetail)
+  
 
   useEffect(() => {
     const headers = {
@@ -32,6 +33,7 @@ function EstablishmentProfile() {
   const onButtonSelection = (option) => {
     setVisual(option);
   };
+  console.log('soyestablishmentdetail',establishmentDetail)
 
   return (
     <div className="dark:bg-darkPrimary dark:text-white">
@@ -115,11 +117,11 @@ function EstablishmentProfile() {
                 case "siteCreate":
                   return <SiteCreate />;
                 case "sites":
-                  return <Sites establishmentDetail={establishmentDetail.sites}/>;
+                  return <Sites establishmentDetail={establishmentDetail.sites} />;
                 case "courtCreate":
                   return <CourtCreate sites={establishmentDetail.sites}/>;
                 default:
-                  return <EstablishmentBookings />;
+                  return <EstablishmentBookings establishmentDetail={establishmentDetail}/>;
               }
             })()}
           </div>

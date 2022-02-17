@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const {createSite, getAllSites, findByLocation} = require('../controllers/site')
+const {createSite, getAllSites, findByLocation, updateStatusSite} = require('../controllers/site')
 
 const validator = require('express-joi-validation').createValidator({})
 const Joi = require('joi')
@@ -27,5 +27,6 @@ router.post('/', timeIp, userExtractor, authGoogle,validator.body(bodySchema), c
 router.get('/location', timeIp, findByLocation)
 router.get('/:establishmentId', timeIp, userExtractor, authGoogle, getAllSites)
 router.get('/', timeIp, getAllSites)
+router.put('/updateStatusSite',updateStatusSite)
 
 module.exports = router
