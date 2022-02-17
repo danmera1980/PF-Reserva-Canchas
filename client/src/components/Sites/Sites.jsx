@@ -4,18 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteSite } from "../../redux/actions/site";
 
 function Sites({ establishmentDetail }) {
- console.log('soyestablishmentdetail',establishmentDetail)
  const dispatch = useDispatch();
  const userToken = useSelector((state) => state.register.userToken);
 
- function handleClick(event,site) {
-   console.log('soy e',site)
-   console.log('soy event',event)
+function  handleDelete(event,site) {
+   
   event.preventDefault();
   dispatch(deleteSite(site.id, userToken));
-  window.location.reload();
-
+  window.location.reload()
+     
 }
+
 let sitesActive=[]
 establishmentDetail.map((e) => (e.isActive===true?
   sitesActive.push(e):null))
@@ -54,7 +53,7 @@ establishmentDetail.map((e) => (e.isActive===true?
                   Ver canchas
                 </td>
               )}
-             <td className="border border-slate-700 py-2"> <button value={e} onClick={(event)=>handleClick(event,e)}>eliminar sede</button> </td>
+             <td className="border border-slate-700 py-2"> <button value={e} onClick={(event)=>handleDelete(event,e)}>eliminar sede</button> </td>
             </tr>
         </tbody>
       </table>
