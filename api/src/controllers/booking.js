@@ -205,6 +205,10 @@ const getBookingsByEstablishment = async (req,res)=>{
               dateTo?{startTime: {[Op.lte]: dateTo }}:null,
               dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
              ]
+          },
+          include:{
+            model: User,
+            attributes:['id','name','lastName']
           }
         }
       }
