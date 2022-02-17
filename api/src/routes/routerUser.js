@@ -10,19 +10,20 @@ const {
   getUserBookingHistory,
 } = require("../controllers/user");
 const { loginUser, checkedEmail } = require("../controllers/login");
+const timeIp = require("../middleware/timeIp");
 
 const router = Router();
 
-router.get("/", getAllUsers);
-router.get("/checkedEmail", checkedEmail);
-router.get("/bookings", userExtractor, authGoogle, getUserBookingHistory);
+router.get("/", timeIp, getAllUsers);
+router.get("/checkedEmail", timeIp, checkedEmail);
+router.get("/bookings", timeIp, userExtractor, authGoogle, getUserBookingHistory);
 
-router.get("/profile", userExtractor, authGoogle, getUserProfile);
-router.post("/googleRegister", userExtractor, authGoogle, registerGoogle);
+router.get("/profile", timeIp, userExtractor, authGoogle, getUserProfile);
+router.post("/googleRegister", timeIp, userExtractor, authGoogle, registerGoogle);
 
-router.post("/register", registerUser);
-router.post("/login", loginUser);
+router.post("/register", timeIp, registerUser);
+router.post("/login", timeIp, loginUser);
 
-router.put("/edit", userExtractor, authGoogle, editUser);
+router.put("/edit", timeIp, userExtractor, authGoogle, editUser);
 
 module.exports = router;

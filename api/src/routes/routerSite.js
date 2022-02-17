@@ -6,7 +6,8 @@ const {createSite, getAllSites, findByLocation} = require('../controllers/site')
 const validator = require('express-joi-validation').createValidator({})
 const Joi = require('joi')
 const userExtractor = require("../middleware/userExtractor");
-const authGoogle = require('../middleware/auth')
+const authGoogle = require('../middleware/auth');
+const timeIp = require('../middleware/timeIp');
 
 
 const bodySchema = Joi.object({
@@ -22,9 +23,9 @@ const bodySchema = Joi.object({
 
 
 
-router.post('/', userExtractor, authGoogle,validator.body(bodySchema), createSite)
-router.get('/location', findByLocation)
-router.get('/:establishmentId', userExtractor, authGoogle, getAllSites)
-router.get('/',getAllSites)
+router.post('/', timeIp, userExtractor, authGoogle,validator.body(bodySchema), createSite)
+router.get('/location', timeIp, findByLocation)
+router.get('/:establishmentId', timeIp, userExtractor, authGoogle, getAllSites)
+router.get('/', timeIp, getAllSites)
 
 module.exports = router

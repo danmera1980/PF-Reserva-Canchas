@@ -1,8 +1,7 @@
 const { Court, Site, Establishment, Op} = require ('../db');
 
 const findByLocation = async (req, res) => { 
-  const now = new Date();
-  console.log("time: " + now.toISOString(), "ip: " + req.ip)
+  
     var {latitude, longitude, sport, zoom } = req.query
     // lat: 0.273323
     // lng: 0.150562
