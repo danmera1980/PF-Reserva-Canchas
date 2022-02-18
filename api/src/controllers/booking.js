@@ -166,8 +166,8 @@ const getBookingsByEstablishment = async (req,res)=>{
   var sport = req.query.sport
   const establishmentId = req.params.establishmentId;
 
-  console.log('dateTo',dateTo);
   console.log('dateFrom',dateFrom);
+  console.log('dateTo',dateTo);
 
   var establishment = await Establishment.findOne({
     where:{
