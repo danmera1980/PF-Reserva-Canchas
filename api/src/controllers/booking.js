@@ -169,49 +169,84 @@ const getBookingsByEstablishment = async (req,res)=>{
   console.log('dateTo',dateTo);
   console.log('dateFrom',dateFrom);
 
-  var establishment = await Establishment.findOne({
+  // var establishment = await Establishment.findOne({
+  //   where:{
+  //     id: establishmentId
+  //   },
+  //   attributes: ['id'],
+  //   include:{
+  //     model: Site,
+  //     as: 'sites',
+  //     attributes: ['name'],
+  //     where:{
+  //       [Op.and]: [
+  //       siteId? {id:siteId}:null
+  //       ]
+  //     },
+  //     include:{
+  //       model: Court,
+  //       as: 'courts',
+  //       attributes: ['name','sport'],
+  //       where:{
+  //         [Op.and]: [
+  //         sport? {sport:sport} : null
+  //         ]
+  //       },
+  //       include:{
+  //         model:Booking,
+  //         as: 'booking',
+  //         attributes:['startTime', 'external_reference', 'payment_status'],
+  //         where:{
+  //           [Op.and]: [
+  //             dateTo?{startTime: {[Op.lte]: dateTo }}:null,
+  //             dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
+  //            ]
+  //         },
+  //         include:{
+  //           model: User,
+  //           attributes:['id','name','lastName']
+  //         }
+  //       }
+  //     }
+  //   }
+  // })
+
+  var sites = await Site.findAll({
     where:{
-      id: establishmentId
+      establishmentId: establishmentId,
+      [Op.and]: [
+        siteId? {id:siteId}:null
+        ]
     },
-    attributes: ['id'],
+    attributes: ['name'],
     include:{
-      model: Site,
-      as: 'sites',
-      attributes: ['name'],
+      model: Court,
+      as: 'courts',
+      attributes: ['name','sport'],
       where:{
         [Op.and]: [
-        siteId? {id:siteId}:null
+        sport? {sport:sport} : null
         ]
       },
       include:{
-        model: Court,
-        as: 'courts',
-        attributes: ['name','sport'],
+        model:Booking,
+        as: 'booking',
+        attributes:['startTime', 'external_reference', 'payment_status'],
         where:{
           [Op.and]: [
-          sport? {sport:sport} : null
-          ]
+            dateTo?{startTime: {[Op.lte]: dateTo }}:null,
+            dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
+            ]
         },
         include:{
-          model:Booking,
-          as: 'booking',
-          attributes:['startTime', 'external_reference', 'payment_status'],
-          where:{
-            [Op.and]: [
-              dateTo?{startTime: {[Op.lte]: dateTo }}:null,
-              dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
-             ]
-          },
-          include:{
-            model: User,
-            attributes:['id','name','lastName']
-          }
+          model: User,
+          attributes:['id','name','lastName']
         }
       }
     }
   })
-
-  res.send(establishment)
+  
+  res.send(sites)
 }
 async function emailSender(userId, code) {
   const userData = await User.findOne({ where: { id: userId } });

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import ReportingResults from "./ReportingResults";
 
 
 function isDate(texto) {
@@ -8,17 +10,11 @@ function isDate(texto) {
   let fecha = new Date(partes[0], --partes[1], partes[2]);
   let hoy = new Date (Date.now());
   
-  if (partes.length === 3 && fecha
-   && partes[2] === fecha.getDate()
-   && partes[1] === fecha.getMonth()
-   && partes[0] === fecha.getFullYear()
-   && fecha.getFullYear()>=1970){
-      if(fecha<=hoy){
-          return 'OK'
-      } return 'future';
+  if(fecha>hoy){
+    return 'future'
   }
   
-  return 'not_date';
+  return 'OK';
 }
 
 
@@ -29,9 +25,6 @@ function validate(input) {
         case 'future':
             errors.dateFrom='La fecha no puede estar en el futuro';
             break;
-        case 'not_date':
-          errors.dateFrom='Inserte un formato del fecha válido. AAAA-MM-DD';
-            break;
         default:
           break;
     }
@@ -40,9 +33,6 @@ function validate(input) {
     switch(isDate(input.dateTo)){
         case 'future':
             errors.dateTo='La fecha no puede estar en el futuro';
-            break;
-        case 'not_date':
-          errors.dateTo='Inserte un formato del fecha válido. AAAA-MM-DD';
             break;
         default:
           break;
@@ -97,7 +87,6 @@ export default function ReportingForm({establishmentDetail}) {
     setInput({
       ...input,
       siteId: e.target.value,
-      courtId:''
     });
     if(e.target.value===""){
         setSelectedSite(sites);
@@ -128,35 +117,17 @@ export default function ReportingForm({establishmentDetail}) {
   function handleSubmit(e) {
     e.preventDefault();
     if (
-      errors.hasOwnProperty("name") ||
-      errors.hasOwnProperty("country") ||
-      errors.hasOwnProperty("city") ||
-      errors.hasOwnProperty("street") ||
-      errors.hasOwnProperty("streetNumber")
+      errors.hasOwnProperty("dateFrom") ||
+      errors.hasOwnProperty("dateTo")
     ) {
       Swal.fire({
         icon: "error",
-        text: "Faltan completar campos obligatorios",
+        text: "No se pueden ingresar fechas futuras",
       });
     } else {
-      console.log('input del sitecreate',input)
       
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Sede creada con exito",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      setInput({
-        establishmentId: establishmentId,
-        name: "",
-        country: "",
-        city: "",
-        street: "",
-        streetNumber: "",
-      });
-      window.location.reload();
+      
+      
     }
   }
   return (
@@ -172,11 +143,10 @@ export default function ReportingForm({establishmentDetail}) {
               <input
                 className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 id="nombre"
-                type="text"
+                type="date"
                 value={input.name}
                 name="dateFrom"
                 onChange={(e) => handleChange(e)}
-                required
               />
               <label
                 className="absolute left-0 -top-3.5 
@@ -188,7 +158,7 @@ export default function ReportingForm({establishmentDetail}) {
                                                 peer-focus:text-sm
                                                 cursor-text"
               >
-                Desde *AAAA-MM-DD:
+                Desde:
               </label>
               {errors.dateFrom && (
                 <p className="text-xs text-red-500">{errors.dateFrom}</p>
@@ -198,11 +168,10 @@ export default function ReportingForm({establishmentDetail}) {
               <input
                 className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 id="nombre"
-                type="text"
+                type="date"
                 value={input.name}
-                name="dateFrom"
+                name="dateTo"
                 onChange={(e) => handleChange(e)}
-                required
               />
               <label
                 className="absolute left-0 -top-3.5 
@@ -214,7 +183,7 @@ export default function ReportingForm({establishmentDetail}) {
                                                 peer-focus:text-sm
                                                 cursor-text"
               >
-                Hasta *AAAA-MM-DD:
+                Hasta:
               </label>
               {errors.dateTo && (
                 <p className="text-red-500 text-xs italic">{errors.dateTo}</p>
@@ -226,12 +195,11 @@ export default function ReportingForm({establishmentDetail}) {
                     className="w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                     name="siteId"
                     onChange={(e) => handleSelectSite(e)}
-                    required
                 >
                     <option value="">Todas las sedes</option>
                     {sites === null
                         ? ""
-                        : sites.map((c) => (
+                        : sites.map((c) => (c.isActive===false?null:
                             <option value={c.id} key={c.id}>
                             {c.name}
                             </option>
@@ -259,7 +227,6 @@ export default function ReportingForm({establishmentDetail}) {
                   className="w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                   name="courtId"
                   onChange={(e) => handleSelectCourt(e)}
-                  required
               >
                   <option value="">Todos los deportes</option>
                   {sports
@@ -287,13 +254,28 @@ export default function ReportingForm({establishmentDetail}) {
               <p className="text-red-500 text-xs italic">{errors.sport}</p>
               )}
             </div>
-            
-            <button
-              className="mt-[3rem] w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Ir al reporte
-            </button>
+            <div>
+              {(errors.hasOwnProperty("dateFrom") || errors.hasOwnProperty("dateTo"))?
+                <div>
+                <button
+                className="mt-[3rem] w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+                >
+                  Ir al reporte
+                </button>
+                </div>
+                :
+                <div>
+                <Link to={{pathname:'/reportingResults', state:{input: input}}}>
+                  <button
+                  className="mt-[3rem] w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  >
+                    Ir al reporte
+                  </button>
+                </Link>
+                </div>
+              }
+            </div>
             <br />
             <br />
             
