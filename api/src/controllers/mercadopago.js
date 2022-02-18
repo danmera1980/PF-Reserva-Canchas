@@ -2,6 +2,7 @@ const { DB_HOST } = process.env;
 
 // SDK de Mercado Pago
 const mercadopago = require("mercadopago");
+const { randomString } = require("./utils/utils");
 const { ACCESS_TOKEN } = process.env;
 
 //Agrega credenciales
@@ -41,7 +42,7 @@ const createPreference = async (req, res, next) => {
   // Crea un objeto de preferencia
   let preference = {
     items: [{ title: courtName + ": " + date, unit_price: price, quantity: 1 }],
-    external_reference: bookingId.toString(),
+    external_reference: randomString(8),
     payment_methods: {
       excluded_payment_types: [{ id: "atm" }, { id: "ticket" }],
       installments: 1, //Cantidad máximo de cuotas

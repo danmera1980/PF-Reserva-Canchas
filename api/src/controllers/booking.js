@@ -1,6 +1,7 @@
-const { date } = require("joi");
 const { User, Establishment, Site, Court, Booking, Op } = require("../db");
-const { DB_HOST } = process.env;
+const { DB_HOST, TUCANCHAYAMAIL, TUCANCHAYAMAILPASS } = process.env;
+const nodemailer = require("nodemailer");
+const { randomString, minutesToHour } = require("./utils/utils");
 
 const getAllBookings = async (req, res, next) => {
   try {
@@ -13,8 +14,6 @@ const getAllBookings = async (req, res, next) => {
 };
 
 const newBooking = async (req, res, next) => {
-  console.log("soy req.params", req.params);
-
   const userId = req.params.userId;
   const courtId = req.params.courtId;
   const price = req.params.price;
@@ -55,14 +54,15 @@ const newBooking = async (req, res, next) => {
     .then((booking) => {
       console.log(booking);
       console.info("redirect success");
-      return res.redirect(`http://${DB_HOST}:3000/profile`);
+      return res.redirect(`http://localhost:3000/profile`);
     })
     .catch((err) => {
       console.log("error al buscar", err);
-      return res.redirect(`http://${DB_HOST}:3000/payment`);
+      return res.redirect(`http://localhost:3000/payment`);
     });
 };
 
+//this code needs reviewing and modularizing (i know ill get to it when i get to it)
 const getCourtAvailability = async (req, res, next) => {
   try {
     //     buscar el horarios apertura y cierre del establecimiento
@@ -157,13 +157,95 @@ const getCourtAvailability = async (req, res, next) => {
   }
 };
 
-function minutesToHour(min) {
-  let newMin = min % 60 ? min % 60 : "00";
-  let newHour = (min - newMin) / 60;
 
-  return newHour + ":" + newMin;
+
+const getBookingsByEstablishment = async (req,res)=>{
+  var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
+  var dateTo = req.query.dateTo ? new Date(req.query.dateTo):null;
+  var siteId = req.query.siteId;
+  var sport = req.query.sport
+  const establishmentId = req.params.establishmentId;
+
+  console.log('dateTo',dateTo);
+  console.log('dateFrom',dateFrom);
+
+  var establishment = await Establishment.findOne({
+    where:{
+      id: establishmentId
+    },
+    attributes: ['id'],
+    include:{
+      model: Site,
+      as: 'sites',
+      attributes: ['name'],
+      where:{
+        [Op.and]: [
+        siteId? {id:siteId}:null
+        ]
+      },
+      include:{
+        model: Court,
+        as: 'courts',
+        attributes: ['name','sport'],
+        where:{
+          [Op.and]: [
+          sport? {sport:sport} : null
+          ]
+        },
+        include:{
+          model:Booking,
+          as: 'booking',
+          attributes:['startTime', 'external_reference', 'payment_status'],
+          where:{
+            [Op.and]: [
+              dateTo?{startTime: {[Op.lte]: dateTo }}:null,
+              dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
+             ]
+          },
+          include:{
+            model: User,
+            attributes:['id','name','lastName']
+          }
+        }
+      }
+    }
+  })
+
+  res.send(establishment)
 }
+async function emailSender(userId, code) {
+  const userData = await User.findOne({ where: { id: userId } });
 
+  let contentHTML = `
+  <h3>Hola, ${userData.name}!</h3>
+
+  <p> Gracias por usar nuestro servicio de reservas. Acercate con tu codigo de reserva a la cancha</p>
+  <h2>&#9917; ${code} &#9917;</h2>
+  `;
+  let transporter = nodemailer.createTransport({
+    host: "smtp.mailgun.org",
+    port: 587,
+    secure: false, // sin SSL
+    auth: {
+      user: TUCANCHAYAMAIL, // generated ethereal user
+      pass: TUCANCHAYAMAILPASS, // generated ethereal password
+    },
+  });
+
+  const response = await transporter.sendMail({
+    from: "'Tu Cancha YA!' <tucanchaya@noresponse.com>",
+    to: `${userData.email}`,
+    subject: "Codigo de reserva",
+    html: contentHTML,
+  });
+
+  console.log(response);
+}
+const prueba = async (req, res, next) => {
+  let code = randomString(8);
+  emailSender(1, code);
+  res.send("funciona");
+};
 const courtBookings = async (req, res, next) => {
   const { courtId } = req.params;
   try {
@@ -175,11 +257,13 @@ const courtBookings = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}
+;
 
 module.exports = {
   getAllBookings,
   newBooking,
   getCourtAvailability,
+  getBookingsByEstablishment,
   courtBookings
 };
