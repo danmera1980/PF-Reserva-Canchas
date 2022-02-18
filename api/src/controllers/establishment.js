@@ -18,44 +18,21 @@ const getEstabIdByUserId = async (req, res, next) => {
     next();
   }
 };
-const getEstablishmentsFromDB = async (req, res, next) => {
-  const searchBarName = req.query.name;
-  const { responsableId } = req.params;
+const getAllActiveEstablishmentsFromDB = async (req, res, next) => {
 
   try {
-    let establishmentDB = await Establishment.findAll();
-
-    if (searchBarName) {
-      establishmentDB = establishmentDB.filter((establishment) =>
-        establishment.name.toLowerCase().includes(searchBarName)
-      );
-    }
-
-    if (responsableId) {
-      establishmentDB = establishmentDB.filter(
-        (establishment) => establishment.responsableId === responsableId
-      );
-      console.log(establishmentDB);
-      establishmentDB = establishmentDB.map((establishment) => {
-        return {
-          cuit: establishment.cuit,
-          name: establishment.name,
-        };
-      });
-      return res.send(establishmentDB);
-    }
-
-    establishmentDB = establishmentDB.map((establishment) => {
-      return {
-        cuit: establishment.cuit,
-        name: establishment.name,
-        logoImage: establishment.logoImage,
-        timeActiveFrom: establishment.timeActiveFrom,
-        timeActiveTo: establishment.timeActiveTo,
-        isActive: establishment.isActive,
-        id: establishment.id,
-      };
+    const establishmentDB = await Establishment.findAll({
+      where:{isActive:true},
+      include:{
+        model: Site,
+        as: 'sites',
+        include:{
+          model: Court,
+          as: 'courts'
+        }
+      },
     });
+
     res.send(establishmentDB);
   } catch (error) {
     console.log(error);
@@ -212,7 +189,7 @@ const statusUpdate = async (req, res, next) => {
 };
 
 module.exports = {
-  getEstablishmentsFromDB,
+  getAllActiveEstablishmentsFromDB,
   createEstablishment,
   addUserToEstablishment,
   getEstabIdByUserId,
