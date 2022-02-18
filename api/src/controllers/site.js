@@ -17,6 +17,7 @@ const createSite = async (req, res, next) => {
       where: {
         name: name,
         establishmentId: establishmentId,
+        isActive: true,
       },
     });
 

@@ -11,6 +11,7 @@ const postCourt = async (req, res, next) => {
         name: name,
         sport: sport,
         siteId: siteId,
+        isActive:true
       },
     });
 

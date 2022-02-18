@@ -6,7 +6,6 @@ function isDate(texto) {
 
   let partes = (texto || '').split('-').map(e => parseInt(e));
   let fecha = new Date(partes[0], --partes[1], partes[2]);
-  console.log('fecha', fecha)
   let hoy = new Date (Date.now());
   
   if (partes.length === 3 && fecha
