@@ -209,44 +209,52 @@ const getBookingsByEstablishment = async (req,res)=>{
   //       }
   //     }
   //   }
-  // })
+  // })const getBookingsByEstId = async (req, res) => {
 
-  var sites = await Site.findAll({
-    where:{
-      establishmentId: establishmentId,
-      [Op.and]: [
-        siteId? {id:siteId}:null
-        ]
-    },
-    attributes: ['name'],
-    include:{
+  const bookings = await Booking.findAll({
+    include:[{
       model: Court,
-      as: 'courts',
-      attributes: ['name','sport'],
-      where:{
-        [Op.and]: [
-        sport? {sport:sport} : null
-        ]
-      },
-      include:{
-        model:Booking,
-        as: 'booking',
-        attributes:['startTime', 'external_reference', 'payment_status'],
-        where:{
-          [Op.and]: [
-            dateTo?{startTime: {[Op.lte]: dateTo }}:null,
-            dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
-            ]
-        },
-        include:{
-          model: User,
-          attributes:['id','name','lastName']
+      as: 'court',
+      include: {
+        model: Site,
+        as: 'site',
+        include: {
+          model: Establishment,
+          as: 'establishment'
         }
       }
+    },
+    {
+      model: User,
+      as: 'user'
+    }
+    ],
+    where: {
+      [Op.and]: [
+        {'$court.site.establishmentId$': establishmentId},
+        siteId?{'$site.id$': siteId}:null,
+        dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
+        dateTo?{startTime: {[Op.lte]: dateTo}}:null,
+        sport?{'$court.sport$': sport}:null,
+      ]
     }
   })
+
+  let sortedBookings = await bookings.sort(function(c,d){
+      if (c.startTime < d.startTime) {
+          return 1;
+      }
+      if (c.startTime > d.startTime) {
+          return -1;
+      }
+      return 0;
+  })
+
+  let mapingBookings = await sortedBookings.map(b => {
+    return {external_reference:b.external_reference,  day: b.startTime.toLocaleDateString(), siteName:b.court.site.name, courtName:b.court.name, sport:b.court.sport, finalAmount: b.finalAmount}
+  })
   
-  res.send(sites)
+  res.send(mapingBookings)
 }
 async function emailSender(userId, code) {
   const userData = await User.findOne({ where: { id: userId } });

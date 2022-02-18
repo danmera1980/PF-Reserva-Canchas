@@ -21,7 +21,6 @@ export function postEstablishment(payload, userToken){
 export function getAllActiveEstablishments(){
     return async(dispatch)=>{
         var allEstab = await axios.get(`${SERVER_URL}/establishment`)
-        console.log(allEstab.data);
         return dispatch({
             type: ALL_ACTIVE_ESTAB,
             payload: allEstab.data

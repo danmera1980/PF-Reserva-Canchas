@@ -113,7 +113,7 @@ function SearchBar({getViewPort}) {
                         <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
                     </Link>
                 </div>
-                {console.log(geoCode.features)}
+                {/* {console.log(geoCode.features)} */}
                 { geoCode !== undefined && geoCode !== '' ?
                     <div className='autoContainer' hidden={geoCode?false:true}>
                         {geoCode && geoCode.features.map(r => (

@@ -225,7 +225,7 @@ export default function ReportingForm({establishmentDetail}) {
             <div className=" relative mt-8">
               <select
                   className="w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
-                  name="courtId"
+                  name="sport"
                   onChange={(e) => handleSelectCourt(e)}
               >
                   <option value="">Todos los deportes</option>
