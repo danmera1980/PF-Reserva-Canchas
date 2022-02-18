@@ -39,20 +39,23 @@ const appointments = [
 ];
 
 function EstablishmentBookings({ establishmentDetail }) {
+  console.log(establishmentDetail);
   const [data, setData] = useState([]);
   const [bookings, setBookings] = useState(null);
 
-var curr = new Date(); // get current date
-var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
-var last = first + 6; // last day is the first day + 6
+  var curr = new Date(); // get current date
+  var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+  var last = first + 6; // last day is the first day + 6
 
-var firstDay = new Date(curr.setDate(first)).toUTCString();
-var lastDay = new Date(curr.setDate(last)).toUTCString();
+  var firstDay = new Date(curr.setDate(first)).toUTCString();
+  var lastDay = new Date(curr.setDate(last)).toUTCString();
 
   useEffect(() => {
     if (establishmentDetail) {
       axios
-        .get(`${SERVER_URL}/booking/byEstab/${establishmentDetail?.id}?dateFrom=${firstDay}&dateTo=${lastDay}`)
+        .get(
+          `${SERVER_URL}/booking/byEstab/${establishmentDetail?.id}?dateFrom=${firstDay}&dateTo=${lastDay}`
+        )
         .then((res) => setBookings(res.data));
     }
   }, [establishmentDetail]);
@@ -206,7 +209,12 @@ var lastDay = new Date(curr.setDate(last)).toUTCString();
   return (
     <Paper>
       <Scheduler data={data} height={660}>
-        <WeekView startDayHour={9} endDayHour={19} />
+        <WeekView
+          startDayHour={establishmentDetail.timeActiveFrom}
+          endDayHour={establishmentDetail.timeActiveTo}
+          startDate={firstDay}
+          endDate={lastDay}
+        />
 
         <Appointments />
         <AppointmentTooltip showCloseButton showOpenButton />
