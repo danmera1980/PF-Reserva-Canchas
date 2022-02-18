@@ -171,7 +171,8 @@ const findOneFav = async (req, res, next) => {
        where:{
         userId: userId,
         courtId: courtid
-      }
+      },
+      attributes: ["userId", "courtId"],
     });
     res.send(fav);
   } catch (error) {
@@ -188,7 +189,7 @@ const findFavorite = async (req, res, next) => {
       attributes: ["name"],
       include: {
         model: Court,
-        attributes: ["name", "sport", "image"],
+        attributes: ["name", "sport", "image","id", "price"],
         exclude: ["user_favorites"],
         include: {
           model: Site,
