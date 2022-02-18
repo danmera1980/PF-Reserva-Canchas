@@ -40,7 +40,6 @@ function EstablishmentProfile() {
     <div className="dark:bg-darkPrimary dark:text-white">
       <Header />
       <div className="md:max-w-[1200px] m-auto">
-        <div className="h-36 bg-[#498C8A] dark:bg-[#057276]"></div>
         <div className="grid place-content-center md:grid-cols-2 xl:grid-cols-[30%,70%]">
           <div>
             <img
@@ -50,7 +49,7 @@ function EstablishmentProfile() {
                   : defaultEstablishmentLogo
               }
               alt="logo_img"
-              className="-mt-28 ml-[2.8rem] md:ml-[3.5rem] object-cover rounded-full w-60 h-60 bg-green-900"
+              className="mt-8 ml-[2.8rem] md:ml-[3.5rem] object-cover rounded-full w-60 h-60 bg-green-900"
             />
 
             <h1 className="mb-5 text-center mt-5 text-2xl font-bold">

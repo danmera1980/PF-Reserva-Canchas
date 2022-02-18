@@ -17,6 +17,7 @@ import {
   AppointmentTooltip,
   AppointmentForm,
   ViewSwitcher,
+  TodayButton,
   Resources,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import { SERVER_URL } from "../../redux/actions/actionNames";
@@ -50,6 +51,11 @@ function EstablishmentBookings({ establishmentDetail }) {
   var firstDay = new Date(curr.setDate(first)).toUTCString();
   var lastDay = new Date(curr.setDate(last)).toUTCString();
 
+  var startDayHour = establishmentDetail?.timeActiveFrom.substring(0,2)
+  var endDayHour = establishmentDetail?.timeActiveTo.substring(0,2)
+
+  console.log(startDayHour, endDayHour )
+
   useEffect(() => {
     if (establishmentDetail) {
       axios
@@ -61,15 +67,6 @@ function EstablishmentBookings({ establishmentDetail }) {
   }, [establishmentDetail]);
 
   console.log(bookings);
-
-  var currentDate = Date.now();
-  const LOCATIONS = establishmentDetail?.sites.map((s) => {
-    if (s.courts.length)
-      return s.courts.map((c) => {
-        return c.name;
-      });
-  });
-  const LOCATIONS_SHORT = [];
   const resources = [
     {
       fieldName: "location",
@@ -208,18 +205,31 @@ function EstablishmentBookings({ establishmentDetail }) {
 
   return (
     <Paper>
-      <Scheduler data={data} height={660}>
-        <WeekView
-          startDayHour={establishmentDetail.timeActiveFrom}
-          endDayHour={establishmentDetail.timeActiveTo}
-          startDate={firstDay}
-          endDate={lastDay}
-        />
+      {establishmentDetail!==null && establishmentDetail?
+        <Scheduler data={data} height={700}>
+          <ViewState/>
+          <WeekView
+            startDayHour={6}
+            endDayHour={24}
+            startDate={firstDay}
+            endDate={lastDay}
+          />
+          <DayView 
+            startDayHour={startDayHour}
+            endDayHour={endDayHour}
+          />
 
-        <Appointments />
-        <AppointmentTooltip showCloseButton showOpenButton />
-        <AppointmentForm readOnly />
-      </Scheduler>
+          <Appointments />
+          <AppointmentTooltip showCloseButton showOpenButton />
+          <AppointmentForm readOnly />
+          <Toolbar/>
+          <DateNavigator/>
+          <TodayButton />
+          <ViewSwitcher/>
+        </Scheduler>
+      :
+        null
+      }
     </Paper>
   );
 }
