@@ -65,6 +65,7 @@ function Bookings() {
                         address={e.court.site.street}
                         price={e.finalAmount}
                         sport={e.court.sport}
+                        courtId={e.courtId}
                       />
                     </div>
                   );

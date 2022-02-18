@@ -122,3 +122,35 @@ export function getUserData(tokenId) {
     }
   };
 }
+
+export function addfav(userToken, courtId){
+  const headers = {
+    Authorization: `Bearer ${userToken}`,
+  };
+  return async () => {
+    try {
+      await axios.put(`${SERVER_URL}/users/fav`, {courtId} ,{
+        headers: headers,
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function delfav(userToken, courtId){
+  const headers = {
+    Authorization: `Bearer ${userToken}`,
+  };
+  return async () => {
+    try {
+      await axios.delete(`${SERVER_URL}/users/fav/${courtId}` ,{
+        headers: headers,
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
