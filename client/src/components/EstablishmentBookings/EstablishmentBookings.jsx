@@ -67,6 +67,10 @@ function EstablishmentBookings({ establishmentDetail }) {
   }, [establishmentDetail]);
 
   console.log(bookings);
+
+  if(bookings){
+    
+  }
   const resources = [
     {
       fieldName: "location",

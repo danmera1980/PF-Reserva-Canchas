@@ -158,6 +158,50 @@ const getCourtAvailability = async (req, res, next) => {
 };
 
 
+const getBookingsByEstId = async (req, res) => {
+  var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
+  var dateTo = req.query.dateTo ? new Date(req.query.dateTo):null;
+  var estId = req.query.estId;
+
+  const bookings = await Booking.findAll({
+    include:[{
+      model: Court,
+      as: 'courts',
+      include: {
+        model: Site,
+        as: 'sites',
+        include: {
+          model: Establishment,
+          as: 'establishments'
+        }
+      }
+    },
+    {
+      model: User,
+      as: 'users'
+    }
+    ],
+    where: {
+      [Op.and]: [
+        {'$sites.establishmentId$': estId},
+        {'$bookings.startTime$': {[Op.gte]: dateFrom}},
+        {'$bookings.endTime$': {[Op.lte]: dateTo}}
+      ]
+    },
+    // attributes: [
+    //   '$bookings.id$', 
+    //   '$bookings.startTime$', 
+    //   '$bookings.endTime$', 
+    //   '$bookings.payment_id$',
+    //   '$bookings.payment_status$',
+    //   ['$courts.name$', 'court_name'],
+    //   ['$sites.name', 'site_name'],
+    //   ['$users.name$','user_name'],
+    //   ['$users.lastName$','user_lastName']
+    // ]
+  })
+}
+
 
 const getBookingsByEstablishment = async (req,res)=>{
   var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
@@ -265,5 +309,6 @@ module.exports = {
   newBooking,
   getCourtAvailability,
   getBookingsByEstablishment,
+  getBookingsByEstId,
   courtBookings
 };
