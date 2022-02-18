@@ -38,14 +38,11 @@ module.exports = (sequelize) => {
         defaultValue: 0
     },
     external_reference:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull:false
     },
     details: {
       type: DataTypes.TEXT,
     },
-    code: {
-      type: DataTypes.STRING,
-    }
   });
 };
