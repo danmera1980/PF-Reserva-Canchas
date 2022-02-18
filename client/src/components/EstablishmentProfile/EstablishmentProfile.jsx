@@ -7,18 +7,24 @@ import Footer from "../Footer/Footer";
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import EstablishmentBookings from "../EstablishmentBookings/EstablishmentBookings";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Sites from "../Sites/Sites";
 import defaultEstablishmentLogo from "../../assets/img/defaultEstablishmentLogo.jpg";
+import {getAllActiveEstablishments} from "../../redux/actions/establishment.js"
 
 function EstablishmentProfile() {
   
+  const dispatch = useDispatch();
   const [visual, setVisual] = useState("bookings");
   const userToken = useSelector((state) => state.register.userToken);
   const [establishmentDetail, setEstablishmentDetail] = useState(null);
   
+  useEffect(()=>{
+    dispatch(getAllActiveEstablishments())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
 
   useEffect(() => {
     const headers = {

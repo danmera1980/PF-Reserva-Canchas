@@ -3,7 +3,7 @@ const router = Router();
 const validator = require("express-joi-validation").createValidator({});
 const Joi = require("joi");
 const {
-  getEstablishmentsFromDB,
+  getAllActiveEstablishmentsFromDB,
   createEstablishment,
   addUserToEstablishment,
   getEstabIdByUserId,
@@ -41,7 +41,7 @@ const bodySchema = Joi.object({
 });
 router.get("/idUser",  timeIp, userExtractor, authGoogle, getEstablishmentByUser);
 router.get('/userId', timeIp, userExtractor, authGoogle, getEstabIdByUserId )
-router.get('/', timeIp, getEstablishmentsFromDB)
+router.get('/', timeIp, getAllActiveEstablishmentsFromDB)
 router.get("/cuitInDb", timeIp, cuitInDb)
 router.post(
   "/",
