@@ -9,7 +9,6 @@ const loadUsers = async function () {
   try {
     const passwordHash = await bcrypt.hash("grupo7", 10);
     const allUsers = dataBase.user;
-    console.log("carga users");
     for (let i = 0; i < allUsers.length; i++) {
       const newUser = await User.create({
         name: allUsers[i].name,
@@ -31,13 +30,13 @@ const loadEstablishments = async function () {
   try {
     const allUsers = await User.findAll();
     const allEstablishments = dataBase.establishment;
-    for (let i = 0; i < allEstablishments.length; i++) {
+    for (let i = 1; i < allEstablishments.length; i++) {
       const newEstablishment = await Establishment.create({
         cuit: allEstablishments[i].cuit,
         name: allEstablishments[i].name,
         timeActiveFrom: allEstablishments[i].timeActiveFrom,
         timeActiveTo: allEstablishments[i].timeActiveTo,
-      });
+      })
 
       await newEstablishment.addUser(allUsers[i]);
       await User.update(
@@ -45,7 +44,7 @@ const loadEstablishments = async function () {
         { where: { id: allUsers[i].id } }
       );
     }
-    console.log("est loaded");
+    console.log("establishments loaded");
   } catch (error) {
     console.log(error);
   }
@@ -53,13 +52,14 @@ const loadEstablishments = async function () {
 
 const loadSites = async function () {
   try {
-    console.log("carga sites");
 
     const allEstablishments = dataBase.establishment;
     const allSites = dataBase.site;
-    for (let i = 0; i < allEstablishments.length; i++) {
+    let i = 0
+    let j = 1
+    do {
       let establishmentDB = await Establishment.findOne({
-        where: { cuit: allEstablishments[i].cuit },
+        where: { cuit: allEstablishments[j].cuit },
       });
       const newSite = await Site.create({
         name: allSites[i].name,
@@ -70,21 +70,14 @@ const loadSites = async function () {
         longitude: allSites[i].longitude,
       });
       establishmentDB.addSite(newSite);
-    }
-    for (let i = 0; i < allSites.length - allEstablishments.length; i++) {
-      let establishmentDB = await Establishment.findOne({
-        where: { cuit: allEstablishments[i].cuit },
-      });
-      const newSite = await Site.create({
-        name: allSites[i].name,
-        city: allSites[i].city,
-        street: allSites[i].street,
-        streetNumber: allSites[i].streetNumber,
-        latitude: allSites[i].latitude,
-        longitude: allSites[i].longitude,
-      });
-      establishmentDB.addSite(newSite);
-    }
+      i++
+      j++
+      if(j===allEstablishments.length) {
+        j = 1
+      }
+    }while(allSites.length>i)
+    
+   
 
     console.log("sites loaded");
   } catch (error) {
