@@ -18,6 +18,7 @@ const loadUsers = async function () {
         passwordHash: passwordHash,
         phone: allUsers[i].phone,
         isAdmin: allUsers[i].isAdmin,
+        isActive: allUsers[i].isActive
       });
     }
     console.log("users loaded");

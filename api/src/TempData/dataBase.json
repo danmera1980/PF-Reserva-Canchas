@@ -64,6 +64,14 @@
             "isAdmin": false
         },
         {
+            "name": "Antonio",
+            "lastName": "Grimau",
+            "phone": "261321321",
+            "email": "antonio@dominio.com",
+            "isAdmin": false,
+            "isActive": false
+        },
+        {
             "name": "Cecilia",
             "lastName": "Roth",
             "phone": "261321321",
@@ -107,6 +115,7 @@
             "name": "Diegote Futbol",
             "timeActiveFrom": "10:00",
             "timeActiveTo": "22:00"
+            
         },
         {
             "cuit": "2077777778",
