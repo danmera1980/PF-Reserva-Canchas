@@ -159,6 +159,60 @@ const getCourtAvailability = async (req, res, next) => {
 
 
 
+const getBookingsByEstablishment = async (req,res)=>{
+  var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
+  var dateTo = req.query.dateTo ? new Date(req.query.dateTo):null;
+  var siteId = req.query.siteId;
+  var sport = req.query.sport
+  const establishmentId = req.params.establishmentId;
+
+  console.log('dateTo',dateTo);
+  console.log('dateFrom',dateFrom);
+
+  var establishment = await Establishment.findOne({
+    where:{
+      id: establishmentId
+    },
+    attributes: ['id'],
+    include:{
+      model: Site,
+      as: 'sites',
+      attributes: ['name'],
+      where:{
+        [Op.and]: [
+        siteId? {id:siteId}:null
+        ]
+      },
+      include:{
+        model: Court,
+        as: 'courts',
+        attributes: ['name','sport'],
+        where:{
+          [Op.and]: [
+          sport? {sport:sport} : null
+          ]
+        },
+        include:{
+          model:Booking,
+          as: 'booking',
+          attributes:['startTime', 'external_reference', 'payment_status'],
+          where:{
+            [Op.and]: [
+              dateTo?{startTime: {[Op.lte]: dateTo }}:null,
+              dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
+             ]
+          },
+          include:{
+            model: User,
+            attributes:['id','name','lastName']
+          }
+        }
+      }
+    }
+  })
+
+  res.send(establishment)
+}
 async function emailSender(userId, code) {
   const userData = await User.findOne({ where: { id: userId } });
 
@@ -210,5 +264,6 @@ module.exports = {
   getAllBookings,
   newBooking,
   getCourtAvailability,
+  getBookingsByEstablishment,
   courtBookings
 };
