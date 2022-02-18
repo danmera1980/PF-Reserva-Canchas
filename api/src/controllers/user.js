@@ -16,7 +16,7 @@ const getAllUsers = async (req, res, next) => {
       throw new Error("No users available");
     }
 
-    console.log((Math.random() * 1e32).toString(36));
+    // console.log((Math.random() * 1e32).toString(36));
 
     res.send(allUsers);
   } catch (e) {

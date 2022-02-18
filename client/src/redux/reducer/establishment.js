@@ -3,6 +3,7 @@ import {
   GET_GEOCODE,
   GET_ESTABLISHMENT_BY_ID,
   LOGOUT,
+  ALL_ACTIVE_ESTAB
 } from "../actions/actionNames";
 
 const initialState = {
@@ -24,6 +25,12 @@ const establishmentReducer = (state = initialState, action) => {
         ...state,
         establishments: action.payload,
       };
+    
+    case ALL_ACTIVE_ESTAB:
+      return{
+        ...state,
+        establishments: action.payload
+      }
 
     case GET_GEOCODE:
       return {

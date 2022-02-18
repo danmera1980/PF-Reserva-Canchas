@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserToEstablishment } from "../../redux/actions/establishment";
-import { getEstablishmentById} from "../../redux/actions/forms";
 import Swal from 'sweetalert2';
 
 
@@ -17,23 +16,17 @@ function validate(input) {
 }
 
 
-export default function AddUserToEstablishment(){
+export default function AddUserToEstablishment({establishmentId}){
 
     const userId = 1;
 
     const dispatch = useDispatch()
     const history = useHistory()
-    const establishmentId = useSelector(state => state.forms.establishmentId)
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
         establishmentId: establishmentId,
         email: '',
     })
-
-    useEffect(()=>{
-        dispatch((getEstablishmentById(userId)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[userId])
 
     useEffect(()=>{
         setInput({
