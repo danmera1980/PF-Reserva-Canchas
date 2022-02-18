@@ -1,4 +1,11 @@
-const { User, Booking, Court, Site, Establishment } = require("../db");
+const {
+  User,
+  Booking,
+  Court,
+  Site,
+  Establishment,
+  Favorites,
+} = require("../db");
 const bcrypt = require("bcrypt");
 
 // starting to code
@@ -9,7 +16,7 @@ const getAllUsers = async (req, res, next) => {
       throw new Error("No users available");
     }
 
-    console.log((Math.random()*1e32).toString(36))
+    console.log((Math.random() * 1e32).toString(36));
 
     res.send(allUsers);
   } catch (e) {
@@ -114,7 +121,7 @@ const getUserBookingHistory = async (req, res, next) => {
           },
         },
       ],
-      order: [["startTime", "DESC"]]
+      order: [["startTime", "DESC"]],
     });
 
     res.send(userHistory);
@@ -134,12 +141,66 @@ const updateStatus = async (req, res, next) => {
     if (!loggedUser.isAdmin) {
       res.status(401).send("Unauthorized");
     } else {
-       const updated = await User.findOne({ where: { id: userId }});
-       updated.isActive = !updated.isActive;
-       await updated.save();
+      const updated = await User.findOne({ where: { id: userId } });
+      updated.isActive = !updated.isActive;
+      await updated.save();
 
-      res.json(updated)
+      res.json(updated);
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+const addfavorite = async (req, res, next) => {
+  const userId = req.user.id;
+  const { courtId } = req.body;
+  try {
+    let newFav = await Favorites.create({ userId: userId, courtId: courtId });
+    res.send(newFav);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const findFavorite = async (req, res, next) => {
+  const id = req.user.id;
+  try {
+    let prueba = await User.findOne({
+      where: { id: id },
+      attributes: ["name"],
+      include: {
+        model: Court,
+        attributes: ["name", "sport", "image"],
+        exclude: ["user_favorites"],
+        include: {
+          model: Site,
+          as: "site",
+          attributes: ["name", "street", "streetNumber"],
+          include: {
+            model: Establishment,
+            as: "establishment",
+            attributes: ["name"],
+          },
+        },
+      },
+    });
+
+    res.send(prueba);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const delFavorite = async (req, res, next) => {
+  const id = req.user.id;
+  const { courtId } = req.params;
+  try {
+     await Favorites.destroy({
+      where: { userId: id, courtId: courtId },
+    });
+
+    res.send("Favorite eliminated");
   } catch (error) {
     next(error);
   }
@@ -152,5 +213,8 @@ module.exports = {
   editUser,
   registerGoogle,
   getUserBookingHistory,
-  updateStatus
+  updateStatus,
+  addfavorite,
+  findFavorite,
+  delFavorite,
 };
