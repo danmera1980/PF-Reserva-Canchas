@@ -195,7 +195,7 @@ const getBookingsByEstablishment = async (req,res)=>{
         include:{
           model:Booking,
           as: 'booking',
-          attributes:['startTime', 'external_reference', 'payment_status'],
+          attributes:['startTime', 'endTime', 'external_reference', 'payment_status'],
           where:{
             [Op.and]: [
               dateTo?{startTime: {[Op.lte]: dateTo }}:null,
