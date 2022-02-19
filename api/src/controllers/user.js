@@ -16,7 +16,7 @@ const getAllUsers = async (req, res, next) => {
       throw new Error("No users available");
     }
 
-    console.log((Math.random() * 1e32).toString(36));
+    // console.log((Math.random() * 1e32).toString(36));
 
     res.send(allUsers);
   } catch (e) {
@@ -154,7 +154,7 @@ const updateStatus = async (req, res, next) => {
 
 const addfavorite = async (req, res, next) => {
   const userId = req.user.id;
-  const { courtId } = req.body;
+  const courtId  = req.body.courtId;
   try {
     let newFav = await Favorites.create({ userId: userId, courtId: courtId });
     res.send(newFav);
@@ -162,6 +162,24 @@ const addfavorite = async (req, res, next) => {
     next(error);
   }
 };
+const findOneFav = async (req, res, next) => {
+  const userId = req.user.id;
+  const { courtid } = req.query;
+
+  try {
+    let fav = await Favorites.findOne({
+       where:{
+        userId: userId,
+        courtId: courtid
+      },
+      attributes: ["userId", "courtId"],
+    });
+    res.send(fav);
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 const findFavorite = async (req, res, next) => {
   const id = req.user.id;
@@ -171,7 +189,7 @@ const findFavorite = async (req, res, next) => {
       attributes: ["name"],
       include: {
         model: Court,
-        attributes: ["name", "sport", "image"],
+        attributes: ["name", "sport", "image","id", "price"],
         exclude: ["user_favorites"],
         include: {
           model: Site,
@@ -195,6 +213,7 @@ const findFavorite = async (req, res, next) => {
 const delFavorite = async (req, res, next) => {
   const id = req.user.id;
   const { courtId } = req.params;
+
   try {
      await Favorites.destroy({
       where: { userId: id, courtId: courtId },
@@ -217,4 +236,5 @@ module.exports = {
   addfavorite,
   findFavorite,
   delFavorite,
+  findOneFav
 };

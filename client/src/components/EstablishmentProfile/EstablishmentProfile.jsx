@@ -71,7 +71,9 @@ function EstablishmentProfile() {
                 ? establishmentDetail.name
                 : "Sin nombre de establecimiento"}
             </h1>
-
+            <h1 className=" mb-5 text-center mt-5">
+              {establishmentDetail && establishmentDetail.isActive ? "" : "Su usuario ha sido deshabilitado comuníquese con el administrador"}
+            </h1>
             <div className="grid grid-cols-2 gap-4 max-w-xs">
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]"

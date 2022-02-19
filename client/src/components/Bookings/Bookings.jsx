@@ -10,6 +10,7 @@ function Bookings() {
   const [visual, setVisual] = useState("bookings");
   const userToken = useSelector((state) => state.register.userToken);
   const [booking, SetBooking] = useState(null);
+  const [favorites, setFavorites] = useState(null)
   const onButtonSelection = (option) => {
     setVisual(option);
   };
@@ -23,8 +24,15 @@ function Bookings() {
       .then((res) => {
         SetBooking(res.data);
       });
+    
+      axios
+      .get(`${SERVER_URL}/users/fav`, { headers: headers })
+      .then((res) => {
+        setFavorites(res.data.courts);
+      });
   }, [userToken]);
 
+console.log(favorites)
 
   return (
     <div>
@@ -65,13 +73,38 @@ function Bookings() {
                         address={e.court.site.street}
                         price={e.finalAmount}
                         sport={e.court.sport}
+                        courtId={e.courtId}
                       />
                     </div>
                   );
                 })
               );
             case "favorites":
-              return <h1>No hay favoritos</h1>;
+              return favorites === null ? (
+                <ReactLoading
+                  type={"spin"}
+                  color={"#000000"}
+                  height={"8.5rem"}
+                  width={"8.5rem"}
+                />
+              ) : (
+                favorites.map((e) => {
+                  return (
+                    <div key={e.id} className="overflow-hidden pb-4">
+                      <Card
+                        name={e.name}
+                        establishment={e.site.establishment.name}
+                        images={e.image[0]}
+                        site={e.site.name}
+                        address={e.site.street}
+                        price={e.price}
+                        sport={e.sport}
+                        courtId={e.id}
+                      />
+                    </div>
+                  );
+                })
+              )
             default:
               return "bookings";
           }
