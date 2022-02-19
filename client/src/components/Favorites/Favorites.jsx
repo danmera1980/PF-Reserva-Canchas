@@ -36,6 +36,7 @@ function Favorites(){
                                     price={e.price}
                                     sport={e.sport}
                                     courtId={e.id}
+                                    button={true}
                                 />
                               )
                         }
