@@ -154,3 +154,23 @@ export function delfav(userToken, courtId){
     }
   };
 }
+
+export function getfavs(tokenId){
+  const headers = {
+    Authorization: `Bearer ${tokenId}`,
+  };
+  return async (dispatch) => {
+    try {
+      var user = await axios.get(`${SERVER_URL}/users/fav`, {
+        headers: headers,
+      });
+      console.log(user)
+      return dispatch({
+        type: 'USER_FAV',
+        payload: user.data.courts
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
