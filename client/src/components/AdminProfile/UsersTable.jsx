@@ -66,7 +66,7 @@ function UsersTable({ users }) {
     window.location.reload();
   }
   return (
-    <div>
+    <div className="flex justify-center -ml-20 sm:w-full">
       <table className="ml-36 mt-10 table-auto border-collapse border border-slate-500 text-white">
         <thead className="bg-slate-600">
           <tr>
@@ -74,7 +74,7 @@ function UsersTable({ users }) {
               Nombre
               <div>
                 <input
-                  className="text-black"
+                  className="text-black rounded"
                   id="name"
                   type="text"
                   onChange={(e) => handleSearch(e)}
@@ -85,7 +85,7 @@ function UsersTable({ users }) {
               Apellido
               <div>
                 <input
-                  className="text-black"
+                  className="text-black rounded"
                   id="lastName"
                   type="text"
                   onChange={(e) => handleSearch(e)}
