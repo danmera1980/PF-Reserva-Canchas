@@ -15,6 +15,7 @@ import {
   LOGOUT,
   SERVER_URL,
   USER_DATA,
+  USER_FAV,
 } from "./actionNames";
 
 export const getAllUsers = () => {
@@ -166,7 +167,7 @@ export function getfavs(tokenId){
       });
       console.log(user)
       return dispatch({
-        type: 'USER_FAV',
+        type: USER_FAV,
         payload: user.data.courts
       });
     } catch (err) {
