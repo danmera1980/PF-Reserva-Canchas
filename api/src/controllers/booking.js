@@ -1,7 +1,7 @@
 const { User, Establishment, Site, Court, Booking, Op } = require("../db");
 const { DB_HOST, TUCANCHAYAMAIL, TUCANCHAYAMAILPASS } = process.env;
 const nodemailer = require("nodemailer");
-const { randomString, minutesToHour } = require("./utils/utils");
+const { randomString, minutesToHour, formatBookingsEst } = require("./utils/utils");
 
 const getAllBookings = async (req, res, next) => {
   try {
@@ -161,45 +161,57 @@ const getCourtAvailability = async (req, res, next) => {
 const getBookingsByEstId = async (req, res) => {
   var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
   var dateTo = req.query.dateTo ? new Date(req.query.dateTo):null;
-  var estId = req.query.estId;
+  var estId = req.params.estId;
 
   const bookings = await Booking.findAll({
     include:[{
       model: Court,
-      as: 'courts',
+      attributes: [
+        'id',
+        'name',
+        'price',
+        'sport'
+      ],
       include: {
         model: Site,
-        as: 'sites',
+        attributes: [
+          'name',
+        ],
         include: {
           model: Establishment,
-          as: 'establishments'
-        }
+          as: 'establishment',
+          attributes: [
+            'name',
+          ]
+        },
       }
     },
     {
       model: User,
-      as: 'users'
+      attributes: [
+        'name',
+        'lastName'
+      ]
     }
     ],
     where: {
       [Op.and]: [
-        {'$sites.establishmentId$': estId},
-        {'$bookings.startTime$': {[Op.gte]: dateFrom}},
-        {'$bookings.endTime$': {[Op.lte]: dateTo}}
+        {'$court->site.establishmentId$': estId},
+        {'$booking.startTime$': {[Op.gte]: dateFrom}},
+        {'$booking.endTime$': {[Op.lte]: dateTo}}
       ]
     },
-    // attributes: [
-    //   '$bookings.id$', 
-    //   '$bookings.startTime$', 
-    //   '$bookings.endTime$', 
-    //   '$bookings.payment_id$',
-    //   '$bookings.payment_status$',
-    //   ['$courts.name$', 'court_name'],
-    //   ['$sites.name', 'site_name'],
-    //   ['$users.name$','user_name'],
-    //   ['$users.lastName$','user_lastName']
-    // ]
+    attributes: [
+      'id', 
+      'details', 
+      'startTime', 
+      'endTime', 
+      'payment_id',
+      'payment_status',
+    ]
   })
+  let results = formatBookingsEst(bookings)
+  res.send(results)
 }
 
 
