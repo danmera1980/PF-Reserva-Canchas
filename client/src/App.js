@@ -19,6 +19,7 @@ import Login from "./components/Login/Login";
 import ReportingForm from "./components/Reporting/ReportingForm";
 import AdminProfile from "./components/AdminProfile/AdminProfile";
 import ReportingResults from "./components/Reporting/ReportingResults";
+import ReportingResultsReactTable from "./components/Reporting/ReportingResultsReactTable";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route exact path="/reporting" component={ReportingForm} />
         <Route exact path="/reportingResults" component={ReportingResults} />
         <Route eaxct path="/admin" component={AdminProfile} />
+        <Route eaxct path="/reactTable" component={ReportingResultsReactTable} />
       </div>
     </React.Fragment>
   );

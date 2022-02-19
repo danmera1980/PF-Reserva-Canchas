@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import ReportingResults from "./ReportingResults";
-import { SERVER_URL } from "../../redux/actions/actionNames";
-import axios from "axios";
 
 
 function isDate(texto) {
@@ -44,17 +42,12 @@ function validate(input) {
 }
 
 export default function ReportingForm({establishmentDetail}) {
-  const history = useHistory();
   const establishmentId  = establishmentDetail.id;
   const sites = establishmentDetail.sites
 
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     establishmentId: establishmentId?establishmentId:"",
-    dateFrom:"",
-    dateTo:"",
-    siteId:"",
-    sport:"",
   });
 
   const [selectedSite, setSelectedSite] = useState(sites)
@@ -132,14 +125,8 @@ export default function ReportingForm({establishmentDetail}) {
         text: "No se pueden ingresar fechas futuras",
       });
     } else {
-      axios.get(`${SERVER_URL}/booking/byEstab/${input.establishmentId}?dateFrom=${input.dateFrom}&dateTo=${input.dateTo}&siteId=${input.siteId}&sport=${input.sport}`)
-        .then(response => history.push(
-          {
-            pathname: '/reactTable',
-            state: response.data
-          }
-        ))
-        
+      
+      
       
     }
   }
@@ -268,12 +255,26 @@ export default function ReportingForm({establishmentDetail}) {
               )}
             </div>
             <div>
+              {(errors.hasOwnProperty("dateFrom") || errors.hasOwnProperty("dateTo"))?
+                <div>
                 <button
                 className="mt-[3rem] w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
                 >
                   Ir al reporte
                 </button>
+                </div>
+                :
+                <div>
+                <Link to={{pathname:'/reportingResults', state:{input: input}}}>
+                  <button
+                  className="mt-[3rem] w-full bg-indigo-400 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  >
+                    Ir al reporte
+                  </button>
+                </Link>
+                </div>
+              }
             </div>
             <br />
             <br />
