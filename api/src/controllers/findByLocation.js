@@ -27,7 +27,8 @@ const findByLocation = async (req, res) => {
             {'$sites.latitude$': {[Op.gte]: parseFloat(latitude) - amplLat}},
             {'$sites.longitude$': {[Op.lte]: parseFloat(longitude) + amplLng }},
             {'$sites.longitude$': {[Op.gte]: parseFloat(longitude) - amplLng }},
-            sport.length?{'$sites.courts.sport$':  sport }:null
+            sport.length?{'$sites.courts.sport$':  sport }:null,
+            {isActive: true}
            ]
           // {'$sites.courts.sport$': {[Op.like]:'%' + sport + '%'}}
           // '$sites.latitude$': {[Op.lte]: latitude},
