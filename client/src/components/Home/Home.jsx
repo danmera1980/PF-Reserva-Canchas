@@ -5,6 +5,7 @@ import Footer from "../Footer/Footer.jsx";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import Popular from "../Popular/Popular.jsx";
 import homeImage from '../../assets/img/homeImage.jpg';
+import { getAllActiveEstablishments } from "../../redux/actions/establishment.js";
 import "./Home.scss";
 
 function Home() {
@@ -15,6 +16,12 @@ function Home() {
     zoom: 10,
     sport: ''
   })
+
+  useEffect(()=>{
+    dispatch(getAllActiveEstablishments())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
   
   useEffect(()=>{
     navigator.geolocation.getCurrentPosition(position => {

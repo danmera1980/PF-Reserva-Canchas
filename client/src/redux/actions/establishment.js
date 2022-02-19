@@ -2,7 +2,8 @@ import {
         CLEAR_GEOCODE,
         GET_GEOCODE, 
         SERVER_URL, 
-        SEARCH_TEXT } from "./actionNames";
+        SEARCH_TEXT,
+        ALL_ACTIVE_ESTAB } from "./actionNames";
 import axios from 'axios';
 
 const mapToken = process.env.REACT_APP_MAPBOX_TOKEN;
@@ -15,6 +16,18 @@ export function postEstablishment(payload, userToken){
         var establishment = await axios.post(`${SERVER_URL}/establishment`, payload, { headers: headers })
         return establishment
     }
+}
+
+export function getAllActiveEstablishments(){
+    return async(dispatch)=>{
+        var allEstab = await axios.get(`${SERVER_URL}/establishment`)
+        console.log(allEstab.data);
+        return dispatch({
+            type: ALL_ACTIVE_ESTAB,
+            payload: allEstab.data
+        })
+    }
+    
 }
 
 export const addUserToEstablishment = (payload) => {

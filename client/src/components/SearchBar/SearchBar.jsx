@@ -12,7 +12,7 @@ const mapToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 function SearchBar({getViewPort}) {
     const [ geoCode, setGeoCode] = useState('')
-    const [establishment, setEstablishment] = useState('Establecimiento');
+    const [establishment, setEstablishment] = useState('Ubicación');
 
     const history = useHistory();
     
