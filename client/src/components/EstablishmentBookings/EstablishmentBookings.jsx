@@ -27,6 +27,9 @@ import { SERVER_URL } from "../../redux/actions/actionNames";
 function EstablishmentBookings({ establishmentDetail }) {
   // console.log(establishmentDetail);
   const [bookings, setBookings] = useState(null);
+  const [courts, setCourts] = useState(null);
+  // setCourts(establishmentDetail.map(e => e.courts.map(e => e.id)))
+  // console.log(establishmentDetail)
 
   var curr = new Date(); // get current date
   var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
@@ -71,9 +74,16 @@ function EstablishmentBookings({ establishmentDetail }) {
 
   let colors = [ amber, blue, blueGrey, brown, cyan, deepOrange, deepPurple, green, indigo, grey, lightBlue, lightGreen, lime ]
 
-  let locations_short = bookings?.map(b => b.courtId)
+  function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+
+  let locations_short = bookings?.filter(onlyUnique)
+  // let locations_short = bookings?.map(b => b.courtId)
   let locations = bookings?.map(b => b.courtName)
   let resourcesData = []
+
+  console.log(locations_short)
   
   for (let i = 0; i < locations?.length; i++) {
     resourcesData.push({

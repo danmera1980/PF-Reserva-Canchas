@@ -225,49 +225,93 @@ const getBookingsByEstablishment = async (req,res)=>{
   console.log('dateFrom',dateFrom);
   console.log('dateTo',dateTo);
 
-  var establishment = await Establishment.findOne({
-    where:{
-      id: establishmentId
-    },
-    attributes: ['id'],
-    include:{
-      model: Site,
-      as: 'sites',
-      attributes: ['name'],
-      where:{
-        [Op.and]: [
-        siteId? {id:siteId}:null
-        ]
-      },
-      include:{
-        model: Court,
-        as: 'courts',
-        attributes: ['name','sport'],
-        where:{
-          [Op.and]: [
-          sport? {sport:sport} : null
-          ]
-        },
-        include:{
-          model:Booking,
-          as: 'booking',
-          attributes:['startTime', 'endTime', 'external_reference', 'payment_status'],
-          where:{
-            [Op.and]: [
-              dateTo?{startTime: {[Op.lte]: dateTo }}:null,
-              dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
-             ]
-          },
-          include:{
-            model: User,
-            attributes:['id','name','lastName']
-          }
+
+  // var establishment = await Establishment.findOne({
+  //   where:{
+  //     id: establishmentId
+  //   },
+  //   attributes: ['id'],
+  //   include:{
+  //     model: Site,
+  //     as: 'sites',
+  //     attributes: ['name'],
+  //     where:{
+  //       [Op.and]: [
+  //       siteId? {id:siteId}:null
+  //       ]
+  //     },
+  //     include:{
+  //       model: Court,
+  //       as: 'courts',
+  //       attributes: ['name','sport'],
+  //       where:{
+  //         [Op.and]: [
+  //         sport? {sport:sport} : null
+  //         ]
+  //       },
+  //       include:{
+  //         model:Booking,
+  //         as: 'booking',
+  //         attributes:['startTime', 'external_reference', 'payment_status'],
+  //         where:{
+  //           [Op.and]: [
+  //             dateTo?{startTime: {[Op.lte]: dateTo }}:null,
+  //             dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
+  //            ]
+  //         },
+  //         include:{
+  //           model: User,
+  //           attributes:['id','name','lastName']
+  //         }
+  //       }
+  //     }
+  //   }
+  // })const getBookingsByEstId = async (req, res) => {
+
+  const bookings = await Booking.findAll({
+    include:[{
+      model: Court,
+      as: 'court',
+      include: {
+        model: Site,
+        as: 'site',
+        include: {
+          model: Establishment,
+          as: 'establishment'
         }
       }
+    },
+    {
+      model: User,
+      as: 'user'
+    }
+    ],
+    where: {
+      [Op.and]: [
+        {'$court.site.establishmentId$': establishmentId},
+        siteId?{'$court.site.id$': siteId}:null,
+        dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
+        dateTo?{startTime: {[Op.lte]: dateTo}}:null,
+        sport?{'$court.sport$': sport}:null,
+      ]
     }
   })
 
-  res.send(establishment)
+  let sortedBookings = await bookings.sort(function(c,d){
+      if (c.startTime < d.startTime) {
+          return 1;
+      }
+      if (c.startTime > d.startTime) {
+          return -1;
+      }
+      return 0;
+  })
+
+  let mapingBookings = await sortedBookings.map(b => {
+    return {external_reference:b.external_reference,  day: b.startTime, siteName:b.court.site.name, courtName:b.court.name, sport:b.court.sport,finalAmount: b.finalAmount}
+  })
+  
+  res.send(mapingBookings)
 }
 async function emailSender(userId, code) {
   const userData = await User.findOne({ where: { id: userId } });
