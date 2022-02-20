@@ -8,11 +8,9 @@ const {SERVER_URL} = require('../../redux/actions/actionNames.js')
 
 
 export default function MercadoPago({booking}){
-
-  const PUBLIC_KEY = 'TEST-6df9d926-e5fa-465e-9d9d-78207d113a0f';
+  const PUBLIC_KEY = 'TEST-e739f66b-51c7-4e0d-99e7-a57608893b7f';
   const [preferenceId, setPreferenceId] = useState("") // preferenceId
-
-
+  const userToken = useSelector((state) => state.register.userToken);
 
   /*
   chicos aca la info de la fecha mandenla como esta en el objeto que les pasa el back y en la ruta de crear el objeto les cuento como se hace para que se guarde bien la fecha sin tener problema con los time zones
@@ -32,13 +30,18 @@ export default function MercadoPago({booking}){
   const hour = parseInt(date[4].split(':' , 1))
 
   useEffect(()=>{
+    if(userToken !== null){
+      const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
     axios
-    .post(`${SERVER_URL}/mercadopago`, input)
+    .post(`${SERVER_URL}/mercadopago`, input,{headers:headers})
     .then((data)=>{
       setPreferenceId(data.data)
     })
-    .catch(err => console.error(err)) 
-  },[])
+    .catch(err => console.error(err))
+    } 
+  },[userToken])
  
   // SDK VERSION 2
   useEffect(()=>{

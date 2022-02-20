@@ -14,6 +14,26 @@ const getAllBookings = async (req, res, next) => {
 };
 
 const newBooking = async (req, res, next) => {
+  // const {data}= req.body
+  // const payData = await axios.get(`https://api.mercadopago.com/v1/payments/${data.id}/?access_token=TEST-8344826949636961-021621-fa6f50dd49774c61c2de981dba9fbeae-157434994`)
+
+  // try {
+  //     if(payData.data.status_detail === "accredited"){
+  //         // const reporte = await Report.create({
+  //         //     name: payData.data.status,
+  //         //     idpago: payData.data.status_detail
+  //         // })
+  //         console.log(payData.data);
+  //         res.status(200).send("ok")
+  //     }
+  // } catch (error) {
+  //     res.status(404).send(error)
+  // }
+  res.status(200).send("ok")
+  
+}
+
+const newBookingMp = async (req, res, next) => {
   const userId = req.params.userId;
   const courtId = req.params.courtId;
   const price = req.params.price;

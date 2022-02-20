@@ -71,7 +71,8 @@ export default function BookingCourt(){
         price: null,
         startTime: "",
         endTime: "",
-        status : ''
+        status : '',
+        establishmentName:''
     })
     const [currentLocation, setCurrentLocation ] = useState({
         latitude: 0,
@@ -107,6 +108,7 @@ export default function BookingCourt(){
                     courtId : res.data.id,
                     courtName: res.data.name, 
                     price: res.data.price,
+                    establishmentName: res.data.site.establishment.name
                 })
                 setViewport({
                     ...viewport,

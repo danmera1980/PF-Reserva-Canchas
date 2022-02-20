@@ -1,5 +1,5 @@
 const { DB_HOST } = process.env;
-
+const {User}= require('../db')
 // SDK de Mercado Pago
 const mercadopago = require("mercadopago");
 const { randomString } = require("./utils/utils");
@@ -11,9 +11,15 @@ mercadopago.configure({
 });
 
 const createPreference = async (req, res, next) => {
-  let { userId, courtId, courtName, price, startTime, endTime } =
+  const userId = req.user.id;
+  let { courtId, courtName, price, startTime, endTime, establishmentName} =
     req.body[0];
 
+  const user = await User.findOne({
+    where:{id: userId},
+    attributes: ["name", "lastName", "email"]
+  })
+  console.log(user)
   console.log(req.body)
 
   console.log('startTime',startTime)
@@ -56,6 +62,41 @@ const createPreference = async (req, res, next) => {
     binary_mode: true,
   };
 
+  let preference2={
+    items :[
+        {
+            id : courtId,
+            title : `Turno en cancha ${courtName}`,
+            quantity: 1,
+            unit_price: price,
+            description: startTime
+        }
+    ],
+    payment_methods: {
+      excluded_payment_types: [
+        { id: "atm" },
+        { id: "ticket"}
+      ],
+      installments: 1, 
+    },
+
+    payer: {
+        name: user.name,
+        surname: user.lastName,
+        email: user.email
+    },
+    back_urls: {
+      success: "https://localhost:3000",
+      failure: "https://localhost:3000",
+      pending: "https://localhost:3000"
+    },
+    auto_return: "approved",
+    notification_url: "https://pi-foodandcook.herokuapp.com/report",
+    statement_descriptor: establishmentName,
+    external_reference: userId,
+    expires: true
+ }
+console.log(preference2);
   mercadopago.preferences
     .create(preference)
 
