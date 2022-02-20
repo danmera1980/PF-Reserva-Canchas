@@ -149,7 +149,7 @@ function EstablishmentProfile() {
           </div>
         </div>
       </div>
-      <div className="mb-0 mt-80">
+      <div className="mb-0 mt-20">
         <Footer />
       </div>
     </div>
