@@ -71,9 +71,16 @@ function EstablishmentBookings({ establishmentDetail }) {
 
   let colors = [ amber, blue, blueGrey, brown, cyan, deepOrange, deepPurple, green, indigo, grey, lightBlue, lightGreen, lime ]
 
-  let locations_short = bookings?.map(b => b.courtId)
+  function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+
+  let locations_short = bookings?.filter(onlyUnique)
+  // let locations_short = bookings?.map(b => b.courtId)
   let locations = bookings?.map(b => b.courtName)
   let resourcesData = []
+
+  console.log(locations_short)
   
   for (let i = 0; i < locations?.length; i++) {
     resourcesData.push({
