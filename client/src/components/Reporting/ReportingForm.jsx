@@ -136,7 +136,7 @@ export default function ReportingForm({establishmentDetail}) {
       axios.get(`${SERVER_URL}/booking/byEstab/${input.establishmentId}?dateFrom=${input.dateFrom}&dateTo=${input.dateTo}&siteId=${input.siteId}&sport=${input.sport}`)
         .then(response => history.push(
           {
-            pathname: '/reactTable',
+            pathname: '/reportingResults',
             state: response.data
           }
         ))

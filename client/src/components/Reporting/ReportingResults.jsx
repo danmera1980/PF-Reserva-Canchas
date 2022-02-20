@@ -1,63 +1,184 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { useLocation, Link } from 'react-router-dom'
-import { SERVER_URL } from "../../redux/actions/actionNames";
+import React, { useMemo, useRef } from "react";
+import { useLocation} from 'react-router-dom'
+import {useTable, useGroupBy, useFilters, useSortBy, useExpanded, usePagination} from 'react-table';
+import { ColumnFilter } from "./utils/ColumnFilter";
+import {format} from 'date-fns';
+import {useReactToPrint} from 'react-to-print'
 
 
-export default function ReportingResults() {
+export default function ReportingResultsReactTable() {
     const location = useLocation()
-    const {input} = location.state;
-    const establishmentId = input.establishmentId;
-    const dateFrom = input.dateFrom?input.dateFrom:"";
-    const dateTo = input.dateTo?input.dateTo:"";
-    const siteId = input.siteId?input.siteId:"";
-    const sport = input.sport?input.sport:"";
+    const data = React.useMemo(()=>location.state,[])
 
-    const [bookings, setBookings] = useState({})
-    useEffect(()=>{
-        axios.get(`${SERVER_URL}/booking/byEstab/${establishmentId}?dateFrom=${dateFrom}&dateTo=${dateTo}&siteId=${siteId}&sport=${sport}`)
-        .then(response => setBookings(response.data))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const defaultColumn = useMemo(()=>{
+        return{
+            Filter: ColumnFilter
+        }
     },[])
 
+    const columns = React.useMemo(()=>[
+       {
+           Header: 'Cod. Reserva',
+           accessor: 'external_reference',
+       },
+       {
+        Header: 'Fecha',
+        accessor: 'day',
+        Cell: ({value})=>{return format(new Date(value), 'yyyy-MM-dd')},
+        } ,
+        {
+            Header: 'Sede',
+            accessor: 'siteName',
+        } ,
+        {
+            Header: 'Cancha',
+            accessor: 'courtName',
+        } ,
+        {
+            Header: 'Deporte',
+            accessor: 'sport',
+            Footer: 'Total'
+        } ,
+        {
+            Header: 'Importe',
+            accessor: 'finalAmount',
+            Cell: props => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits:0}).format(props.value),
+            Footer: <span>{(data.reduce((total, { finalAmount }) => total += finalAmount, 0)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' , maximumFractionDigits:0})}</span>
+        }  
+    ],[])
+
+    const tableInstance = useTable(
+        {columns,data, defaultColumn},
+        useFilters,
+        useGroupBy,
+        useSortBy,
+        useExpanded,
+        usePagination)
+   
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        footerGroups,
+        page,
+        nextPage,
+        previousPage,
+        canNextPage,
+        canPreviousPage,
+        pageOptions,
+        setPageSize,
+        state,
+        prepareRow,
+    } = tableInstance 
+
+    const {pageIndex, pageSize} = state
+
+    const componentRef = useRef()
+    const handlePrint = useReactToPrint({
+        content: ()=> componentRef.current,
+    })
+
     return (
-        <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
-            {!bookings.length ? 
+        <div>
+            {!data.length ? 
             (<span>No hay resultado</span>) 
             :
             (
             <div>
-                <table className="w-full border-collapse border border-slate-500 bg-slate-200">
-                    <thead className="bg-white">
-                    <tr>
-                        <th className="border border-slate-600 px-10">Cod. Reserva</th>
-                        <th className="border border-slate-600 px-10">Fecha</th>
-                        <th className="border border-slate-600 px-10">Sede</th>
-                        <th className="border border-slate-600 px-10">Cancha</th>
-                        <th className="border border-slate-600">Deporte</th>
-                        <th className="border border-slate-600 px-5">Importe</th>
-                    </tr>
-                    </thead>
-                    <tbody className="text-center">
-                    {bookings.map((e) => (
-                        <tr key={e.external_reference} className="hover:bg-black">
-                            <td className="border border-slate-700 py-2">{e.external_reference}</td>
-                            <td className="border border-slate-700 py-2">{e.day}</td>
-                            <td className="border border-slate-700 py-2">{e.siteName}</td>
-                            <td className="border border-slate-700 py-2">{e.courtName}</td>
-                            <td className="border border-slate-700 py-2">{e.sport}</td>
-                            <td className="border border-slate-700 py-2">{e.finalAmount}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                <span>
+                    <button 
+                    className="bg-blue-700 hover:bg-blue-500 text-white font-ligth  py-1 px-2 border border-blue-700 hover:border-transparent rounded h-8 align-middle text-center mx-3 my-1 disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
+                    onClick={handlePrint}>
+                        Imprimir
+                    </button>    
+                </span>
+                <div ref={componentRef}>
+                    <h1 className="text-slate-200 mx-3 my-1">Reporte de reservas</h1>
+                    <div className="tableFixHead">
+                        <table>
+                            <thead>
+                                {headerGroups.map(headerGroup => (
+                                <tr {...headerGroup.getHeaderGroupProps()}>
+                                    {headerGroup.headers.map(column => (
+                                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                        {column.render('Header')}
+                                        <span>
+                                            {column.isSorted ? 
+                                            (column.isSortedDesc ? ' 🔽' : ' 🔼')
+                                            : ''}
+                                        </span>
+                                        <div>{column.canFilter ? column.render('Filter') : null}</div>
+                                    </th>
+                                    ))}
+                                </tr>
+                                ))}
+                            </thead>
+                            <tbody {...getTableBodyProps()}>
+                                {page.map(row => {
+                                prepareRow(row)
+                                return (
+                                    <tr {...row.getRowProps()}>
+                                    {row.cells.map(cell => {
+                                        return (
+                                        <td {...cell.getCellProps()}>
+                                            {cell.render('Cell')}
+                                        </td>
+                                        )
+                                    })}
+                                    </tr>
+                                )
+                                })}
+                            </tbody>
+                            <tfoot>
+                                {footerGroups.map(footerGroup => (
+                                    <tr {...footerGroup.getFooterGroupProps()}>
+                                    {footerGroup.headers.map(column => (
+                                        <td {...column.getFooterProps()}>{column.render('Footer')}</td>
+                                    ))}
+                                    </tr>
+                                ))}
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
             )}
-            <Link to={{pathname:'/establishmentprofile', state:{visualInit: 'reporting', establishmentId:establishmentId}}}>
+            <div id={'paging'}>
+                <span className="text-white">
+                    Página{' '}
+                    <strong>
+                        {pageIndex + 1} de {pageOptions.length}
+                    </strong>{' '}
+                    
+                </span>
+                <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
+                    {
+                        [10,20,30,50,999999999].map(pageSize => (
+                            <option key={pageSize} value={pageSize}>
+                                    Mostrar {pageSize<100? pageSize : 'Todo'}
+                            </option>
+                            
+                        ))
+                    }
+                </select>
+                <button 
+                    className="bg-blue-700 hover:bg-blue-500 text-white font-ligth  py-1 px-2 border border-blue-700 hover:border-transparent rounded w-10 h-8 align-middle text-center mx-0.5 my-1 disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
+                    onClick={()=>{previousPage()}}
+                    disabled={!canPreviousPage}>
+                    {'<<'}
+                </button>
+                <button
+                    className="bg-blue-700 hover:bg-blue-500 text-white font-ligth  py-1 px-2 border border-blue-700 hover:border-transparent rounded w-10 h-8 align-middle text-center mx-0.5 my-1 disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
+                    onClick={()=>{nextPage()}}
+                    disabled={!canNextPage}>
+                    {'>>'}
+                </button>
+            </div>
+            {/* <Link to={{pathname:'/establishmentprofile', state:{visualInit: 'reporting', establishmentId:establishmentId}}}>
               <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-full">
                 Volver
               </button>
-            </Link>
+            </Link> */}
         </div>
     )
 }
