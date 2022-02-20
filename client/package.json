@@ -13,6 +13,7 @@
     "@testing-library/react": "^11.2.1",
     "@testing-library/user-event": "^12.2.2",
     "axios": "^0.24.0",
+    "date-fns": "^2.28.0",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-calendar-datetime-picker": "^1.6.0",

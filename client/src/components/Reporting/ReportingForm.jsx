@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import ReportingResults from "./ReportingResults";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import axios from "axios";
+import './ReactTable.css'
 
 
 function isDate(texto) {

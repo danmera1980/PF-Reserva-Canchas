@@ -251,7 +251,7 @@ const getBookingsByEstablishment = async (req,res)=>{
   })
 
   let mapingBookings = await sortedBookings.map(b => {
-    return {external_reference:b.external_reference,  day: b.startTime.toLocaleDateString(), siteName:b.court.site.name, courtName:b.court.name, sport:b.court.sport, finalAmount: b.finalAmount}
+    return {external_reference:b.external_reference,  day: b.startTime, siteName:b.court.site.name, courtName:b.court.name, sport:b.court.sport,finalAmount: b.finalAmount}
   })
   
   res.send(mapingBookings)
