@@ -1,7 +1,7 @@
 const { User, Establishment, Site, Court, Booking, Op } = require("../db");
 const { DB_HOST, TUCANCHAYAMAIL, TUCANCHAYAMAILPASS } = process.env;
 const nodemailer = require("nodemailer");
-const { randomString, minutesToHour } = require("./utils/utils");
+const { randomString, minutesToHour, formatBookingsEst } = require("./utils/utils");
 
 const getAllBookings = async (req, res, next) => {
   try {
@@ -158,6 +158,62 @@ const getCourtAvailability = async (req, res, next) => {
 };
 
 
+const getBookingsByEstId = async (req, res) => {
+  var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
+  var dateTo = req.query.dateTo ? new Date(req.query.dateTo):null;
+  var estId = req.params.estId;
+
+  const bookings = await Booking.findAll({
+    include:[{
+      model: Court,
+      attributes: [
+        'id',
+        'name',
+        'price',
+        'sport'
+      ],
+      include: {
+        model: Site,
+        attributes: [
+          'name',
+        ],
+        include: {
+          model: Establishment,
+          as: 'establishment',
+          attributes: [
+            'name',
+          ]
+        },
+      }
+    },
+    {
+      model: User,
+      attributes: [
+        'name',
+        'lastName'
+      ]
+    }
+    ],
+    where: {
+      [Op.and]: [
+        {'$court->site.establishmentId$': estId},
+        {'$booking.startTime$': {[Op.gte]: dateFrom}},
+        {'$booking.endTime$': {[Op.lte]: dateTo}}
+      ]
+    },
+    attributes: [
+      'id', 
+      'details', 
+      'startTime', 
+      'endTime', 
+      'payment_id',
+      'payment_status',
+    ]
+  })
+  let results = formatBookingsEst(bookings)
+  res.send(results)
+}
+
 
 const getBookingsByEstablishment = async (req,res)=>{
   var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
@@ -166,8 +222,9 @@ const getBookingsByEstablishment = async (req,res)=>{
   var sport = req.query.sport
   const establishmentId = req.params.establishmentId;
 
-  console.log('dateTo',dateTo);
   console.log('dateFrom',dateFrom);
+  console.log('dateTo',dateTo);
+
 
   // var establishment = await Establishment.findOne({
   //   where:{
@@ -308,5 +365,6 @@ module.exports = {
   newBooking,
   getCourtAvailability,
   getBookingsByEstablishment,
+  getBookingsByEstId,
   courtBookings
 };
