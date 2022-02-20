@@ -12,7 +12,7 @@ function Favorites(){
 
     useEffect(() => {
         dispatch(getfavs(userToken))
-      }, [userToken]);
+      }, [dispatch]);
     return(
         <div>
             {favorites.map((e) => {
