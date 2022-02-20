@@ -1,16 +1,19 @@
 import { useEffect } from "react";
 import { React, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import Card from "../Card/Card";
 import ReactLoading from "react-loading";
+import { getfavs } from "../../redux/actions/users";
+import Favorites from "../Favorites/Favorites";
 
 function Bookings() {
+  const dispatch = useDispatch()
   const [visual, setVisual] = useState("bookings");
   const userToken = useSelector((state) => state.register.userToken);
+  const favorites = useSelector(state => state.users.userFav)
   const [booking, SetBooking] = useState(null);
-  const [favorites, setFavorites] = useState(null)
   const onButtonSelection = (option) => {
     setVisual(option);
   };
@@ -24,12 +27,7 @@ function Bookings() {
       .then((res) => {
         SetBooking(res.data);
       });
-    
-      axios
-      .get(`${SERVER_URL}/users/fav`, { headers: headers })
-      .then((res) => {
-        setFavorites(res.data.courts);
-      });
+    dispatch(getfavs(userToken))
   }, [userToken]);
 
 console.log(favorites)
@@ -80,31 +78,7 @@ console.log(favorites)
                 })
               );
             case "favorites":
-              return favorites === null ? (
-                <ReactLoading
-                  type={"spin"}
-                  color={"#000000"}
-                  height={"8.5rem"}
-                  width={"8.5rem"}
-                />
-              ) : (
-                favorites.map((e) => {
-                  return (
-                    <div key={e.id} className="overflow-hidden pb-4">
-                      <Card
-                        name={e.name}
-                        establishment={e.site.establishment.name}
-                        images={e.image[0]}
-                        site={e.site.name}
-                        address={e.site.street}
-                        price={e.price}
-                        sport={e.sport}
-                        courtId={e.id}
-                      />
-                    </div>
-                  );
-                })
-              )
+              return  <Favorites/> 
             default:
               return "bookings";
           }
