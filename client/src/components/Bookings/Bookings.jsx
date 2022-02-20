@@ -1,14 +1,18 @@
 import { useEffect } from "react";
 import { React, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import Card from "../Card/Card";
 import ReactLoading from "react-loading";
+import { getfavs } from "../../redux/actions/users";
+import Favorites from "../Favorites/Favorites";
 
 function Bookings() {
+  const dispatch = useDispatch()
   const [visual, setVisual] = useState("bookings");
   const userToken = useSelector((state) => state.register.userToken);
+  const favorites = useSelector(state => state.users.userFav)
   const [booking, SetBooking] = useState(null);
   const onButtonSelection = (option) => {
     setVisual(option);
@@ -23,8 +27,10 @@ function Bookings() {
       .then((res) => {
         SetBooking(res.data);
       });
+    dispatch(getfavs(userToken))
   }, [userToken]);
 
+console.log(favorites)
 
   return (
     <div>
@@ -65,13 +71,14 @@ function Bookings() {
                         address={e.court.site.street}
                         price={e.finalAmount}
                         sport={e.court.sport}
+                        courtId={e.courtId}
                       />
                     </div>
                   );
                 })
               );
             case "favorites":
-              return <h1>No hay favoritos</h1>;
+              return  <Favorites/> 
             default:
               return "bookings";
           }

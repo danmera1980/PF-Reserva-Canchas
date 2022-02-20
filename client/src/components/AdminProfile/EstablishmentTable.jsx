@@ -52,7 +52,7 @@ function EstablihsmentTable({ establishment }) {
   }
 
   return (
-    <div>
+    <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
       <table className="ml-36 mt-10 table-auto border-collapse border border-slate-500 text-white">
         <thead className="bg-slate-600">
           <tr>

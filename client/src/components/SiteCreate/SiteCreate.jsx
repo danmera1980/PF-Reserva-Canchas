@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postSite } from "../../redux/actions/site";
-import { getEstablishmentById } from "../../redux/actions/forms";
 import ReactMapGL, { Marker } from 'react-map-gl';
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,17 +11,17 @@ const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 function validate(input) {
   let errors = {};
-  if (input.name !== "" && !/^[a-zA-Z0-9' ':.]{1,30}$/.test(input.name)) {
+  if (input.name !== "" && !/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\:.]{1,30}$/.test(input.name)) {
     errors.name = "No se permiten simbolos";
   }
-  if (input.country !== "" && !/^[a-zA-Z0-9' ']{1,30}$/.test(input.country)) {
-    errors.country = "No se permiten simbolos";
+  if (input.country !== "" && !/^[a-zA-ZÀ-ÿ' '\ñ\Ñ\:.]{1,30}$/.test(input.country)) {
+    errors.country = "No se permiten simbolos ni números";
   }
-  if (input.city !== "" && !/^[a-zA-Z0-9' ']{1,30}$/.test(input.city)) {
-    errors.city = "Se requiere una ciudad";
+  if (input.city !== "" && !/^[a-zA-ZÀ-ÿ' '\ñ\Ñ\:.]{1,30}$/.test(input.city)) {
+    errors.city = "No colocar símbolos ni números";
   }
-  if (input.street !== "" && !/^[a-zA-Z0-9' ':.]{1,30}$/.test(input.street)) {
-    errors.street = "Se requiere un nombre de calle";
+  if (input.street !== "" && !/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\:.]{1,30}$/.test(input.street)) {
+    errors.street = "No colocar símbolos";
   }
   if (input.streetNumber !== "" && input.streetNumber < 0) {
     errors.streetNumber = "No se permite numero negativo";
@@ -30,13 +29,12 @@ function validate(input) {
   return errors;
 }
 
-export default function SiteCreate() {
+export default function SiteCreate({establishmentId}) {
   const dispatch = useDispatch();
-  const establishmentId = useSelector((state) => state.establishment.establishmentId);
   const userToken = useSelector((state) => state.register.userToken);
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
-    establishmentId: establishmentId?establishmentId:"",
+    establishmentId: establishmentId,
     name: "",
     country: "",
     city: "",
@@ -63,14 +61,6 @@ export default function SiteCreate() {
     })
   }
 
-  useEffect(() => {
-    dispatch(getEstablishmentById(userToken))
-    setInput({
-       ...input,
-       establishmentId: establishmentId,
-    })
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[establishmentId])
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(position => {
@@ -271,7 +261,7 @@ export default function SiteCreate() {
               <input
                 className="w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 placeholder="Numero de calle..."
-                type="text"
+                type="number"
                 value={input.streetNumber}
                 name="streetNumber"
                 id="numC"

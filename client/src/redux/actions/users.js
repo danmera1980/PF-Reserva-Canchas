@@ -15,6 +15,7 @@ import {
   LOGOUT,
   SERVER_URL,
   USER_DATA,
+  USER_FAV,
 } from "./actionNames";
 
 export const getAllUsers = () => {
@@ -119,6 +120,58 @@ export function getUserData(tokenId) {
     } catch (err) {
       console.log(err);
       dispatch({ type: SET_ERRORS, payload: err });
+    }
+  };
+}
+
+export function addfav(userToken, courtId){
+  const headers = {
+    Authorization: `Bearer ${userToken}`,
+  };
+  return async () => {
+    try {
+      await axios.put(`${SERVER_URL}/users/fav`, {courtId} ,{
+        headers: headers,
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function delfav(userToken, courtId){
+  const headers = {
+    Authorization: `Bearer ${userToken}`,
+  };
+  return async () => {
+    try {
+      await axios.delete(`${SERVER_URL}/users/fav/${courtId}` ,{
+        headers: headers,
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function getfavs(tokenId){
+  const headers = {
+    Authorization: `Bearer ${tokenId}`,
+  };
+  return async (dispatch) => {
+    try {
+      var user = await axios.get(`${SERVER_URL}/users/fav`, {
+        headers: headers,
+      });
+      console.log(user)
+      return dispatch({
+        type: USER_FAV,
+        payload: user.data.courts
+      });
+    } catch (err) {
+      console.log(err);
     }
   };
 }

@@ -40,19 +40,23 @@ function AdminProfile() {
   return (
     <div>
       <Header />
-      <button
-        className="mt-5 ml-40 h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all "
-        onClick={() => onButtonSelection("users")}
-      >
-        Ver usuarios
-      </button>
-      <button
-        className="mt-5 ml-40 h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all "
-        onClick={() => onButtonSelection("establishments")}
-      >
-        Ver Establecimientos
-      </button>
-
+      <h1 className="text-indigo-500 flex justify-center text-2xl mt-3">
+        Perfil Administrador
+      </h1>
+      <div className="grid grid-cols-2 gap-4 max-w-xs mt-10 ml-10">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]"
+          onClick={() => onButtonSelection("users")}
+        >
+          Ver usuarios
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]"
+          onClick={() => onButtonSelection("establishments")}
+        >
+          Ver Establecimientos
+        </button>
+      </div>
       <div>
         {(() => {
           switch (visual) {
@@ -61,11 +65,7 @@ function AdminProfile() {
             case "establishments":
               return <EstablihsmentTable establishment={establishment} />;
             default:
-              return (
-                <h1 className="text-indigo-500 flex justify-center text-2xl">
-                  Perfil Administrador
-                </h1>
-              );
+              return <div></div>;
           }
         })()}
       </div>

@@ -9,17 +9,11 @@ import ReactLoading from "react-loading";
 
 function validate(input) {
   let errors = {};
-  if (!/^[a-zA-Z0-9_\-' ']{1,20}$/.test(input.name)) {
-    errors.name = "Completar nombre";
-  }
-  if (!/^[a-zA-Z0-9' ':]{0,20}$/.test(input.name)) {
+  if (!/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\:.]{1,20}$/.test(input.name)) {
     errors.name = "No se permiten símbolos";
   }
 
-  if (!/^[a-zA-Z0-9_\-' ',.]{1,40}$/.test(input.description)) {
-    errors.description = "Completar la descripcion";
-  }
-  if (!/^[a-zA-Z0-9_\-' ',.:]{0,100}$/.test(input.description)) {
+  if (!/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\,:.]{0,100}$/.test(input.description)) {
     errors.description = "No se permiten símbolos";
   }
   if (!input.sport) {
@@ -37,7 +31,6 @@ export default function CourtCreate({ sites }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
-  // const establishmentId = useSelector((state) => state.forms.establishmentId);
   const userToken = useSelector((state) => state.register.userToken);
 
   const [input, setInput] = useState({

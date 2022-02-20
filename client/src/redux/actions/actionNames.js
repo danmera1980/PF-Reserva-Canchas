@@ -15,3 +15,5 @@ export const LOGOUT = 'LOGOUT';
 export const GET_GEOCODE = ' GET_GEOCODE';
 export const CLEAR_GEOCODE = 'CLEAR_GEOCODE';
 export const USER_DATA = "USER_DATA";
+export const ALL_ACTIVE_ESTAB = "ALL_ACTIVE_ESTAB";
+export const USER_FAV= 'USER_FAV'

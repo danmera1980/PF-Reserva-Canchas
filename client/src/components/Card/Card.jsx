@@ -1,15 +1,45 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect,useState } from "react";
 import Slider from "../Slider/Slider";
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { SERVER_URL } from "../../redux/actions/actionNames";
+import { addfav, delfav } from "../../redux/actions/users";
 
 function Card({id, name, images,button, establishment, court, courtId, address, price, sport}) {
+  const dispatch= useDispatch()
   const history = useHistory()
+  const userToken = useSelector(state => state.register.userToken)
+  const [fav, setFav] = useState(false)
   function handleClick(){
     history.push(`/establishment/${courtId}`)
   }
+  useEffect( () =>{
+    const headers = {
+      Authorization: `Bearer ${userToken}`
+    }
+    axios
+        .get(`${SERVER_URL}/users/onefav?courtid=${courtId}`,{headers:headers})
+        .then(res =>{
+          res.data.courtId?setFav(true):setFav(false)
+        })
+  },[courtId])
   
+
+  function handleAddFav(e){
+      e.preventDefault()
+      dispatch(addfav(userToken, courtId))
+      setFav(true)
+  }
+
+  function handleRemoveFav(e){
+    e.preventDefault()
+    dispatch(delfav(userToken, courtId))
+    setFav(false)
+  }
+
   return (
     <div className="flex flex-wrap -m-3">
       <div className="w-full flex flex-col p-3 max-w-3xl">
@@ -18,8 +48,11 @@ function Card({id, name, images,button, establishment, court, courtId, address, 
 
           <div className="flex flex-1 flex-col p-1 relative">
 
-            <button className="absolute right-4 top-2 block scale-125 active:scale-90 transition-all sm:right-2">
-              <FontAwesomeIcon icon={faStar} color={"yellow"} />
+            <button 
+              onClick={fav===true ? handleRemoveFav : handleAddFav }
+              className="absolute right-4 top-2 block scale-125 active:scale-90 transition-all sm:right-2"
+              >
+                <FontAwesomeIcon icon={faStar} color={fav===true?"yellow":"gray"} />
             </button>
             <h1 className="font-bold text-2xl dark:text-darkAccent">{establishment}</h1>
 
