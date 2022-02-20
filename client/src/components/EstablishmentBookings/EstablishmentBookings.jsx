@@ -7,7 +7,7 @@ import { SERVER_URL } from "../../redux/actions/actionNames";
 function EstablishmentBookings({establishmentDetail}) {
   const [courts, setCourts] = useState(null);
   // setCourts(establishmentDetail.map(e => e.courts.map(e => e.id)))
-  console.log(establishmentDetail)
+  // console.log(establishmentDetail)
 
 
   // useEffect(() => {
