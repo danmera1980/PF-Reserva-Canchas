@@ -18,6 +18,7 @@ import Calendario from "./components/Calendar/Calendar";
 import Login from "./components/Login/Login";
 import ReportingForm from "./components/Reporting/ReportingForm";
 import AdminProfile from "./components/AdminProfile/AdminProfile";
+import ReportingResults from "./components/Reporting/ReportingResults";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route exact path="/payment" component={MercadoPago}/>
         <Route exact path="/calendar" component={Calendario} />
         <Route exact path="/reporting" component={ReportingForm} />
+        <Route exact path="/reportingResults" component={ReportingResults} />
         <Route eaxct path="/admin" component={AdminProfile} />
       </div>
     </React.Fragment>
