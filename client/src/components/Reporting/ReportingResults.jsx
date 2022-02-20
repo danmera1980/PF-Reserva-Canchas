@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from "react";
-import { useLocation} from 'react-router-dom'
+import { useLocation, Link} from 'react-router-dom'
 import {useTable, useGroupBy, useFilters, useSortBy, useExpanded, usePagination} from 'react-table';
 import { ColumnFilter } from "./utils/ColumnFilter";
 import {format} from 'date-fns';
@@ -8,7 +8,9 @@ import {useReactToPrint} from 'react-to-print'
 
 export default function ReportingResultsReactTable() {
     const location = useLocation()
-    const data = React.useMemo(()=>location.state,[])
+    const establishmentDetail = location.state.establishmentDetail
+    const data = React.useMemo(()=>location.state.data,[])
+
 
     const defaultColumn = useMemo(()=>{
         return{
@@ -80,20 +82,27 @@ export default function ReportingResultsReactTable() {
 
     return (
         <div>
+            <span>
+                <Link to={{pathname:'/establishmentprofile', state:{visualInit: 'reporting', estabDetailInit:establishmentDetail}}}>
+                    <button className="bg-blue-700 hover:bg-blue-500 text-white font-ligth  py-1 px-2 border border-blue-700 hover:border-transparent rounded h-8 align-middle text-center mx-3 my-2 disabled:bg-gray-300 disabled:text-black disabled:border-gray-300">
+                        Volver
+                    </button>
+                </Link>
+                <button 
+                className="bg-blue-700 hover:bg-blue-500 text-white font-ligth  py-1 px-2 border border-blue-700 hover:border-transparent rounded h-8 align-middle text-center mx-3 my-2 disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
+                onClick={handlePrint}>
+                    Imprimir
+                </button>
+                    
+            </span>
             {!data.length ? 
-            (<span>No hay resultado</span>) 
+            (<h1 className="text-black mx-3 my-1 bg-blue-300 px-1">No existen reservas para los filtros selecionados</h1>) 
             :
             (
             <div>
-                <span>
-                    <button 
-                    className="bg-blue-700 hover:bg-blue-500 text-white font-ligth  py-1 px-2 border border-blue-700 hover:border-transparent rounded h-8 align-middle text-center mx-3 my-1 disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
-                    onClick={handlePrint}>
-                        Imprimir
-                    </button>    
-                </span>
+                
                 <div ref={componentRef}>
-                    <h1 className="text-slate-200 mx-3 my-1">Reporte de reservas</h1>
+                    <h1 className="text-black bg-blue-300">Reporte de reservas</h1>
                     <div className="tableFixHead">
                         <table>
                             <thead>
@@ -174,11 +183,7 @@ export default function ReportingResultsReactTable() {
                     {'>>'}
                 </button>
             </div>
-            {/* <Link to={{pathname:'/establishmentprofile', state:{visualInit: 'reporting', establishmentId:establishmentId}}}>
-              <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-full">
-                Volver
-              </button>
-            </Link> */}
+            
         </div>
     )
 }

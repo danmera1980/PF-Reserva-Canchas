@@ -137,7 +137,7 @@ export default function ReportingForm({establishmentDetail}) {
         .then(response => history.push(
           {
             pathname: '/reportingResults',
-            state: response.data
+            state: {data: response.data, establishmentDetail:establishmentDetail}
           }
         ))
         

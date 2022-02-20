@@ -19,13 +19,12 @@ function EstablishmentProfile() {
   const location = useLocation()
   const dispatch = useDispatch();
 
-  // console.log(location.state)
-
-  // const {visualInit, establishmentId} = location.state!==undefined ? {visualInit: location.state.visualInit, establishmentId: location.state.establishmentId} :{visualInit:'bookings', establishmentId:null} ;
+  const visualInit = location.state && location.state.visualInit ? location.state.visualInit : 'bookings'
+  const estabDetailInit = location.state && location.state.estabDetailInit ? location.state.estabDetailInit : null
  
-  const [visual, setVisual] = useState('bookings');
+  const [visual, setVisual] = useState(visualInit);
   const userToken = useSelector((state) => state.register.userToken);
-  const [establishmentDetail, setEstablishmentDetail] = useState(null);
+  const [establishmentDetail, setEstablishmentDetail] = useState(estabDetailInit);
   
   useEffect(()=>{
     dispatch(getAllActiveEstablishments())
@@ -33,6 +32,7 @@ function EstablishmentProfile() {
   },[])
 
   useEffect(() => {
+    setVisual(visualInit)
     const headers = {
       Authorization: `Bearer ${userToken}`,
     };
@@ -40,7 +40,7 @@ function EstablishmentProfile() {
       .get(`${SERVER_URL}/establishment/idUser`, { headers: headers })
       .then((res) => {
         setEstablishmentDetail(res.data);
-        // setVisual(visualInit)
+        setVisual(visualInit);
       });
   }, [userToken]);
 

@@ -232,7 +232,7 @@ const getBookingsByEstablishment = async (req,res)=>{
     where: {
       [Op.and]: [
         {'$court.site.establishmentId$': establishmentId},
-        siteId?{'$site.id$': siteId}:null,
+        siteId?{'$court.site.id$': siteId}:null,
         dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
         dateTo?{startTime: {[Op.lte]: dateTo}}:null,
         sport?{'$court.sport$': sport}:null,
