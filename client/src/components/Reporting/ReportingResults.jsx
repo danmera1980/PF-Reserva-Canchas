@@ -96,15 +96,15 @@ export default function ReportingResultsReactTable() {
                     
             </span>
             {!data.length ? 
-            (<h1 className="text-black mx-3 my-1 bg-blue-300 px-1">No existen reservas para los filtros selecionados</h1>) 
+            (<h1 className='tituloTabla'>No existen reservas para los filtros selecionados</h1>) 
             :
             (
             <div>
                 
                 <div ref={componentRef}>
-                    <h1 className="text-black bg-blue-300">Reporte de reservas</h1>
+                    <h1 className='tituloTabla' >Reporte de reservas</h1>
                     <div className="tableFixHead">
-                        <table>
+                        <table className='reactTable'>
                             <thead>
                                 {headerGroups.map(headerGroup => (
                                 <tr {...headerGroup.getHeaderGroupProps()}>
