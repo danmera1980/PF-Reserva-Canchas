@@ -106,7 +106,7 @@ export default function BookingCourt(){
                 confirmButtonText: "Ok",
             }).then((result) => {
                 if (result.isConfirmed) {
-                  history.push("/login");
+                  return history.push("/login");
                 }
               });
             }
@@ -181,7 +181,7 @@ export default function BookingCourt(){
                     currentDateTime={currentDateTime}
                 />
                 {
-                    input.startTime.length && input.endTime.length ?
+                    userToken && input.startTime.length && input.endTime.length ?
                     <MercadoPago booking={input}/> :
                     null 
                 }
