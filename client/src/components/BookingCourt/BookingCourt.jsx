@@ -31,39 +31,48 @@ const disabledDates = [
       day: 12
     }
   ]
-  const scheduledTime = [
-    {
-      year: 2022,
-      month: 2,
-      day: 18,
-      times: [
-        10,
-        13,
-        14,
-        17,
-        18
-      ]
-    },
-    {
-      year: 2022,
-      month: 2,
-      day: 19,
-      times:[
-        9,
-        10,
-        12,
-        13,
-        18,
-        19,
-        20
-      ]
-    }
-  ]
+const scheduledTime = [
+{
+    year: 2022,
+    month: 2,
+    day: 18,
+    times: [
+    10,
+    13,
+    14,
+    17,
+    18
+    ]
+},
+{
+    year: 2022,
+    month: 2,
+    day: 19,
+    times:[
+    9,
+    10,
+    12,
+    13,
+    18,
+    19,
+    20
+    ]
+}
+]
 
 
 export default function BookingCourt(){
     const {courtId} = useParams()
     const [court, setCourt] = useState([])
+    const nowDateTime = new Date()
+    const currentDateTime = {
+        year: nowDateTime.getFullYear(),
+        month:nowDateTime.getMonth()+1,
+        day: nowDateTime.getDate(),
+        hour: nowDateTime.getHours()
+    }
+    const [disabledDates, setDisableDates] = useState([]);
+    const [scheduledTime, setScheduledTime] = useState([]);
     const [input, setInput] = useState({
         userId: null,
         courtId : null,
@@ -157,6 +166,7 @@ export default function BookingCourt(){
                     disabledDates={disabledDates}
                     scheduledTime={scheduledTime}
                     selectedBooking={selectedBooking}
+                    currentDateTime={currentDateTime}
                 />
                 {
                     input.startTime.length && input.endTime.length ?

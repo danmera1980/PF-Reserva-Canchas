@@ -1,15 +1,15 @@
-  /* table {
+  .reactTable {
     font-family: Arial, Helvetica, sans-serif;
     margin-top: 0;
     border-collapse: collapse;
     width: 94vw;
   } */
 
-  /* table tbody{
+  .reactTable tbody{
     height: 10px;
   } */
   
-  /* table td, table th {
+  .reactTable td, table th {
     border: 2px solid #ddd;
     padding: 6px;
   } */
@@ -18,13 +18,13 @@
     margin-left: 1vw;
   }
   
-  table tr:nth-child(even){background-color: #fff;}
-  table tr:nth-child(odd){background-color: #eee;}
+  .reactTable tr:nth-child(even){background-color: #fff;}
+  .reactTable tr:nth-child(odd){background-color: #eee;}
  
   
-  table tr:hover {background-color: #ddd;}
+  .reactTable tr:hover {background-color: #ddd;}
   
-  table th{
+  .reactTable th{
     padding-top: 6px;
     padding-bottom: 6px;
     text-align: left;
@@ -32,7 +32,7 @@
     color: white;
   }
 
-  tfoot td {
+  .reactTable tfoot td {
     font-weight: bold;
     padding-top: 6px;
     padding-bottom: 6px;
@@ -42,17 +42,19 @@
     border-color: #04AA6D;
   }
 
-  input{
+  .searchFilter{
     color:black
   }
 
-  h1{
+  .tituloTabla{
+    background-color: rgb(147 197 253 / var(--tw-bg-opacity));
     margin: 1vw;
     margin-left: 1vw;
     width: 94vw;
     margin-bottom: 0;
   }
-  /* .tableFixHead {
+
+  .tableFixHead {
     overflow-y: auto;
     max-height: 78vh;
     margin: 0.5vw;
@@ -64,7 +66,7 @@
   .tableFixHead thead th {
     position: sticky;
     top: 0;
-  } */
+  }
   /* .tableFixHead tfoot tr {
     position: sticky;
     bottom: 0;

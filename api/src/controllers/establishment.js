@@ -118,6 +118,7 @@ const addUserToEstablishment = async (req, res, next) => {
 
 const getEstablishmentByUser = async (req, res, next) => {
   const userId = req.user.id;
+  console.log(userId)
   let user = await User.findOne({
     where: { id: userId },
   });
