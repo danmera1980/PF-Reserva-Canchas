@@ -16,6 +16,7 @@ const {
   addfavorite,
   findFavorite,
   delFavorite,
+  findOneFav,
 } = require("../controllers/user");
 const { loginUser, checkedEmail } = require("../controllers/login");
 const router = Router();
@@ -70,5 +71,6 @@ router.put("/fav",timeIp, userExtractor, authGoogle, addfavorite);
 
 router.put("/edit",timeIp, userExtractor, authGoogle, editUser);
 router.put("/updateStatus",timeIp, userExtractor, authGoogle, updateStatus);
+router.get("/onefav", timeIp, userExtractor, authGoogle, findOneFav)
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const { User, Establishment, Site, Court, Booking, Op } = require("../db");
 const { DB_HOST, TUCANCHAYAMAIL, TUCANCHAYAMAILPASS } = process.env;
 const nodemailer = require("nodemailer");
-const { randomString, minutesToHour } = require("./utils/utils");
+const { randomString, minutesToHour, formatBookingsEst } = require("./utils/utils");
 
 const getAllBookings = async (req, res, next) => {
   try {
@@ -151,68 +151,177 @@ const getCourtAvailability = async (req, res, next) => {
       });
     }
 
-    res.status(200).json([dayBookings, availability]);
+    res.status(200).json([availability]);
   } catch (e) {
     next(e);
   }
 };
 
 
+const getBookingsByEstId = async (req, res) => {
+  var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
+  var dateTo = req.query.dateTo ? new Date(req.query.dateTo):null;
+  var estId = req.params.estId;
+
+  const bookings = await Booking.findAll({
+    include:[{
+      model: Court,
+      attributes: [
+        'id',
+        'name',
+        'price',
+        'sport'
+      ],
+      include: {
+        model: Site,
+        attributes: [
+          'name',
+        ],
+        include: {
+          model: Establishment,
+          as: 'establishment',
+          attributes: [
+            'name',
+          ]
+        },
+      }
+    },
+    {
+      model: User,
+      attributes: [
+        'name',
+        'lastName'
+      ]
+    }
+    ],
+    where: {
+      [Op.and]: [
+        {'$court->site.establishmentId$': estId},
+        {'$booking.startTime$': {[Op.gte]: dateFrom}},
+        {'$booking.endTime$': {[Op.lte]: dateTo}}
+      ]
+    },
+    attributes: [
+      'id', 
+      'details', 
+      'startTime', 
+      'endTime', 
+      'payment_id',
+      'payment_status',
+    ]
+  })
+  let results = formatBookingsEst(bookings)
+  res.send(results)
+}
+
 
 const getBookingsByEstablishment = async (req,res)=>{
   var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
   var dateTo = req.query.dateTo ? new Date(req.query.dateTo):null;
   var siteId = req.query.siteId;
-  var sport = req.query.sport
+  var sport = req.query.sport;
   const establishmentId = req.params.establishmentId;
 
-  console.log('dateTo',dateTo);
   console.log('dateFrom',dateFrom);
+  console.log('dateTo',dateTo);
 
-  var establishment = await Establishment.findOne({
-    where:{
-      id: establishmentId
-    },
-    attributes: ['id'],
-    include:{
-      model: Site,
-      as: 'sites',
-      attributes: ['name'],
-      where:{
-        [Op.and]: [
-        siteId? {id:siteId}:null
-        ]
-      },
-      include:{
+
+  // var establishment = await Establishment.findOne({
+  //   where:{
+  //     id: establishmentId
+  //   },
+  //   attributes: ['id'],
+  //   include:{
+  //     model: Site,
+  //     as: 'sites',
+  //     attributes: ['name'],
+  //     where:{
+  //       [Op.and]: [
+  //       siteId? {id:siteId}:null
+  //       ]
+  //     },
+  //     include:{
+  //       model: Court,
+  //       as: 'courts',
+  //       attributes: ['name','sport'],
+  //       where:{
+  //         [Op.and]: [
+  //         sport? {sport:sport} : null
+  //         ]
+  //       },
+  //       include:{
+  //         model:Booking,
+  //         as: 'booking',
+  //         attributes:['startTime', 'external_reference', 'payment_status'],
+  //         where:{
+  //           [Op.and]: [
+  //             dateTo?{startTime: {[Op.lte]: dateTo }}:null,
+  //             dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
+  //            ]
+  //         },
+  //         include:{
+  //           model: User,
+  //           attributes:['id','name','lastName']
+  //         }
+  //       }
+  //     }
+  //   }
+  // })const getBookingsByEstId = async (req, res) => {
+
+  const bookings = await Booking.findAll({
+    include: [
+      {
         model: Court,
-        as: 'courts',
-        attributes: ['name','sport'],
-        where:{
-          [Op.and]: [
-          sport? {sport:sport} : null
-          ]
-        },
-        include:{
-          model:Booking,
-          as: 'booking',
-          attributes:['startTime', 'external_reference', 'payment_status'],
-          where:{
-            [Op.and]: [
-              dateTo?{startTime: {[Op.lte]: dateTo }}:null,
-              dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
-             ]
+        as: "court",
+        include: {
+          model: Site,
+          as: "site",
+          include: {
+            model: Establishment,
+            as: "establishment",
           },
-          include:{
-            model: User,
-            attributes:['id','name','lastName']
-          }
-        }
-      }
-    }
-  })
+        },
+      },
+      {
+        model: User,
+        as: "user",
+      },
+    ],
+    where: {
+      [Op.and]: [
+        { "$court.site.establishmentId$": establishmentId },
+        siteId ? { "$court.site.id$": siteId } : null,
+        dateFrom ? { startTime: { [Op.gte]: dateFrom } } : null,
+        dateTo ? { startTime: { [Op.lte]: dateTo } } : null,
+        sport ? { "$court.sport$": sport } : null,
+      ],
+    },
+  });
 
-  res.send(establishment)
-}
+  let sortedBookings = await bookings.sort(function (c, d) {
+    if (c.startTime < d.startTime) {
+      return 1;
+    }
+    if (c.startTime > d.startTime) {
+      return -1;
+    }
+    return 0;
+  });
+
+  let mapingBookings = await sortedBookings.map((b) => {
+    return {
+      external_reference: b.external_reference,
+      day: b.startTime,
+      siteName: b.court.site.name,
+      courtName: b.court.name,
+      sport: b.court.sport,
+      finalAmount: b.finalAmount,
+    };
+  });
+
+  res.send(mapingBookings);
+};
+
 async function emailSender(userId, code) {
   const userData = await User.findOne({ where: { id: userId } });
 
@@ -220,8 +329,7 @@ async function emailSender(userId, code) {
   <h3>Hola, ${userData.name}!</h3>
 
   <p> Gracias por usar nuestro servicio de reservas. Acercate con tu codigo de reserva a la cancha</p>
-  <h2>&#9917; ${code} &#9917;</h2>
-  `;
+  <h2>&#9917; ${code} &#9917;</h2> `;
   let transporter = nodemailer.createTransport({
     host: "smtp.mailgun.org",
     port: 587,
@@ -241,11 +349,7 @@ async function emailSender(userId, code) {
 
   console.log(response);
 }
-const prueba = async (req, res, next) => {
-  let code = randomString(8);
-  emailSender(1, code);
-  res.send("funciona");
-};
+
 const courtBookings = async (req, res, next) => {
   const { courtId } = req.params;
   try {
@@ -253,17 +357,44 @@ const courtBookings = async (req, res, next) => {
       where: { id: courtId },
     });
 
-    res.send(courtBooking)
+    res.send(courtBooking);
   } catch (error) {
     next(error);
   }
-}
-;
+};
+
+
+const addBooking = async (req, res, next) => {
+  const { courtId, details, dateFrom, dateTo, finalAmount } = req.body;
+  let external_reference = randomString(8)
+  // ES IMPORTANTE VER COMO ME MANDAN LA FECHA ACA ASI LA GUARDI DIRECTO O LA CONVIERTO A FORMATO FECHA COMO LE QUEDE MAS COMODO AL DAN EN EL FRONT
+  try {
+    const newBooking = await Booking.create({
+      courtId,
+      userId : 1,
+      details, 
+      status: 'approved',
+      startTime: dateFrom,
+      endTime: dateTo,
+      external_reference,
+      finalAmount
+    });
+
+    res.send(newBooking.external_reference);
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 
 module.exports = {
   getAllBookings,
   newBooking,
   getCourtAvailability,
   getBookingsByEstablishment,
-  courtBookings
+  getBookingsByEstId,
+  courtBookings,
+  addBooking
 };

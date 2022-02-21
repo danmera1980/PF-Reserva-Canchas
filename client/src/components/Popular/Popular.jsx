@@ -22,7 +22,7 @@ export default function Popular({currentLocation}) {
         <h2 className='text-2xl font-semibold text-lightSecondary dark:text-darkAccent'>{popularTitle}</h2>
         <p className='text-black dark:text-white'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis earum fugiat nostrum, soluta quis labore recusandae aut dicta maxime ratione sit, quia cupiditate similique. Iure esse alias impedit unde dolorum?</p>
         <div className='my-5 gap-4 overflow-x-auto overflow-y-hidden flex scroll-smooth scroll-auto'>
-        {sitesNear.map(m => m.sites.map(site => {
+        {sitesNear?.map(m => m.sites.map(site => {
           return(
           <div key={site.id} className='w-64 flex-none'>
             <Card 

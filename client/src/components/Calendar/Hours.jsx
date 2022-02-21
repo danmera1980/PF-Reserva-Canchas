@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 
-const Hours = ({currentDate, disabledTime, selectedBooking}) => {
+const Hours = ({currentDate, disabledTime, selectedBooking, minTime}) => {
     const [hours, setHours] = useState([])
+
+    console.log(minTime)
 
     useEffect(()=> {
         setHours([])
         for (let i = 0; i < 24; i++) { 
-            disabledTime?.times.find(t => t===i)?
+            disabledTime?.times.find(t => (t===i||t<=minTime))?
             setHours(prevHours => [
                 ...prevHours,
                 {

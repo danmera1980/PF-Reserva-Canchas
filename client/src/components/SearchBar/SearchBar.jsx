@@ -12,7 +12,7 @@ const mapToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 function SearchBar({getViewPort}) {
     const [ geoCode, setGeoCode] = useState('')
-    const [establishment, setEstablishment] = useState('Establecimiento');
+    const [establishment, setEstablishment] = useState('Ubicación');
 
     const history = useHistory();
     
@@ -51,7 +51,6 @@ function SearchBar({getViewPort}) {
     let handleSearch = (e)=>{
         e.preventDefault()
         
-        console.log(searchText)
         getViewPort({
             latitude: searchText.latitude,
             longitude: searchText.longitude,
@@ -113,7 +112,6 @@ function SearchBar({getViewPort}) {
                         <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
                     </Link>
                 </div>
-                {console.log(geoCode.features)}
                 { geoCode !== undefined && geoCode !== '' ?
                     <div className='autoContainer' hidden={geoCode?false:true}>
                         {geoCode && geoCode.features.map(r => (

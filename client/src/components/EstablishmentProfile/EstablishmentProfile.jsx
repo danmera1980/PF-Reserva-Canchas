@@ -8,7 +8,7 @@ import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import EstablishmentBookings from "../EstablishmentBookings/EstablishmentBookings";
 import { useSelector,useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import Sites from "../Sites/Sites";
 import defaultEstablishmentLogo from "../../assets/img/defaultEstablishmentLogo.jpg";
@@ -16,10 +16,15 @@ import {getAllActiveEstablishments} from "../../redux/actions/establishment.js"
 
 function EstablishmentProfile() {
   
+  const location = useLocation()
   const dispatch = useDispatch();
-  const [visual, setVisual] = useState("bookings");
+
+  const visualInit = location.state && location.state.visualInit ? location.state.visualInit : 'bookings'
+  const estabDetailInit = location.state && location.state.estabDetailInit ? location.state.estabDetailInit : null
+ 
+  const [visual, setVisual] = useState(visualInit);
   const userToken = useSelector((state) => state.register.userToken);
-  const [establishmentDetail, setEstablishmentDetail] = useState(null);
+  const [establishmentDetail, setEstablishmentDetail] = useState(estabDetailInit);
   
   useEffect(()=>{
     dispatch(getAllActiveEstablishments())
@@ -27,6 +32,7 @@ function EstablishmentProfile() {
   },[])
 
   useEffect(() => {
+    setVisual(visualInit)
     const headers = {
       Authorization: `Bearer ${userToken}`,
     };
@@ -34,7 +40,7 @@ function EstablishmentProfile() {
       .get(`${SERVER_URL}/establishment/idUser`, { headers: headers })
       .then((res) => {
         setEstablishmentDetail(res.data);
-        console.log(establishmentDetail)
+        setVisual(visualInit);
       });
   }, [userToken]);
 
@@ -47,7 +53,6 @@ function EstablishmentProfile() {
     <div className="dark:bg-darkPrimary dark:text-white">
       <Header />
       <div className="md:max-w-[1200px] m-auto">
-        <div className="h-36 bg-[#498C8A] dark:bg-[#057276]"></div>
         <div className="grid place-content-center md:grid-cols-2 xl:grid-cols-[30%,70%]">
           <div>
             <img
@@ -57,7 +62,7 @@ function EstablishmentProfile() {
                   : defaultEstablishmentLogo
               }
               alt="logo_img"
-              className="-mt-28 ml-[2.8rem] md:ml-[3.5rem] object-cover rounded-full w-60 h-60 bg-green-900"
+              className="mt-8 ml-[2.8rem] md:ml-[3.5rem] object-cover rounded-full w-60 h-60 bg-green-900"
             />
 
             <h1 className="mb-5 text-center mt-5 text-2xl font-bold">
@@ -144,7 +149,7 @@ function EstablishmentProfile() {
           </div>
         </div>
       </div>
-      <div className="mb-0 mt-80">
+      <div className="mb-0 mt-20">
         <Footer />
       </div>
     </div>
