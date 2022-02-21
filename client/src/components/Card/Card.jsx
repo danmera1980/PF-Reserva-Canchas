@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
-import { addfav, delfav } from "../../redux/actions/users";
+import { addfav, delfav, getfavs } from "../../redux/actions/users";
 import Swal from "sweetalert2";
 
 function Card({
@@ -31,7 +31,8 @@ function Card({
     history.push(`/establishment/${courtId}`);
   }
   useEffect(() => {
-    const headers = {
+    if(userToken){
+      const headers = {
       Authorization: `Bearer ${userToken}`,
     };
     axios
@@ -40,7 +41,7 @@ function Card({
       })
       .then((res) => {
         res.data.courtId ? setFav(true) : setFav(false);
-      });
+      });}
   }, [courtId]);
 
   function handleAddFav(e) {
@@ -60,10 +61,11 @@ function Card({
     }
   }
 
-  function handleRemoveFav(e) {
-    e.preventDefault();
-    dispatch(delfav(userToken, courtId));
-    setFav(false);
+  function handleRemoveFav(e){
+    e.preventDefault()
+    dispatch(delfav(userToken, courtId))
+    dispatch(getfavs(userToken))
+    setFav(false)
   }
 
   return (
