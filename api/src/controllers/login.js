@@ -26,6 +26,7 @@ const loginUser = async (req, res, next) => {
     res.send({
       id: user.id,
       token,
+      isAdmin: user.isAdmin
     });
   } catch (error) {
     next(error);

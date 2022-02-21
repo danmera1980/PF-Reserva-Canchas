@@ -151,23 +151,21 @@ const getCourtAvailability = async (req, res, next) => {
       });
     }
 
-    res.status(200).json([dayBookings, availability]);
+    res.status(200).json([availability]);
   } catch (e) {
     next(e);
   }
 };
 
-
-
-const getBookingsByEstablishment = async (req,res)=>{
-  var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom):null;
-  var dateTo = req.query.dateTo ? new Date(req.query.dateTo):null;
+const getBookingsByEstablishment = async (req, res) => {
+  var dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom) : null;
+  var dateTo = req.query.dateTo ? new Date(req.query.dateTo) : null;
   var siteId = req.query.siteId;
-  var sport = req.query.sport
+  var sport = req.query.sport;
   const establishmentId = req.params.establishmentId;
 
-  console.log('dateTo',dateTo);
-  console.log('dateFrom',dateFrom);
+  console.log("dateTo", dateTo);
+  console.log("dateFrom", dateFrom);
 
   // var establishment = await Establishment.findOne({
   //   where:{
@@ -212,50 +210,59 @@ const getBookingsByEstablishment = async (req,res)=>{
   // })const getBookingsByEstId = async (req, res) => {
 
   const bookings = await Booking.findAll({
-    include:[{
-      model: Court,
-      as: 'court',
-      include: {
-        model: Site,
-        as: 'site',
+    include: [
+      {
+        model: Court,
+        as: "court",
         include: {
-          model: Establishment,
-          as: 'establishment'
-        }
-      }
-    },
-    {
-      model: User,
-      as: 'user'
-    }
+          model: Site,
+          as: "site",
+          include: {
+            model: Establishment,
+            as: "establishment",
+          },
+        },
+      },
+      {
+        model: User,
+        as: "user",
+      },
     ],
     where: {
       [Op.and]: [
-        {'$court.site.establishmentId$': establishmentId},
-        siteId?{'$court.site.id$': siteId}:null,
-        dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
-        dateTo?{startTime: {[Op.lte]: dateTo}}:null,
-        sport?{'$court.sport$': sport}:null,
-      ]
+        { "$court.site.establishmentId$": establishmentId },
+        siteId ? { "$court.site.id$": siteId } : null,
+        dateFrom ? { startTime: { [Op.gte]: dateFrom } } : null,
+        dateTo ? { startTime: { [Op.lte]: dateTo } } : null,
+        sport ? { "$court.sport$": sport } : null,
+      ],
+    },
+  });
+
+  let sortedBookings = await bookings.sort(function (c, d) {
+    if (c.startTime < d.startTime) {
+      return 1;
     }
-  })
+    if (c.startTime > d.startTime) {
+      return -1;
+    }
+    return 0;
+  });
 
-  let sortedBookings = await bookings.sort(function(c,d){
-      if (c.startTime < d.startTime) {
-          return 1;
-      }
-      if (c.startTime > d.startTime) {
-          return -1;
-      }
-      return 0;
-  })
+  let mapingBookings = await sortedBookings.map((b) => {
+    return {
+      external_reference: b.external_reference,
+      day: b.startTime,
+      siteName: b.court.site.name,
+      courtName: b.court.name,
+      sport: b.court.sport,
+      finalAmount: b.finalAmount,
+    };
+  });
 
-  let mapingBookings = await sortedBookings.map(b => {
-    return {external_reference:b.external_reference,  day: b.startTime, siteName:b.court.site.name, courtName:b.court.name, sport:b.court.sport,finalAmount: b.finalAmount}
-  })
-  
-  res.send(mapingBookings)
-}
+  res.send(mapingBookings);
+};
+
 async function emailSender(userId, code) {
   const userData = await User.findOne({ where: { id: userId } });
 
@@ -263,8 +270,7 @@ async function emailSender(userId, code) {
   <h3>Hola, ${userData.name}!</h3>
 
   <p> Gracias por usar nuestro servicio de reservas. Acercate con tu codigo de reserva a la cancha</p>
-  <h2>&#9917; ${code} &#9917;</h2>
-  `;
+  <h2>&#9917; ${code} &#9917;</h2> `;
   let transporter = nodemailer.createTransport({
     host: "smtp.mailgun.org",
     port: 587,
@@ -284,11 +290,7 @@ async function emailSender(userId, code) {
 
   console.log(response);
 }
-const prueba = async (req, res, next) => {
-  let code = randomString(8);
-  emailSender(1, code);
-  res.send("funciona");
-};
+
 const courtBookings = async (req, res, next) => {
   const { courtId } = req.params;
   try {
@@ -296,17 +298,15 @@ const courtBookings = async (req, res, next) => {
       where: { id: courtId },
     });
 
-    res.send(courtBooking)
+    res.send(courtBooking);
   } catch (error) {
     next(error);
   }
-}
-;
-
+};
 module.exports = {
   getAllBookings,
   newBooking,
   getCourtAvailability,
   getBookingsByEstablishment,
-  courtBookings
+  courtBookings,
 };
