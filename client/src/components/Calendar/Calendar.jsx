@@ -22,16 +22,20 @@ const Calendario = ({disabledDates, scheduledTime, selectedBooking, currentDateT
         });
     }, []);
 
+    const getDate = (date) => {
+      setDate(date)
+    }
+
     return (
       <div className="flex">
         <DtCalendar
-          onChange={setDate}
+          onChange={getDate}
           disabledDates={disabledDates}
           minDate={currentDateTime}
       />
       {date? 
         <Hours
-          currentDate={date}
+          selectedDate={date}
           disabledTime={getSchedule(scheduledTime)}
           selectedBooking={selectedBooking}
           minTime={currentDateTime.hour}
