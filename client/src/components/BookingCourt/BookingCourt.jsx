@@ -4,13 +4,14 @@ import Header from "../Header/Header";
 import logo from "../../assets/img/logo.svg";
 import ReactMapGL, { Marker } from 'react-map-gl';
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import Calendar from '../Calendar/Calendar'
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import MercadoPago from '../MercadoPago/MercadoPago'
+import Swal from "sweetalert2";
 
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
 const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
@@ -62,6 +63,7 @@ const scheduledTime = [
 
 
 export default function BookingCourt(){
+    const history = useHistory()
     const {courtId} = useParams()
     const [court, setCourt] = useState([])
     const nowDateTime = new Date()
@@ -95,9 +97,29 @@ export default function BookingCourt(){
         pitch: 50
     });
     const userToken = useSelector((state) => state.register.userToken);
+    const isActive = useSelector((state) => state.register.isActive);
     const [userId, setUserId] = useState('')
 
     const selectedBooking = (data) => {
+        if(userToken === null){
+            Swal.fire({
+                title: "Ingresa a tu cuenta para que puedas reservar",
+                confirmButtonText: "Ok",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  return history.push("/login");
+                }
+              });
+        }else if(!isActive){
+            Swal.fire({
+                title: "Usuario inhabilitado, contactarse con el administrador",
+                confirmButtonText: "Ok",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  return history.push("/");
+                }
+              });
+        }
         setInput({
             ...input,
             startTime: data.startTime.toString(),
@@ -169,7 +191,7 @@ export default function BookingCourt(){
                     currentDateTime={currentDateTime}
                 />
                 {
-                    input.startTime.length && input.endTime.length ?
+                    isActive && userToken && input.startTime.length && input.endTime.length ?
                     <MercadoPago booking={input}/> :
                     null 
                 }
