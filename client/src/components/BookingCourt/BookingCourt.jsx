@@ -101,7 +101,7 @@ export default function BookingCourt(){
     const [userId, setUserId] = useState('')
 
     const selectedBooking = (data) => {
-        if(userToken === null && !isActive){
+        if(userToken === null || !isActive){
             Swal.fire({
                 title: "Ingresa a tu cuenta para que puedas reservar",
                 confirmButtonText: "Ok",
