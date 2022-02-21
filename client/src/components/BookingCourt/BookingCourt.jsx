@@ -97,10 +97,11 @@ export default function BookingCourt(){
         pitch: 50
     });
     const userToken = useSelector((state) => state.register.userToken);
+    const isActive = useSelector((state) => state.register.isActive);
     const [userId, setUserId] = useState('')
 
     const selectedBooking = (data) => {
-        if(userToken === null){
+        if(userToken === null && !isActive){
             Swal.fire({
                 title: "Ingresa a tu cuenta para que puedas reservar",
                 confirmButtonText: "Ok",
@@ -181,7 +182,7 @@ export default function BookingCourt(){
                     currentDateTime={currentDateTime}
                 />
                 {
-                    userToken && input.startTime.length && input.endTime.length ?
+                    isActive && userToken && input.startTime.length && input.endTime.length ?
                     <MercadoPago booking={input}/> :
                     null 
                 }

@@ -31,7 +31,8 @@ function Card({
     history.push(`/establishment/${courtId}`);
   }
   useEffect(() => {
-    const headers = {
+    if(userToken){
+      const headers = {
       Authorization: `Bearer ${userToken}`,
     };
     axios
@@ -40,7 +41,7 @@ function Card({
       })
       .then((res) => {
         res.data.courtId ? setFav(true) : setFav(false);
-      });
+      });}
   }, [courtId]);
 
   function handleAddFav(e) {
