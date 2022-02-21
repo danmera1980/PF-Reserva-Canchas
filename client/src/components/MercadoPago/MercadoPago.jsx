@@ -11,6 +11,7 @@ export default function MercadoPago({booking}){
 
   const PUBLIC_KEY = 'TEST-6df9d926-e5fa-465e-9d9d-78207d113a0f';
   const [preferenceId, setPreferenceId] = useState("") // preferenceId
+  const userToken = useSelector((state) => state.register.userToken);
 
 
 
@@ -32,12 +33,17 @@ export default function MercadoPago({booking}){
   const hour = parseInt(date[4].split(':' , 1))
 
   useEffect(()=>{
+    if(userToken !== null){
+      const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
     axios
-    .post(`${SERVER_URL}/mercadopago`, input)
+    .post(`${SERVER_URL}/mercadopago`, input,{headers:headers})
     .then((data)=>{
       setPreferenceId(data.data)
     })
-    .catch(err => console.error(err)) 
+    .catch(err => console.error(err))
+    } 
   },[])
  
   // SDK VERSION 2

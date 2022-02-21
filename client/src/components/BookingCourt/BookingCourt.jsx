@@ -11,6 +11,7 @@ import Calendar from '../Calendar/Calendar'
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import MercadoPago from '../MercadoPago/MercadoPago'
+import Swal from "sweetalert2";
 
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
 const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
@@ -100,8 +101,14 @@ export default function BookingCourt(){
 
     const selectedBooking = (data) => {
         if(userToken === null){
-            alert('Tiene que estar logueado para reservar') 
-            history.push("/login") 
+            Swal.fire({
+                title: "Ingresa a tu cuenta para que puedas reservar",
+                confirmButtonText: "Ok",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  history.push("/login");
+                }
+              });
             }
         setInput({
             ...input,

@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
-import { addfav, delfav } from "../../redux/actions/users";
+import { addfav, delfav, getfavs } from "../../redux/actions/users";
 
 function Card({id, name, images,button, establishment, court, courtId, address, price, sport}) {
   const dispatch= useDispatch()
@@ -37,6 +37,7 @@ function Card({id, name, images,button, establishment, court, courtId, address, 
   function handleRemoveFav(e){
     e.preventDefault()
     dispatch(delfav(userToken, courtId))
+    dispatch(getfavs(userToken))
     setFav(false)
   }
 
