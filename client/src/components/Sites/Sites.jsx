@@ -36,6 +36,7 @@ console.log('sites useEffect',sites)
       if (result.isConfirmed) {
        
         dispatch(deleteSite(site.id, userToken));
+        setCourts(site.courts.map(e=>e.isActive=false))
         setSites(sites.filter(e=>e!==site))
         Swal.fire("Sede eliminada");
         //window.location.reload();
@@ -100,7 +101,7 @@ console.log('sites useEffect',sites)
               </tr>
             </thead>
             <tbody className="text-center">
-              {console.log('sites',sites),sites.map((e) => (
+              {sites.map((e) => (
                 <tr key={e.id} className="hover:bg-black">
                   <td className="border border-slate-700 py-2">{e.name}</td>
                   <td className="border border-slate-700 py-2">{e.city}</td>
@@ -139,7 +140,8 @@ console.log('sites useEffect',sites)
       )}
 
       <div className="py-2">
-        {courts.length ? (
+        
+            {courts.map((e) => (e.isActive===true?
           <table className="w-full border-collapse border border-slate-500">
             <thead className="bg-slate-600">
               <tr>
@@ -152,7 +154,6 @@ console.log('sites useEffect',sites)
                 </th>
               </tr>
             </thead>
-            {courts.map((e) => (e.isActive===true?
               <tbody className="text-center" key={e.id}>
                 <tr key={e.id}>
                   <td className="border border-slate-700">{e.name}</td>
@@ -172,11 +173,12 @@ console.log('sites useEffect',sites)
                     </button>{" "}
                   </td>
                 </tr>
-              </tbody>:<></>
-            ))}
+              </tbody>
           </table>
-        ) : null}
-      </div>
+              :<></>
+            ))}
+        
+      </div>  
     </div>
   )
 
