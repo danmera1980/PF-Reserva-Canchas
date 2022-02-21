@@ -362,11 +362,37 @@ const courtBookings = async (req, res, next) => {
     next(error);
   }
 };
+
+
+const addBooking = async (req, res, next) => {
+  const { courtId, details, dateFrom, dateTo, finalAmount } = req.body;
+  let external_reference = randomString(8)
+  try {
+    const newBooking = await Booking.create({
+      courtId,
+      userId : 1,
+      details, 
+      startTime: dateFrom,
+      endTime: dateTo,
+      external_reference,
+      finalAmount
+    });
+
+    res.send(newBooking.external_reference);
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
 module.exports = {
   getAllBookings,
   newBooking,
   getCourtAvailability,
   getBookingsByEstablishment,
   getBookingsByEstId,
-  courtBookings
+  courtBookings,
+  addBooking
 };
