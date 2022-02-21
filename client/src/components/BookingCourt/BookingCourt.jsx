@@ -4,7 +4,7 @@ import Header from "../Header/Header";
 import logo from "../../assets/img/logo.svg";
 import ReactMapGL, { Marker } from 'react-map-gl';
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import Calendar from '../Calendar/Calendar'
@@ -62,6 +62,7 @@ const scheduledTime = [
 
 
 export default function BookingCourt(){
+    const history = useHistory()
     const {courtId} = useParams()
     const [court, setCourt] = useState([])
     const nowDateTime = new Date()
@@ -98,6 +99,10 @@ export default function BookingCourt(){
     const [userId, setUserId] = useState('')
 
     const selectedBooking = (data) => {
+        if(userToken === null){
+            alert('Tiene que estar logueado para reservar') 
+            history.push("/login") 
+            }
         setInput({
             ...input,
             startTime: data.startTime.toString(),
