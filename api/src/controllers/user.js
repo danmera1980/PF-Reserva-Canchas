@@ -38,7 +38,7 @@ const registerGoogle = async (req, res, next) => {
   try {
     const user = req.user;
 
-    let response = { id: user.id, isAdmin: user.isAdmin };
+    let response = { id: user.id, isActive: user.isActive };
     res.status(200).json(response);
   } catch (e) {
     next(e);
