@@ -1,48 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-import ReportingResults from "./ReportingResults";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import axios from "axios";
-import './ReactTable.css'
 
-
-function isDate(texto) {
-
-  let partes = (texto || '').split('-').map(e => parseInt(e));
-  let fecha = new Date(partes[0], --partes[1], partes[2]);
-  let hoy = new Date (Date.now());
-  
-  if(fecha>hoy){
-    return 'future'
-  }
-  
-  return 'OK';
-}
-
-
-function validate(input) {
-  let errors = {};
-  if(input.dateFrom!==""){
-    switch(isDate(input.dateFrom)){
-        case 'future':
-            errors.dateFrom='La fecha no puede estar en el futuro';
-            break;
-        default:
-          break;
-    }
-  }
-  if(input.dateTo!==""){
-    switch(isDate(input.dateTo)){
-        case 'future':
-            errors.dateTo='La fecha no puede estar en el futuro';
-            break;
-        default:
-          break;
-    }
-  }
-  return errors;
-}
 
 export default function ReportingForm({establishmentDetail}) {
   const history = useHistory();
@@ -83,12 +44,6 @@ export default function ReportingForm({establishmentDetail}) {
       ...input,
       [e.target.name]: e.target.value,
     });
-    setErrors(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
   }
      
   function handleSelectSite(e) {
@@ -101,12 +56,6 @@ export default function ReportingForm({establishmentDetail}) {
     }else{
         setSelectedSite(sites.filter(site => site.id===e.target.value))
     }
-    setErrors(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
   }
 
   function handleSelectCourt(e) {
@@ -114,12 +63,6 @@ export default function ReportingForm({establishmentDetail}) {
       ...input,
       [e.target.name]: e.target.value,
     });
-    setErrors(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
   }
 
   function handleSubmit(e) {
