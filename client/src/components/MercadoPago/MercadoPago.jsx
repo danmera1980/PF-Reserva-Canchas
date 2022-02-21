@@ -11,6 +11,8 @@ export default function MercadoPago({booking}){
 
   const PUBLIC_KEY = 'TEST-6df9d926-e5fa-465e-9d9d-78207d113a0f';
   const [preferenceId, setPreferenceId] = useState("") // preferenceId
+  const userToken = useSelector(state => state.register.userToken)
+
 
 
 
@@ -18,6 +20,7 @@ export default function MercadoPago({booking}){
   chicos aca la info de la fecha mandenla como esta en el objeto que les pasa el back y en la ruta de crear el objeto les cuento como se hace para que se guarde bien la fecha sin tener problema con los time zones
   */
   const input = [booking]
+  console.log(input)
   // [{
   //   userId: 1,
   //   courtId : 1,
@@ -28,12 +31,14 @@ export default function MercadoPago({booking}){
   //   status : 'created'
   // }]
 
-  const date = input[0].startTime.split(' ' , 5)
-  const hour = parseInt(date[4].split(':' , 1))
+  // const date = input[0].startTime.split(' ' , 5)
+  // const hour = parseInt(date[4].split(':' , 1))
 
   useEffect(()=>{
+    const headers = {
+      Authorization: `Bearer ${userToken}`}
     axios
-    .post(`${SERVER_URL}/mercadopago`, input)
+    .post(`${SERVER_URL}/mercadopago`, input, {headers:headers})
     .then((data)=>{
       setPreferenceId(data.data)
     })
@@ -73,7 +78,7 @@ export default function MercadoPago({booking}){
       <h4 className="font-bold py-1 text-xl text-center dark:text-white ">Detalle de reserva</h4>
       <h2 className="font-bold py-1 text-l  dark:text-white ">{input[0].courtName}</h2>
       <h1 className="font-bold py-2 text-s dark:text-white ">Fecha y Horario</h1>
-      <h1 className="font-bold py-2  dark:text-white ">{date[2]}-{date[1]}-{date[3]} de {hour} a {hour+1}</h1>
+      {/* <h1 className="font-bold py-2  dark:text-white ">{date[2]}-{date[1]}-{date[3]} de {hour} a {hour+1}</h1> */}
       <h1 className="font-bold py-2  dark:text-white ">Total a pagar  {'$' + input[0].price}</h1>
       <div className="cho-container place-content-center ">
         {!preferenceId &&
