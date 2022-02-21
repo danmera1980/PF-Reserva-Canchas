@@ -4,6 +4,7 @@ import {useTable, useGroupBy, useFilters, useSortBy, useExpanded, usePagination}
 import { ColumnFilter } from "./utils/ColumnFilter";
 import {format} from 'date-fns';
 import {useReactToPrint} from 'react-to-print'
+import './ReactTable.css'
 
 
 export default function ReportingResultsReactTable() {
@@ -39,18 +40,24 @@ export default function ReportingResultsReactTable() {
         {
             Header: 'Deporte',
             accessor: 'sport',
-            Footer: 'Total'
+            Footer: <div>
+                <div>Total</div>
+                <div>Total -5% comisión</div>
+            </div>
         } ,
         {
             Header: 'Importe',
             accessor: 'finalAmount',
             Cell: props => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits:0}).format(props.value),
-            Footer: <span>{(data.reduce((total, { finalAmount }) => total += finalAmount, 0)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' , maximumFractionDigits:0})}</span>
+            Footer: <div>
+                        <div>{(data.reduce((total, { finalAmount }) => total += finalAmount, 0)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' , maximumFractionDigits:0})}</div>
+                        <div>{(data.reduce((total, { finalAmount }) => total += finalAmount*0.95, 0)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' , maximumFractionDigits:0})}</div>
+                    </div>
         }  
     ],[])
 
     const tableInstance = useTable(
-        {columns,data, defaultColumn},
+        {columns,data, defaultColumn, initialState:{pageSize:999999999}},
         useFilters,
         useGroupBy,
         useSortBy,
@@ -69,11 +76,11 @@ export default function ReportingResultsReactTable() {
         canPreviousPage,
         pageOptions,
         setPageSize,
-        state,
+        state: {pageIndex, pageSize},
         prepareRow,
     } = tableInstance 
 
-    const {pageIndex, pageSize} = state
+    // const {pageIndex, pageSize} = state
 
     const componentRef = useRef()
     const handlePrint = useReactToPrint({
@@ -145,6 +152,7 @@ export default function ReportingResultsReactTable() {
                                         <td {...column.getFooterProps()}>{column.render('Footer')}</td>
                                     ))}
                                     </tr>
+                                    
                                 ))}
                             </tfoot>
                         </table>
