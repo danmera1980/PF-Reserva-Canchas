@@ -103,13 +103,13 @@ export default function ReportingResultsReactTable() {
                 
                 <div ref={componentRef}>
                     <h1 className="text-black bg-blue-300">Reporte de reservas</h1>
-                    <div className="tableFixHead">
-                        <table>
-                            <thead>
+                    <div className="overflow-y-auto max-h-[78vh] m-[0.5vw] ml-[1vw] mt-0">
+                        <table className="w-full border-collapse border border-slate-500">
+                            <thead className="sticky top-0">
                                 {headerGroups.map(headerGroup => (
                                 <tr {...headerGroup.getHeaderGroupProps()}>
                                     {headerGroup.headers.map(column => (
-                                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                    <th {...column.getHeaderProps(column.getSortByToggleProps())} className="border-2 border-solid border-[#ddd] p-[6px] bg-[#04AA6D] text-white">
                                         {column.render('Header')}
                                         <span>
                                             {column.isSorted ? 
@@ -122,14 +122,14 @@ export default function ReportingResultsReactTable() {
                                 </tr>
                                 ))}
                             </thead>
-                            <tbody {...getTableBodyProps()}>
+                            <tbody {...getTableBodyProps()} className="h-[10px]">
                                 {page.map(row => {
                                 prepareRow(row)
                                 return (
                                     <tr {...row.getRowProps()}>
                                     {row.cells.map(cell => {
                                         return (
-                                        <td {...cell.getCellProps()}>
+                                        <td {...cell.getCellProps()} className="border-2 border-solid border-[#ddd] p-[6px]">
                                             {cell.render('Cell')}
                                         </td>
                                         )
@@ -138,11 +138,11 @@ export default function ReportingResultsReactTable() {
                                 )
                                 })}
                             </tbody>
-                            <tfoot>
+                            <tfoot className="sticky bottom-0">
                                 {footerGroups.map(footerGroup => (
-                                    <tr {...footerGroup.getFooterGroupProps()}>
+                                    <tr {...footerGroup.getFooterGroupProps()} className="sticky bottom-0">
                                     {footerGroup.headers.map(column => (
-                                        <td {...column.getFooterProps()}>{column.render('Footer')}</td>
+                                        <td {...column.getFooterProps()} className="border-2 border-solid border-[#ddd] p-[6px]">{column.render('Footer')}</td>
                                     ))}
                                     </tr>
                                 ))}
