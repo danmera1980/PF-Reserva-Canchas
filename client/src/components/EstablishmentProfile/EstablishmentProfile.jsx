@@ -42,7 +42,7 @@ function EstablishmentProfile() {
         setEstablishmentDetail(res.data);
         setVisual(visualInit);
       });
-  }, [userToken]);
+  }, [userToken, visualInit]);
 
   const onButtonSelection = (option) => {
     setVisual(option);
