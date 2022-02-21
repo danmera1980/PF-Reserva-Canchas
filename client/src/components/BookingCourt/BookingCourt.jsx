@@ -101,7 +101,7 @@ export default function BookingCourt(){
     const [userId, setUserId] = useState('')
 
     const selectedBooking = (data) => {
-        if(userToken === null || !isActive){
+        if(userToken === null){
             Swal.fire({
                 title: "Ingresa a tu cuenta para que puedas reservar",
                 confirmButtonText: "Ok",
@@ -110,7 +110,16 @@ export default function BookingCourt(){
                   return history.push("/login");
                 }
               });
-            }
+        }else if(!isActive){
+            Swal.fire({
+                title: "Usuario inhabilitado, contactarse con el administrador",
+                confirmButtonText: "Ok",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  return history.push("/");
+                }
+              });
+        }
         setInput({
             ...input,
             startTime: data.startTime.toString(),
