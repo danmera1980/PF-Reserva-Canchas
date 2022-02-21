@@ -367,11 +367,13 @@ const courtBookings = async (req, res, next) => {
 const addBooking = async (req, res, next) => {
   const { courtId, details, dateFrom, dateTo, finalAmount } = req.body;
   let external_reference = randomString(8)
+  // ES IMPORTANTE VER COMO ME MANDAN LA FECHA ACA ASI LA GUARDI DIRECTO O LA CONVIERTO A FORMATO FECHA COMO LE QUEDE MAS COMODO AL DAN EN EL FRONT
   try {
     const newBooking = await Booking.create({
       courtId,
       userId : 1,
       details, 
+      status: 'approved',
       startTime: dateFrom,
       endTime: dateTo,
       external_reference,

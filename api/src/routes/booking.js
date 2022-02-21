@@ -12,6 +12,7 @@ router.get("/:courtId", timeIp, courtBookings)
 router.get('/new/:userId/:courtId/:price/:startTime/:endTime', timeIp, newBooking)
 router.get('/byEstab/:establishmentId', timeIp, getBookingsByEstablishment)
 router.get('/byEstabId/:estId', timeIp, getBookingsByEstId)
-router.post('/addgit ', timeIp, addBooking)
+// NEW ROUTE TO ADD BOOKINGS FOR ESTABLISHMENTS
+router.post('/add', timeIp, addBooking)
 
 module.exports = router;
