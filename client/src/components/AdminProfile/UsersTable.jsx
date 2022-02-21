@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import { useSelector } from "react-redux";
+import Toggle from "react-toggle";
+import "./css-toggle.scss";
 
 function UsersTable({ users }) {
   const userToken = useSelector((state) => state.register.userToken);
@@ -58,16 +60,16 @@ function UsersTable({ users }) {
     };
     axios.put(
       `${SERVER_URL}/users/updateStatus`,
+
       { userId },
       {
         headers: headers,
       }
     );
-    window.location.reload();
   }
   return (
     <div className="flex justify-center -ml-20 sm:w-full">
-      <table className="ml-36 mt-10 table-auto border-collapse border border-slate-500 text-white">
+      <table className="ml-36 mt-10 table-auto border-collapse border border-slate-500 text-white overflow-y-auto">
         <thead className="bg-slate-600">
           <tr>
             <th className="border border-slate-600 px-10">
@@ -121,12 +123,12 @@ function UsersTable({ users }) {
                 {u.hasEstablishment ? "si" : "no"}
               </td>
               <td className="border border-slate-700">
-                <label
-                  className="cursor-pointer"
-                  onClick={() => HandleHabilitarUs(u.id)}
-                >
-                  {u.isActive ? "Habilitado" : "Deshabilitado"}
-                </label>
+                <div>
+                  <Toggle
+                    onClick={() => HandleHabilitarUs(u.id)}
+                    defaultChecked={u.isActive}
+                  />
+                </div>
               </td>
             </tr>
           ))}
