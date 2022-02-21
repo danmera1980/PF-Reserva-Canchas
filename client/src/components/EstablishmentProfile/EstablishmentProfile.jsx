@@ -42,7 +42,7 @@ function EstablishmentProfile() {
         setEstablishmentDetail(res.data);
         setVisual(visualInit);
       });
-  }, [userToken]);
+  }, [userToken, visualInit]);
 
   const onButtonSelection = (option) => {
     setVisual(option);
@@ -137,7 +137,7 @@ function EstablishmentProfile() {
                 case "siteCreate":
                   return <SiteCreate establishmentId={establishmentDetail.id}/>;
                 case "sites":
-                  return <Sites establishmentDetail={establishmentDetail.sites} />;
+                  return <Sites sitesInit={establishmentDetail.sites} />;
                 case "courtCreate":
                   return <CourtCreate sites={establishmentDetail.sites}/>;
                 case "reporting":

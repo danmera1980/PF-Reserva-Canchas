@@ -8,16 +8,12 @@ const {
 } = require("../db");
 const bcrypt = require("bcrypt");
 
-// starting to code
 const getAllUsers = async (req, res, next) => {
   try {
     const allUsers = await User.findAll();
     if (!allUsers.length) {
       throw new Error("No users available");
     }
-
-    // console.log((Math.random() * 1e32).toString(36));
-
     res.send(allUsers);
   } catch (e) {
     next(e);
@@ -41,7 +37,9 @@ const getUserProfile = async (req, res, next) => {
 const registerGoogle = async (req, res, next) => {
   try {
     const user = req.user;
-    res.status(200).json(user.id);
+
+    let response = { id: user.id, isActive: user.isActive };
+    res.status(200).json(response);
   } catch (e) {
     next(e);
   }
@@ -88,6 +86,7 @@ const editUser = async (req, res, next) => {
     next(e);
   }
 };
+
 const getUserBookingHistory = async (req, res, next) => {
   try {
     const userHistory = await Booking.findAll({
@@ -98,7 +97,6 @@ const getUserBookingHistory = async (req, res, next) => {
         exclude: [
           "payment_status",
           "merchant_order_id",
-          "external_reference",
           "createdAt",
           "updatedAt",
           "userId",
@@ -143,6 +141,30 @@ const updateStatus = async (req, res, next) => {
     } else {
       const updated = await User.findOne({ where: { id: userId } });
       updated.isActive = !updated.isActive;
+
+      let contentHTML = `
+      <h3>Hola, ${updated.name}!</h3>
+    
+      <p> Le notificamos que su usuario ha sido ${
+        updated.isActive ? "habiitado" : "deshabilitado"
+      } por el administrador. para mas informacion, comunicarse a tucanchaya@gmail.com</p> `;
+      let transporter = nodemailer.createTransport({
+        host: "smtp.mailgun.org",
+        port: 587,
+        secure: false, // sin SSL
+        auth: {
+          user: TUCANCHAYAMAIL, // generated ethereal user
+          pass: TUCANCHAYAMAILPASS, // generated ethereal password
+        },
+      });
+
+      const response = await transporter.sendMail({
+        from: "'Tu Cancha YA!' <tucanchaya@noresponse.com>",
+        to: `${updated.email}`,
+        subject: `Estado de su cuenta`,
+        html: contentHTML,
+      });
+
       await updated.save();
 
       res.json(updated);
@@ -154,7 +176,7 @@ const updateStatus = async (req, res, next) => {
 
 const addfavorite = async (req, res, next) => {
   const userId = req.user.id;
-  const courtId  = req.body.courtId;
+  const courtId = req.body.courtId;
   try {
     let newFav = await Favorites.create({ userId: userId, courtId: courtId });
     res.send(newFav);
@@ -162,15 +184,16 @@ const addfavorite = async (req, res, next) => {
     next(error);
   }
 };
+
 const findOneFav = async (req, res, next) => {
   const userId = req.user.id;
   const { courtid } = req.query;
 
   try {
     let fav = await Favorites.findOne({
-       where:{
+      where: {
         userId: userId,
-        courtId: courtid
+        courtId: courtid,
       },
       attributes: ["userId", "courtId"],
     });
@@ -180,7 +203,6 @@ const findOneFav = async (req, res, next) => {
   }
 };
 
-
 const findFavorite = async (req, res, next) => {
   const id = req.user.id;
   try {
@@ -189,7 +211,7 @@ const findFavorite = async (req, res, next) => {
       attributes: ["name"],
       include: {
         model: Court,
-        attributes: ["name", "sport", "image","id", "price"],
+        attributes: ["name", "sport", "image", "id", "price"],
         exclude: ["user_favorites"],
         include: {
           model: Site,
@@ -215,7 +237,7 @@ const delFavorite = async (req, res, next) => {
   const { courtId } = req.params;
 
   try {
-     await Favorites.destroy({
+    await Favorites.destroy({
       where: { userId: id, courtId: courtId },
     });
 
@@ -236,5 +258,5 @@ module.exports = {
   addfavorite,
   findFavorite,
   delFavorite,
-  findOneFav
+  findOneFav,
 };

@@ -39,18 +39,24 @@ export default function ReportingResultsReactTable() {
         {
             Header: 'Deporte',
             accessor: 'sport',
-            Footer: 'Total'
+            Footer: <div>
+                <div>Total</div>
+                <div>Total -5% comisión</div>
+            </div>
         } ,
         {
             Header: 'Importe',
             accessor: 'finalAmount',
             Cell: props => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits:0}).format(props.value),
-            Footer: <span>{(data.reduce((total, { finalAmount }) => total += finalAmount, 0)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' , maximumFractionDigits:0})}</span>
+            Footer: <div>
+                        <div>{(data.reduce((total, { finalAmount }) => total += finalAmount, 0)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' , maximumFractionDigits:0})}</div>
+                        <div>{(data.reduce((total, { finalAmount }) => total += finalAmount*0.95, 0)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' , maximumFractionDigits:0})}</div>
+                    </div>
         }  
     ],[])
 
     const tableInstance = useTable(
-        {columns,data, defaultColumn},
+        {columns,data, defaultColumn, initialState:{pageSize:999999999}},
         useFilters,
         useGroupBy,
         useSortBy,
@@ -69,11 +75,11 @@ export default function ReportingResultsReactTable() {
         canPreviousPage,
         pageOptions,
         setPageSize,
-        state,
+        state: {pageIndex, pageSize},
         prepareRow,
     } = tableInstance 
 
-    const {pageIndex, pageSize} = state
+    // const {pageIndex, pageSize} = state
 
     const componentRef = useRef()
     const handlePrint = useReactToPrint({
@@ -82,34 +88,34 @@ export default function ReportingResultsReactTable() {
 
     return (
         <div>
-            <span>
+            <span className="flex flex-row gap-2 sm:gap-5 place-content-center my-2">
                 <Link to={{pathname:'/establishmentprofile', state:{visualInit: 'reporting', estabDetailInit:establishmentDetail}}}>
-                    <button className="bg-blue-700 hover:bg-blue-500 text-white font-ligth  py-1 px-2 border border-blue-700 hover:border-transparent rounded h-8 align-middle text-center mx-3 my-2 disabled:bg-gray-300 disabled:text-black disabled:border-gray-300">
+                    <button className="bg-blue-700 hover:bg-blue-500 text-white font-light py-1 px-2 border border-blue-700 hover:border-transparent rounded h-8 align-middle text-center disabled:bg-gray-300 disabled:text-black disabled:border-gray-300">
                         Volver
                     </button>
                 </Link>
                 <button 
-                className="bg-blue-700 hover:bg-blue-500 text-white font-ligth  py-1 px-2 border border-blue-700 hover:border-transparent rounded h-8 align-middle text-center mx-3 my-2 disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
+                className="bg-blue-700 hover:bg-blue-500 text-white font-light  py-1 px-2 border border-blue-700 hover:border-transparent rounded h-8 align-middle text-center disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
                 onClick={handlePrint}>
                     Imprimir
                 </button>
                     
             </span>
             {!data.length ? 
-            (<h1 className="text-black mx-3 my-1 bg-blue-300 px-1">No existen reservas para los filtros selecionados</h1>) 
+            (<h1 className='tituloTabla'>No existen reservas para los filtros seleccionados</h1>) 
             :
             (
             <div>
                 
                 <div ref={componentRef}>
-                    <h1 className="text-black bg-blue-300">Reporte de reservas</h1>
-                    <div className="tableFixHead">
-                        <table>
+                    <h1 className="text-black bg-blue-300 text-center">Reporte de reservas</h1>
+                    <div className="overflow-y-auto overflow-x-auto sm:max-h-[78vh] mt-2 sm:flex sm:place-content-center">
+                        <table className="w-[94vw] border-collapse">
                             <thead>
                                 {headerGroups.map(headerGroup => (
                                 <tr {...headerGroup.getHeaderGroupProps()}>
                                     {headerGroup.headers.map(column => (
-                                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                    <th {...column.getHeaderProps(column.getSortByToggleProps())} className="border-2 border-solid border-[#ddd] pt-[6px] pb-[6px] bg-[#04AA6D] text-white">
                                         {column.render('Header')}
                                         <span>
                                             {column.isSorted ? 
@@ -122,14 +128,14 @@ export default function ReportingResultsReactTable() {
                                 </tr>
                                 ))}
                             </thead>
-                            <tbody {...getTableBodyProps()}>
+                            <tbody {...getTableBodyProps()} className="h-[10px]">
                                 {page.map(row => {
                                 prepareRow(row)
                                 return (
-                                    <tr {...row.getRowProps()}>
+                                    <tr {...row.getRowProps()} className="even:bg-[#fff] odd:bg-[#eee] hover:bg-[#ddd]">
                                     {row.cells.map(cell => {
                                         return (
-                                        <td {...cell.getCellProps()}>
+                                        <td {...cell.getCellProps()} className="border-2 border-solid border-[#ddd] p-[6px] text-center">
                                             {cell.render('Cell')}
                                         </td>
                                         )
@@ -142,9 +148,10 @@ export default function ReportingResultsReactTable() {
                                 {footerGroups.map(footerGroup => (
                                     <tr {...footerGroup.getFooterGroupProps()}>
                                     {footerGroup.headers.map(column => (
-                                        <td {...column.getFooterProps()}>{column.render('Footer')}</td>
+                                        <td {...column.getFooterProps()} className="bg-[#04AA6D] text-right pr-2 font-bold">{column.render('Footer')}</td>
                                     ))}
                                     </tr>
+                                    
                                 ))}
                             </tfoot>
                         </table>
@@ -152,15 +159,15 @@ export default function ReportingResultsReactTable() {
                 </div>
             </div>
             )}
-            <div id={'paging'}>
-                <span className="text-white">
+            <div className="grid grid-cols-2 gap-2 mt-2 sm:flex sm:place-content-end sm:mr-16">
+                <span className="dark:text-white ml-10">
                     Página{' '}
                     <strong>
                         {pageIndex + 1} de {pageOptions.length}
                     </strong>{' '}
                     
                 </span>
-                <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
+                <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))} className="mr-5 ml-5">
                     {
                         [10,20,30,50,999999999].map(pageSize => (
                             <option key={pageSize} value={pageSize}>
@@ -170,19 +177,22 @@ export default function ReportingResultsReactTable() {
                         ))
                     }
                 </select>
-                <button 
-                    className="bg-blue-700 hover:bg-blue-500 text-white font-ligth  py-1 px-2 border border-blue-700 hover:border-transparent rounded w-10 h-8 align-middle text-center mx-0.5 my-1 disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
-                    onClick={()=>{previousPage()}}
-                    disabled={!canPreviousPage}>
-                    {'<<'}
-                </button>
-                <button
-                    className="bg-blue-700 hover:bg-blue-500 text-white font-ligth  py-1 px-2 border border-blue-700 hover:border-transparent rounded w-10 h-8 align-middle text-center mx-0.5 my-1 disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
-                    onClick={()=>{nextPage()}}
-                    disabled={!canNextPage}>
-                    {'>>'}
-                </button>
+                
             </div>
+               <div className="flex place-content-center mt-4 gap-2 sm:gap-5">
+                    <button 
+                        className="bg-blue-700 hover:bg-blue-500 text-white border border-blue-700 hover:border-transparent rounded w-10 h-8 text-center disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
+                        onClick={()=>{previousPage()}}
+                        disabled={!canPreviousPage}>
+                        {'<<'}
+                    </button>
+                    <button
+                        className="bg-blue-700 hover:bg-blue-500 text-white border border-blue-700 hover:border-transparent rounded w-10 h-8 text-center disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
+                        onClick={()=>{nextPage()}}
+                        disabled={!canNextPage}>
+                        {'>>'}
+                    </button>
+               </div>
             
         </div>
     )

@@ -1,8 +1,7 @@
 <!-- @format -->
 
 # Final Project - Sport Field Reservations Platform
-
-![App logo](client\src\assets\img\logo.svg)
+![App logo](https://raw.githubusercontent.com/danmera1980/PF-Reserva-Canchas/master/client/src/assets/img/tuCanchaYa!_Logo.png)
 
 ## Objetivos del Proyecto
 
