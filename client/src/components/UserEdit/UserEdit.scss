@@ -1,0 +1,127 @@
+// .containerCreateCourt {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   padding: 0;
+//   background-color: black;
+// }
+
+// .form {
+//   border-radius: 20px;
+//   display: flex;
+//   flex-direction: column;
+//   padding: 5vh 2vw;
+//   background-color: #f3f1edb7;
+//   box-shadow: -1px 2px 104px 12px rgba(0, 0, 0, 0.68);
+//   margin-bottom: 20px;
+// }
+
+// .title {
+//   margin-top: 0;
+//   margin-top: 20px;
+//   margin-bottom: 4vh;
+//   color: #230d85;
+// }
+
+// .error {
+//   color: #c21e1e;
+// }
+
+// .label {
+//   color: slateblue;
+//   font-weight: 900;
+// }
+
+// .inputForm {
+//   width: 90%;
+//   height: 1.5rem;
+//   margin-left: 2vw;
+//   background-color: rgb(232, 240, 254);
+//   border: 1px solid #776c62;
+// }
+
+// .btnBack {
+//   color: white;
+//   border-radius: 10px;
+//   font-size: 15px;
+//   height: 25px;
+//   width: 80px;
+//   background-color: rgb(42, 0, 231);
+//   margin-top: 50px;
+// }
+
+// .btnBack:hover {
+//   cursor: pointer;
+//   background-color: white;
+//   color: rgb(42, 0, 231);
+//   font-size: 15px;
+//   height: 25px;
+//   width: 80px;
+// }
+
+// .buttonCreateCourt {
+//   color: white;
+//   border-radius: 10px;
+//   font-size: 15px;
+//   height: 30px;
+//   width: 120px;
+//   background-color: rgb(42, 0, 231);
+//   margin-top: 20px;
+// }
+
+// .buttonCreateCourt:hover {
+//   cursor: pointer;
+//   background-color: white;
+//   color: rgb(42, 0, 231);
+//   font-size: 15px;
+//   height: 30px;
+//   width: 120px;
+// }
+
+// .form{
+//   height: 100vh;
+//   display: grid;
+//   justify-content: center;
+//   align-items: center;
+//   background-color: black;
+//   font-size: 1.2rem;
+// }
+// .formN {
+//   position: relative;
+//   width: 20rem;
+//   height: 1.5rem;
+// }
+// .form_input{
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     border: 2px solid rgba(128, 128, 128, 0.795);
+//     border-radius: .5rem;
+//     color: white;
+//     padding: 1.25rem;
+//     background: none;
+
+//     &:hover{
+//       border-color: yellowgreen;
+//       }
+//     }
+// .form_label{
+//     position: absolute;
+//     left: 1rem;
+//     top:0.8rem;
+//     padding: 0 0.5rem;
+//     color: white;
+//     cursor: text;
+//     transition: top 200ms ease-in,
+//                 left 200ms ease-in,
+//                 font-size 200ms ease-in;
+//     font-size: 1rem;
+//     background-color: black;
+//   }
+// .form_input:focus ~ .form_label{
+//   top:-0.5rem;
+//   font-size: 0.8rem;
+//   left: 0.8rem;
+// }

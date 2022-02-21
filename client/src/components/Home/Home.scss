@@ -1,0 +1,27 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.homeImage{
+  // width: 1200px;
+  margin: 0 auto;
+  // height: 460px;
+  object-fit: cover;
+  // object-position: 50% 45%;
+  border-radius: 10px;
+}
+
+.search {
+  position: relative;
+  top: -40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 650px;
+  background: var(--clr-dark);
+  height: 80px;
+  border-radius: 20px;
+  margin: 0 auto;
+}
