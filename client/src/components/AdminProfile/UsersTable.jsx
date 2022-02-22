@@ -1,30 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import { useSelector } from "react-redux";
 import Toggle from "react-toggle";
 import "./css-toggle.scss";
 
-function UsersTable({ users }) {
+function UsersTable() {
+  const [users, setUsers] = useState(null);
   const userToken = useSelector((state) => state.register.userToken);
-  const [usersTemp, setUsersTemp] = useState(users);
+
+  useEffect(() => {
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
+    axios.get(`${SERVER_URL}/users`, { headers: headers }).then((res) => {
+      setUsers(res.data);
+    });
+  }, [userToken]);
 
   function handleSearch(input) {
     switch (input.target.id) {
       case "name":
         if (input.target.value !== "") {
-          setUsersTemp(() => {
+          setUsers(() => {
             return users.filter((item) =>
               item.name.toLowerCase().includes(input.target.value.toLowerCase())
             );
           });
         } else {
-          setUsersTemp(users);
+          setUsers(users);
         }
         break;
       case "lastName":
         if (input.target.value !== "") {
-          setUsersTemp(() => {
+          setUsers(() => {
             return users.filter((item) =>
               item.lastName
                 .toLowerCase()
@@ -32,11 +41,11 @@ function UsersTable({ users }) {
             );
           });
         } else {
-          setUsersTemp(users);
+          setUsers(users);
         }
         break;
       default:
-        setUsersTemp(users);
+        setUsers(users);
         break;
     }
   }
@@ -45,14 +54,14 @@ function UsersTable({ users }) {
     if (e.target.value !== "all") {
       console.log(e.target.value);
       if (e.target.value === "true") {
-        setUsersTemp(users.filter((u) => u.hasEstablishment === true));
+        setUsers(users.filter((u) => u.hasEstablishment === true));
       } else {
-        setUsersTemp(users.filter((u) => u.hasEstablishment === false));
+        setUsers(users.filter((u) => u.hasEstablishment === false));
       }
     } else {
-      setUsersTemp(users);
+      setUsers(users);
     }
-    console.log(usersTemp, e.target.value);
+    console.log(users, e.target.value);
   }
   function HandleHabilitarUs(userId) {
     const headers = {
@@ -113,7 +122,7 @@ function UsersTable({ users }) {
           </tr>
         </thead>
         <tbody className="text-center text-white">
-          {usersTemp?.map((u) => (
+          {users?.map((u) => (
             <tr key={u.id}>
               <td className="border border-slate-700">{u.name}</td>
               <td className="border border-slate-700">{u.lastName}</td>
