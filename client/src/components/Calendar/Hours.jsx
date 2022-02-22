@@ -9,7 +9,7 @@ const Hours = ({selectedDate, disabledTime, selectedBooking, minTime}) => {
     useEffect(()=> {
         setHours([])
         for (let i = 0; i < 24; i++) { 
-            disabledTime?.find(t => (parseInt(t.startTime.split(":")[0])===i))?
+            disabledTime?.find(t => (parseInt(t.startTime.split(":")[0])===i && t.isAvailable===true))?
             setHours(prevHours => [
                 ...prevHours,
                 {
