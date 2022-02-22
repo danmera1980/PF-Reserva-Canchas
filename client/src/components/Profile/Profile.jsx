@@ -69,66 +69,65 @@ function Profile() {
             </h1>
 
             <div className="">
-              <div className="grid grid-cols-2 gap-4 max-w-xs">
+              <div className="grid gap-4 max-w-xs">
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]"
+                  className="col-span-2 bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-14"
                   onClick={() => onButtonSelection("bookings")}
                 >
-                  <FontAwesomeIcon icon={faThLarge} size={"2x"} />
-                  <p>Mis Reservas</p>
+                  <span className="flex place-content-center gap-2">
+                    <FontAwesomeIcon icon={faThLarge} size={"2x"} />
+                    <p className="pt-1">Mis Reservas</p>
+                  </span>
                 </button>
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]"
-                  onClick={() => onButtonSelection("transactions")}
-                >
-                  <FontAwesomeIcon icon={faMoneyCheckAlt} size={"2x"} />
-                  <p>Transacciones</p>
-                </button>
+
                 {userDetails && userDetails.hasEstablishment ? (
-                  <Link to={"/establishmentprofile"}>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]">
-                      <FontAwesomeIcon icon={faFutbol} size={"2x"} />
-                      <p>Establecimiento</p>
+                  <Link to={"/establishmentprofile"} className="col-span-2">
+                    <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-14">
+                      <span className="flex place-content-center gap-2">
+                        <FontAwesomeIcon icon={faFutbol} size={"2x"} />
+                        <p className="pt-1">Establecimiento</p>
+                      </span>
                     </button>
                   </Link>
                 ) : (
-                  <Link to={"/establishment"}>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-sm text-white font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]">
-                      <FontAwesomeIcon icon={faFutbol} size={"2x"} />
-                      <p>Crear Establecimiento</p>
+                  <Link to={"/establishment"} className="col-span-2">
+                    <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-14">
+                      <span className="flex place-content-center gap-2">
+                        <FontAwesomeIcon icon={faFutbol} size={"2x"} />
+                        <p className="pt-1">Crear Establecimiento</p>
+                      </span>
                     </button>
                   </Link>
                 )}
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]"
+                  className="col-span-2 bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-14"
                   onClick={() => onButtonSelection("editProfile")}
                 >
-                  <FontAwesomeIcon icon={faPencilAlt} size={"2x"} />
-                  <p>Editar perfil</p>
+                  <span className="flex place-content-center gap-2">
+                    <FontAwesomeIcon icon={faPencilAlt} size={"2x"} />
+                    <p className="pt-1">Editar perfil</p>
+                  </span>
                 </button>
+                {userDetails && userDetails.isAdmin ? (
+                  <Link to={"/admin"} className="col-span-2">
+                    {" "}
+                    <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-14">
+                      <span className="flex place-content-center gap-2">
+                        {" "}
+                        <FontAwesomeIcon icon={faCog} size={"2x"} />
+                        <p className="pt-1">Panel Administrador</p>
+                      </span>
+                    </button>
+                  </Link>
+                ) : null}
               </div>
             </div>
-            {userDetails && userDetails.isAdmin ? (
-              <div className="mt-[1rem] flex place-content-center">
-                <Link to={"/admin"}>
-                  {" "}
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-[4.8rem] sm:mr-[2.5rem] border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]">
-                    <FontAwesomeIcon icon={faCog} size={"2x"} />
-                    <p>Panel Administrador</p>
-                  </button>
-                </Link>{" "}
-              </div>
-            ) : (
-              <div></div>
-            )}
           </div>
           <div className="pt-7 md:overflow-auto md:max-h-fit">
             {(() => {
               switch (visual) {
                 case "bookings":
                   return <Bookings />;
-                case "transactions":
-                  return <div>Transacciones</div>;
                 case "editProfile":
                   return <UserEdit userDetails={userDetails} />;
                 default:

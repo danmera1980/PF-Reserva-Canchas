@@ -11,7 +11,8 @@ import "./Scrollbar.scss"
 function Bookings() {
   const [visual, setVisual] = useState("bookings");
   const userToken = useSelector((state) => state.register.userToken);
-  const [booking, SetBooking] = useState(null);
+  const [booking, SetBooking] = useState([]);
+  
   const onButtonSelection = (option) => {
     setVisual(option);
   };
@@ -27,17 +28,19 @@ function Bookings() {
       });
   }, [userToken]);
 
+  console.table(booking)
+
   return (
     <div>
       <div className="place-content-around lg:place-content-start flex lg:gap-10 border-b-[1px] border-black dark:border-white">
         <button
-          className="inline-block"
+          className="inline-block focus:text-darkAccent active:text-darkAccent"
           onClick={() => onButtonSelection("bookings")}
         >
           Reservas
         </button>
         <button
-          className="inline-block"
+          className="inline-block focus:text-darkAccent active:text-darkAccent"
           onClick={() => onButtonSelection("favorites")}
         >
           Favoritos
@@ -47,7 +50,11 @@ function Bookings() {
         {(() => {
           switch (visual) {
             case "bookings":
-              return booking === null ? (
+              return booking.length === 0 ? 
+              <div className="flex place-content-center">
+                <h1 className="font-bold text-xl">No hay reservas</h1>
+              </div> :
+              booking === null ? (
                 <ReactLoading
                   type={"spin"}
                   color={"#000000"}
@@ -55,7 +62,7 @@ function Bookings() {
                   width={"8.5rem"}
                 />
               ) : (
-                <div className="h-[28rem] sm:h-[31rem] overflow-y-auto scrollbar">
+                <div className="h-[28rem] sm:h-[29rem] overflow-y-auto scrollbar">
                   {booking.map((e) => {
                     return (
                       <div key={e.id} className="overflow-hidden pb-4">
@@ -76,7 +83,7 @@ function Bookings() {
                 </div>
               );
             case "favorites":
-              return  <Favorites/> 
+              return <div className="h-[27rem] sm:h-[29rem] overflow-y-auto scrollbar"><Favorites /></div>  
             default:
               return "bookings";
           }
