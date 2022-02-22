@@ -11,17 +11,29 @@ const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 function validate(input) {
   let errors = {};
-  if (input.name !== "" && !/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\:.]{1,30}$/.test(input.name)) {
+  if (input.name !== "" && !/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\:.]+$/.test(input.name)) {
     errors.name = "No se permiten simbolos";
   }
-  if (input.country !== "" && !/^[a-zA-ZÀ-ÿ' '\ñ\Ñ\:.]{1,30}$/.test(input.country)) {
+  if (input.name.length>30) {
+    errors.name = "No se permiten más de 30 caracteres";
+  }
+  if (input.country !== "" && !/^[a-zA-ZÀ-ÿ' '\ñ\Ñ\:.]+$/.test(input.country)) {
     errors.country = "No se permiten simbolos ni números";
   }
-  if (input.city !== "" && !/^[a-zA-ZÀ-ÿ' '\ñ\Ñ\:.]{1,30}$/.test(input.city)) {
+  if (input.country.length>30) {
+    errors.country = "No se permiten más de 30 caracteres";
+  }
+  if (input.city !== "" && !/^[a-zA-ZÀ-ÿ' '\ñ\Ñ\:.]+$/.test(input.city)) {
     errors.city = "No colocar símbolos ni números";
   }
-  if (input.street !== "" && !/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\:.]{1,30}$/.test(input.street)) {
+  if (input.city.length>30) {
+    errors.city = "No se permiten más de 30 caracteres";
+  }
+  if (input.street !== "" && !/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\:.]+$/.test(input.street)) {
     errors.street = "No colocar símbolos";
+  }
+  if (input.street.length>30) {
+    errors.street = "No se permiten más de 30 caracteres";
   }
   if (input.streetNumber !== "" && input.streetNumber < 0) {
     errors.streetNumber = "No se permite numero negativo";
