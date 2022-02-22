@@ -1,11 +1,10 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import axios from "axios";
-
 import UsersTable from "./UsersTable";
-import { useSelector } from "react-redux";
-import EstablihsmentTable from "./EstablishmentTable";
+import EstablishmentTable from "./EstablishmentTable";
+import { Link } from "react-router-dom";
+import "../Bookings/Scrollbar.scss"
 
 function AdminProfile() {
   const [visual, setVisual] = useState("");
@@ -17,36 +16,46 @@ function AdminProfile() {
   return (
     <div>
       <Header />
-      <h1 className="text-indigo-500 flex justify-center text-2xl mt-3">
-        Perfil Administrador
-      </h1>
-      <div className="flex w-full mt-10 gap-4 justify-center">
+      <div className="md:max-w-[1200px] m-auto">
+      <div className="flex place-content-center mt-5">
+        <Link to="/profile">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white w-40 font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]"
+            className="bg-blue-500 hover:bg-blue-700 text-white text-sm w-24 font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-10"
+            onClick={() => onButtonSelection("users")}
+          >
+            Volver
+          </button>
+          </Link>
+      </div>
+      
+      <div className="flex w-full mt-3 gap-4 justify-center">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold w-40 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[3.6rem]"
           onClick={() => onButtonSelection("users")}
         >
           Ver usuarios
         </button>
 
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white w-40 font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]"
+          className="bg-blue-500 hover:bg-blue-700 text-white text-sm w-40 font-bold border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[3.6rem]"
           onClick={() => onButtonSelection("establishments")}
         >
           Ver Establecimientos
         </button>
       </div>
-      <div>
+      <div className="flex place-content-center md:overflow-auto md:max-h-fit scrollbar mt-4">
         {(() => {
           switch (visual) {
             case "users":
               return <UsersTable />;
             case "establishments":
-              return <EstablihsmentTable />;
+              return <EstablishmentTable />;
             default:
               return <UsersTable />;
           }
         })()}
       </div>
+    </div>
       <Footer />
     </div>
   );

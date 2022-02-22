@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import Toggle from "react-toggle";
 import "./css-toggle.scss";
+import "../Bookings/Scrollbar.scss"
 
 function EstablihsmentTable() {
   const [establishment, setEstablishment] = useState(null);
@@ -64,15 +65,15 @@ function EstablihsmentTable() {
   }
 
   return (
-    <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
-      <table className="ml-36 mt-10 table-auto border-collapse border border-slate-500 text-white">
+    <div className="w-[21rem] h-[29rem] overflow-auto sm:w-full my-5 scrollbar">
+      <table className="table-auto border-collapse border border-slate-500 text-white">
         <thead className="bg-slate-600">
           <tr>
             <th className="border border-slate-600 px-10">
               Cuit
               <div>
                 <input
-                  className="text-black"
+                  className="text-black rounded"
                   id="cuit"
                   type="text"
                   onChange={(e) => handleSearch(e)}
@@ -83,7 +84,7 @@ function EstablihsmentTable() {
               Nombre
               <div>
                 <input
-                  className="text-black"
+                  className="text-black rounded"
                   id="name"
                   type="text"
                   onChange={(e) => handleSearch(e)}
@@ -107,7 +108,7 @@ function EstablihsmentTable() {
               <td className="border border-slate-700">{est.timeActiveFrom}</td>
               <td className="border border-slate-700">{est.timeActiveTo}</td>
               <td className="border border-slate-700">
-                <div>
+                <div className="mt-2">
                   <Toggle
                     onClick={() => HandleHabilitarEst(est.id)}
                     defaultChecked={est.isActive}
