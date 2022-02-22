@@ -27,7 +27,7 @@ export default function Slider({images}) {
   };
 
   return (
-    <div className="container-slider">
+    <div className="container-slider h-[12rem] sm:h-full">
       {dataSlider.map((obj, index) => {
         return (
           <div
