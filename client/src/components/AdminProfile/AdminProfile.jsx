@@ -31,12 +31,12 @@ function AdminProfile() {
       Authorization: `Bearer ${userToken}`,
     };
     axios
-      .get(`${SERVER_URL}/establishment`, { headers: headers })
+      .get(`${SERVER_URL}/establishment/admin`, { headers: headers })
       .then((res) => {
         setEstablishment(res.data);
       });
   }, [userToken]);
-
+  console.log(establishment);
   return (
     <div>
       <Header />

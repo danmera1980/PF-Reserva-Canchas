@@ -8,9 +8,10 @@ const {
   addUserToEstablishment,
   getEstabIdByUserId,
   getEstablishmentByUser,
+  allEstablishmentsAdmin,
   cuitInDb,
   establishmentBookings,
-  statusUpdate
+  statusUpdate,
 } = require("../controllers/establishment.js");
 const userExtractor = require("../middleware/userExtractor");
 const authGoogle = require("../middleware/auth");
@@ -39,10 +40,17 @@ const bodySchema = Joi.object({
     .regex(/^([0-9]{2})\:([0-9]{2})$/)
     .required(),
 });
-router.get("/idUser",  timeIp, userExtractor, authGoogle, getEstablishmentByUser);
-router.get('/userId', timeIp, userExtractor, authGoogle, getEstabIdByUserId )
-router.get('/', timeIp, getAllActiveEstablishmentsFromDB)
-router.get("/cuitInDb", timeIp, cuitInDb)
+router.get(
+  "/idUser",
+  timeIp,
+  userExtractor,
+  authGoogle,
+  getEstablishmentByUser
+);
+router.get("/userId", timeIp, userExtractor, authGoogle, getEstabIdByUserId);
+router.get("/", timeIp, getAllActiveEstablishmentsFromDB);
+router.get("/cuitInDb", timeIp, cuitInDb);
+router.get("/admin", timeIp, userExtractor, authGoogle, allEstablishmentsAdmin);
 router.post(
   "/",
   timeIp,
