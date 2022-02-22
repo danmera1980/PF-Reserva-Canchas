@@ -17,7 +17,8 @@ const loadUsers = async function () {
         passwordHash: passwordHash,
         phone: allUsers[i].phone,
         isAdmin: allUsers[i].isAdmin,
-        isActive: allUsers[i].isActive
+        isActive: allUsers[i].isActive,
+        img:allUsers[i].img
       });
     }
     console.log("users loaded");
@@ -36,6 +37,7 @@ const loadEstablishments = async function () {
         name: allEstablishments[i].name,
         timeActiveFrom: allEstablishments[i].timeActiveFrom,
         timeActiveTo: allEstablishments[i].timeActiveTo,
+        logoImage: allEstablishments[i].logoImage
       })
 
       await newEstablishment.addUser(allUsers[i]);
@@ -97,7 +99,8 @@ const loadCourts = async function () {
     const allCourts = dataBase.court;
 
     for (let i = 0; i < allSites.length; i++) {
-      for (let j = 0; j < getRandomArbitrary(1, 9); j++) {
+      let rnm = getRandomArbitrary(1, allCourts.length-1)
+      for (let j = 0; j < rnm ; j++) {
         const siteDb = await Site.findOne({
           where: { id: allSites[i].id },
         });
@@ -107,6 +110,7 @@ const loadCourts = async function () {
           shiftLength: allCourts[j].shiftLength,
           price: allCourts[j].price,
           sport: allCourts[j].sport,
+          image: allCourts[j].image,
         });
         await siteDb.addCourt(newCourt);
       }
