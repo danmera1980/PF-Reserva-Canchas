@@ -22,7 +22,10 @@ console.log('sites useEffect',sites)
 
 
   const handleSites = (site) => {
-    setCourts(() => site.courts.filter(e=>e.isActive===true));
+    if(!courts.length){
+
+      setCourts(() => site.courts.filter(e=>e.isActive===true));
+    }else {setCourts([])}
   };
   function handleDeleteSite(event, site) {
     event.preventDefault();
