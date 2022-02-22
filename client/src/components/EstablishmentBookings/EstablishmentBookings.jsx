@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import Paper from "@mui/material/Paper";
 import Grid from '@mui/material/Grid';
 import TextField from "@mui/material/TextField";
@@ -25,13 +26,13 @@ import { SERVER_URL } from "../../redux/actions/actionNames";
 
 function EstablishmentBookings({ establishmentDetail }) {
   const [bookings, setBookings] = useState(null);
-  const [newBooking, setNewBooking] = useState({});
+  const [newBooking, setNewBooking] = useState('');
 
   var curr = new Date(); // get current date
   var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
   var last = first + 6; // last day is the first day + 6
   var firstDayMonth = new Date(curr.getFullYear(), curr.getMonth(), 1);
-  var lastDayMonth= new Date(curr.getFullYear(), curr.getMonth() + 1, 0);
+  var lastDayMonth= new Date(curr.getFullYear(), curr.getMonth() + 1);
 
   console.log(curr.getDay())
 
@@ -41,7 +42,7 @@ function EstablishmentBookings({ establishmentDetail }) {
   var startDayHour = establishmentDetail?.timeActiveFrom.substring(0,2)
   var endDayHour = establishmentDetail?.timeActiveTo.substring(0,2)
 
-  // console.log(startDayHour, endDayHour )
+  console.log(firstDayMonth.toISOString(), lastDayMonth.toISOString() )
 
   useEffect(() => {
     if (establishmentDetail) {
@@ -55,7 +56,7 @@ function EstablishmentBookings({ establishmentDetail }) {
               id: b.id,
               courtId: b.courtId,
               courtName: b.courtName,
-              title: b.siteName + ' - ' + b.courtName + ' - ' + b.userName + ' ' + b.userLastName,
+              title: b.siteName + ' - ' + b.courtName + ' - ' + b.userName + ' ' + b.userLastName + ' ref: ' + b.external_reference ,
               startDate: b.startTime,
               endDate: b.endTime,
               location: b.courtName
@@ -63,7 +64,15 @@ function EstablishmentBookings({ establishmentDetail }) {
           })
         }));
     }
-  }, [establishmentDetail]);
+
+    if(newBooking){
+      Swal.fire({
+        title: "Reseva Creada",
+        text: 'Código de reserva: ' + newBooking
+      })
+      setNewBooking('')
+    }
+  }, [establishmentDetail, newBooking]);
 
   console.log(bookings);
 
@@ -319,11 +328,12 @@ function EstablishmentBookings({ establishmentDetail }) {
       finalAmount: 0
     }
 
-    console.log(body.dateFrom)
     if(added){
       axios.post(`${SERVER_URL}/booking/add`, body)
-      // .then()
+      .then(res => setNewBooking(res.data))
     }
+
+    console.log(newBooking)
   }
 
   return (
@@ -367,13 +377,13 @@ function EstablishmentBookings({ establishmentDetail }) {
             showOpenButton 
           />
           <AppointmentForm>
-             <AppointmentForm.label 
+             {/* <AppointmentForm.label 
               text="Precio"
               type="title"
             />
             <AppointmentForm.TextEditor 
               placeholder="custom field"
-            />
+            /> */}
           </AppointmentForm>
           <Toolbar/>
           <DateNavigator/>
