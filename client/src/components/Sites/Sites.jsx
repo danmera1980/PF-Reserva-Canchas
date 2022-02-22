@@ -22,7 +22,10 @@ console.log('sites useEffect',sites)
 
 
   const handleSites = (site) => {
-    setCourts(() => site.courts.filter(e=>e.isActive===true));
+    if(!courts.length){
+
+      setCourts(() => site.courts.filter(e=>e.isActive===true));
+    }else {setCourts([])}
   };
   function handleDeleteSite(event, site) {
     event.preventDefault();
@@ -36,6 +39,7 @@ console.log('sites useEffect',sites)
       if (result.isConfirmed) {
        
         dispatch(deleteSite(site.id, userToken));
+        setCourts(site.courts.map(e=>e.isActive=false))
         setSites(sites.filter(e=>e!==site))
         Swal.fire("Sede eliminada");
         //window.location.reload();
@@ -84,7 +88,7 @@ console.log('sites useEffect',sites)
 
     <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
       {!sites.length ? (
-        <span>No hay sedes</span>
+        <span className="flex place-content-center mt-40 text-4xl text-blue-800 dark:text-white">No tenes sedes actualmente</span>
       ) : (
         <div>
           <table className="w-full border-collapse border border-slate-500">
@@ -100,8 +104,8 @@ console.log('sites useEffect',sites)
               </tr>
             </thead>
             <tbody className="text-center">
-              {console.log('sites',sites),sites.map((e) => (
-                <tr key={e.id} className="hover:bg-black">
+              {sites.map((e) => (
+                <tr key={e.id} >
                   <td className="border border-slate-700 py-2">{e.name}</td>
                   <td className="border border-slate-700 py-2">{e.city}</td>
                   <td className="border border-slate-700 py-2">{e.country}</td>
@@ -139,7 +143,8 @@ console.log('sites useEffect',sites)
       )}
 
       <div className="py-2">
-        {courts.length ? (
+        
+            {courts.map((e) => (e.isActive===true?
           <table className="w-full border-collapse border border-slate-500">
             <thead className="bg-slate-600">
               <tr>
@@ -152,7 +157,6 @@ console.log('sites useEffect',sites)
                 </th>
               </tr>
             </thead>
-            {courts.map((e) => (e.isActive===true?
               <tbody className="text-center" key={e.id}>
                 <tr key={e.id}>
                   <td className="border border-slate-700">{e.name}</td>
@@ -172,11 +176,12 @@ console.log('sites useEffect',sites)
                     </button>{" "}
                   </td>
                 </tr>
-              </tbody>:<></>
-            ))}
+              </tbody>
           </table>
-        ) : null}
-      </div>
+              :<></>
+            ))}
+        
+      </div>  
     </div>
   )
 
