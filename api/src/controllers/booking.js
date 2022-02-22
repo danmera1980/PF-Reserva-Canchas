@@ -208,6 +208,7 @@ const getBookingsByEstId = async (req, res) => {
       'endTime', 
       'payment_id',
       'payment_status',
+      'external_reference'
     ]
   })
   let results = formatBookingsEst(bookings)
