@@ -88,7 +88,7 @@ console.log('sites useEffect',sites)
 
     <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
       {!sites.length ? (
-        <span>No hay sedes</span>
+        <span className="flex place-content-center mt-40 text-4xl text-blue-800 dark:text-white">No tenes sedes actualmente</span>
       ) : (
         <div>
           <table className="w-full border-collapse border border-slate-500">
