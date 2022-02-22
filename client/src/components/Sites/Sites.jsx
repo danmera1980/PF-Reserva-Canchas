@@ -105,7 +105,7 @@ console.log('sites useEffect',sites)
             </thead>
             <tbody className="text-center">
               {sites.map((e) => (
-                <tr key={e.id} className="hover:bg-black">
+                <tr key={e.id} >
                   <td className="border border-slate-700 py-2">{e.name}</td>
                   <td className="border border-slate-700 py-2">{e.city}</td>
                   <td className="border border-slate-700 py-2">{e.country}</td>
