@@ -29,6 +29,7 @@ function minutesToHour(min) {
         establishmentName: b.court.site.establishment.name,
         userName: b.user.name,
         userLastName: b.user.lastName,
+        external_reference: b.external_reference
       }
     })
     return result
