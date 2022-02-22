@@ -16,8 +16,6 @@ function Bookings() {
     setVisual(option);
   };
 
-  console.table(booking)
-
   useEffect(() => {
     const headers = {
       Authorization: `Bearer ${userToken}`,
