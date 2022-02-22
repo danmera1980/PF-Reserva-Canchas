@@ -198,7 +198,7 @@ const getBookingsByEstId = async (req, res) => {
       [Op.and]: [
         {'$court->site.establishmentId$': estId},
         {'$booking.startTime$': {[Op.gte]: dateFrom}},
-        {'$booking.endTime$': {[Op.lte]: dateTo}}
+        {'$booking.endTime$': {[Op.lte]: dateTo}},
       ]
     },
     attributes: [
@@ -225,49 +225,6 @@ const getBookingsByEstablishment = async (req,res)=>{
   console.log('dateFrom',dateFrom);
   console.log('dateTo',dateTo);
 
-
-  // var establishment = await Establishment.findOne({
-  //   where:{
-  //     id: establishmentId
-  //   },
-  //   attributes: ['id'],
-  //   include:{
-  //     model: Site,
-  //     as: 'sites',
-  //     attributes: ['name'],
-  //     where:{
-  //       [Op.and]: [
-  //       siteId? {id:siteId}:null
-  //       ]
-  //     },
-  //     include:{
-  //       model: Court,
-  //       as: 'courts',
-  //       attributes: ['name','sport'],
-  //       where:{
-  //         [Op.and]: [
-  //         sport? {sport:sport} : null
-  //         ]
-  //       },
-  //       include:{
-  //         model:Booking,
-  //         as: 'booking',
-  //         attributes:['startTime', 'external_reference', 'payment_status'],
-  //         where:{
-  //           [Op.and]: [
-  //             dateTo?{startTime: {[Op.lte]: dateTo }}:null,
-  //             dateFrom?{startTime: {[Op.gte]: dateFrom}}:null,
-  //            ]
-  //         },
-  //         include:{
-  //           model: User,
-  //           attributes:['id','name','lastName']
-  //         }
-  //       }
-  //     }
-  //   }
-  // })const getBookingsByEstId = async (req, res) => {
-
   const bookings = await Booking.findAll({
     include: [
       {
@@ -289,6 +246,7 @@ const getBookingsByEstablishment = async (req,res)=>{
     ],
     where: {
       [Op.and]: [
+        {userId: {[Op.gte]:2}},
         { "$court.site.establishmentId$": establishmentId },
         siteId ? { "$court.site.id$": siteId } : null,
         dateFrom ? { startTime: { [Op.gte]: dateFrom } } : null,
