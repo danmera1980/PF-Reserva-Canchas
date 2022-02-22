@@ -32,10 +32,10 @@ function Home() {
         sport: ''
       })
     })
-  },[currentLocation])
+  },[])
 
   const getViewPort = (viewport) => {
-    console.log(viewport)
+    // console.log(viewport)
   }
 
   return (
