@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { SERVER_URL } from "../../redux/actions/actionNames";
+import Toggle from "react-toggle";
+import "./css-toggle.scss";
 
 function EstablihsmentTable({ establishment }) {
   const userToken = useSelector((state) => state.register.userToken);
@@ -48,7 +50,6 @@ function EstablihsmentTable({ establishment }) {
         headers: headers,
       }
     );
-    window.location.reload();
   }
 
   return (
@@ -95,12 +96,12 @@ function EstablihsmentTable({ establishment }) {
               <td className="border border-slate-700">{est.timeActiveFrom}</td>
               <td className="border border-slate-700">{est.timeActiveTo}</td>
               <td className="border border-slate-700">
-                <label
-                  className="cursor-pointer"
-                  onClick={() => HandleHabilitarEst(est.id)}
-                >
-                  {est.isActive ? "Habilitado" : "Deshabilitado"}
-                </label>
+                <div>
+                  <Toggle
+                    onClick={() => HandleHabilitarEst(est.id)}
+                    defaultChecked={est.isActive}
+                  />
+                </div>
               </td>
             </tr>
           ))}
