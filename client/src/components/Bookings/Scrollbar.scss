@@ -1,3 +1,4 @@
+@media (min-width: 640px){
 .scrollbar::-webkit-scrollbar {
     width: 20px;
     height: 20px;
@@ -17,3 +18,4 @@
   .scrollbar::-webkit-scrollbar-thumb:hover {
     background: #00f3fb;
   }
+}
