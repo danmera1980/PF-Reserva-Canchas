@@ -53,6 +53,7 @@ export default function Login() {
     }
   }, [userInfo.email, userToken]);
 
+
   const responseSuccess = (response) => {
     console.log(response);
     dispatch(loginWithGoogle(response));
@@ -62,10 +63,7 @@ export default function Login() {
     history.push("/profile");
   };
   const responseFailure = (response) => {
-    Swal.fire({
-      title: `Hubo un error`,
-    });
-    console.log(response);
+    console.log(response, 'es response');
   };
 
   const handleChange = (e) => {
@@ -102,8 +100,18 @@ export default function Login() {
         }
       });
     } else {
-      dispatch(loginUser(userInfo));
-      history.push("/");
+     axios.post(`${SERVER_URL}/users/login`, userInfo)
+        .then((user) => {
+          dispatch(loginUser(user.data));
+          history.push("/profile");
+        })
+        .catch((err) => {
+          Swal.fire({
+            title: "Email o contraseña incorrectos",
+            icon: "error",
+            showConfirmButton: "Ok",
+          });
+        });
       setUserInfo(initialState);
     }
   };
