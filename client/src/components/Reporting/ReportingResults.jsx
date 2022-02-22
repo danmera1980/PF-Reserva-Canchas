@@ -104,18 +104,18 @@ export default function ReportingResultsReactTable() {
             {!data.length ? 
             (<h1 className='tituloTabla'>No existen reservas para los filtros seleccionados</h1>) 
             :
-            (
-            <div>
+            
+            (<div>
                 
                 <div ref={componentRef}>
-                    <h1 className="text-black bg-blue-300 text-center">Reporte de reservas</h1>
-                    <div className="overflow-y-auto overflow-x-auto sm:max-h-[78vh] mt-2 sm:flex sm:place-content-center">
+                    <h1 className="text-black bg-blue-300 text-center w-[94vw] flex place-content-center">Reporte de reservas</h1>
+                    <div className="overflow-y overflow-x-auto max-h-[75vh] sm:max-h-[70vh] mt-2 sm:flex sm:place-content-center">
                         <table className="w-[94vw] border-collapse">
-                            <thead>
+                            <thead className="sticky top-0 w-full">
                                 {headerGroups.map(headerGroup => (
                                 <tr {...headerGroup.getHeaderGroupProps()}>
                                     {headerGroup.headers.map(column => (
-                                    <th {...column.getHeaderProps(column.getSortByToggleProps())} className="border-2 border-solid border-[#ddd] pt-[6px] pb-[6px] bg-[#04AA6D] text-white">
+                                    <th {...column.getHeaderProps(column.getSortByToggleProps())} className="pt-[6px] pb-[6px] bg-[#04AA6D] text-white">
                                         {column.render('Header')}
                                         <span>
                                             {column.isSorted ? 
@@ -135,7 +135,7 @@ export default function ReportingResultsReactTable() {
                                     <tr {...row.getRowProps()} className="even:bg-[#fff] odd:bg-[#eee] hover:bg-[#ddd]">
                                     {row.cells.map(cell => {
                                         return (
-                                        <td {...cell.getCellProps()} className="border-2 border-solid border-[#ddd] p-[6px] text-center">
+                                        <td {...cell.getCellProps()} className="border-2 border-solid border-[#ddd] text-center">
                                             {cell.render('Cell')}
                                         </td>
                                         )
@@ -144,7 +144,7 @@ export default function ReportingResultsReactTable() {
                                 )
                                 })}
                             </tbody>
-                            <tfoot>
+                            <tfoot className="sticky bottom-0">
                                 {footerGroups.map(footerGroup => (
                                     <tr {...footerGroup.getFooterGroupProps()}>
                                     {footerGroup.headers.map(column => (
@@ -157,29 +157,25 @@ export default function ReportingResultsReactTable() {
                         </table>
                     </div>
                 </div>
-            </div>
-            )}
-            <div className="grid grid-cols-2 gap-2 mt-2 sm:flex sm:place-content-end sm:mr-16">
-                <span className="dark:text-white ml-10">
-                    Página{' '}
-                    <strong>
-                        {pageIndex + 1} de {pageOptions.length}
-                    </strong>{' '}
-                    
-                </span>
-                <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))} className="mr-5 ml-5">
-                    {
-                        [10,20,30,50,999999999].map(pageSize => (
-                            <option key={pageSize} value={pageSize}>
-                                    Mostrar {pageSize<100? pageSize : 'Todo'}
-                            </option>
-                            
-                        ))
-                    }
-                </select>
-                
-            </div>
-               <div className="flex place-content-center mt-4 gap-2 sm:gap-5">
+                <div className="grid grid-cols-3 gap-3 mt-2 sm:flex sm:place-content-center sm:mr-16">
+                    <span className="dark:text-white ml-10">
+                        Página{' '}
+                        <strong>
+                            {pageIndex + 1} de {pageOptions.length}
+                        </strong>{' '}
+                        
+                    </span>
+                    <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))} className="">
+                        {
+                            [10,20,30,50,999999999].map(pageSize => (
+                                <option key={pageSize} value={pageSize}>
+                                        Mostrar {pageSize<100? pageSize : 'Todo'}
+                                </option>
+                                
+                            ))
+                        }
+                    </select>
+                    <div className="gap-2 flex">
                     <button 
                         className="bg-blue-700 hover:bg-blue-500 text-white border border-blue-700 hover:border-transparent rounded w-10 h-8 text-center disabled:bg-gray-300 disabled:text-black disabled:border-gray-300"
                         onClick={()=>{previousPage()}}
@@ -192,8 +188,10 @@ export default function ReportingResultsReactTable() {
                         disabled={!canNextPage}>
                         {'>>'}
                     </button>
-               </div>
-            
+                    </div>
+                </div>
+            </div>)
+            }
         </div>
     )
 }
