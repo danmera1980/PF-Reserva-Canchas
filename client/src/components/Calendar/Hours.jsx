@@ -4,17 +4,17 @@ import { useEffect } from "react";
 const Hours = ({selectedDate, disabledTime, selectedBooking, minTime}) => {
     const [hours, setHours] = useState([])
 
-    console.log(minTime, selectedDate)
+    console.log(minTime, disabledTime)
 
     useEffect(()=> {
         setHours([])
         for (let i = 0; i < 24; i++) { 
-            disabledTime?.times.find(t => (t===i||t<=minTime))?
+            disabledTime?.find(t => (parseInt(t.startTime.split(":")[0])===i))?
             setHours(prevHours => [
                 ...prevHours,
                 {
                     hour: i,
-                    disabled: true,
+                    disabled: false,
                     selected: false
                 }
             ])
@@ -23,7 +23,7 @@ const Hours = ({selectedDate, disabledTime, selectedBooking, minTime}) => {
                 ...prevHours,
                 {
                     hour: i,
-                    disabled: false,
+                    disabled: true,
                     selected: false
                 }
             ])
@@ -47,13 +47,23 @@ const Hours = ({selectedDate, disabledTime, selectedBooking, minTime}) => {
                     ]
                 })  
             } else {
-                setHours(hours => {
-                    return [
-                        ...hours.slice(0, i), 
-                        hours[i]= {hour: i, disabled: false, selected: false},
-                        ...hours.slice(i+1)
-                    ]
-                })
+                if(hours[i].disabled===false){
+                    setHours(hours => {
+                        return [
+                            ...hours.slice(0, i), 
+                            hours[i]= {hour: i, disabled: false, selected: false},
+                            ...hours.slice(i+1)
+                        ]
+                    })
+                } else {
+                    setHours(hours => {
+                        return [
+                            ...hours.slice(0, i), 
+                            hours[i]= {hour: i, disabled: true, selected: false},
+                            ...hours.slice(i+1)
+                        ]
+                    })
+                }
             }
         }
     }
