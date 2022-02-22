@@ -1,40 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import Toggle from "react-toggle";
 import "./css-toggle.scss";
 
-function EstablihsmentTable({ establishment }) {
+function EstablihsmentTable() {
+  const [establishment, setEstablishment] = useState(null);
   const userToken = useSelector((state) => state.register.userToken);
-  const [data, setData] = useState(establishment);
+
+  useEffect(() => {
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
+    axios
+      .get(`${SERVER_URL}/establishment/admin`, { headers: headers })
+      .then((res) => {
+        setEstablishment(res.data);
+      });
+  }, [userToken]);
 
   function handleSearch(input) {
     switch (input.target.id) {
       case "name":
         if (input.target.value !== "") {
-          setData(() => {
+          setEstablishment(() => {
             return establishment.filter((item) =>
               item.name.toLowerCase().includes(input.target.value.toLowerCase())
             );
           });
         } else {
-          setData(establishment);
+          setEstablishment(establishment);
         }
         break;
       case "cuit":
         if (input.target.value !== "") {
-          setData(() => {
+          setEstablishment(() => {
             return establishment.filter((item) =>
               item.cuit.includes(input.target.value)
             );
           });
         } else {
-          setData(establishment);
+          setEstablishment(establishment);
         }
         break;
       default:
-        setData(establishment);
+        setEstablishment(establishment);
         break;
     }
   }
@@ -89,7 +100,7 @@ function EstablihsmentTable({ establishment }) {
           </tr>
         </thead>
         <tbody className="text-center text-white">
-          {data?.map((est) => (
+          {establishment?.map((est) => (
             <tr key={est.id}>
               <td className="border border-slate-700">{est.cuit}</td>
               <td className="border border-slate-700">{est.name}</td>
