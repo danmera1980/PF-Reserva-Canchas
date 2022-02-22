@@ -19,21 +19,38 @@ const getEstabIdByUserId = async (req, res, next) => {
   }
 };
 const getAllActiveEstablishmentsFromDB = async (req, res, next) => {
-
   try {
     const establishmentDB = await Establishment.findAll({
-      where:{isActive:true},
-      include:{
+      where: { isActive: true },
+      include: {
         model: Site,
-        as: 'sites',
-        include:{
+        as: "sites",
+        include: {
           model: Court,
-          as: 'courts'
-        }
+          as: "courts",
+        },
       },
     });
 
     res.send(establishmentDB);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const allEstablishmentsAdmin = async (req, res, next) => {
+  try {
+    const id = req.user.id;
+    const wantedUser = await User.findOne({
+      where: { id },
+      attributes: { exclude: ["passwordHash"] },
+    });
+    if (!wantedUser.isAdmin) {
+      throw new Error("Not Authorized");
+    }
+    const allEstablishments = await Establishment.findAll();
+
+    res.send(allEstablishments);
   } catch (error) {
     console.log(error);
   }
@@ -118,7 +135,7 @@ const addUserToEstablishment = async (req, res, next) => {
 
 const getEstablishmentByUser = async (req, res, next) => {
   const userId = req.user.id;
-  console.log(userId)
+  console.log(userId);
   let user = await User.findOne({
     where: { id: userId },
   });
@@ -137,7 +154,7 @@ const getEstablishmentByUser = async (req, res, next) => {
       include: {
         model: Site,
         as: "sites",
-      //  where:{isActive:true},
+        //  where:{isActive:true},
         include: {
           model: Court,
           as: "courts",
@@ -197,4 +214,5 @@ module.exports = {
   getEstablishmentByUser,
   cuitInDb,
   statusUpdate,
+  allEstablishmentsAdmin,
 };

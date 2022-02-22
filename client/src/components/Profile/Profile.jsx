@@ -32,14 +32,13 @@ function Profile() {
       .get(`${SERVER_URL}/users/profile`, { headers: headers })
       .then((res) => {
         setUserDetails(res.data);
-        console.log(userDetails)
+        console.log(userDetails);
       });
   }, [userToken]);
 
   const onButtonSelection = (option) => {
     setVisual(option);
   };
-
 
   return (
     <div className="dark:bg-darkPrimary dark:text-white">
@@ -58,13 +57,15 @@ function Profile() {
               className="-mt-28 ml-[2.8rem] md:ml-[3.5rem] object-cover rounded-full w-60 h-60 bg-green-900"
             />
 
-            <h1 className=" mb-5 text-center mt-5 text-2xl font-bold">
+            <h1 className="mb-5 text-center mt-5 text-2xl font-bold">
               {userDetails && userDetails.name
                 ? userDetails.name + " " + userDetails.lastName
                 : "Nombre de usuario no establecido"}
             </h1>
-            <h1 className=" mb-5 text-center mt-5">
-              {userDetails && userDetails.isActive ? "" : "Su usuario ha sido deshabilitado comuníquese con el administrador"}
+            <h1 className="mb-5 text-center mt-5">
+              {userDetails && userDetails.isActive
+                ? ""
+                : "Su usuario ha sido deshabilitado comuníquese con el administrador"}
             </h1>
 
             <div className="">
@@ -105,17 +106,21 @@ function Profile() {
                   <FontAwesomeIcon icon={faPencilAlt} size={"2x"} />
                   <p>Editar perfil</p>
                 </button>
-                
               </div>
-              
-        
             </div>
-            {userDetails && userDetails.isAdmin ? <div>
-                      <Link to={"/admin"}> <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]">
-                  <FontAwesomeIcon icon={faCog} size={"2x"} />
-                  <p>Panel Administrador</p>
-                </button></Link> </div> : <div></div>}
+            {userDetails && userDetails.isAdmin ? (
+              <div className="mt-[1rem] flex place-content-center">
+                <Link to={"/admin"}>
+                  {" "}
+                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-[4.8rem] sm:mr-[2.5rem] border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]">
+                    <FontAwesomeIcon icon={faCog} size={"2x"} />
+                    <p>Panel Administrador</p>
+                  </button>
+                </Link>{" "}
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
           <div className="pt-7 md:overflow-auto md:max-h-fit">
             {(() => {

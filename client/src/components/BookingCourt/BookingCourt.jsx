@@ -15,51 +15,6 @@ import Swal from "sweetalert2";
 
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
 const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
-const disabledDates = [
-    {
-      year: 2022,
-      month: 2,
-      day: 23
-    },
-    {
-      year: 2022,
-      month: 6,
-      day: 16
-    },
-    {
-      year: 2022,
-      month: 2,
-      day: 12
-    }
-  ]
-const scheduledTime = [
-{
-    year: 2022,
-    month: 2,
-    day: 18,
-    times: [
-    10,
-    13,
-    14,
-    17,
-    18
-    ]
-},
-{
-    year: 2022,
-    month: 2,
-    day: 19,
-    times:[
-    9,
-    10,
-    12,
-    13,
-    18,
-    19,
-    20
-    ]
-}
-]
 
 
 export default function BookingCourt(){
@@ -73,8 +28,6 @@ export default function BookingCourt(){
         day: nowDateTime.getDate(),
         hour: nowDateTime.getHours()
     }
-    const [disabledDates, setDisableDates] = useState([]);
-    const [scheduledTime, setScheduledTime] = useState([]);
     const [input, setInput] = useState({
         userId: null,
         courtId : null,
@@ -185,10 +138,9 @@ export default function BookingCourt(){
                 </div>
                 <div>
                 <Calendar 
-                    disabledDates={disabledDates}
-                    scheduledTime={scheduledTime}
                     selectedBooking={selectedBooking}
                     currentDateTime={currentDateTime}
+                    courtId={input.courtId}
                 />
                 {
                     isActive && userToken && input.startTime.length && input.endTime.length ?
