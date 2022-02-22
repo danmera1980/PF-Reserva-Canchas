@@ -28,8 +28,6 @@ function Bookings() {
       });
   }, [userToken]);
 
-  console.table(booking)
-
   return (
     <div>
       <div className="place-content-around lg:place-content-start flex lg:gap-10 border-b-[1px] border-black dark:border-white">

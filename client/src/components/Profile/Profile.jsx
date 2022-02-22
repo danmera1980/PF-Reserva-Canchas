@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Card from "../Card/Card";
 import UserEdit from "../UserEdit/UserEdit";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import defaultUserImage from "../../assets/img/user.png";
-import ReactLoading from "react-loading";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
@@ -13,7 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCog,
   faFutbol,
-  faMoneyCheckAlt,
   faPencilAlt,
   faThLarge,
 } from "@fortawesome/free-solid-svg-icons";
@@ -32,7 +29,6 @@ function Profile() {
       .get(`${SERVER_URL}/users/profile`, { headers: headers })
       .then((res) => {
         setUserDetails(res.data);
-        console.log(userDetails);
       });
   }, [userToken]);
 

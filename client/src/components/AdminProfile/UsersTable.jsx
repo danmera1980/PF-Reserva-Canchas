@@ -4,6 +4,7 @@ import { SERVER_URL } from "../../redux/actions/actionNames";
 import { useSelector } from "react-redux";
 import Toggle from "react-toggle";
 import "./css-toggle.scss";
+import "../Bookings/Scrollbar.scss"
 
 function UsersTable() {
   const [users, setUsers] = useState(null);
@@ -52,7 +53,6 @@ function UsersTable() {
 
   function handleFilter(e) {
     if (e.target.value !== "all") {
-      console.log(e.target.value);
       if (e.target.value === "true") {
         setUsers(users.filter((u) => u.hasEstablishment === true));
       } else {
@@ -61,7 +61,6 @@ function UsersTable() {
     } else {
       setUsers(users);
     }
-    console.log(users, e.target.value);
   }
   function HandleHabilitarUs(userId) {
     const headers = {
@@ -77,11 +76,11 @@ function UsersTable() {
     );
   }
   return (
-    <div className="flex justify-center -ml-20 sm:w-full">
-      <table className="ml-36 mt-10 table-auto border-collapse border border-slate-500 text-white overflow-y-auto">
+    <div className="flex h-[29rem] w-[21rem] sm:w-full overflow-x-auto scrollbar">
+      <table className="table-auto border-collapse border border-slate-500 text-white overflow-y-auto">
         <thead className="bg-slate-600">
           <tr>
-            <th className="border border-slate-600 px-10">
+            <th className="border border-slate-600 px-10 py-2">
               Nombre
               <div>
                 <input
@@ -104,7 +103,7 @@ function UsersTable() {
               </div>
             </th>
             <th className="border border-slate-600 px-10">Email</th>
-            <th className="border border-slate-600 px-10">Telefono</th>
+            <th className="border border-slate-600 px-10">Teléfono</th>
             <th className="border border-slate-600 px-10">
               Posee Establecimiento
               <select
@@ -132,7 +131,7 @@ function UsersTable() {
                 {u.hasEstablishment ? "si" : "no"}
               </td>
               <td className="border border-slate-700">
-                <div>
+                <div className="mt-2">
                   <Toggle
                     onClick={() => HandleHabilitarUs(u.id)}
                     defaultChecked={u.isActive}
