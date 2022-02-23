@@ -19,7 +19,6 @@ import Login from "./components/Login/Login";
 import ReportingForm from "./components/Reporting/ReportingForm";
 import AdminProfile from "./components/AdminProfile/AdminProfile";
 import ReportingResults from "./components/Reporting/ReportingResults";
-import SuccessMp from "./components/SuccessMp/SuccessMp";
 
 function App() {
   return (
@@ -42,7 +41,6 @@ function App() {
         <Route exact path="/reporting" component={ReportingForm} />
         <Route exact path="/reportingResults" component={ReportingResults} />
         <Route exact path="/admin" component={AdminProfile} />
-        <Route exact path="/success" component={SuccessMp} />
       </div>
     </React.Fragment>
   );
