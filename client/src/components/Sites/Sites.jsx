@@ -9,23 +9,20 @@ function Sites({ sitesInit }) {
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.register.userToken);
   const [courts, setCourts] = useState([]);
-  const[sites,setSites]=useState(sitesInit.filter(e=>e.isActive===true))
+  const [sites, setSites] = useState(
+    sitesInit.filter((e) => e.isActive === true)
+  );
 
-
-
-useEffect(()=>{
-setSites(sitesInit.filter(e=>e.isActive===true))
-//console.log(sitesInit)
-console.log('sites useEffect',sites)
-},[sitesInit])
-
-
+  useEffect(() => {
+    setSites(sitesInit.filter((e) => e.isActive === true));
+  }, [sitesInit]);
 
   const handleSites = (site) => {
-    if(!courts.length){
-
-      setCourts(() => site.courts.filter(e=>e.isActive===true));
-    }else {setCourts([])}
+    if (!courts.length) {
+      setCourts(() => site.courts.filter((e) => e.isActive === true));
+    } else {
+      setCourts([]);
+    }
   };
   function handleDeleteSite(event, site) {
     event.preventDefault();
@@ -37,10 +34,9 @@ console.log('sites useEffect',sites)
       denyButtonText: `No`,
     }).then((result) => {
       if (result.isConfirmed) {
-       
         dispatch(deleteSite(site.id, userToken));
-        setCourts(site.courts.map(e=>e.isActive=false))
-        setSites(sites.filter(e=>e!==site))
+        setCourts(site.courts.map((e) => (e.isActive = false)));
+        setSites(sites.filter((e) => e !== site));
         Swal.fire("Sede eliminada");
         //window.location.reload();
       } else if (result.isDenied) {
@@ -49,7 +45,6 @@ console.log('sites useEffect',sites)
     });
   }
   function handleDeleteCourt(event, court) {
-    
     event.preventDefault();
     new Swal({
       title: "Estas seguro de eliminar la cancha?",
@@ -59,36 +54,29 @@ console.log('sites useEffect',sites)
       denyButtonText: `No`,
     }).then((result) => {
       if (result.isConfirmed) {
-     
         dispatch(deleteCourt(court.id, userToken));
         Swal.fire("Cancha eliminada");
-       
-          sitesInit.map(site=>site.courts.map(c=>{
-          if(c===court){c.isActive=false}}))
-          setCourts(courts.filter(e=>e!==court))
-        
-    console.log('sitesInit',sitesInit)
-    //console.log('sites',sites)
-      
+
+        sitesInit.map((site) =>
+          site.courts.map((c) => {
+            if (c === court) {
+              c.isActive = false;
+            }
+          })
+        );
+        setCourts(courts.filter((e) => e !== court));
       } else if (result.isDenied) {
         Swal.fire("La cancha no se elimino");
       }
     });
   }
 
-  // let sitesActive = [];
-  // sitesInit.map((e) =>
-  //   e.isActive === true ? sitesActive.push(e) : null
-  // );
-
-
-
-
   return (
-
     <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
       {!sites.length ? (
-        <span className="flex place-content-center mt-40 text-4xl text-blue-800 dark:text-white">No tenes sedes actualmente</span>
+        <span className="flex place-content-center mt-40 text-4xl text-blue-800 dark:text-white">
+          No tenes sedes actualmente
+        </span>
       ) : (
         <div>
           <table className="w-full border-collapse border border-slate-500">
@@ -105,7 +93,7 @@ console.log('sites useEffect',sites)
             </thead>
             <tbody className="text-center">
               {sites.map((e) => (
-                <tr key={e.id} >
+                <tr key={e.id}>
                   <td className="border border-slate-700 py-2">{e.name}</td>
                   <td className="border border-slate-700 py-2">{e.city}</td>
                   <td className="border border-slate-700 py-2">{e.country}</td>
@@ -113,7 +101,7 @@ console.log('sites useEffect',sites)
                   <td className="border border-slate-700 py-2">
                     {e.streetNumber}
                   </td>
-                  {!(e.courts.filter(c=>c.isActive===true).length)? (
+                  {!e.courts.filter((c) => c.isActive === true).length ? (
                     <td className="border border-slate-700 py-2">
                       Sin canchas cargadas
                     </td>
@@ -142,9 +130,8 @@ console.log('sites useEffect',sites)
         </div>
       )}
 
-      <div className="py-2">
-        
-            {courts.map((e) => (e.isActive===true?
+      {courts.length ? (
+        <div className="py-2">
           <table className="w-full border-collapse border border-slate-500">
             <thead className="bg-slate-600">
               <tr>
@@ -157,35 +144,35 @@ console.log('sites useEffect',sites)
                 </th>
               </tr>
             </thead>
-              <tbody className="text-center" key={e.id}>
-                <tr key={e.id}>
-                  <td className="border border-slate-700">{e.name}</td>
-                  <td className="border border-slate-700">${e.price}</td>
-                  <td className="border border-slate-700">
-                    {e.shiftLength} Minutos
-                  </td>
-                  <td className="border border-slate-700">{e.sport}</td>
-                  <td className="border border-slate-700 py-2">
-                    {" "}
-                    <button
-                      value={e}
-                      onClick={(event) => handleDeleteCourt(event, e,sites)}
-                      className="bg-red-500 px-1 hover:bg-red-600 transition-all active:scale-95"
-                    >
-                      X
-                    </button>{" "}
-                  </td>
-                </tr>
-              </tbody>
+            {courts.map((e) =>
+              e.isActive === true ? (
+                <tbody className="text-center" key={e.id}>
+                  <tr key={e.id}>
+                    <td className="border border-slate-700">{e.name}</td>
+                    <td className="border border-slate-700">${e.price}</td>
+                    <td className="border border-slate-700">
+                      {e.shiftLength} Minutos
+                    </td>
+                    <td className="border border-slate-700">{e.sport}</td>
+                    <td className="border border-slate-700 py-2">
+                      {" "}
+                      <button
+                        value={e}
+                        onClick={(event) => handleDeleteCourt(event, e, sites)}
+                        className="bg-red-500 px-1 hover:bg-red-600 transition-all active:scale-95"
+                      >
+                        X
+                      </button>{" "}
+                    </td>
+                  </tr>
+                </tbody>
+              ) : null
+            )}
           </table>
-              :<></>
-            ))}
-        
-      </div>  
+        </div>
+      ) : null}
     </div>
-  )
-
-
+  );
 }
 
 export default Sites;
