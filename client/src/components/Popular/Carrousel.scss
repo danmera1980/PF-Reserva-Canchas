@@ -10,3 +10,7 @@ $animationSpeed: 55s;
   -webkit-animation: scroll $animationSpeed linear infinite;
   width: calc(823px * 14);
 }
+
+.carrousel:hover{
+  animation-play-state: paused;
+}
