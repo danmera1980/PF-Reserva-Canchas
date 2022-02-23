@@ -24,8 +24,13 @@ function Sites() {
       .then((res) => {
         setEstablishmentDetail(res.data);
       })
-      .then(response => {setSites(establishmentDetail.sites.filter((e) => e.isActive === true))
-  })}, [userToken, establishmentDetail]);
+  }, [userToken]);
+
+  useEffect(()=>{
+    if(establishmentDetail){
+      setSites(establishmentDetail.sites.filter((e) => e.isActive === true))
+    }
+  },[establishmentDetail])
 
 
   const handleSites = (site) => {
@@ -69,6 +74,7 @@ function Sites() {
         Swal.fire("Cancha eliminada");
 
         sites.map((site) =>
+          // eslint-disable-next-line array-callback-return
           site.courts.map((c) => {
             if (c === court) {
               c.isActive = false;
@@ -83,7 +89,7 @@ function Sites() {
   }
 
   return (
-    <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
+    <div className="w-[20rem] overflow-x-auto overflow-y-hidden sm:w-full my-5">
       {!sites.length ? (
         <span className="flex place-content-center mt-40 text-4xl text-blue-800 dark:text-white">
           No tenes sedes actualmente

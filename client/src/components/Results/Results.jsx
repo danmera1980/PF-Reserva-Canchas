@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
@@ -18,8 +18,10 @@ const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 function Results() {
     const location = useLocation();
     const [ selectedCard, setSelectedCard] = useState(null);
+    // eslint-disable-next-line no-unused-vars
     const [width, setWidth] = useState(window.innerWidth)
     const resultsData = useSelector(state => state.establishment.establishments);
+    // eslint-disable-next-line no-unused-vars
     const [currentLocation, setCurrentLocation ] = useState({
         latitude: Number(location.state.latitude),
         longitude: Number(location.state.longitude)

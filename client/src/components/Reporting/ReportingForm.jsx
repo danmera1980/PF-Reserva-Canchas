@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import axios from "axios";
 
 
-export default function ReportingForm({establishmentDetail}) {
+export default function ReportingForm() {
   const history = useHistory();
-  const establishmentId  = establishmentDetail.id;
-  const sites = establishmentDetail.sites
+  const userToken = useSelector((state) => state.register.userToken);
+  const [establishmentDetail, setEstablishmentDetail] = useState(null);
+  const [sites, setSites] = useState([]);
 
+  // eslint-disable-next-line no-unused-vars
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
-    establishmentId: establishmentId?establishmentId:"",
+    establishmentId: establishmentDetail?establishmentDetail.id:"",
     dateFrom:"",
     dateTo:"",
     siteId:"",
@@ -21,6 +24,27 @@ export default function ReportingForm({establishmentDetail}) {
 
   const [selectedSite, setSelectedSite] = useState(sites)
   const [sports, setSports] = useState(determinateSports(selectedSite))
+
+
+  useEffect(() => {
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    axios
+      .get(`${SERVER_URL}/establishment/idUser`, { headers: headers })
+      .then((res) => {
+        setEstablishmentDetail(res.data);
+      })
+  }, [userToken]);
+
+  useEffect(()=>{
+    if(establishmentDetail){
+      setSites(establishmentDetail.sites.filter((e) => e.isActive === true))
+    }
+  },[establishmentDetail])
+
+
 
   function determinateSports(selectedSite){
     let allCourts = selectedSite.map(c => c.courts);
