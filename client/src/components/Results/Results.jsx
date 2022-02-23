@@ -7,7 +7,6 @@ import SearchBar from '../SearchBar/SearchBar';
 import Footer from '../Footer/Footer';
 import Card from '../Card/Card';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
-import './Results.scss';
 import Slider from '../Slider/Slider';
 import { useLocation } from 'react-router-dom';
 
@@ -60,13 +59,13 @@ function Results() {
 
   return (
     <div>
-        <div className='fixed w-full z-50'>
+        <div className='fixed top-0 w-full z-1'>
             <Header />
             <SearchBar getViewPort={getViewPort}/>
-        </div>       
-        <div className='results'>
+        </div> 
+        <div className='flex flex-row ml-20 gap-10 mt-[23vh] w-90 p-2 z-10 h-70'>
                 {resultsData.length ?
-                <div className='leftResults'>
+                <div className='basis-1/2 h-[68vh] sm:h-[68vh] overflow-y-auto scrollbar snap-y snap-mandatory overflow-x-hidden'>
                      {resultsData.map(m => m.sites.map(site => site.courts.map( court => (
                         <Card 
                             key= {court.id}
@@ -84,10 +83,9 @@ function Results() {
                         />
                     ))))}
                 </div>
-                
                 : <div className="flex place-content-center my-1 text-2xl w-full dark:text-white">No hay resultados para tu búsqueda</div>}
                 {resultsData.length ?
-                <div className='rightResults'>
+                <div className='basis-1/2 h-[68vh] sm:h-[68vh] overflow-y-hidden'>
                     <ReactMapGL 
                         {...viewport}
                         onViewportChange={newView => setViewport(newView)}
