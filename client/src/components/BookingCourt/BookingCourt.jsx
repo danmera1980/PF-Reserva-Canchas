@@ -156,7 +156,7 @@ export default function BookingCourt(){
                         className="place-content-center"
                     >                    
                                 <Marker latitude={court?.site.latitude} longitude={court?.site.longitude}>
-                                    <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
+                                    <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='2x'/>
                                 </Marker>                   
                     </ReactMapGL>
                     

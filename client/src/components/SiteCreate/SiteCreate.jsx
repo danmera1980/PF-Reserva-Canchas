@@ -318,7 +318,7 @@ export default function SiteCreate({establishmentId}) {
               mapStyle={MapStyle}
             >
               <Marker draggable={true} onDragEnd={getLngLat => handleDrag(getLngLat)} latitude={input.latitude} longitude={input.longitude}>
-                <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
+                <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='2x'/>
               </Marker>
             </ReactMapGL>
             </div>

@@ -98,7 +98,7 @@ function Results() {
                                                             latitude: m.sites[0].latitude,
                                                             longitude: m.sites[0].longitude})}>
                             <Marker latitude={m.sites[0].latitude} longitude={m.sites[0].longitude}>
-                                <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
+                                <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='1x'/>
                             </Marker>
                         </button>
                     ))}
