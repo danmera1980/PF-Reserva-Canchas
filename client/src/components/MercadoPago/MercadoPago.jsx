@@ -9,7 +9,7 @@ const {SERVER_URL} = require('../../redux/actions/actionNames.js')
 
 export default function MercadoPago({booking}){
 
-  const PUBLIC_KEY = 'TEST-6df9d926-e5fa-465e-9d9d-78207d113a0f';
+  const PUBLIC_KEY = 'TEST-e739f66b-51c7-4e0d-99e7-a57608893b7f';
   const [preferenceId, setPreferenceId] = useState("") // preferenceId
   const userToken = useSelector((state) => state.register.userToken);
 
@@ -29,8 +29,8 @@ export default function MercadoPago({booking}){
   //   status : 'created'
   // }]
 
-  const date = input[0].startTime.split(' ' , 5)
-  const hour = parseInt(date[4].split(':' , 1))
+  // const date = input[0].startTime.split(' ' , 5)
+  // const hour = parseInt(date[4].split(':' , 1))
 
   useEffect(()=>{
     if(userToken !== null){
@@ -79,7 +79,7 @@ export default function MercadoPago({booking}){
       <h4 className="font-bold py-1 text-xl text-center dark:text-white ">Detalle de reserva</h4>
       <h2 className="font-bold py-1 text-l  dark:text-white ">{input[0].courtName}</h2>
       <h1 className="font-bold py-2 text-s dark:text-white ">Fecha y Horario</h1>
-      <h1 className="font-bold py-2  dark:text-white ">{date[2]}-{date[1]}-{date[3]} de {hour} a {hour+1}</h1>
+      {/* <h1 className="font-bold py-2  dark:text-white ">{date[2]}-{date[1]}-{date[3]} de {hour} a {hour+1}</h1> */}
       <h1 className="font-bold py-2  dark:text-white ">Total a pagar  {'$' + input[0].price}</h1>
       <div className="cho-container place-content-center ">
         {!preferenceId &&
