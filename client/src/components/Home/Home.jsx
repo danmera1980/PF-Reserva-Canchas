@@ -12,7 +12,6 @@ import Swal from "sweetalert2";
 
 function Home() {
   const {search} = useLocation()
-  console.log(search);
   if(search.includes('status=approved')){
     Swal.fire({
       title: `Se acredito su pago`,
