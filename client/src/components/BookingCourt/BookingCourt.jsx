@@ -3,6 +3,7 @@ import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import logo from "../../assets/img/logo.svg";
 import ReactMapGL, { Marker } from 'react-map-gl';
+import mapbox from '!mapbox-gl'
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

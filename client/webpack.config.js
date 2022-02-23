@@ -20,6 +20,7 @@ module.exports = {
   module: {
     noParse: /(mapbox-gl)\.js$/,
     rules: [
+      {"import/no-webpack-loader-syntax": "off"},
       {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
