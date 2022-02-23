@@ -58,7 +58,7 @@ function Home() {
           <h2 className="text-2xl font-semibold text-lightSecondary dark:text-darkAccent text-center">
             Canchas populares
           </h2>
-          <div className="overflow-x-auto md:h-[19rem]">
+          <div className="overflow-x-auto md:h-[19rem] mb-16 md:mb-0">
             <Popular currentLocation={currentLocation} />
           </div>
         </div>
