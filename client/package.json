@@ -50,15 +50,12 @@
     "redux-thunk": "^2.4.1",
     "sass": "^1.48.0",
     "sweetalert2": "^11.3.10",
-    "web-vitals": "^0.2.4",
-    "webpack": "^5.69.1",
-    "webpack-cli": "^4.9.2"
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "webpack serve",
     "build": "react-scripts build"
   },
   "eslintConfig": {
@@ -71,6 +68,9 @@
     "production": [
       ">0.25%",
       "not dead",
+      "not ie 11",
+      "not chrome < 51",
+      "not safari < 10",
       "not op_mini all"
     ],
     "development": [
