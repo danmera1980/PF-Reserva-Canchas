@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
     "@devexpress/dx-react-core": "^3.0.1",
     "@devexpress/dx-react-scheduler": "^3.0.1",
     "@devexpress/dx-react-scheduler-material-ui": "^3.0.1",
@@ -21,8 +24,10 @@
     "@testing-library/react": "^11.2.1",
     "@testing-library/user-event": "^12.2.2",
     "axios": "^0.24.0",
+    "babel-loader": "^8.2.3",
     "date-fns": "^2.28.0",
     "emotion": "^11.0.0",
+    "html-webpack-plugin": "^5.5.0",
     "moment": "^2.29.1",
     "mui": "0.0.1",
     "react": "^17.0.1",
@@ -36,22 +41,25 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "^5.0.0",
     "react-sweetalert2": "^0.5.1",
-    "react-toggle": "^4.1.2",
     "react-table": "^7.7.0",
     "react-to-print": "^2.14.4",
+    "react-toggle": "^4.1.2",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.4.1",
     "sass": "^1.48.0",
     "sweetalert2": "^11.3.10",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "webpack serve",
+    "build": "webpack"
   },
   "eslintConfig": {
     "extends": [
