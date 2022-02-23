@@ -1,53 +1,111 @@
 /* eslint import/no-webpack-loader-syntax: off */
 
-import React from "react";
-import mbxGeocoding from '@mapbox/mapbox-sdk/services/geocoding';
-import mapboxgl from '!mapbox-gl/dist/mapbox-gl.js';
+import React, { useRef, useEffect, useState } from 'react';
+import mapboxgl from 'mapbox-gl';
 import './Map.css';
 
-const  PK_TOKEN_MAP  = process.env.REACT_APP_MAPBOX_TOKEN;
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+const Map = ({location, markers}) => {
+  const mapContainerRef = useRef(null);
 
-mapboxgl.accessToken = PK_TOKEN_MAP;
+  const [lng, setLng] = useState(-87.65);
+  const [lat, setLat] = useState(41.84);
+  const [zoom, setZoom] = useState(12);
+
+  // Initialize map when component mounts
+  useEffect(() => {
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: MapStyle,
+      center: location,
+      zoom: zoom,
+    });
+
+    // Create default markers
+    markers.features.map((marker) =>
+        {
+            console.log(marker)
+            new mapboxgl.Marker()
+            .setLngLat(marker.geometry.coordinates)
+            .setPopup(
+                new mapboxgl.Popup({ offset: 25 })
+                .setHTML(
+                    `<h3>${marker.properties.title}</h3><p>${marker.properties.description}</p>`
+                )
+            )
+            .addTo(map)
+        }
+    );
+
+    // Add navigation control (the +/- zoom buttons)
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+    map.on('move', () => {
+      setLng(map.getCenter().lng.toFixed(4));
+      setLat(map.getCenter().lat.toFixed(4));
+      setZoom(map.getZoom().toFixed(2));
+    });
+
+    // Clean up on unmount
+    return () => map.remove();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <div>
+      <div className="sidebarStyle">
+        <div>
+          Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+        </div>
+      </div>
+      <div className="map-container" ref={mapContainerRef} />
+    </div>
+  );
+};
+
+export default Map;
+
+// import React, {useEffect, useRef, useState} from "react";
+// import mapboxgl from '!mapbox-gl';
+// import './Map.css';
+
+// const MapStyle = 'mapbox://styles/mapbox/streets-v11';
+// mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+
+// export default function Map({ location, markers }) {
+//     const mapContainerRef = useRef(null);
+
+//     const [currentLocation, setCurrentLocation ] = useState(location)
+//     const [zoom, setZoom] =useState(10);
+//     const map = useRef(null);
+
+//     useEffect(()=>{
+//         if(map) return;
+//         map = new mapboxgl.Map({
+//             container: mapContainerRef.current,
+//             style: MapStyle,
+//             center: currentLocation,
+//             zoom: zoom
+//         });
+//         // create markers
+//         markers.forEach(marker => {
+//             new mapboxgl.Marker().setLngLat(marker.geometry.coodinates).addTo(map);
+//         })
+//         return () => map.remove();
+//     },[])
+    
+//     // useEffect(()=>{
+//     //     if(!map.current) return;
+//     //     map.current.on('move', ()=>{
+//     //         setCurrentLocation([map.current.getCenter().lng.toFixed(4), map.current.getCenter().lat.toFixed(4)]);
+//     //         setZoom(map.current.getZoom().toFixed(2));
+//     //     });
+//     // });
 
 
-
-export default function Map({ address }) {
-
-    // paso el token
-    const mapboxClient = mbxGeocoding({ accessToken: mapboxgl.accessToken });
-    mapboxClient
-        .forwardGeocode({
-            // direccion
-            query: address,
-            autocomplete: false,
-            limit: 1
-        })
-        .send()
-        .then((response) => {
-            if (
-                !response ||
-                !response.body ||
-                !response.body.features ||
-                !response.body.features.length
-            ) {
-                console.error('Invalid response:');
-                console.error(response);
-                return;
-            }
-            const feature = response.body.features[0];
-
-            const map = new mapboxgl.Map({
-                container: 'map',
-                style: MapStyle,
-                center: feature.center,
-                //Zoom de la ubicacion
-                zoom: 15
-            });
-
-            // crea un marker y lo agrega al mapa.
-            new mapboxgl.Marker().setLngLat(feature.center).addTo(map);
-        });
-
-    return <div id='map'></div>
-}
+//     return (
+//         <div>
+//             <div className="map-container" ref={mapContainerRef} />
+//         </div>
+//     )
+// }
