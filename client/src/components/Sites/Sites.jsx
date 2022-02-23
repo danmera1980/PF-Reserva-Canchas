@@ -4,18 +4,29 @@ import { deleteSite } from "../../redux/actions/site";
 import { deleteCourt } from "../../redux/actions/court";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import axios from "axios";
+import { SERVER_URL } from "../../redux/actions/actionNames";
 
-function Sites({ sitesInit }) {
+function Sites() {
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.register.userToken);
+  const [establishmentDetail, setEstablishmentDetail] = useState(null);
   const [courts, setCourts] = useState([]);
-  const [sites, setSites] = useState(
-    sitesInit.filter((e) => e.isActive === true)
-  );
+  const [sites, setSites] = useState([]);
 
   useEffect(() => {
-    setSites(sitesInit.filter((e) => e.isActive === true));
-  }, [sitesInit]);
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    axios
+      .get(`${SERVER_URL}/establishment/idUser`, { headers: headers })
+      .then((res) => {
+        setEstablishmentDetail(res.data);
+      })
+      .then(response => {setSites(establishmentDetail.sites.filter((e) => e.isActive === true))
+  })}, [userToken, establishmentDetail]);
+
 
   const handleSites = (site) => {
     if (!courts.length) {
@@ -35,7 +46,7 @@ function Sites({ sitesInit }) {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteSite(site.id, userToken));
-        setCourts(site.courts.map((e) => (e.isActive = false)));
+        setCourts(site.courts.map((court) => dispatch(deleteCourt(court.id, userToken))))
         setSites(sites.filter((e) => e !== site));
         Swal.fire("Sede eliminada");
         //window.location.reload();
@@ -57,7 +68,7 @@ function Sites({ sitesInit }) {
         dispatch(deleteCourt(court.id, userToken));
         Swal.fire("Cancha eliminada");
 
-        sitesInit.map((site) =>
+        sites.map((site) =>
           site.courts.map((c) => {
             if (c === court) {
               c.isActive = false;
@@ -130,7 +141,7 @@ function Sites({ sitesInit }) {
         </div>
       )}
 
-      {courts.length ? (
+      {courts.filter(c => c.isActive===true).length ? (
         <div className="py-2">
           <table className="w-full border-collapse border border-slate-500">
             <thead className="bg-slate-600">
