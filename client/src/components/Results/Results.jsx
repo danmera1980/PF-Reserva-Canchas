@@ -78,60 +78,64 @@ function Results() {
         </div>
         
         <div className='results'>
-            <div className='leftResults'>
-                {resultsData && resultsData?.map(m => m.sites.map(site => site.courts.map( court => (
-                    <Card 
-                        key= {court.id}
-                        id= {m.cuit}
-                        name= {site.name}
-                        images= {court.image}
-                        establishment= {m.name}
-                        cuit={m.cuit}
-                        court= {court.name}
-                        courtId={court.id}
-                        address= {site.street}
-                        price= {court.price}
-                        sport= {court.sport}
-                        button={true}
-                    />
-                ))))}
-            </div>
-            <div className='rightResults'>
-                <ReactMapGL 
-                    {...viewport}
-                    onViewportChange={newView => setViewport(newView)}
-                    mapboxApiAccessToken={mapboxToken}
-                    mapStyle={MapStyle}
-                >
-                    {resultsData.map(m => (
-                        <button key={m.id} 
-                        onClick={e => selectedCardClick(e, {establishment: m.name, 
-                                                            site: m.sites[0].name,
-                                                            name: m.sites[0].courts[0].name, 
-                                                            address: m.sites[0].street, 
-                                                            sport: m.sites[0].courts[0].sport,
-                                                            price: m.sites[0].courts[0].price,
-                                                            latitude: m.sites[0].latitude,
-                                                            longitude: m.sites[0].longitude})}>
-                            <Marker latitude={m.sites[0].latitude} longitude={m.sites[0].longitude}>
-                                <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
-                            </Marker>
-                        </button>
-                    ))}
-                    {selectedCard ? (
-                        <Popup latitude={selectedCard.latitude} longitude={selectedCard.longitude} onClose={() => setSelectedCard(null)}>
-                        <div>
-                            <Slider/>
-                            <h2>{selectedCard.establishment}</h2>
-                            <h3>{selectedCard.site} - {selectedCard.name}</h3>
-                            <h4>{selectedCard.address} <span>City</span></h4>
-                            <h4>{selectedCard.sport}</h4>
-                            <h3>${selectedCard.price}</h3>
-                        </div>
-                        </Popup>
-                    ):null}
-                </ReactMapGL>
-            </div>
+                {resultsData.length ?
+                <div className='leftResults'>
+                     {resultsData.map(m => m.sites.map(site => site.courts.map( court => (
+                        <Card 
+                            key= {court.id}
+                            id= {m.cuit}
+                            name= {site.name}
+                            images= {court.image}
+                            establishment= {m.name}
+                            cuit={m.cuit}
+                            court= {court.name}
+                            courtId={court.id}
+                            address= {site.street}
+                            price= {court.price}
+                            sport= {court.sport}
+                            button={true}
+                        />
+                    ))))}
+                </div>
+                
+                : <div className="flex place-content-center my-1 text-2xl w-full dark:text-white">No hay resultados para tu búsqueda</div>}
+                {resultsData.length ?
+                <div className='rightResults'>
+                    <ReactMapGL 
+                        {...viewport}
+                        onViewportChange={newView => setViewport(newView)}
+                        mapboxApiAccessToken={mapboxToken}
+                        mapStyle={MapStyle}
+                    >
+                        {resultsData.map(m => (
+                            <button key={m.id} 
+                            onClick={e => selectedCardClick(e, {establishment: m.name, 
+                                                                site: m.sites[0].name,
+                                                                name: m.sites[0].courts[0].name, 
+                                                                address: m.sites[0].street, 
+                                                                sport: m.sites[0].courts[0].sport,
+                                                                price: m.sites[0].courts[0].price,
+                                                                latitude: m.sites[0].latitude,
+                                                                longitude: m.sites[0].longitude})}>
+                                <Marker latitude={m.sites[0].latitude} longitude={m.sites[0].longitude}>
+                                    <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
+                                </Marker>
+                            </button>
+                        ))}
+                        {selectedCard ? (
+                            <Popup latitude={selectedCard.latitude} longitude={selectedCard.longitude} onClose={() => setSelectedCard(null)}>
+                            <div>
+                                <Slider/>
+                                <h2>{selectedCard.establishment}</h2>
+                                <h3>{selectedCard.site} - {selectedCard.name}</h3>
+                                <h4>{selectedCard.address} <span>City</span></h4>
+                                <h4>{selectedCard.sport}</h4>
+                                <h3>${selectedCard.price}</h3>
+                            </div>
+                            </Popup>
+                        ):null}
+                    </ReactMapGL>
+                </div> : null}
         </div>
         <Footer />
     </div>
