@@ -59,8 +59,8 @@ function Results() {
     <div>
         <div className='fixed w-full z-50'>
             <Header />
+            <SearchBar getViewPort={getViewPort}/>
         </div>
-        <SearchBar getViewPort={getViewPort}/>
         <div className='results'>
             <div className='leftResults'>
                 {resultsData && resultsData?.map(m => m.sites.map(site => site.courts.map( court => (
