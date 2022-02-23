@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
@@ -9,35 +9,38 @@ import Card from '../Card/Card';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import './Results.scss';
 import Slider from '../Slider/Slider';
+import { useLocation } from 'react-router-dom';
 
 
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
 const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 function Results() {
+    const location = useLocation();
     const [ selectedCard, setSelectedCard] = useState(null);
+    // eslint-disable-next-line no-unused-vars
     const [width, setWidth] = useState(window.innerWidth)
     const resultsData = useSelector(state => state.establishment.establishments);
+    // eslint-disable-next-line no-unused-vars
     const [currentLocation, setCurrentLocation ] = useState({
-        latitude: 0,
-        longitude: 0
+        latitude: Number(location.state.latitude),
+        longitude: Number(location.state.longitude)
     })
     
-    useEffect(()=> [
-        navigator.geolocation.getCurrentPosition(position => {
-            setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
-            setViewport({
-                ...viewport,
-                latitude: position.coords.latitude, 
-                longitude: position.coords.longitude 
-            })
-            console.log('My location', currentLocation)
-        })
-    ],[])
+    // NO SE USA MÁS PORQUE SE SETEA DESDE EL SEARCHBAR
+    // useEffect(()=> [
+    //     navigator.geolocation.getCurrentPosition(position => {
+    //         setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
+    //         setViewport({
+    //             ...viewport,
+    //             latitude: position.coords.latitude, 
+    //             longitude: position.coords.longitude 
+    //         })
+    //         console.log('My location', currentLocation)
+    //     })
+    // ],[])
 
     const [viewport, setViewport] = useState({
-        // latitude: resultsData?resultsData[0].sites[0].latitude: currentLocation.latitude,
-        // longitude: resultsData?resultsData[0].sites[0].longitude: currentLocation.longitude,
         latitude: currentLocation.latitude,
         longitude: currentLocation.longitude,
         width: width<1200?'400px':'600px',
@@ -60,7 +63,20 @@ function Results() {
         <div className='fixed w-full z-50'>
             <Header />
         </div>
+        
+        {/* CORREGIR ESTILOS PARA QUE SE VEA EL SEARCHBAR */}
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div>
         <SearchBar getViewPort={getViewPort}/>
+        </div>
+        
         <div className='results'>
             <div className='leftResults'>
                 {resultsData && resultsData?.map(m => m.sites.map(site => site.courts.map( court => (
