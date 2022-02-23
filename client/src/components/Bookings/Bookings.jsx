@@ -60,10 +60,10 @@ function Bookings() {
                   width={"8.5rem"}
                 />
               ) : (
-                <div className="h-[28rem] sm:h-[29rem] overflow-y-auto scrollbar">
+                <div className="h-[28rem] sm:h-[29rem] overflow-y-auto scrollbar snap-y snap-mandatory">
                   {booking.map((e) => {
                     return (
-                      <div key={e.id} className="overflow-hidden pb-4">
+                      <div key={e.id} className="overflow-hidden pb-4 snap-start">
                         <BookingsCard
                           images={e.court.image.length ? e.court.image : "https://i.ibb.co/LSVSVLG/cancha.jpg"}
                           establishment={e.court.site.establishment.name}
