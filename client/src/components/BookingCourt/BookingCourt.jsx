@@ -4,6 +4,8 @@ import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import logo from "../../assets/img/logo.svg";
 import ReactMapGL, { Marker } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
+import MapboxWorker from "mapbox-gl/dist/mapbox-gl-csp-worker";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +21,8 @@ const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 
 export default function BookingCourt(){
+
+    mapboxgl.workerClass = MapboxWorker;
     const history = useHistory()
     const {courtId} = useParams()
     const [court, setCourt] = useState([])

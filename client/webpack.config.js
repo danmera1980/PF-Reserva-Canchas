@@ -22,6 +22,10 @@ module.exports = {
     rules: [
       {"import/no-webpack-loader-syntax": "off"},
       {
+        test: /\bmapbox-gl-csp-worker.js\b/i,
+        use: { loader: 'worker-loader' }
+      },
+      {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       },
