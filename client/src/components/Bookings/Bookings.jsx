@@ -1,19 +1,18 @@
 import { useEffect } from "react";
 import { React, useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { SERVER_URL } from "../../redux/actions/actionNames";
-import Card from "../Card/Card";
+import BookingsCard from "./BookingsCard";
 import ReactLoading from "react-loading";
-import { getfavs } from "../../redux/actions/users";
 import Favorites from "../Favorites/Favorites";
+import "./Scrollbar.scss"
 
 function Bookings() {
-  const dispatch = useDispatch()
   const [visual, setVisual] = useState("bookings");
   const userToken = useSelector((state) => state.register.userToken);
-  const favorites = useSelector(state => state.users.userFav)
-  const [booking, SetBooking] = useState(null);
+  const [booking, SetBooking] = useState([]);
+  
   const onButtonSelection = (option) => {
     setVisual(option);
   };
@@ -27,22 +26,19 @@ function Bookings() {
       .then((res) => {
         SetBooking(res.data);
       });
-    dispatch(getfavs(userToken))
   }, [userToken]);
-
-console.log(favorites)
 
   return (
     <div>
       <div className="place-content-around lg:place-content-start flex lg:gap-10 border-b-[1px] border-black dark:border-white">
         <button
-          className="inline-block"
+          className="inline-block focus:text-darkAccent active:text-darkAccent"
           onClick={() => onButtonSelection("bookings")}
         >
           Reservas
         </button>
         <button
-          className="inline-block"
+          className="inline-block focus:text-darkAccent active:text-darkAccent"
           onClick={() => onButtonSelection("favorites")}
         >
           Favoritos
@@ -52,7 +48,11 @@ console.log(favorites)
         {(() => {
           switch (visual) {
             case "bookings":
-              return booking === null ? (
+              return booking.length === 0 ? 
+              <div className="flex place-content-center">
+                <h1 className="font-bold text-xl">No hay reservas</h1>
+              </div> :
+              booking === null ? (
                 <ReactLoading
                   type={"spin"}
                   color={"#000000"}
@@ -60,25 +60,28 @@ console.log(favorites)
                   width={"8.5rem"}
                 />
               ) : (
-                booking.map((e) => {
-                  return (
-                    <div key={e.id} className="overflow-hidden pb-4">
-                      <Card
-                        name={e.court.name}
-                        establishment={e.court.site.establishment.name}
-                        images={e.court.image[0]}
-                        site={e.court.site.name}
-                        address={e.court.site.street}
-                        price={e.finalAmount}
-                        sport={e.court.sport}
-                        courtId={e.courtId}
-                      />
-                    </div>
-                  );
-                })
+                <div className="h-[28rem] sm:h-[29rem] overflow-y-auto scrollbar snap-y snap-mandatory">
+                  {booking.map((e) => {
+                    return (
+                      <div key={e.id} className="overflow-hidden pb-4 snap-start">
+                        <BookingsCard
+                          images={e.court.image.length ? e.court.image : "https://i.ibb.co/LSVSVLG/cancha.jpg"}
+                          establishment={e.court.site.establishment.name}
+                          name={e.court.name}
+                          reference={e.external_reference}
+                          place={e.court.site.street + " " + e.court.site.streetNumber}
+                          date={e.startTime.replace("Z", "")}
+                          price={e.finalAmount}
+                          sport={e.court.sport}
+                          courtId={e.courtId}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               );
             case "favorites":
-              return  <Favorites/> 
+              return <div className="h-[27rem] sm:h-[29rem] overflow-y-auto scrollbar"><Favorites /></div>  
             default:
               return "bookings";
           }

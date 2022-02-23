@@ -5,24 +5,25 @@
   width: 600px;
   margin: 0 auto;
   background-color: var(--clr-light);
-  // color: var(--clr-light);
   font-size: var(--fs-btn);
   border-radius: 15px;
   color: var(--clr-accent);
   padding-right: 20px;
+  padding-left: 20px;
   filter: var(--shadow);
+  height: 40px;
 }
 
 .searchSelect,
-.searchInput {
+.searchContainer {
   display: flex;
   flex-grow: 1;
-  width: 100%;
+  width: 90%;
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  margin-right: 20px;
-  margin-left: 20px;
+  // margin-right: 20px;
+  // margin-left: 20px;
 }
 
 .searchSelect select {
@@ -37,7 +38,38 @@
   padding-left: 5px;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 900px) {
+  .searchBar{
+    width: 400px;
+    flex-direction: column;
+    padding: 5px;
+    height: 100px;
+  }
+  .searchSelect{
+    padding-bottom: 5px;
+  }
+}
+
+@media (max-width: 450px) {
+  .searchBar{
+    width: 280px;
+    flex-direction: column;
+    padding: 5px;
+    height: 100px;
+  }
+  .searchSelect{
+    padding-bottom: 5px;
+  }
+  .searchInput{
+    width: 250px;
+  }
+  #establishment{
+    width: 80%;
+  }
+}
+
+#establishment{
+  width: 80%;
 }
 
 .searchContainer {
@@ -61,4 +93,9 @@
   background: #634646;
   columns: white;
   cursor: pointer;
+}
+
+.searchInput{
+  display: flex;
+  padding-left: 10px;
 }

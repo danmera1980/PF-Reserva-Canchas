@@ -4,8 +4,6 @@ import { useEffect } from "react";
 const Hours = ({selectedDate, disabledTime, selectedBooking, minTime}) => {
     const [hours, setHours] = useState([])
 
-    console.log(minTime, disabledTime)
-
     useEffect(()=> {
         setHours([])
         for (let i = 0; i < 24; i++) { 

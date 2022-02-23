@@ -47,17 +47,13 @@ export function registerUser(payload) {
   };
 }
 export function loginUser(payload) {
+  return { type: LOGIN, payload: payload };
 
-  return async function (dispatch) {
-    await axios
-      .post(`${SERVER_URL}/users/login`, payload)
-      .then((user) => {
-        return dispatch({ type: LOGIN, payload: user.data });
-      })
-      .catch((err) => {
-        dispatch({ type: SET_ERRORS, payload: "Contraseña o email incorrecto" });
-      });
-  };
+  //     })
+  //     .catch((err) => {
+  //       dispatch({ type: SET_ERRORS, payload: "Contraseña o email incorrecto" });
+  //     });
+  // };
 }
 
 export function loginWithGoogle(response) {

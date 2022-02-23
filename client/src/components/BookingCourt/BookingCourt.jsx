@@ -117,50 +117,52 @@ export default function BookingCourt(){
     return(
         <div>
             <Header/>
-            {court.name ? <div className="grid place-content-center  ">
-                <div className="grid place-content-center ">
-                    <img
-                        src={court.site.establishment.logoImage ? court.site.establishment.logoImage : logo}
-                        alt="logo_establecimiento"
-                        className=" rounded-xl max-w-3xl place-content-center pb-5 "
-                        /> 
-                </div>
-                <div className="bg-white dark:bg-slate-600 p-5 content-center">
-                    <h1 className="font-bold text-center py-5 text-6xl dark:text-white ">{court?.site.establishment.name}</h1>              
-                    <h1 className="font-bold py-5 text-5xl dark:text-white ">{court?.site.name}</h1>
-                    <p className="font-bold py-5 text-2xl dark:text-white ">{court?.name}</p>
-                    <p className="font-bold py-2  dark:text-white">Descripcion de cancha</p>
-                    <p className="font-bold py-2  dark:text-white">Deporte:  {court?.sport}</p>
-                    <p className="max-w-2xl place-content-center font-bold text-center py-3 dark:text-white">{court?.description}</p>
-                    <p className="font-bold py-2  dark:text-white">Ubicación {court?.site.city}, {court?.site.street}, {court?.site.streetNumber}</p>
-                    <p className="font-bold py-2  dark:text-white">Precio ${court.price}</p>
-                    <p className="font-bold py-2  dark:text-white">Horario de {court?.site.establishment.timeActiveFrom} a {court?.site.establishment.timeActiveTo}</p>
-                </div>
-                <div>
-                <Calendar 
-                    selectedBooking={selectedBooking}
-                    currentDateTime={currentDateTime}
-                    courtId={input.courtId}
-                />
-                {
-                    isActive && userToken && input.startTime.length && input.endTime.length ?
-                    <MercadoPago booking={input}/> :
-                    null 
-                }
-                <ReactMapGL 
-                    {...viewport}
-                    onViewportChange={newView => setViewport(newView)}
-                    mapboxApiAccessToken={mapboxToken}
-                    mapStyle={MapStyle}
-                    className="place-content-center"
-                >                    
-                            <Marker latitude={court?.site.latitude} longitude={court?.site.longitude}>
-                                <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
-                            </Marker>                   
-                </ReactMapGL>
-                
-                </div>
-                </div> : null}
+            <div className="md:max-w-[1200px] m-auto">
+                {court.name ? <div className="grid place-content-center">
+                    <div className="grid place-content-center ">
+                        <img
+                            src={court.site.establishment.logoImage ? court.site.establishment.logoImage : logo}
+                            alt="logo_establecimiento"
+                            className="rounded-xl max-w-3xl place-content-center pb-5"
+                            /> 
+                    </div>
+                    <div className="bg-white dark:bg-slate-600 p-5 content-center">
+                        <h1 className="font-bold text-center py-5 text-6xl dark:text-white ">{court?.site.establishment.name}</h1>              
+                        <h1 className="font-bold py-5 text-5xl dark:text-white ">{court?.site.name}</h1>
+                        <p className="font-bold py-5 text-2xl dark:text-white ">{court?.name}</p>
+                        <p className="font-bold py-2  dark:text-white">Descripcion de cancha</p>
+                        <p className="font-bold py-2  dark:text-white">Deporte:  {court?.sport}</p>
+                        <p className="max-w-2xl place-content-center font-bold text-center py-3 dark:text-white">{court?.description}</p>
+                        <p className="font-bold py-2  dark:text-white">Ubicación {court?.site.city}, {court?.site.street}, {court?.site.streetNumber}</p>
+                        <p className="font-bold py-2  dark:text-white">Precio ${court.price}</p>
+                        <p className="font-bold py-2  dark:text-white">Horario de {court?.site.establishment.timeActiveFrom} a {court?.site.establishment.timeActiveTo}</p>
+                    </div>
+                    <div>
+                    <Calendar 
+                        selectedBooking={selectedBooking}
+                        currentDateTime={currentDateTime}
+                        courtId={input.courtId}
+                    />
+                    {
+                        isActive && userToken && input.startTime.length && input.endTime.length ?
+                        <MercadoPago booking={input}/> :
+                        null 
+                    }
+                    <ReactMapGL 
+                        {...viewport}
+                        onViewportChange={newView => setViewport(newView)}
+                        mapboxApiAccessToken={mapboxToken}
+                        mapStyle={MapStyle}
+                        className="place-content-center"
+                    >                    
+                                <Marker latitude={court?.site.latitude} longitude={court?.site.longitude}>
+                                    <FontAwesomeIcon icon={faMapMarkerAlt} color='red' size='lg'/>
+                                </Marker>                   
+                    </ReactMapGL>
+                    
+                    </div>
+                    </div> : null}
+            </div>
               
             <Footer/>
         </div>

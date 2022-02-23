@@ -28,7 +28,6 @@ function SearchBar({getViewPort}) {
     const [sportType, setSportType] = useState('');
 
     useEffect(() => {
-        // dispatch(getGeocode(searchText.text));
         if(searchText.text !== ''){
             axios
                 .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText.text}.json?access_token=${mapToken}`)
