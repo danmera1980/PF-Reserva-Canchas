@@ -189,7 +189,7 @@ export default function BookingCourt() {
                 ) : null}
               </div>
             </div>
-            <div className="flex justify-center items-center flex-col mt-3 lg:grid lg:w-full">
+            <div className="flex justify-center items-center flex-col mt-3 lg:grid lg:col-span-full lg:col-start-1 lg:col-end-3">
               <ReactMapGL
                 {...viewport}
                 onViewportChange={(newView) => setViewport(newView)}
