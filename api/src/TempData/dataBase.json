@@ -29,7 +29,7 @@
             "phone": "261321321",
             "email": "leonardo@dominio.com",
             "isAdmin": false,
-            "img":""
+            "img":"https://img.bekia.es/celebrities/th/3000/3476.jpg"
         },
         {
             "name": "José",
@@ -132,7 +132,7 @@
             "timeActiveFrom": "14:00",
             "timeActiveTo": "22:00",
             "logoImage": "https://img2.freepng.es/20180408/ire/kisspng-national-dodgeball-league-tournament-sports-league-dodge-5aca55f92fbd42.2643999515232097211956.jpg"
-        },
+        },        
         {
             "cuit": "2066666668",
             "name": "Diegote Futbol",
@@ -145,7 +145,7 @@
             "name": "Recreativo Pampayasta",
             "timeActiveFrom": "12:00",
             "timeActiveTo": "23:00",
-            "logoImage": "http://www.dibujospedia.com/dibujos/bart-jugando-al-futbol.gif"
+            "logoImage": "https://i.pinimg.com/originals/a4/10/48/a4104863b08de600e522dfb8aa80e758.png"
         },
         {
             "cuit": "209999998",
