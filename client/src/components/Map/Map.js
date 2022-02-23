@@ -10,6 +10,8 @@ const MapStyle = 'mapbox://styles/mapbox/streets-v11';
 
 mapboxgl.accessToken = PK_TOKEN_MAP;
 
+
+
 export default function Map({ address }) {
 
     // paso el token
