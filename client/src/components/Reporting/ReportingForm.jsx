@@ -41,6 +41,10 @@ export default function ReportingForm() {
   useEffect(()=>{
     if(establishmentDetail){
       setSites(establishmentDetail.sites.filter((e) => e.isActive === true))
+      setInput({
+        ...input,
+        establishmentId: establishmentDetail.id
+      })
     }
   },[establishmentDetail])
 

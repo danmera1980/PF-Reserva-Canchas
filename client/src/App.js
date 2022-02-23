@@ -12,7 +12,6 @@ import UserEdit from "./components/UserEdit/UserEdit";
 import MercadoPago from "./components/MercadoPago/MercadoPago";
 // import CreateOrder from "./components/MercadoPago/CreateOrder";
 import EstablishmentProfile from "./components/EstablishmentProfile/EstablishmentProfile";
-import AddUserToEstablishment from './components/AddUserToEstablishment/AddUserToEstablishment.jsx';
 import BookingCourt from "./components/BookingCourt/BookingCourt";
 import Calendario from "./components/Calendar/Calendar";
 import Login from "./components/Login/Login";
@@ -35,7 +34,6 @@ function App() {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/useredit" component={UserEdit} />
         <Route exact path="/establishmentprofile" component={EstablishmentProfile} />
-        <Route exact path="/addUserToEstablishment" component={AddUserToEstablishment}/>
         <Route exact path="/establishment/:courtId" component={BookingCourt}/>
         <Route exact path="/payment" component={MercadoPago}/>
         <Route exact path="/calendar" component={Calendario} />
