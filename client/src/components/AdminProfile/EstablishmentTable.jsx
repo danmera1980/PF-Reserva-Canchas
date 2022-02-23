@@ -1,38 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { SERVER_URL } from "../../redux/actions/actionNames";
+import Toggle from "react-toggle";
+import "./css-toggle.scss";
+import "../Bookings/Scrollbar.scss"
 
-function EstablihsmentTable({ establishment }) {
+function EstablihsmentTable() {
+  const [establishment, setEstablishment] = useState(null);
   const userToken = useSelector((state) => state.register.userToken);
-  const [data, setData] = useState(establishment);
+
+  useEffect(() => {
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
+    axios
+      .get(`${SERVER_URL}/establishment/admin`, { headers: headers })
+      .then((res) => {
+        setEstablishment(res.data);
+      });
+  }, [userToken]);
 
   function handleSearch(input) {
     switch (input.target.id) {
       case "name":
         if (input.target.value !== "") {
-          setData(() => {
+          setEstablishment(() => {
             return establishment.filter((item) =>
               item.name.toLowerCase().includes(input.target.value.toLowerCase())
             );
           });
         } else {
-          setData(establishment);
+          setEstablishment(establishment);
         }
         break;
       case "cuit":
         if (input.target.value !== "") {
-          setData(() => {
+          setEstablishment(() => {
             return establishment.filter((item) =>
               item.cuit.includes(input.target.value)
             );
           });
         } else {
-          setData(establishment);
+          setEstablishment(establishment);
         }
         break;
       default:
-        setData(establishment);
+        setEstablishment(establishment);
         break;
     }
   }
@@ -48,19 +62,18 @@ function EstablihsmentTable({ establishment }) {
         headers: headers,
       }
     );
-    window.location.reload();
   }
 
   return (
-    <div className="w-[20rem] overflow-x-auto sm:w-full my-5">
-      <table className="ml-36 mt-10 table-auto border-collapse border border-slate-500 text-white">
+    <div className="w-[21rem] h-[29rem] overflow-auto sm:w-full my-5 scrollbar">
+      <table className="table-auto border-collapse border border-slate-500 text-white">
         <thead className="bg-slate-600">
           <tr>
             <th className="border border-slate-600 px-10">
               Cuit
               <div>
                 <input
-                  className="text-black"
+                  className="text-black rounded"
                   id="cuit"
                   type="text"
                   onChange={(e) => handleSearch(e)}
@@ -71,7 +84,7 @@ function EstablihsmentTable({ establishment }) {
               Nombre
               <div>
                 <input
-                  className="text-black"
+                  className="text-black rounded"
                   id="name"
                   type="text"
                   onChange={(e) => handleSearch(e)}
@@ -88,19 +101,19 @@ function EstablihsmentTable({ establishment }) {
           </tr>
         </thead>
         <tbody className="text-center text-white">
-          {data?.map((est) => (
+          {establishment?.map((est) => (
             <tr key={est.id}>
               <td className="border border-slate-700">{est.cuit}</td>
               <td className="border border-slate-700">{est.name}</td>
               <td className="border border-slate-700">{est.timeActiveFrom}</td>
               <td className="border border-slate-700">{est.timeActiveTo}</td>
               <td className="border border-slate-700">
-                <label
-                  className="cursor-pointer"
-                  onClick={() => HandleHabilitarEst(est.id)}
-                >
-                  {est.isActive ? "Habilitado" : "Deshabilitado"}
-                </label>
+                <div className="mt-2">
+                  <Toggle
+                    onClick={() => HandleHabilitarEst(est.id)}
+                    defaultChecked={est.isActive}
+                  />
+                </div>
               </td>
             </tr>
           ))}

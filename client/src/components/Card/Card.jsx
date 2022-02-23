@@ -1,69 +1,154 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "../Slider/Slider";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
-import { addfav, delfav } from "../../redux/actions/users";
+import { addfav, delfav, getfavs } from "../../redux/actions/users";
+import Swal from "sweetalert2";
+import {
+  faBaseballBall,
+  faFutbol,
+  faMapMarkerAlt,
+  faTableTennis,
+  faVolleyballBall,
+} from "@fortawesome/free-solid-svg-icons";
 
-function Card({id, name, images,button, establishment, court, courtId, address, price, sport}) {
-  const dispatch= useDispatch()
-  const history = useHistory()
-  const userToken = useSelector(state => state.register.userToken)
-  const [fav, setFav] = useState(false)
-  function handleClick(){
-    history.push(`/establishment/${courtId}`)
+function Card({
+  id,
+  name,
+  images,
+  button,
+  establishment,
+  court,
+  courtId,
+  address,
+  price,
+  sport,
+}) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const userToken = useSelector((state) => state.register.userToken);
+  const isActive = useSelector((state) => state.register.isActive);
+
+  const [fav, setFav] = useState(false);
+  function handleClick() {
+    history.push(`/establishment/${courtId}`);
   }
-  useEffect( () =>{
-    const headers = {
-      Authorization: `Bearer ${userToken}`
-    }
-    axios
-        .get(`${SERVER_URL}/users/onefav?courtid=${courtId}`,{headers:headers})
-        .then(res =>{
-          res.data.courtId?setFav(true):setFav(false)
+  useEffect(() => {
+    if (userToken) {
+      const headers = {
+        Authorization: `Bearer ${userToken}`,
+      };
+      axios
+        .get(`${SERVER_URL}/users/onefav?courtid=${courtId}`, {
+          headers: headers,
         })
-  },[courtId])
-  
+        .then((res) => {
+          res.data.courtId ? setFav(true) : setFav(false);
+        });
+    }
+  }, [courtId]);
 
-  function handleAddFav(e){
-      e.preventDefault()
-      dispatch(addfav(userToken, courtId))
-      setFav(true)
+  function handleAddFav(e) {
+    e.preventDefault();
+    if (isActive) {
+      dispatch(addfav(userToken, courtId));
+      setFav(true);
+    } else if (!isActive && userToken) {
+      Swal.fire({
+        title: `Has sido deshabilitado por el admin`,
+      });
+    } else {
+      Swal.fire({
+        title: `Debes iniciar sesión`,
+      });
+      history.push(`/login`);
+    }
   }
 
-  function handleRemoveFav(e){
-    e.preventDefault()
-    dispatch(delfav(userToken, courtId))
-    setFav(false)
+  function handleRemoveFav(e) {
+    e.preventDefault();
+    dispatch(delfav(userToken, courtId));
+    dispatch(getfavs(userToken));
+    setFav(false);
+  }
+
+  let sportsIcon = null;
+  switch (sport) {
+    case "Futbol 5":
+    case "Futbol 7":
+    case "Futbol 11":
+      sportsIcon = <FontAwesomeIcon icon={faFutbol} size="2x" />;
+      break;
+    case "Basquet":
+      sportsIcon = <FontAwesomeIcon icon={faBaseballBall} size="2x" />;
+      break;
+    case "Tenis":
+      sportsIcon = <FontAwesomeIcon icon={faTableTennis} size="2x" />;
+      break;
+    case "Handbol":
+      sportsIcon = <FontAwesomeIcon icon={faVolleyballBall} size="2x" />;
+      break;
+    case "Squash":
+      sportsIcon = <FontAwesomeIcon icon={faBaseballBall} size="2x" />;
+      break;
+    case "Padel":
+      sportsIcon = <FontAwesomeIcon icon={faBaseballBall} size="2x" />;
+      break;
+    default:
+      sportsIcon = <FontAwesomeIcon icon={faFutbol} size="2x" />;
   }
 
   return (
     <div className="flex flex-wrap -m-3">
       <div className="w-full flex flex-col p-3 max-w-3xl">
-        <div className=" dark:text-darkPrimary bg-white dark:bg-slate-600 rounded-lg shadow-lg overflow-hidden flex flex-1 flex-col sm:grid sm:grid-cols-2">
+        <div className="dark:text-darkPrimary bg-white dark:bg-slate-600 rounded-lg shadow-lg overflow-hidden flex flex-1 flex-col sm:grid sm:grid-cols-2">
           <Slider images={[images]} />
 
-          <div className="flex flex-1 flex-col p-1 relative">
-
-            <button 
-              onClick={fav===true ? handleRemoveFav : handleAddFav }
+          <div className="flex flex-1 flex-col text-center p-1 relative">
+            <button
+              onClick={fav === true ? handleRemoveFav : handleAddFav}
               className="absolute right-4 top-2 block scale-125 active:scale-90 transition-all sm:right-2"
-              >
-                <FontAwesomeIcon icon={faStar} color={fav===true?"yellow":"gray"} />
+            >
+              <FontAwesomeIcon
+                icon={faStar}
+                color={fav === true ? "yellow" : "gray"}
+              />
             </button>
-            <h1 className="font-bold text-2xl dark:text-darkAccent">{establishment}</h1>
+            <h1 className="font-bold text-2xl dark:text-darkAccent">
+              {establishment}
+            </h1>
 
-            <div className="m-2 text-sm flex-1">
-              <h2 className="dark:text-darkAccent">{name} {court}</h2>
-              <h3 className="mt-2 dark:text-darkAccent">{address}</h3>
+            <div className="py-2 text-base flex-1">
+              <h2 className="dark:text-darkAccent">
+                🥅 {name} {court}
+              </h2>
+
+              <h1 className="py-1">
+                <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
+                <span className="dark:text-darkAccent text-base md:text-sm">
+                  {address}
+                </span>
+              </h1>
+
+              <p className="pt-1">{sportsIcon}</p>
+
+              <p className="font-bold text-xl md:text-base">$ {price}</p>
             </div>
-            <p>{sport}</p>
-            {/* <p>10 de Marzo a las 20:00 hs</p> */}
-            <p className="font-bold text-xl text-green-500">${price}</p>
-            {button?<button onClick={handleClick} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded  absolute right-6 bottom-4">Reserva</button>: null}
+
+            {button ? (
+              <div className="pb-1">
+                <button
+                  onClick={handleClick}
+                  className="bg-blue-500 hover:bg-blue-700 font-semibold py-2 border border-blue-500 rounded active:scale-95 transition-all w-full sm:w-32"
+                >
+                  Reserva
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

@@ -5,8 +5,7 @@ import { REGISTER, LOGIN, LOGINGOOGLE, EDIT_SUCCESS, LOGOUT, SET_ERRORS } from "
 const initialState = {
   userToken: null,
   userId: null,
-  isAdmin: null,
-  registerErrors:[], // se cargan los errores de login, register y edit user
+  isActive: null,
   userMessage:[] // mensaje de respuesta
 };
 
@@ -17,13 +16,13 @@ const registerReducer = (state = initialState, action) => {
         ...state,
       };
     case LOGIN:
+      console.log(action.payload)
       return {
         ...state,
         userToken: action.payload.token,
         userId: action.payload.id,
-        isAdmin: action.payload.isAdmin,
+        isActive: action.payload.isActive,
 
-        registerErrors:[]
       };
     case LOGINGOOGLE:
       console.log(action.payload, 'estoy en logingoolge')
@@ -31,20 +30,17 @@ const registerReducer = (state = initialState, action) => {
         ...state,
         userToken: action.payload[1], 
         userId: action.payload[0].id,
-        isAdmin: action.payload[0].isAdmin,
+        isActive: action.payload[0].isActive,
 
-        registerErrors:[]
       };
       case EDIT_SUCCESS:
         return {
             ...state,
             userMessage: action.payload,
-            registerErrors:[]
         };
     case SET_ERRORS:
         return{
             ...state,
-            registerErrors: action.payload
         };
     case LOGOUT:
       console.log('estoy en logout');
@@ -52,6 +48,7 @@ const registerReducer = (state = initialState, action) => {
         ...state,
         userToken: null,
         userId: null,
+        isActive: null,
         userMessage:[]
       };
     default:

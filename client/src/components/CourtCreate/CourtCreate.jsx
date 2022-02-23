@@ -9,14 +9,20 @@ import ReactLoading from "react-loading";
 
 function validate(input) {
   let errors = {};
-  if (!/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\:.]{1,20}$/.test(input.name)) {
+  if (input.name !== "" && !/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\:.]+$/.test(input.name)) {
     errors.name = "No se permiten símbolos";
   }
+  if (input.name.length>20) {
+    errors.name = "No se permiten más de 20 caracteres";
+  }
 
-  if (!/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\,:.]{0,100}$/.test(input.description)) {
+  if (input.description !== "" && !/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\,:.]+$/.test(input.description)) {
     errors.description = "No se permiten símbolos";
   }
-  if (!input.sport) {
+  if (input.description.length>100) {
+    errors.description = "No se permiten más de 100 caracteres";
+  }
+  if (input.sport !== "" && !input.sport) {
     errors.sport = "Selecciona un deporte";
   }
 

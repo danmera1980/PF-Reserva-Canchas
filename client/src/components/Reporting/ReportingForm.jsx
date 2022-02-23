@@ -96,9 +96,9 @@ export default function ReportingForm({establishmentDetail}) {
             onSubmit={(e) => handleSubmit(e)}
           >
             <h3>Complete los filtros que desee</h3>
-            <div className=" relative mt-8">
+            <div className="relative mt-8">
               <input
-                className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
+                className="w-full peer placeholder-transparent h-10 border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
                 id="nombre"
                 type="date"
                 value={input.name}

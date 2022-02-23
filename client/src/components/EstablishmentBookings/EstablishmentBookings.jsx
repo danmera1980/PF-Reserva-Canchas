@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import Paper from "@mui/material/Paper";
 import Grid from '@mui/material/Grid';
 import TextField from "@mui/material/TextField";
 import Room from '@mui/icons-material/Room';
 import ButtonGroup from "@mui/material/ButtonGroup";
-import Button from "@mui/material/Button";
 import { styled, alpha } from "@mui/material/styles";
 import { amber, blue, blueGrey, brown, cyan, deepOrange, deepPurple, green, indigo, grey, lightBlue, lightGreen, lime } from "@mui/material/colors";
-import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
+import { ViewState, EditingState, IntegratedEditing } from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
   DayView,
@@ -25,17 +25,14 @@ import {
 import { SERVER_URL } from "../../redux/actions/actionNames";
 
 function EstablishmentBookings({ establishmentDetail }) {
-  // console.log(establishmentDetail);
   const [bookings, setBookings] = useState(null);
-  const [courts, setCourts] = useState(null);
-  // setCourts(establishmentDetail.map(e => e.courts.map(e => e.id)))
-  // console.log(establishmentDetail)
+  const [newBooking, setNewBooking] = useState('');
 
   var curr = new Date(); // get current date
   var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
   var last = first + 6; // last day is the first day + 6
   var firstDayMonth = new Date(curr.getFullYear(), curr.getMonth(), 1);
-  var lastDayMonth= new Date(curr.getFullYear(), curr.getMonth() + 1, 0);
+  var lastDayMonth= new Date(curr.getFullYear(), curr.getMonth() + 1);
 
   console.log(curr.getDay())
 
@@ -45,13 +42,12 @@ function EstablishmentBookings({ establishmentDetail }) {
   var startDayHour = establishmentDetail?.timeActiveFrom.substring(0,2)
   var endDayHour = establishmentDetail?.timeActiveTo.substring(0,2)
 
-  // console.log(startDayHour, endDayHour )
+  console.log(firstDayMonth.toISOString(), lastDayMonth.toISOString() )
 
   useEffect(() => {
     if (establishmentDetail) {
       axios
         .get(
-          // `${SERVER_URL}/booking/byEstabId/1?dateFrom=2022-02-01&dateTo=2022-02-28`
           `${SERVER_URL}/booking/byEstabId/${establishmentDetail?.id}?dateFrom=${firstDayMonth}&dateTo=${lastDayMonth}`
         )
         .then((res) => setBookings(()=> {
@@ -60,7 +56,7 @@ function EstablishmentBookings({ establishmentDetail }) {
               id: b.id,
               courtId: b.courtId,
               courtName: b.courtName,
-              title: b.siteName + ' - ' + b.courtName + ' - ' + b.userName + ' ' + b.userLastName,
+              title: b.siteName + ' - ' + b.courtName + ' - ' + b.userName + ' ' + b.userLastName + ' ref: ' + b.external_reference ,
               startDate: b.startTime,
               endDate: b.endTime,
               location: b.courtName
@@ -68,22 +64,25 @@ function EstablishmentBookings({ establishmentDetail }) {
           })
         }));
     }
-  }, [establishmentDetail]);
+
+    if(newBooking){
+      Swal.fire({
+        title: "Reseva Creada",
+        text: 'Código de reserva: ' + newBooking
+      })
+      setNewBooking('')
+    }
+  }, [establishmentDetail, newBooking]);
 
   console.log(bookings);
 
   let colors = [ amber, blue, blueGrey, brown, cyan, deepOrange, deepPurple, green, indigo, grey, lightBlue, lightGreen, lime ]
 
-  function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
-  }
-
-  let locations_short = bookings?.filter(onlyUnique)
-  // let locations_short = bookings?.map(b => b.courtId)
-  let locations = bookings?.map(b => b.courtName)
+  let locations_short = [... new Map(bookings?.map(b=> [b.courtId, b.courtId])).values()]
+  let locations = [... new Map(bookings?.map(b=> [b.courtId, b.courtName])).values()]
   let resourcesData = []
 
-  console.log(locations_short)
+  console.log(locations_short, locations, bookings)
   
   for (let i = 0; i < locations?.length; i++) {
     resourcesData.push({
@@ -92,7 +91,6 @@ function EstablishmentBookings({ establishmentDetail }) {
       color: colors[i]
     })
   }
-  // console.log(locations_short, locations, resourcesData)
   
   const LOCATIONS = locations
   const LOCATIONS_SHORT = locations_short
@@ -244,6 +242,47 @@ function EstablishmentBookings({ establishmentDetail }) {
       backgroundColor: alpha(theme.palette.action.disabledBackground, 0.06),
     },
   }));
+  // #FOLD_BLOCK
+  const StyledDiv = styled('div')(({ theme }) => ({
+    [`& .${classes.icon}`]: {
+      margin: theme.spacing(2, 0),
+      marginRight: theme.spacing(2),
+    },
+    [`& .${classes.header}`]: {
+      overflow: 'hidden',
+      paddingTop: theme.spacing(0.5),
+    },
+    [`& .${classes.textField}`]: {
+      width: '100%',
+    },
+    [`& .${classes.content}`]: {
+      padding: theme.spacing(2),
+      paddingTop: 0,
+    },
+    [`& .${classes.closeButton}`]: {
+      float: 'right',
+    },
+    [`& .${classes.picker}`]: {
+      marginRight: theme.spacing(2),
+      '&:last-child': {
+        marginRight: 0,
+      },
+      width: '50%',
+    },
+    [`& .${classes.wrapper}`]: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      padding: theme.spacing(1, 0),
+    },
+    [`& .${classes.buttonGroup}`]: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      padding: theme.spacing(0, 2),
+    },
+    [`& .${classes.button}`]: {
+      marginLeft: theme.spacing(2),
+    },
+  }));
 
   const StyledGrid = styled(Grid)(() => ({
     [`&.${classes.textCenter}`]: {
@@ -279,30 +318,29 @@ function EstablishmentBookings({ establishmentDetail }) {
   };
 
   const commitChanges = ({added, changed, deleted}) => {
+    console.log(added)
 
+    let body = {
+      courtId: added.courtId,
+      details: added.title,
+      dateFrom: added.startDate.toISOString(),
+      dateTo: added.endDate.toISOString(),
+      finalAmount: 0
+    }
+
+    if(added){
+      axios.post(`${SERVER_URL}/booking/add`, body)
+      .then(res => setNewBooking(res.data))
+    }
+
+    console.log(newBooking)
   }
-
-  const Content = (({
-    children, appointmentData, ...restProps
-  }) => (
-    <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
-      <Grid container alignItems="center">
-        <StyledGrid item xs={2} className={classes.textCenter}>
-          <StyledRoom className={classes.icon} />
-        </StyledGrid>
-        <Grid item xs={10}>
-          <span>{appointmentData.location}</span>
-        </Grid>
-      </Grid>
-    </AppointmentTooltip.Content>
-  ));
 
   return (
     <Paper>
       {bookings!==null && bookings?
         <Scheduler data={bookings} height={700}>
           <ViewState/>
-
           <EditingState 
             onCommitChanges={commitChanges}
             // addedAppointment={addedAppointment}
@@ -312,6 +350,7 @@ function EstablishmentBookings({ establishmentDetail }) {
             // editingAppointment={editingAppointment}
             // onEditingAppointmentChange={changeEditingAppointment}
           />
+          <IntegratedEditing/>
           <WeekView
             startDayHour={6}
             endDayHour={24}
@@ -322,23 +361,30 @@ function EstablishmentBookings({ establishmentDetail }) {
             endDayHour={endDayHour}
             timeTableCellComponent={TimeTableCell}
             dayScaleCellComponent={DayScaleCell}
-          />
+            />
           <DayView 
             startDayHour={startDayHour}
             endDayHour={endDayHour}
             timeTableCellComponent={TimeTableCell}
             dayScaleCellComponent={DayScaleCell}
             cellDuration="60"
-          />
+            />
 
           <Appointments />
           <Resources data={resources}/>
           <AppointmentTooltip 
-            contentComponent={Content}
             showCloseButton 
             showOpenButton 
           />
-          <AppointmentForm readOnly />
+          <AppointmentForm>
+             {/* <AppointmentForm.label 
+              text="Precio"
+              type="title"
+            />
+            <AppointmentForm.TextEditor 
+              placeholder="custom field"
+            /> */}
+          </AppointmentForm>
           <Toolbar/>
           <DateNavigator/>
           <TodayButton />
