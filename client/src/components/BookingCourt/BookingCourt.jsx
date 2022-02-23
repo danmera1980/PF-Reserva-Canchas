@@ -1,3 +1,4 @@
+/* eslint import/no-webpack-loader-syntax: off */
 import React, {useEffect, useState} from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
