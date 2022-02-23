@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { postCourt } from "../../redux/actions/court";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import "./CourtCreate.scss";
 import ReactLoading from "react-loading";
+import { SERVER_URL } from "../../redux/actions/actionNames";
 
 function validate(input) {
   let errors = {};
-  if (input.name !== "" && !/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\:.]+$/.test(input.name)) {
+  if (input.name !== "" && !/^[a-zA-ZÀ-ÿ0-9' 'ñÑ:.]+$/.test(input.name)) {
     errors.name = "No se permiten símbolos";
   }
   if (input.name.length>20) {
     errors.name = "No se permiten más de 20 caracteres";
   }
 
-  if (input.description !== "" && !/^[a-zA-ZÀ-ÿ0-9' '\ñ\Ñ\,:.]+$/.test(input.description)) {
+  if (input.description !== "" && !/^[a-zA-ZÀ-ÿ0-9' 'ñÑ,:.]+$/.test(input.description)) {
     errors.description = "No se permiten símbolos";
   }
   if (input.description.length>100) {
@@ -33,11 +33,31 @@ function validate(input) {
   return errors;
 }
 
-export default function CourtCreate({ sites }) {
+export default function CourtCreate() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
   const userToken = useSelector((state) => state.register.userToken);
+  const [establishmentDetail, setEstablishmentDetail] = useState(null);
+  const [sites, setSites] = useState([]);
+
+  useEffect(() => {
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    axios
+      .get(`${SERVER_URL}/establishment/idUser`, { headers: headers })
+      .then((res) => {
+        setEstablishmentDetail(res.data);
+      })
+  }, [userToken]);
+
+  useEffect(()=>{
+    if(establishmentDetail){
+      setSites(establishmentDetail.sites.filter((e) => e.isActive === true))
+    }
+  },[establishmentDetail])
 
   const [input, setInput] = useState({
     name: "",

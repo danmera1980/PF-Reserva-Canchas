@@ -13,19 +13,35 @@ const mapToken = process.env.REACT_APP_MAPBOX_TOKEN;
 function SearchBar({getViewPort}) {
     const [ geoCode, setGeoCode] = useState('')
     const [establishment, setEstablishment] = useState('Ubicación');
+    const [currentLocation, setCurrentLocation ] = useState({
+        latitude: 0,
+        longitude: 0
+    })
 
     const history = useHistory();
     
     const dispatch= useDispatch();
     const [searchText, setSearchText] = useState({
-        latitude:-32.88641481914277,
-        longitude:-68.84519635165792,
+        latitude:0,
+        longitude:0,
         sport: '',
         text: '',
         zoom: 10
     });
 
     const [sportType, setSportType] = useState('');
+
+    useEffect(()=> [
+        navigator.geolocation.getCurrentPosition(position => {
+            setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
+            setSearchText({
+                ...searchText,
+                latitude: position.coords.latitude, 
+                longitude: position.coords.longitude 
+            })
+            console.log('My location', currentLocation)
+        })
+    ],[])
 
     useEffect(() => {
         if(searchText.text !== ''){
@@ -60,12 +76,12 @@ function SearchBar({getViewPort}) {
         })
         dispatch(searchByText(searchText));
         setSearchText({
-            latitude:-32.88641481914277,
-            longitude:-68.84519635165792,
+            latitude:'',
+            longitude:'',
             sport: '',
             text: ''
         })
-        history.push('/results')
+        history.push({pathname: '/results', state:{latitude:searchText.latitude, longitude:searchText.longitude}})
     }
 
     function handleFilterBySport(e){
