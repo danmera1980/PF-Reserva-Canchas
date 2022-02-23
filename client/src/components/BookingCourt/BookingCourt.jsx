@@ -6,7 +6,13 @@ import ReactMapGL, { Marker } from "react-map-gl";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { faInfo, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBaseballBall,
+  faFutbol,
+  faTableTennis,
+  faVolleyballBall,
+} from "@fortawesome/free-solid-svg-icons";
 import Calendar from "../Calendar/Calendar";
 import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
@@ -118,12 +124,38 @@ export default function BookingCourt() {
       });
   }, [userToken]);
 
+  let sportsIcon = null;
+  switch (court.sport) {
+    case "Futbol 5":
+    case "Futbol 7":
+    case "Futbol 11":
+      sportsIcon = <FontAwesomeIcon icon={faFutbol} size="2x" />;
+      break;
+    case "Basquet":
+      sportsIcon = <FontAwesomeIcon icon={faBaseballBall} size="2x" />;
+      break;
+    case "Tenis":
+      sportsIcon = <FontAwesomeIcon icon={faTableTennis} size="2x" />;
+      break;
+    case "Handbol":
+      sportsIcon = <FontAwesomeIcon icon={faVolleyballBall} size="2x" />;
+      break;
+    case "Squash":
+      sportsIcon = <FontAwesomeIcon icon={faBaseballBall} size="2x" />;
+      break;
+    case "Padel":
+      sportsIcon = <FontAwesomeIcon icon={faBaseballBall} size="2x" />;
+      break;
+    default:
+      sportsIcon = <FontAwesomeIcon icon={faFutbol} size="2x" />;
+  }
+
   return (
     <div>
       <Header />
       {court.name ? (
-        <div className="grid place-content-center  ">
-          <div className="grid place-content-center ">
+        <div className="grid place-content-center md:max-w-[1200px] m-auto">
+          <div className="flex place-content-center items-center gap-5 my-2">
             <img
               src={
                 court.site.establishment.logoImage
@@ -131,83 +163,80 @@ export default function BookingCourt() {
                   : logo
               }
               alt="logo_establecimiento"
-              className=" rounded-xl max-w-3xl place-content-center pb-5 "
+              className="rounded-lg w-32 h-32 object-contain"
             />
+
+            <h1 className="dark:text-darkAccent text-7xl">
+              {court?.site.establishment.name}
+            </h1>
           </div>
-          <div className="lg:grid lg:grid-cols-2 lg:gap-1 lg:h-full lg:ml-0">
-            <div className="flex items-center justify-center flex-col w-[19.5rem] ml-36 rounded bg-white dark:bg-slate-600 p-5 place-content-center lg:w-[500px] lg:rounded lg:grid lg:ml-0 lg:mr-2">
-              <div className="flex flex-col items-center justify-center font-bold text-center py-2 text-xl dark:text-white ">
-                <h1>{court?.site.establishment.name}</h1>
-              </div>
-              <div className="flex flex-col items-center justify-center font-bold py-2 text-lg dark:text-white text-center">
+
+          <div className="lg:grid lg:grid-cols-2 lg:gap-2">
+            <div className="flex items-center w-[19.5rem] ml-36 lg:w-[500px] lg:max-h-[23rem] lg:rounded lg:grid lg:ml-0">
+              <div className="flex flex-col items-center place-content-center font-bold py-2 text-lg dark:text-darkAccent text-center">
                 <h1>{court?.site.name}</h1>
               </div>
-              <div className="flex flex-col items-center justify-center font-bold py-2 text-m dark:text-white text-center">
-                <p>{court?.name}</p>
+              <div className="font-bold py-2 dark:text-darkAccent text-center">
+                <p>🥅 {court?.name}</p>
               </div>
-              <div className="flex flex-col items-center justify-center font-bold py-2  dark:text-white text-center">
-                <p>Descripcion de cancha</p>
+              <div className="font-bold py-2 dark:text-white text-center">
+                <p>{sportsIcon}</p>
               </div>
-              <div className="flex flex-col items-center justify-center font-bold py-2  dark:text-white text-center">
-                <p>Deporte: {court?.sport}</p>
+              <div className="max-w-xl font-bold text-center py-2 dark:text-darkAccent">
+                <h1>
+                  <FontAwesomeIcon icon={faInfo} color={"white"} />
+                  <span> {court?.description}</span>
+                </h1>
               </div>
-              <div className="flex flex-col items-center justify-center max-w-xl text-s font-bold text-center py-2 dark:text-white">
-                <p>{court?.description}</p>
-              </div>
-              <div className="flex flex-col items-center justify-center font-bold py-2  dark:text-white text-center">
+              <div className="font-bold py-2 dark:text-darkAccent text-center ">
                 <p>
-                  Ubicación {court?.site.city}, {court?.site.street},{" "}
-                  {court?.site.streetNumber}
-                </p>
-              </div>
-              <div className="flex flex-col items-center justify-center font-bold py-2  dark:text-white text-center">
-                <p>Precio ${court.price}</p>
-              </div>
-              <div className="flex flex-col items-center justify-center font-bold py-2  dark:text-white text-center ">
-                <p>
-                  Horario de {court?.site.establishment.timeActiveFrom} a{" "}
+                  🕒 Horario de {court?.site.establishment.timeActiveFrom} a{" "}
                   {court?.site.establishment.timeActiveTo}
                 </p>
               </div>
+              <div className="font-bold py-2 text-xl dark:text-white text-center">
+                <h1>
+                  <FontAwesomeIcon icon={faMapMarkerAlt} color={"red"} />{" "}
+                  <span>
+                    Ubicación {court?.site.city}, {court?.site.street},{" "}
+                    {court?.site.streetNumber}
+                  </span>
+                </h1>
+              </div>
+              <div className="font-bold py-2 text-xl dark:text-white text-center">
+                <p>Precio $ {court.price}</p>
+              </div>
             </div>
 
-            <div className="flex justify-center items-center flex-col mt-3 lg:flex lg:ml-0 lg:items-start lg:mt-0">
-              <div className="flex justify-center items-center flex-col">
-                <Calendar
-                  className="rounded flex flex-col"
-                  selectedBooking={selectedBooking}
-                  currentDateTime={currentDateTime}
-                  courtId={input.courtId}
-                />
-              </div>
-              <div className="flex justify-center items-center flex-col">
-                {isActive &&
-                userToken &&
-                input.startTime.length &&
-                input.endTime.length ? (
-                  <MercadoPago booking={input} />
-                ) : null}
-              </div>
-            </div>
-            <div className="flex justify-center items-center flex-col mt-3 lg:grid lg:col-span-full lg:col-start-1 lg:col-end-3">
-              <ReactMapGL
-                {...viewport}
-                onViewportChange={(newView) => setViewport(newView)}
-                mapboxApiAccessToken={mapboxToken}
-                mapStyle={MapStyle}
-                className="flex place-content-center"
+            <ReactMapGL
+              {...viewport}
+              onViewportChange={(newView) => setViewport(newView)}
+              mapboxApiAccessToken={mapboxToken}
+              mapStyle={MapStyle}
+            >
+              <Marker
+                latitude={court?.site.latitude}
+                longitude={court?.site.longitude}
               >
-                <Marker
-                  latitude={court?.site.latitude}
-                  longitude={court?.site.longitude}
-                >
-                  <FontAwesomeIcon
-                    icon={faMapMarkerAlt}
-                    color="red"
-                    size="lg"
-                  />
-                </Marker>
-              </ReactMapGL>
+                <FontAwesomeIcon icon={faMapMarkerAlt} color="red" size="lg" />
+              </Marker>
+            </ReactMapGL>
+          </div>
+
+          <div className="grid place-content-center grid-flow-col gap-2 mb-[3rem] mt-2 transition-all">
+            <Calendar
+              selectedBooking={selectedBooking}
+              currentDateTime={currentDateTime}
+              courtId={input.courtId}
+            />
+
+            <div className="">
+              {isActive &&
+              userToken &&
+              input.startTime.length &&
+              input.endTime.length ? (
+                <MercadoPago booking={input} />
+              ) : null}
             </div>
           </div>
         </div>
