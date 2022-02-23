@@ -19,6 +19,7 @@ import ReportingForm from "./components/Reporting/ReportingForm";
 import AdminProfile from "./components/AdminProfile/AdminProfile";
 import ReportingResults from "./components/Reporting/ReportingResults";
 import SuccessMp from "./components/SuccessMp/SuccessMp";
+import Map from "./components/Map/Map";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route exact path="/reportingResults" component={ReportingResults} />
         <Route exact path="/admin" component={AdminProfile} />
         <Route exact path="/success" component={SuccessMp} />
+        <Route exact path="/map" component={Map} />
       </div>
     </React.Fragment>
   );
