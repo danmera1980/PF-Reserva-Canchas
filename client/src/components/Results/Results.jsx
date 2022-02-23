@@ -16,6 +16,7 @@ const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 function Results() {
     const [ selectedCard, setSelectedCard] = useState(null);
+    const [width, setWidth] = useState(window.innerWidth)
     const resultsData = useSelector(state => state.establishment.establishments);
     const [currentLocation, setCurrentLocation ] = useState({
         latitude: 0,
@@ -39,7 +40,7 @@ function Results() {
         // longitude: resultsData?resultsData[0].sites[0].longitude: currentLocation.longitude,
         latitude: currentLocation.latitude,
         longitude: currentLocation.longitude,
-        width: '600px',
+        width: width<1200?'400px':'600px',
         height: '85vh',
         zoom: 12,
         pitch: 50
@@ -58,9 +59,9 @@ function Results() {
     <div>
         <div className='fixed w-full z-50'>
             <Header />
-            <SearchBar getViewPort={getViewPort}/>
         </div>
-        <div className='results p-32'>
+        <SearchBar getViewPort={getViewPort}/>
+        <div className='results'>
             <div className='leftResults'>
                 {resultsData && resultsData?.map(m => m.sites.map(site => site.courts.map( court => (
                     <Card 

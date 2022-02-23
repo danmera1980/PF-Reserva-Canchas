@@ -26,3 +26,17 @@
   border-radius: 20px;
   margin: 0 auto;
 }
+
+@media (max-width: 900px) {
+  .search{
+    width: 500px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 450px) {
+  .search{
+    width: 300px;
+    height: 100px;
+  }
+}
