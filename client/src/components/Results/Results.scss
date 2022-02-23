@@ -2,13 +2,31 @@
     display: flex;
     margin: 0 auto;
     width: 1200px;
+    padding: 8rem;
 }
 
 .leftResults, .rightResults {
-    width: 50%;
+    width: 45%;
 }
 
 .rightResults{
     position: fixed;
-    left: 50%
+    left: 50%;
+    margin-left: 10px;
+}
+
+@media (max-width: 900px) {
+    .leftResults{
+        width: 450px;
+    }
+    .results{
+        padding-top: 12rem;
+    }
+}
+
+@media (max-width: 780px) {
+    .rightResults{
+        display: none;
+    }
+    
 }
