@@ -26,7 +26,6 @@ const Map = ({location, markers}) => {
     // Create default markers
     markers?.features.map((marker) =>
         {
-            console.log(marker)
             new mapboxgl.Marker()
             .setLngLat(marker.geometry.coordinates)
             .setPopup(
@@ -60,11 +59,6 @@ const Map = ({location, markers}) => {
 
   return (
     <div>
-      <div className="sidebarStyle">
-        <div>
-          Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-        </div>
-      </div>
       <div className="map-container" ref={mapContainerRef} />
     </div>
   );

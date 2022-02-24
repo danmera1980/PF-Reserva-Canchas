@@ -68,11 +68,7 @@ function SearchBar({getViewPort}) {
         
         getViewPort({
             latitude: searchText.latitude,
-            longitude: searchText.longitude,
-            width: '600px',
-            height: '85vh',
-            zoom: 12,
-            pitch: 50
+            longitude: searchText.longitude
         })
         dispatch(searchByText(searchText));
         setSearchText({
