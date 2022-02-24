@@ -7,9 +7,6 @@ import Card from "../Card/Card";
 import Map from '../Map/Map'
 import "./Results.scss";
 
-const MapStyle = "mapbox://styles/mapbox/streets-v11";
-const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
-
 function Results() {
     // const location = useLocation();
     const [ selectedCard, setSelectedCard] = useState(null);
