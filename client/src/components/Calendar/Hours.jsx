@@ -68,7 +68,7 @@ const Hours = ({selectedDate, disabledTime, selectedBooking, minTime}) => {
 
     return (
         <div className="rounded drop-shadow-md">
-            <div className="flex flex-col justify-center items-center text-white bg-[#009a17] h-[78px]">
+            <div className="grid place-content-center text-white bg-[#009a17] h-[76px]">
                 <h1 className="inline-block align-middle">HORARIOS</h1>
                 <span>{selectedDate.day}/{selectedDate.month}/{selectedDate.year}</span>
             </div>

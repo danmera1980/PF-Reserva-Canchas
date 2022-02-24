@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import  {DtCalendar}  from 'react-calendar-datetime-picker';
 import 'react-calendar-datetime-picker/dist/index.css';
 import { SERVER_URL } from "../../redux/actions/actionNames";
@@ -21,7 +21,7 @@ const Calendario = ({courtId, selectedBooking, currentDateTime}) => {
     }
 
     return (
-      <div className="flex">
+      <div className="grid-flow-col lg:flex place-content-center gap-2 mt-1">
         <DtCalendar
           onChange={getDate}
           minDate={currentDateTime}
