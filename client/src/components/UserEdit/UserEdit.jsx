@@ -9,12 +9,12 @@ import ReactLoading from "react-loading";
 
 function validate(input) {
   let errors = {};
-  if (!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.name)) {
+  if (input.name !== "" && !/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.name)) {
     errors.name =
       "El nombre no puede ser menor a 2 caracteres ni ser mayor a 20 caracteres, ni contener símbolos";
   }
 
-  if (!/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.lastName)) {
+  if (input.lastName !== "" && !/^[a-zA-Z0-9_\-' ']{2,20}$/.test(input.lastName)) {
     errors.lastName =
       "El apellido no puede ser menor a 2 caracteres ni ser mayor a 20 caracteres, ni contener símbolos";
   }
@@ -103,8 +103,8 @@ export default function UserEdit({userDetails}) {
   }
 
   return userToken ? (
-    <div className="max-w-md sm:max-w-none m-auto">
-      <div className="w-full flex justify-center text-black">
+    <div className="w-[19rem] md:w-full sm:max-w-none m-auto">
+      <div className="w-full flex justify-center text-black ">
         <form
           className="w-full flex-col justify-center items-center border-grey-400 border-2 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
           onSubmit={handleSubmit}
@@ -129,7 +129,7 @@ export default function UserEdit({userDetails}) {
           </div>
 
           <input type="hidden" value={userToken} />
-          <div className="relative mt-10">
+          <div className="relative mt-2">
             <input
               className="w-full peer placeholder-transparent h-10   border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
               autoComplete="off"
@@ -155,7 +155,7 @@ export default function UserEdit({userDetails}) {
               {"Nombre actual: " + userDetails.name}
             </label>
             {errors.name && (
-              <p className=" text-xs text-red-500">{errors.name}</p>
+              <p className=" text-xs text-yellow-500">{errors.name}</p>
             )}
           </div>
           <div className="mb-4 relative mt-3">
@@ -174,7 +174,7 @@ export default function UserEdit({userDetails}) {
               peer-placeholder-shown:text-base 
               peer-placeholder-shown:text-gray-400
               peer-placeholder-shown:top-2 transition-all 
-              peer-focus:-top-3.5 peer-focus:text-gray-600
+              peer-focus:-top-[0.7rem] peer-focus:text-gray-600
               peer-focus:text-sm
               cursor-text"
               htmlFor="lastName"
@@ -182,12 +182,12 @@ export default function UserEdit({userDetails}) {
               {"Apellido actual: " + userDetails.lastName}
             </label>
             {errors.lastName && (
-              <p className="text-xs text-red-500">{errors.lastName}</p>
+              <p className="text-xs text-yellow-500">{errors.lastName}</p>
             )}
           </div>
-          <div className="mb-4 relative mt-3">
+          <div className="mb-4 relative mt-6 md:mt-3">
             <input
-              className="peer placeholder-transparent h-10 w-full  border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
+              className="peer placeholder-transparent h-10 md:h-10 w-full border-b-2 border-grey-300 focus:outline-none focus:border-indigo-600 bg-transparent"
               placeholder=" "
               autoComplete="off"
               type="text"
@@ -198,13 +198,14 @@ export default function UserEdit({userDetails}) {
             />
             <label
               className="absolute left-0 -top-3.5 
-                                            text-gray-600 text-sm 
-                                            peer-placeholder-shown:text-base 
-                                            peer-placeholder-shown:text-gray-400
-                                            peer-placeholder-shown:top-2 transition-all 
-                                            peer-focus:-top-3.5 peer-focus:text-gray-600
-                                            peer-focus:text-sm
-                                            cursor-text"
+              text-gray-600 text-sm 
+              peer-placeholder-shown:text-base 
+              peer-placeholder-shown:text-gray-400
+              md:peer-placeholder-shown:top-2 transition-all 
+              peer-focus:-top-3
+              md:peer-focus:-top-[0.7rem] peer-focus:text-gray-600
+              peer-focus:text-sm
+              cursor-text"
               htmlFor="telefono"
             >
               {"Número de teléfono actual: " +
@@ -213,10 +214,10 @@ export default function UserEdit({userDetails}) {
                   : "Ninguno")}
             </label>
             {errors.phone && (
-              <p className="text-xs text-red-500">{errors.phone}</p>
+              <p className="text-xs text-yellow-500">{errors.phone}</p>
             )}
           </div>
-          <div className="mb-4 relative mt-3 bg-indigo-400 text-center hover:bg-indigo-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <div className="mb-4 relative mt-7 md:mt-3 bg-indigo-400 text-center hover:bg-indigo-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             <input
               className="absolute top-0 right-0 left-0 bottom-0 w-full h-full opacity-0"
               autoComplete="off"

@@ -55,6 +55,7 @@ function EstablishmentProfile() {
       <div className="md:max-w-[1200px] m-auto">
         <div className="grid place-content-center md:grid-cols-2 xl:grid-cols-[30%,70%]">
           <div>
+            <div className="flex flex-col items-center max-w-xs">
             <img
               src={
                 establishmentDetail && establishmentDetail.logoImage
@@ -62,7 +63,7 @@ function EstablishmentProfile() {
                   : defaultEstablishmentLogo
               }
               alt="logo_img"
-              className="mt-8 ml-[2.8rem] md:ml-[3.5rem] object-cover rounded-full w-60 h-60 bg-green-900"
+              className="mt-8 object-cover rounded-full w-60 h-60 bg-green-900"
             />
 
             <h1 className="mb-5 text-center mt-5 text-2xl font-bold">
@@ -70,9 +71,11 @@ function EstablishmentProfile() {
                 ? establishmentDetail.name
                 : "Sin nombre de establecimiento"}
             </h1>
-            <h1 className=" mb-5 text-center mt-5">
+            <h1 className=" mb-5 text-center">
               {establishmentDetail && establishmentDetail.isActive ? "" : "Su usuario ha sido deshabilitado comuníquese con el administrador"}
             </h1>
+            </div>
+
             <div className="grid grid-cols-2 gap-4 max-w-xs">
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 border border-blue-700 rounded shadow-2xl shadow-indigo-600 active:scale-95 transition-all h-[4.5rem]"
@@ -143,7 +146,9 @@ function EstablishmentProfile() {
                 case "reporting":
                   return <ReportingForm establishmentDetail={establishmentDetail}/>;
                 default:
-                  return <EstablishmentBookings establishmentDetail={establishmentDetail}/>;
+                  return <div className="w-[20rem] md:w-full">
+                    <EstablishmentBookings establishmentDetail={establishmentDetail}/>
+                  </div>;
               }
             })()}
           </div>

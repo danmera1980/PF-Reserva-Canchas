@@ -2,13 +2,31 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import Paper from "@mui/material/Paper";
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import Room from '@mui/icons-material/Room';
+import Room from "@mui/icons-material/Room";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { styled, alpha } from "@mui/material/styles";
-import { amber, blue, blueGrey, brown, cyan, deepOrange, deepPurple, green, indigo, grey, lightBlue, lightGreen, lime } from "@mui/material/colors";
-import { ViewState, EditingState, IntegratedEditing } from "@devexpress/dx-react-scheduler";
+import {
+  amber,
+  blue,
+  blueGrey,
+  brown,
+  cyan,
+  deepOrange,
+  deepPurple,
+  green,
+  indigo,
+  grey,
+  lightBlue,
+  lightGreen,
+  lime,
+} from "@mui/material/colors";
+import {
+  ViewState,
+  EditingState,
+  IntegratedEditing,
+} from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
   DayView,
@@ -26,23 +44,19 @@ import { SERVER_URL } from "../../redux/actions/actionNames";
 
 function EstablishmentBookings({ establishmentDetail }) {
   const [bookings, setBookings] = useState(null);
-  const [newBooking, setNewBooking] = useState('');
+  const [newBooking, setNewBooking] = useState("");
 
   var curr = new Date(); // get current date
   var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
   var last = first + 6; // last day is the first day + 6
   var firstDayMonth = new Date(curr.getFullYear(), curr.getMonth(), 1);
-  var lastDayMonth= new Date(curr.getFullYear(), curr.getMonth() + 1);
-
-  console.log(curr.getDay())
+  var lastDayMonth = new Date(curr.getFullYear(), curr.getMonth() + 1);
 
   var firstDay = new Date(curr.setDate(first)).toUTCString();
   var lastDay = new Date(curr.setDate(last)).toUTCString();
 
-  var startDayHour = establishmentDetail?.timeActiveFrom.substring(0,2)
-  var endDayHour = establishmentDetail?.timeActiveTo.substring(0,2)
-
-  console.log(firstDayMonth.toISOString(), lastDayMonth.toISOString() )
+  var startDayHour = establishmentDetail?.timeActiveFrom.substring(0, 2);
+  var endDayHour = establishmentDetail?.timeActiveTo.substring(0, 2);
 
   useEffect(() => {
     if (establishmentDetail) {
@@ -50,55 +64,84 @@ function EstablishmentBookings({ establishmentDetail }) {
         .get(
           `${SERVER_URL}/booking/byEstabId/${establishmentDetail?.id}?dateFrom=${firstDayMonth}&dateTo=${lastDayMonth}`
         )
-        .then((res) => setBookings(()=> {
-          return res.data.map(b=>{
-            return {
-              id: b.id,
-              courtId: b.courtId,
-              courtName: b.courtName,
-              title: b.siteName + ' - ' + b.courtName + ' - ' + b.userName + ' ' + b.userLastName + ' ref: ' + b.external_reference ,
-              startDate: b.startTime,
-              endDate: b.endTime,
-              location: b.courtName
-            } 
+        .then((res) =>
+          setBookings(() => {
+            return res.data.map((b) => {
+              return {
+                id: b.id,
+                courtId: b.courtId,
+                courtName: b.courtName,
+                title:
+                  b.siteName +
+                  " - " +
+                  b.courtName +
+                  " - " +
+                  b.userName +
+                  " " +
+                  b.userLastName +
+                  " ref: " +
+                  b.external_reference,
+                startDate: b.startTime,
+                endDate: b.endTime,
+                location: b.courtName,
+              };
+            });
           })
-        }));
+        );
     }
 
-    if(newBooking){
+    if (newBooking) {
       Swal.fire({
         title: "Reseva Creada",
-        text: 'Código de reserva: ' + newBooking
-      })
-      setNewBooking('')
+        text: "Código de reserva: " + newBooking,
+      });
+      setNewBooking("");
     }
   }, [establishmentDetail, newBooking]);
 
   console.log(bookings);
 
-  let colors = [ amber, blue, blueGrey, brown, cyan, deepOrange, deepPurple, green, indigo, grey, lightBlue, lightGreen, lime ]
+  let colors = [
+    amber,
+    blue,
+    blueGrey,
+    brown,
+    cyan,
+    deepOrange,
+    deepPurple,
+    green,
+    indigo,
+    grey,
+    lightBlue,
+    lightGreen,
+    lime,
+  ];
 
-  let locations_short = [... new Map(bookings?.map(b=> [b.courtId, b.courtId])).values()]
-  let locations = [... new Map(bookings?.map(b=> [b.courtId, b.courtName])).values()]
-  let resourcesData = []
+  let locations_short = [
+    ...new Map(bookings?.map((b) => [b.courtId, b.courtId])).values(),
+  ];
+  let locations = [
+    ...new Map(bookings?.map((b) => [b.courtId, b.courtName])).values(),
+  ];
+  let resourcesData = [];
 
-  console.log(locations_short, locations, bookings)
-  
+  console.log(locations_short, locations, bookings);
+
   for (let i = 0; i < locations?.length; i++) {
     resourcesData.push({
       id: locations_short[i],
       text: locations[i],
-      color: colors[i]
-    })
+      color: colors[i],
+    });
   }
-  
-  const LOCATIONS = locations
-  const LOCATIONS_SHORT = locations_short
+
+  const LOCATIONS = locations;
+  const LOCATIONS_SHORT = locations_short;
   const resources = [
     {
       fieldName: "courtId",
       title: "Canchas",
-      instances: resourcesData
+      instances: resourcesData,
     },
   ];
 
@@ -213,70 +256,74 @@ function EstablishmentBookings({ establishmentDetail }) {
     },
   }));
   // #FOLD_BLOCK
-  const StyledWeekViewTimeTableCell = styled(WeekView.TimeTableCell)(({ theme }) => ({
-    [`&.${classes.todayCell}`]: {
-      backgroundColor: alpha(theme.palette.primary.main, 0.1),
-      '&:hover': {
-        backgroundColor: alpha(theme.palette.primary.main, 0.14),
+  const StyledWeekViewTimeTableCell = styled(WeekView.TimeTableCell)(
+    ({ theme }) => ({
+      [`&.${classes.todayCell}`]: {
+        backgroundColor: alpha(theme.palette.primary.main, 0.1),
+        "&:hover": {
+          backgroundColor: alpha(theme.palette.primary.main, 0.14),
+        },
+        "&:focus": {
+          backgroundColor: alpha(theme.palette.primary.main, 0.16),
+        },
       },
-      '&:focus': {
+      [`&.${classes.weekendCell}`]: {
+        backgroundColor: alpha(theme.palette.action.disabledBackground, 0.04),
+        "&:hover": {
+          backgroundColor: alpha(theme.palette.action.disabledBackground, 0.04),
+        },
+        "&:focus": {
+          backgroundColor: alpha(theme.palette.action.disabledBackground, 0.04),
+        },
+      },
+    })
+  );
+  // #FOLD_BLOCK
+  const StyledWeekViewDayScaleCell = styled(WeekView.DayScaleCell)(
+    ({ theme }) => ({
+      [`&.${classes.today}`]: {
         backgroundColor: alpha(theme.palette.primary.main, 0.16),
       },
-    },
-    [`&.${classes.weekendCell}`]: {
-      backgroundColor: alpha(theme.palette.action.disabledBackground, 0.04),
-      '&:hover': {
-        backgroundColor: alpha(theme.palette.action.disabledBackground, 0.04),
+      [`&.${classes.weekend}`]: {
+        backgroundColor: alpha(theme.palette.action.disabledBackground, 0.06),
       },
-      '&:focus': {
-        backgroundColor: alpha(theme.palette.action.disabledBackground, 0.04),
-      },
-    },
-  }));
+    })
+  );
   // #FOLD_BLOCK
-  const StyledWeekViewDayScaleCell = styled(WeekView.DayScaleCell)(({ theme }) => ({
-    [`&.${classes.today}`]: {
-      backgroundColor: alpha(theme.palette.primary.main, 0.16),
-    },
-    [`&.${classes.weekend}`]: {
-      backgroundColor: alpha(theme.palette.action.disabledBackground, 0.06),
-    },
-  }));
-  // #FOLD_BLOCK
-  const StyledDiv = styled('div')(({ theme }) => ({
+  const StyledDiv = styled("div")(({ theme }) => ({
     [`& .${classes.icon}`]: {
       margin: theme.spacing(2, 0),
       marginRight: theme.spacing(2),
     },
     [`& .${classes.header}`]: {
-      overflow: 'hidden',
+      overflow: "hidden",
       paddingTop: theme.spacing(0.5),
     },
     [`& .${classes.textField}`]: {
-      width: '100%',
+      width: "100%",
     },
     [`& .${classes.content}`]: {
       padding: theme.spacing(2),
       paddingTop: 0,
     },
     [`& .${classes.closeButton}`]: {
-      float: 'right',
+      float: "right",
     },
     [`& .${classes.picker}`]: {
       marginRight: theme.spacing(2),
-      '&:last-child': {
+      "&:last-child": {
         marginRight: 0,
       },
-      width: '50%',
+      width: "50%",
     },
     [`& .${classes.wrapper}`]: {
-      display: 'flex',
-      justifyContent: 'space-between',
+      display: "flex",
+      justifyContent: "space-between",
       padding: theme.spacing(1, 0),
     },
     [`& .${classes.buttonGroup}`]: {
-      display: 'flex',
-      justifyContent: 'flex-end',
+      display: "flex",
+      justifyContent: "flex-end",
       padding: theme.spacing(0, 2),
     },
     [`& .${classes.button}`]: {
@@ -286,10 +333,10 @@ function EstablishmentBookings({ establishmentDetail }) {
 
   const StyledGrid = styled(Grid)(() => ({
     [`&.${classes.textCenter}`]: {
-      textAlign: 'center',
+      textAlign: "center",
     },
   }));
-  
+
   const StyledRoom = styled(Room)(({ theme: { palette } }) => ({
     [`&.${classes.icon}`]: {
       color: palette.action.active,
@@ -299,49 +346,65 @@ function EstablishmentBookings({ establishmentDetail }) {
   const TimeTableCell = (props) => {
     const { startDate } = props;
     const date = new Date(startDate);
-  
+
     if (date.getDate() === new Date().getDate()) {
-      return <StyledWeekViewTimeTableCell {...props} className={classes.todayCell} />;
-    } if (date.getDay() === 0 || date.getDay() === 6) {
-      return <StyledWeekViewTimeTableCell {...props} className={classes.weekendCell} />;
-    } return <StyledWeekViewTimeTableCell {...props} />;
+      return (
+        <StyledWeekViewTimeTableCell {...props} className={classes.todayCell} />
+      );
+    }
+    if (date.getDay() === 0 || date.getDay() === 6) {
+      return (
+        <StyledWeekViewTimeTableCell
+          {...props}
+          className={classes.weekendCell}
+        />
+      );
+    }
+    return <StyledWeekViewTimeTableCell {...props} />;
   };
 
   const DayScaleCell = (props) => {
     const { startDate, today } = props;
-  
+
     if (today) {
-      return <StyledWeekViewDayScaleCell {...props} className={classes.today} />;
-    } if (startDate.getDay() === 0 || startDate.getDay() === 6) {
-      return <StyledWeekViewDayScaleCell {...props} className={classes.weekend} />;
-    } return <StyledWeekViewDayScaleCell {...props} />;
+      return (
+        <StyledWeekViewDayScaleCell {...props} className={classes.today} />
+      );
+    }
+    if (startDate.getDay() === 0 || startDate.getDay() === 6) {
+      return (
+        <StyledWeekViewDayScaleCell {...props} className={classes.weekend} />
+      );
+    }
+    return <StyledWeekViewDayScaleCell {...props} />;
   };
 
-  const commitChanges = ({added, changed, deleted}) => {
-    console.log(added)
+  const commitChanges = ({ added, changed, deleted }) => {
+    console.log(added);
 
     let body = {
       courtId: added.courtId,
       details: added.title,
       dateFrom: added.startDate.toISOString(),
       dateTo: added.endDate.toISOString(),
-      finalAmount: 0
+      finalAmount: 0,
+    };
+
+    if (added) {
+      axios
+        .post(`${SERVER_URL}/booking/add`, body)
+        .then((res) => setNewBooking(res.data));
     }
 
-    if(added){
-      axios.post(`${SERVER_URL}/booking/add`, body)
-      .then(res => setNewBooking(res.data))
-    }
-
-    console.log(newBooking)
-  }
+    console.log(newBooking);
+  };
 
   return (
     <Paper>
-      {bookings!==null && bookings?
+      {bookings !== null && bookings ? (
         <Scheduler data={bookings} height={700}>
-          <ViewState/>
-          <EditingState 
+          <ViewState />
+          <EditingState
             onCommitChanges={commitChanges}
             // addedAppointment={addedAppointment}
             // onAddedAppointmentChange={changeAddedAppointment}
@@ -350,7 +413,7 @@ function EstablishmentBookings({ establishmentDetail }) {
             // editingAppointment={editingAppointment}
             // onEditingAppointmentChange={changeEditingAppointment}
           />
-          <IntegratedEditing/>
+          <IntegratedEditing />
           <WeekView
             startDayHour={6}
             endDayHour={24}
@@ -361,38 +424,33 @@ function EstablishmentBookings({ establishmentDetail }) {
             endDayHour={endDayHour}
             timeTableCellComponent={TimeTableCell}
             dayScaleCellComponent={DayScaleCell}
-            />
-          <DayView 
+          />
+          <DayView
             startDayHour={startDayHour}
             endDayHour={endDayHour}
             timeTableCellComponent={TimeTableCell}
             dayScaleCellComponent={DayScaleCell}
             cellDuration="60"
-            />
+          />
 
           <Appointments />
-          <Resources data={resources}/>
-          <AppointmentTooltip 
-            showCloseButton 
-            showOpenButton 
-          />
+          <Resources data={resources} />
+          <AppointmentTooltip showCloseButton showOpenButton />
           <AppointmentForm>
-             {/* <AppointmentForm.label 
-              text="Precio"
-              type="title"
-            />
-            <AppointmentForm.TextEditor 
-              placeholder="custom field"
-            /> */}
+            {/* <AppointmentForm.label 
+                text="Precio"
+                type="title"
+              />
+              <AppointmentForm.TextEditor 
+                placeholder="custom field"
+              /> */}
           </AppointmentForm>
-          <Toolbar/>
-          <DateNavigator/>
+          <Toolbar />
+          <DateNavigator />
           <TodayButton />
-          <ViewSwitcher/>
+          <ViewSwitcher />
         </Scheduler>
-      :
-        null
-      }
+      ) : null}
     </Paper>
   );
 }
