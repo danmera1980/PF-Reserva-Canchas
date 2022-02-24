@@ -7,9 +7,6 @@ import Card from "../Card/Card";
 import Map from '../Map/Map'
 import "./Results.scss";
 
-const MapStyle = "mapbox://styles/mapbox/streets-v11";
-const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
-
 function Results() {
     // const location = useLocation();
     const [ selectedCard, setSelectedCard] = useState(null);
@@ -87,7 +84,7 @@ function Results() {
                 </div>
                 : <div className="flex place-content-center my-1 text-2xl w-full dark:text-white">No hay resultados para tu búsqueda</div>}
                 
-                <div className='lg:h-[68vh] overflow-hidden hidden md:block -z-10'>
+                <div className='lg:h-[68vh] overflow-hidden hidden md:block'>
                   <Map
                     location= {currentLocation}
                     markers={resultsData}
