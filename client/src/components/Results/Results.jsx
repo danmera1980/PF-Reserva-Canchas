@@ -64,8 +64,10 @@ function Results() {
     
     useEffect(()=> {
       if(data.length){
+        console.log('entre aqui')
         setCurrentLocation([data[0].sites[0].longitude, data[0].sites[0].latitude]) 
       } else {
+        console.log('entre acca')
         setCurrentLocation([-64.19450712912459, -31.408336004083672]) 
       }
     },[data])
