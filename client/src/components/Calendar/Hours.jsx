@@ -31,7 +31,7 @@ const Hours = ({selectedDate, disabledTime, selectedBooking, minTime}) => {
 
     const handleClick = (date, time) => {
         selectedBooking({
-            startTime: [date.year,date.month-1,date.day,time], 
+            startTime: [date.year,date.month,date.day,time], 
             endTime: new Date(date.year,date.month-1,date.day,time+1,"00","00"),
         })
 
