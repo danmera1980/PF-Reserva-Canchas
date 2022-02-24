@@ -59,17 +59,17 @@ function Results() {
 
   return (
     <div>
-        <div className='fixed top-0 w-full z-1'>
+        <div className='fixed top-0 w-full'>
             <Header />
         </div>
         
-        <div className='fixed top-20 mt-5 w-full z-2'>
+        <div className='fixed top-20 mt-5 w-full'>
         <SearchBar getViewPort={getViewPort}/>
         </div>
         
-        <div className='flex flex-row ml-20 gap-10 mt-[23vh] w-90 p-2 z-10 h-70'>
+        <div className='flex flex-row ml-20 gap-10 mt-[23vh] w-90 p-2 h-70'>
                 {resultsData.length ?
-                <div className='basis-1/2 h-[68vh] sm:h-[68vh] overflow-y-auto scrollbar snap-y snap-mandatory overflow-x-hidden'>
+                <div className='basis-1/2 h-[68vh] sm:h-[68vh] overflow-y-auto scrollbar snap-y snap-mandatory overflow-x-hidden -z-10'>
                      {resultsData.map(m => m.sites.map(site => site.courts.map( court => (
                         <Card 
                             key= {court.id}
@@ -89,7 +89,7 @@ function Results() {
                 </div>
                 : <div className="flex place-content-center my-1 text-2xl w-full dark:text-white">No hay resultados para tu búsqueda</div>}
                 {resultsData.length ?
-                <div className='basis-1/2 h-[68vh] sm:h-[68vh] overflow-y-hidden'>
+                <div className='basis-1/2 h-[68vh] sm:h-[68vh] overflow-y-hidden -z-10'>
                     <ReactMapGL 
                         {...viewport}
                         onViewportChange={newView => setViewport(newView)}

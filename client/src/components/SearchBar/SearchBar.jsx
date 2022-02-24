@@ -122,13 +122,14 @@ function SearchBar({getViewPort}) {
                         value={searchText.text}
                         id='establishment'
                         placeholder={establishment}
+                        autoComplete = "off"
                     /> 
                     <Link to={"/results"}>
                         <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
                     </Link>
                 </div>
                 { geoCode !== undefined && geoCode !== '' ?
-                    <div className='autoContainer' hidden={geoCode?false:true}>
+                    <div className='autoContainer transition-all overflow-y-auto max-h-48' hidden={geoCode?false:true}>
                         {geoCode && geoCode.features.map(r => (
                             <div className='optionContainer' key={r.id} onClick={() => suggestionHandler(r)}>
                                 <span>{r.place_name}</span>
