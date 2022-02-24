@@ -113,7 +113,7 @@ export default function ReportingResultsReactTable() {
                 
                 <div ref={componentRef}>
                     <h1 className="text-xl flex place-content-center">Reporte de reservas</h1>
-                    <div className="overflow-y overflow-x-auto max-h-[70vh] sm:max-h-[65vh] mt-2 sm:flex sm:place-content-center -webkit-scrollbar-display-none ">
+                    <div className="overflow-y overflow-x-auto max-h-[70vh] sm:max-h-[65vh] mt-2 sm:flex sm:place-content-center -webkit-scrollbar-display-none">
                         <table className="w-[94vw] border-collapse">
                             <thead className="sticky top-0 w-full">
                                 {headerGroups.map(headerGroup => (

@@ -43,6 +43,7 @@ function Profile() {
         <div className="h-36 bg-[#498C8A] dark:bg-[#057276]"></div>
         <div className="grid place-content-center md:grid-cols-2 xl:grid-cols-[30%,70%]">
           <div>
+          <div className="flex flex-col items-center max-w-xs">
             <img
               src={
                 userDetails && userDetails.img
@@ -50,7 +51,7 @@ function Profile() {
                   : defaultUserImage
               }
               alt="logo_img"
-              className="-mt-28 ml-[2.8rem] md:ml-[3.5rem] object-cover rounded-full w-60 h-60 bg-green-900"
+              className="-mt-28 object-cover rounded-full w-60 h-60 bg-green-900"
             />
 
             <h1 className="mb-5 text-center mt-5 text-2xl font-bold">
@@ -58,11 +59,12 @@ function Profile() {
                 ? userDetails.name + " " + userDetails.lastName
                 : "Nombre de usuario no establecido"}
             </h1>
-            <h1 className="mb-5 text-center mt-5">
+            <h1 className="mb-5 text-center">
               {userDetails && userDetails.isActive
                 ? ""
                 : "Su usuario ha sido deshabilitado comuníquese con el administrador"}
             </h1>
+            </div>
 
             <div className="">
               <div className="grid gap-4 max-w-xs">

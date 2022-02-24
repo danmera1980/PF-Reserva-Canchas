@@ -1,14 +1,15 @@
 /* eslint import/no-webpack-loader-syntax: off */
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import logo from "../../assets/img/logo.svg";
-import ReactMapGL, { Marker } from 'react-map-gl';
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
+import ReactMapGL, { Marker } from "react-map-gl";
+import mapboxgl from "mapbox-gl/dist/mapbox-gl-csp";
 import MapboxWorker from "mapbox-gl/dist/mapbox-gl-csp-worker";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Map from "../Map/Map";
 import { faInfo, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import {
   faBaseballBall,
@@ -21,9 +22,6 @@ import axios from "axios";
 import { SERVER_URL } from "../../redux/actions/actionNames";
 import MercadoPago from "../MercadoPago/MercadoPago";
 import Swal from "sweetalert2";
-
-const MapStyle = "mapbox://styles/mapbox/streets-v11";
-const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 export default function BookingCourt() {
   const history = useHistory();
@@ -152,7 +150,7 @@ export default function BookingCourt() {
       break;
     default:
       sportsIcon = <FontAwesomeIcon icon={faFutbol} size="2x" />;
-  }
+  }  
 
   return (
     <div>
@@ -211,8 +209,29 @@ export default function BookingCourt() {
                 <p>Precio $ {court.price}</p>
               </div>
             </div>
-
-            <ReactMapGL
+            <div className="relative overflow-hidden">
+              <Map
+                location={[court?.site.longitude, court?.site.latitude]}
+                markers={{
+                  features: [{
+                  type: "Feature",
+              
+                  properties: {
+                    establishment: "",
+                    site: "",
+                    court: input.courtName,
+                    address: "",
+                    sport: "deporte",
+                    price: input.price,
+                  },
+                  geometry: {
+                    coordinates: [court?.site.longitude, court?.site.latitude],
+                    type: "Point",
+                  },
+                }]}}
+              />
+            </div>
+            {/* <ReactMapGL
               {...viewport}
               onViewportChange={(newView) => setViewport(newView)}
               mapboxApiAccessToken={mapboxToken}
@@ -224,7 +243,7 @@ export default function BookingCourt() {
               >
                 <FontAwesomeIcon icon={faMapMarkerAlt} color="red" size="lg" />
               </Marker>
-            </ReactMapGL>
+            </ReactMapGL> */}
           </div>
 
           <div className="grid place-content-center grid-flow-col gap-2 mb-[3rem] mt-2 transition-all">

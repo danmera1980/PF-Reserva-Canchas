@@ -107,23 +107,14 @@ function Card({
       <div className="w-full flex flex-col p-3 max-w-3xl">
         <div className="dark:text-darkPrimary bg-white dark:bg-slate-600 rounded-lg shadow-lg overflow-hidden flex flex-1 flex-col sm:grid sm:grid-cols-2">
           <Slider images={[images]} />
-
+          
           <div className="flex flex-1 flex-col text-center p-1 relative">
-            <button
-              onClick={fav === true ? handleRemoveFav : handleAddFav}
-              className="absolute right-4 top-2 block scale-125 active:scale-90 transition-all sm:right-2"
-            >
-              <FontAwesomeIcon
-                icon={faStar}
-                color={fav === true ? "yellow" : "gray"}
-              />
-            </button>
             <h1 className="font-bold text-2xl dark:text-darkAccent">
               {establishment}
             </h1>
 
             <div className="py-2 text-base flex-1">
-              <h2 className="dark:text-darkAccent">
+              <h2 className="dark:text-darkAccent shrink-1">
                 🥅 {name} {court}
               </h2>
 
@@ -149,6 +140,16 @@ function Card({
                 </button>
               </div>
             ) : null}
+            <button
+            onClick={fav === true ? handleRemoveFav : handleAddFav}
+            className="absolute top-32 md:bottom-4 right-3 block scale-150 transition-all active:scale-125"
+          >
+            <FontAwesomeIcon
+              icon={faStar}
+              color={fav === true ? "yellow" : "gray"}
+              className=""
+            />
+          </button>
           </div>
         </div>
       </div>
