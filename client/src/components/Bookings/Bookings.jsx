@@ -60,7 +60,7 @@ function Bookings() {
                   width={"8.5rem"}
                 />
               ) : (
-                <div className="h-[28rem] sm:h-[29rem] overflow-y-auto scrollbar snap-y snap-mandatory">
+                <div className="h-[28rem] w-[19rem] md:w-full sm:h-[29rem] overflow-y-auto scrollbar snap-y snap-mandatory">
                   {booking.map((e) => {
                     return (
                       <div key={e.id} className="overflow-hidden pb-4 snap-start">
@@ -81,7 +81,7 @@ function Bookings() {
                 </div>
               );
             case "favorites":
-              return <div className="h-[27rem] sm:h-[29rem] overflow-y-auto scrollbar"><Favorites /></div>  
+              return <div className="h-[27rem] w-[19rem] md:w-full sm:h-[29rem] overflow-y-auto scrollbar"><Favorites /></div>  
             default:
               return "bookings";
           }
