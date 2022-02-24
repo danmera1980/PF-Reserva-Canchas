@@ -7,12 +7,13 @@ const MapStyle = 'mapbox://styles/mapbox/streets-v11';
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 
-const Map = ({location, markers}) => {
+const Map = ({location, markers, draggable, handleDrag}) => {
   const mapContainerRef = useRef(null);
 
   const [lng, setLng] = useState(-87.65);
   const [lat, setLat] = useState(41.84);
   const [zoom, setZoom] = useState(12);
+  const [marker, setMarker] = useState('')
 
   // Initialize map when component mounts
   useEffect(() => {
@@ -24,25 +25,42 @@ const Map = ({location, markers}) => {
     });
 
     // Create default markers
-    markers?.features.map((marker) =>
-        {
-            new mapboxgl.Marker()
-            .setLngLat(marker.geometry.coordinates)
-            .setPopup(
-                new mapboxgl.Popup({ offset: 25 })
-                .setHTML(
-                    `<div>
-                        <h2 class="text-lg">${marker.properties.establishment}</h2>
-                        <h3 class="text-lg">${marker.properties.site} - ${marker.properties.court}</h3>
-                        <p class="text-lg">${marker.properties.address}</p>
-                        <p class="text-lg">${marker.properties.sport}</p>
-                        <p class="text-lg">${marker.properties.price}</p>
-                    </div>`
-                )
-            )
-            .addTo(map)
-        }
-    );
+    console.log(draggable)
+    if(draggable){
+      setMarker(
+        new mapboxgl.Marker({draggable: true})
+        .setLngLat(location)
+        .addTo(map)
+      )
+      console.log(marker)
+    } else {
+      markers?.features.map((marker) =>
+          {
+              new mapboxgl.Marker()
+              .setLngLat(marker.geometry.coordinates)
+              .setPopup(
+                  new mapboxgl.Popup({ offset: 25 })
+                  .setHTML(
+                      `<div>
+                          <h2 class="text-lg">${marker.properties.establishment}</h2>
+                          <h3 class="text-lg">${marker.properties.site} - ${marker.properties.court}</h3>
+                          <p class="text-lg">${marker.properties.address}</p>
+                          <p class="text-lg">${marker.properties.sport}</p>
+                          <p class="text-lg">${marker.properties.price}</p>
+                      </div>`
+                  )
+              )
+              .addTo(map)
+          }
+      );
+    }
+
+    // marker.on('dragend', handleDrag(() => { 
+    //   console.log(marker.getLngLat())
+    //   marker.getLngLat()  
+    // }))
+
+    // marker.on('dragend', onDragEnd)
 
     // Add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');

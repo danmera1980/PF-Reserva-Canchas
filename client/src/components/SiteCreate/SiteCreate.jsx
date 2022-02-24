@@ -70,11 +70,14 @@ export default function SiteCreate({ establishmentId }) {
   ]);
 
   function handleDrag(getLngLat) {
-    setInput({
-      ...input,
-      longitude: getLngLat.lngLat[0],
-      latitude: getLngLat.lngLat[1],
-    });
+    if(getLngLat.lngLat){
+      setInput({
+        ...input,
+        longitude: getLngLat.lngLat[0],
+        latitude: getLngLat.lngLat[1],
+      });
+      console.log(input)
+    }
   }
 
   useEffect(() => {
@@ -146,7 +149,7 @@ export default function SiteCreate({ establishmentId }) {
       window.location.reload();
     }
   }
-  console.log(viewport, "view");
+  console.log(input, "input");
   return (
     <div className="max-w-xs sm:max-w-none m-auto">
       <div className="flex flex-col justify-center text-black">
@@ -314,7 +317,9 @@ export default function SiteCreate({ establishmentId }) {
               Selecciona la ubicación de la sede en el mapa
             </h1>
             <Map
-              location={[-31.408336004083672, -64.19450712912459]}
+              location={[-64.19450712912459, -31.408336004083672]}
+              draggable={true}
+              handleDrag={handleDrag}
               markers={{
                 features: [
                   {
@@ -328,7 +333,7 @@ export default function SiteCreate({ establishmentId }) {
                       price: "",
                     },
                     geometry: {
-                      coordinates:[-31.408336004083672, -64.19450712912459],
+                      coordinates:[-64.19450712912459, -31.408336004083672],
                       type: "Point",
                     },
                   },
