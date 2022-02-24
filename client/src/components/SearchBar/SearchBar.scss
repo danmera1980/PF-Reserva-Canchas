@@ -93,7 +93,7 @@
 }
 
 .optionContainer:hover{
-  background: #634646;
+  background: rgb(200, 212, 212);
   columns: white;
   cursor: pointer;
 }
@@ -101,4 +101,25 @@
 .searchInput{
   display: flex;
   padding-left: 10px;
+}
+
+@media (min-width: 640px) {
+  .sScrollbar::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  .sScrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: white;
+  }
+
+  .sScrollbar::-webkit-scrollbar-thumb {
+    background: rgb(200, 212, 212);
+    border-radius: 100vh;
+    border: 3px solid white;
+  }
+
+  .sScrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-color-text-accent);
+  }
 }

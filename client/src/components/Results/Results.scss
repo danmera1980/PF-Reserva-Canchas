@@ -1,0 +1,21 @@
+@media (min-width: 640px) {
+    .cardScrollbar::-webkit-scrollbar {
+      width: 15px;
+    }
+  
+    .cardScrollbar::-webkit-scrollbar-track {
+      border-radius: 100vh;
+      background: white;
+    }
+  
+    .cardScrollbar::-webkit-scrollbar-thumb {
+      background: var(--dark-color-text-accent);
+      border-radius: 100vh;
+      border: 3px solid white;
+    }
+  
+    .cardScrollbar::-webkit-scrollbar-thumb:hover {
+      background: #00f3fb;
+    }
+  }
+  
