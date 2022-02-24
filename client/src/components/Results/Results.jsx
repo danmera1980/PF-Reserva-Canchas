@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Header from "../Header/Header";
 import SearchBar from "../SearchBar/SearchBar";
@@ -13,42 +13,62 @@ function Results() {
     // eslint-disable-next-line no-unused-vars
     const [width, setWidth] = useState(window.innerWidth)
     const data = useSelector(state => state.establishment.establishments);
-    const resultsData = {
-      features: data?.map(d => {
-        return {
-          type: "Feature",
-          properties: {
-            establishment: d.name,
-            site: d.sites[0].name,
-            court: d.sites[0].courts[0].name,
-            address: d.sites[0].street,
-            sport: d.sites[0].courts[0].sport,
-            price: d.sites[0].courts[0].price
-          },
-          geometry: {
-            coordinates: [d.sites[0].longitude, d.sites[0].latitude],
-            type: "Point"
+    // console.log(data)
+
+    const [currentLocation, setCurrentLocation ] = useState([ -64.19450712912459, -31.408336004083672])
+    // if(data.length){
+    //     setCurrentLocation([data[0].sites[0].longitude, data[0].sites[0].latitude])
+    // }
+    let resultsData={}
+    if(data.length){
+       resultsData = {
+        features: data?.map(d => {
+          return {
+            type: "Feature",
+            properties: {
+              establishment: d.name,
+              site: d.sites[0].name,
+              court: d.sites[0].courts[0].name,
+              address: d.sites[0].street,
+              sport: d.sites[0].courts[0].sport,
+              price: d.sites[0].courts[0].price
+            },
+            geometry: {
+              coordinates: [d.sites[0].longitude, d.sites[0].latitude],
+              type: "Point"
+            }
           }
-        }
-    })}
+      })}
+    } else {
+      resultsData = {
+        features: {
+            type: "Feature",
+            properties: {
+              establishment: 'Test',
+              site: 'Test',
+              court: 'Test',
+              address: 'Test',
+              sport: 'Test',
+              price: 'Test'
+            },
+            geometry: {
+              coordinates: [-64.19450712912459, -31.408336004083672],
+              type: "Point"
+            }
+          }
+      }
+    }
     console.log(resultsData)
     // eslint-disable-next-line no-unused-vars
-    const [currentLocation, setCurrentLocation ] = useState([0,0])
    
     
-    
-    // NO SE USA MÁS PORQUE SE SETEA DESDE EL SEARCHBAR
-    // useEffect(()=> [
-    //     navigator.geolocation.getCurrentPosition(position => {
-    //         setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
-    //         setViewport({
-    //             ...viewport,
-    //             latitude: position.coords.latitude, 
-    //             longitude: position.coords.longitude 
-    //         })
-    //         console.log('My location', currentLocation)
-    //     })
-    // ],[])
+    useEffect(()=> {
+      if(data.length){
+        setCurrentLocation([data[0].sites[0].longitude, data[0].sites[0].latitude]) 
+      } else {
+        setCurrentLocation([-64.19450712912459, -31.408336004083672]) 
+      }
+    },[data])
 
     const getViewPort = (viewport) => {
         setCurrentLocation([viewport.longitude, viewport.latitude])
@@ -83,13 +103,13 @@ function Results() {
                     ))))}
                 </div>
                 : <div className="flex place-content-center my-1 text-2xl w-full dark:text-white">No hay resultados para tu búsqueda</div>}
-                
                 <div className='relative overflow-hidden hidden md:block'>
                   <Map
                     location= {currentLocation}
                     markers={resultsData}
                   />
                 </div> 
+                
         </div>
         <Footer />
     </div>
