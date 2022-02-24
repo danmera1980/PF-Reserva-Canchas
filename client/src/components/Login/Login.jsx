@@ -118,18 +118,18 @@ export default function Login() {
 
   return (
     <div className="temp">
-      <h1 className="flex justify-center text-xl text-indigo-800 dark:text-white">
+      {/* <h1 className="flex justify-center text-xl text-indigo-800 dark:text-white">
         Selecciona un método para Ingresar
-      </h1>
+      </h1> */}
       <div className="temp">
         <div className="mt-5 flex justify-center cursor-pointer rounded-xl">
-          <GoogleLogin
+          {/* <GoogleLogin
             clientId="325119971427-qq0udfk49hkpt0qrbbhfia9bbo6vjs8u.apps.googleusercontent.com"
             buttonText="Login"
             onSuccess={responseSuccess}
             onFailure={responseFailure}
             cookiePolicy={"single_host_origin"}
-          />
+          /> */}
         </div>
         <div className="flex justify-center">
           <form

@@ -154,7 +154,7 @@ const Register = () => {
       </h1>
       <br />
       <div className="">
-        <div className="flex justify-center cursor-pointer">
+        {/* <div className="flex justify-center cursor-pointer">
           <div className="flex justify-center text-green-400 bg-slate-500 h-10 w-24 items-center rounded-md">
             <GoogleLogin
               clientId="325119971427-qq0udfk49hkpt0qrbbhfia9bbo6vjs8u.apps.googleusercontent.com"
@@ -164,7 +164,7 @@ const Register = () => {
               cookiePolicy={"single_host_origin"}
             />
           </div>
-        </div>
+        </div> */}
         <div className="flex justify-center">
           <form
             className="md:w-3/5 lg:w-2/5 flex-col justify-center items-center mx-5 border-grey-400 border-2 mt-10 bg-white drop-shadow-md backdrop-blur-3xl rounded-md px-3 py-3"
