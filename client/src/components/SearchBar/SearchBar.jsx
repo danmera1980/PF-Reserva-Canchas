@@ -129,7 +129,7 @@ function SearchBar({getViewPort}) {
                     </Link>
                 </div>
                 { geoCode !== undefined && geoCode !== '' ?
-                    <div className='autoContainer transition-all overflow-y-auto max-h-48' hidden={geoCode?false:true}>
+                    <div className='autoContainer transition-all overflow-y-auto max-h-48 sScrollbar rounded-md' hidden={geoCode?false:true}>
                         {geoCode && geoCode.features.map(r => (
                             <div className='optionContainer' key={r.id} onClick={() => suggestionHandler(r)}>
                                 <span>{r.place_name}</span>
