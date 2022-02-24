@@ -1,7 +1,6 @@
 /* eslint import/no-webpack-loader-syntax: off */
-
 import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl from '!mapbox-gl';
 import './Map.css';
 
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
@@ -64,48 +63,3 @@ const Map = ({location, markers}) => {
 };
 
 export default Map;
-
-// import React, {useEffect, useRef, useState} from "react";
-// import mapboxgl from '!mapbox-gl';
-// import './Map.css';
-
-// const MapStyle = 'mapbox://styles/mapbox/streets-v11';
-// mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
-
-// export default function Map({ location, markers }) {
-//     const mapContainerRef = useRef(null);
-
-//     const [currentLocation, setCurrentLocation ] = useState(location)
-//     const [zoom, setZoom] =useState(10);
-//     const map = useRef(null);
-
-//     useEffect(()=>{
-//         if(map) return;
-//         map = new mapboxgl.Map({
-//             container: mapContainerRef.current,
-//             style: MapStyle,
-//             center: currentLocation,
-//             zoom: zoom
-//         });
-//         // create markers
-//         markers.forEach(marker => {
-//             new mapboxgl.Marker().setLngLat(marker.geometry.coodinates).addTo(map);
-//         })
-//         return () => map.remove();
-//     },[])
-    
-//     // useEffect(()=>{
-//     //     if(!map.current) return;
-//     //     map.current.on('move', ()=>{
-//     //         setCurrentLocation([map.current.getCenter().lng.toFixed(4), map.current.getCenter().lat.toFixed(4)]);
-//     //         setZoom(map.current.getZoom().toFixed(2));
-//     //     });
-//     // });
-
-
-//     return (
-//         <div>
-//             <div className="map-container" ref={mapContainerRef} />
-//         </div>
-//     )
-// }
