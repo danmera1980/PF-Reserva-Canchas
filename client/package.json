@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
     "@devexpress/dx-react-core": "^3.0.1",
     "@devexpress/dx-react-scheduler": "^3.0.1",
     "@devexpress/dx-react-scheduler-material-ui": "^3.0.1",
@@ -14,6 +17,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.17",
+    "@mapbox/mapbox-sdk": "^0.13.2",
     "@mui/icons-material": "^5.4.2",
     "@mui/lab": "^5.0.0-alpha.69",
     "@mui/material": "^5.4.2",
@@ -21,37 +25,42 @@
     "@testing-library/react": "^11.2.1",
     "@testing-library/user-event": "^12.2.2",
     "axios": "^0.24.0",
+    "babel-loader": "^8.2.3",
     "date-fns": "^2.28.0",
     "emotion": "^11.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "install": "^0.13.0",
+    "mapbox-gl": "^2.7.0",
+    "react-map-gl": "^6.1.19",
     "moment": "^2.29.1",
     "mui": "0.0.1",
     "react": "^17.0.1",
     "react-calendar-datetime-picker": "^1.6.0",
-    "react-dom": "^17.0.1",
+    "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",
     "react-icons": "^4.3.1",
     "react-loading": "^2.0.3",
-    "react-map-gl": "^6.1.19",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
     "react-scripts": "^5.0.0",
     "react-sweetalert2": "^0.5.1",
-    "react-toggle": "^4.1.2",
     "react-table": "^7.7.0",
     "react-to-print": "^2.14.4",
+    "react-toggle": "^4.1.2",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.4.1",
+    "rrule": "^2.6.8",
     "sass": "^1.48.0",
     "sweetalert2": "^11.3.10",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
@@ -61,9 +70,11 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      ">0.25%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "not chrome < 51",
+      "not safari < 10"
     ],
     "development": [
       "last 1 chrome version",

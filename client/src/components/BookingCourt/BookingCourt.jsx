@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+/* eslint import/no-webpack-loader-syntax: off */
+import React, {useEffect, useState} from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import logo from "../../assets/img/logo.svg";
-import ReactMapGL, { Marker } from "react-map-gl";
+import ReactMapGL, { Marker } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
+import MapboxWorker from "mapbox-gl/dist/mapbox-gl-csp-worker";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -96,6 +99,7 @@ export default function BookingCourt() {
           courtName: res.data.name,
           price: res.data.price,
         });
+
         setViewport({
           ...viewport,
           latitude: res.data.site.latitude,
