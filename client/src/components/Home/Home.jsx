@@ -52,7 +52,7 @@ function Home() {
               className="homeImage h-72 w-[90%] md:w-[690px] md:h-[400px] xl:w-[1200px] xl:h-[460px]"
             />
           </div>
-          <div className="search">
+          <div className="search z-10">
             <SearchBar getViewPort={getViewPort} />
           </div>
           <h2 className="text-2xl font-semibold text-lightSecondary dark:text-darkAccent text-center">

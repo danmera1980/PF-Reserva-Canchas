@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import Header from '../Header/Header';
-import SearchBar from '../SearchBar/SearchBar';
-import Footer from '../Footer/Footer';
-import Card from '../Card/Card';
-import Map from '../Map/Map';
-import Slider from '../Slider/Slider';
-// import { useLocation } from 'react-router-dom';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import Header from "../Header/Header";
+import SearchBar from "../SearchBar/SearchBar";
+import Footer from "../Footer/Footer";
+import Card from "../Card/Card";
+import Map from '../Map/Map'
+import "./Results.scss";
 
-
-const MapStyle = 'mapbox://styles/mapbox/streets-v11';
+const MapStyle = "mapbox://styles/mapbox/streets-v11";
 const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 function Results() {
@@ -63,33 +59,35 @@ function Results() {
 
   return (
     <div>
-        <div className='fixed top-0 w-full z-1'>
-            <Header />
+        <Header />
+        <div className='fixed top-20 mt-5 w-full'>
             <SearchBar getViewPort={getViewPort}/>
         </div> 
-        <div className='flex flex-row ml-20 gap-10 mt-[23vh] w-90 p-2 z-10 h-70'>
+        <div className='grid place-content-center md:flex md:flex-row gap-10 mt-[10vh] md:max-w-[1200px] m-auto'>
                 {data.length ?
-                <div className='basis-1/2 h-[68vh] sm:h-[68vh] overflow-y-auto scrollbar snap-y snap-mandatory overflow-x-hidden'>
+                <div className='h-[27rem] md:h-[68vh] snap-y snap-mandatory cardScrollbar overflow-x-hidden mt-32 md:mt-0'>
                      {data.map(m => m.sites.map(site => site.courts.map( court => (
-                        <Card 
-                            key= {court.id}
-                            id= {m.cuit}
-                            name= {site.name}
-                            images= {court.image}
-                            establishment= {m.name}
-                            cuit={m.cuit}
-                            court= {court.name}
-                            courtId={court.id}
-                            address= {site.street}
-                            price= {court.price}
-                            sport= {court.sport}
-                            button={true}
-                        />
+                         <div className="pb-4 snap-start" key={court.id}>
+                            <Card 
+                                key= {court.id}
+                                id= {m.cuit}
+                                name= {site.name}
+                                images= {court.image}
+                                establishment= {m.name}
+                                cuit={m.cuit}
+                                court= {court.name}
+                                courtId={court.id}
+                                address= {site.street}
+                                price= {court.price}
+                                sport= {court.sport}
+                                button={true}
+                            />
+                        </div>
                     ))))}
                 </div>
                 : <div className="flex place-content-center my-1 text-2xl w-full dark:text-white">No hay resultados para tu búsqueda</div>}
                 
-                <div className='basis-1/2 h-[68vh] sm:h-[68vh] overflow-y-hidden relative'>
+                <div className='lg:h-[68vh] overflow-hidden hidden md:block -z-10'>
                   <Map
                     location= {currentLocation}
                     markers={resultsData}
