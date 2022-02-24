@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import {useLocation} from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 import SearchBar from "../SearchBar/SearchBar.jsx";
@@ -7,8 +8,20 @@ import Popular from "../Popular/Popular.jsx";
 import homeImage from "../../assets/img/homeImage.jpg";
 import { getAllActiveEstablishments } from "../../redux/actions/establishment.js";
 import "./Home.scss";
+import Swal from "sweetalert2";
 
 function Home() {
+  const {search} = useLocation()
+  if(search.includes('status=approved')){
+    Swal.fire({
+      title: `Se acredito su pago`,
+    });
+  }else if(search.includes('status=rejected')|| search){
+    Swal.fire({
+      title: `Su pago no se acredito, el turno no sera reservado`,
+    });
+
+  }
   const dispatch = useDispatch();
   const [currentLocation, setCurrentLocation] = useState({
     latitude: -32.88641481914277,
