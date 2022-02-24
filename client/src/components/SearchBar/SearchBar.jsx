@@ -13,19 +13,35 @@ const mapToken = process.env.REACT_APP_MAPBOX_TOKEN;
 function SearchBar({getViewPort}) {
     const [ geoCode, setGeoCode] = useState('')
     const [establishment, setEstablishment] = useState('Ubicación');
+    const [currentLocation, setCurrentLocation ] = useState({
+        latitude: 0,
+        longitude: 0
+    })
 
     const history = useHistory();
     
     const dispatch= useDispatch();
     const [searchText, setSearchText] = useState({
-        latitude:-32.88641481914277,
-        longitude:-68.84519635165792,
+        latitude:0,
+        longitude:0,
         sport: '',
         text: '',
         zoom: 10
     });
 
     const [sportType, setSportType] = useState('');
+
+    useEffect(()=> [
+        navigator.geolocation.getCurrentPosition(position => {
+            setCurrentLocation({...currentLocation, latitude: position.coords.latitude, longitude: position.coords.longitude})
+            setSearchText({
+                ...searchText,
+                latitude: position.coords.latitude, 
+                longitude: position.coords.longitude 
+            })
+            console.log('My location', currentLocation)
+        })
+    ],[])
 
     useEffect(() => {
         if(searchText.text !== ''){
@@ -52,20 +68,16 @@ function SearchBar({getViewPort}) {
         
         getViewPort({
             latitude: searchText.latitude,
-            longitude: searchText.longitude,
-            width: '600px',
-            height: '85vh',
-            zoom: 12,
-            pitch: 50
+            longitude: searchText.longitude
         })
         dispatch(searchByText(searchText));
         setSearchText({
-            latitude:-32.88641481914277,
-            longitude:-68.84519635165792,
+            latitude:'',
+            longitude:'',
             sport: '',
             text: ''
         })
-        history.push('/results')
+        history.push({pathname: '/results', state:{latitude:searchText.latitude, longitude:searchText.longitude}})
     }
 
     function handleFilterBySport(e){
@@ -106,13 +118,14 @@ function SearchBar({getViewPort}) {
                         value={searchText.text}
                         id='establishment'
                         placeholder={establishment}
+                        autoComplete = "off"
                     /> 
                     <Link to={"/results"}>
                         <FontAwesomeIcon onClick={(e) => handleSearch(e)} icon={faSearchLocation} className='faIcon'/>
                     </Link>
                 </div>
                 { geoCode !== undefined && geoCode !== '' ?
-                    <div className='autoContainer' hidden={geoCode?false:true}>
+                    <div className='autoContainer transition-all overflow-y-auto max-h-48 sScrollbar rounded-md' hidden={geoCode?false:true}>
                         {geoCode && geoCode.features.map(r => (
                             <div className='optionContainer' key={r.id} onClick={() => suggestionHandler(r)}>
                                 <span>{r.place_name}</span>

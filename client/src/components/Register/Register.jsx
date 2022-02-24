@@ -99,9 +99,9 @@ const Register = () => {
   };
 
   const responseFailure = (response) => {
-    Swal.fire({
-      title: `Hubo un error`,
-    });
+    // Swal.fire({
+    //   title: `Hubo un error`,
+    // });
   };
   const handleChange = (e) => {
     e.preventDefault();

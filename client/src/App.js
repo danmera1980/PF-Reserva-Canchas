@@ -12,14 +12,13 @@ import UserEdit from "./components/UserEdit/UserEdit";
 import MercadoPago from "./components/MercadoPago/MercadoPago";
 // import CreateOrder from "./components/MercadoPago/CreateOrder";
 import EstablishmentProfile from "./components/EstablishmentProfile/EstablishmentProfile";
-import AddUserToEstablishment from './components/AddUserToEstablishment/AddUserToEstablishment.jsx';
 import BookingCourt from "./components/BookingCourt/BookingCourt";
 import Calendario from "./components/Calendar/Calendar";
 import Login from "./components/Login/Login";
 import ReportingForm from "./components/Reporting/ReportingForm";
 import AdminProfile from "./components/AdminProfile/AdminProfile";
 import ReportingResults from "./components/Reporting/ReportingResults";
-import SuccessMp from "./components/SuccessMp/SuccessMp";
+import TempResults from "./components/Results/TempResults";
 
 function App() {
   return (
@@ -35,14 +34,13 @@ function App() {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/useredit" component={UserEdit} />
         <Route exact path="/establishmentprofile" component={EstablishmentProfile} />
-        <Route exact path="/addUserToEstablishment" component={AddUserToEstablishment}/>
         <Route exact path="/establishment/:courtId" component={BookingCourt}/>
         <Route exact path="/payment" component={MercadoPago}/>
         <Route exact path="/calendar" component={Calendario} />
         <Route exact path="/reporting" component={ReportingForm} />
         <Route exact path="/reportingResults" component={ReportingResults} />
         <Route exact path="/admin" component={AdminProfile} />
-        <Route exact path="/success" component={SuccessMp} />
+        <Route exact path="/temp" component={TempResults} />
       </div>
     </React.Fragment>
   );

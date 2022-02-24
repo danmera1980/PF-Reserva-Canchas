@@ -1,12 +1,16 @@
 @keyframes scroll {
-    0% { transform: translateX(0); -webkit-transform: translateX(0); -moz-transform: translateX(0); -ms-transform: translateX(0); -o-transform: translateX(0); }
-    100% { transform: translateX(calc(-400px * 7)); -webkit-transform: translateX(calc(-400px * 7)); -moz-transform: translateX(calc(-400px * 7)); -ms-transform: translateX(calc(-400px * 7)); -o-transform: translateX(calc(-400px * 7)); }
-  }
+  0% { transform: translateX(0); -webkit-transform: translateX(0); -moz-transform: translateX(0); -ms-transform: translateX(0); -o-transform: translateX(0); }
+  95% { transform: translateX(calc(-823px * 7)); -webkit-transform: translateX(calc(-823px * 7)); -moz-transform: translateX(calc(-823px * 7)); -ms-transform: translateX(calc(-823px * 7)); -o-transform: translateX(calc(-823px * 7)); }
+}
 
-$animationSpeed: 54s;
+$animationSpeed: 55s;
 
 .carrousel {
   animation: scroll $animationSpeed linear infinite;
-  -webkit-animation: scroll $animationSpeed;
-  width: calc(400px * 14);
+  -webkit-animation: scroll $animationSpeed linear infinite;
+  width: calc(823px * 14);
+}
+
+.carrousel:hover{
+  animation-play-state: paused;
 }
