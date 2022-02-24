@@ -69,7 +69,7 @@ export default function MercadoPago({booking}){
       <h4 className="font-bold py-1 text-xl text-center dark:text-white ">Detalle de reserva</h4>
       <h2 className="font-bold py-1 text-l  dark:text-white ">{input[0].courtName}</h2>
       <h1 className="font-bold py-2 text-s dark:text-white ">Fecha y Horario</h1>
-      <h1 className="font-bold py-2  dark:text-white ">{date[2]}-{parseInt(date[1])+1}-{date[0]} de {date[3]} a {parseInt(date[3])+1}</h1>
+      <h1 className="font-bold py-2  dark:text-white ">{date[2]}-{parseInt(date[1])}-{date[0]} de {date[3]} a {parseInt(date[3])+1}</h1>
       <h1 className="font-bold py-2  dark:text-white ">Total a pagar  {'$' + input[0].price}</h1>
       <div className="cho-container place-content-center ">
         {!preferenceId &&
