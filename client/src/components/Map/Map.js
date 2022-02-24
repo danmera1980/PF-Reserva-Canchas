@@ -5,6 +5,8 @@ import './Map.css';
 
 const MapStyle = 'mapbox://styles/mapbox/streets-v11';
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+
+
 const Map = ({location, markers}) => {
   const mapContainerRef = useRef(null);
 
@@ -22,7 +24,7 @@ const Map = ({location, markers}) => {
     });
 
     // Create default markers
-    markers.features.map((marker) =>
+    markers?.features.map((marker) =>
         {
             console.log(marker)
             new mapboxgl.Marker()
@@ -30,7 +32,13 @@ const Map = ({location, markers}) => {
             .setPopup(
                 new mapboxgl.Popup({ offset: 25 })
                 .setHTML(
-                    `<h3>${marker.properties.title}</h3><p>${marker.properties.description}</p>`
+                    `<div>
+                        <h2 class="text-lg">${marker.properties.establishment}</h2>
+                        <h3 class="text-lg">${marker.properties.site} - ${marker.properties.court}</h3>
+                        <p class="text-lg">${marker.properties.address}</p>
+                        <p class="text-lg">${marker.properties.sport}</p>
+                        <p class="text-lg">${marker.properties.price}</p>
+                    </div>`
                 )
             )
             .addTo(map)
