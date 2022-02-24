@@ -75,7 +75,8 @@ function SearchBar({getViewPort}) {
             latitude:'',
             longitude:'',
             sport: '',
-            text: ''
+            text: '',
+            zoom: 10
         })
         history.push({pathname: '/results', state:{latitude:searchText.latitude, longitude:searchText.longitude}})
     }
