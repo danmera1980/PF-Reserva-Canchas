@@ -60,7 +60,7 @@ function Results() {
         <div className='fixed top-20 mt-5 w-full'>
             <SearchBar getViewPort={getViewPort}/>
         </div> 
-        <div className='grid place-content-center md:flex md:flex-row gap-10 mt-[10vh] md:max-w-[1200px] m-auto'>
+        <div className='grid place-content-center md:grid-cols-2 md:max-w-[1200px] gap-10 mt-[10vh] m-auto'>
                 {data.length ?
                 <div className='h-[27rem] md:h-[68vh] snap-y snap-mandatory cardScrollbar overflow-x-hidden mt-32 md:mt-0'>
                      {data.map(m => m.sites.map(site => site.courts.map( court => (
@@ -84,7 +84,7 @@ function Results() {
                 </div>
                 : <div className="flex place-content-center my-1 text-2xl w-full dark:text-white">No hay resultados para tu búsqueda</div>}
                 
-                <div className='lg:h-[68vh] overflow-hidden hidden md:block'>
+                <div className='relative overflow-hidden hidden md:block'>
                   <Map
                     location= {currentLocation}
                     markers={resultsData}
