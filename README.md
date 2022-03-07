@@ -3,7 +3,7 @@
 # Final Project - Sport Field Reservations Platform
 ![App logo](https://raw.githubusercontent.com/danmera1980/PF-Reserva-Canchas/master/client/src/assets/img/logo.svg)
 
-![Main](client\src\assets\img\Sport Field Reservations Platform.jpg)
+![Main](https://github.com/danmera1980/PF-Reserva-Canchas/blob/71b1800a65c8c813ca2a76c49c754450fa47facf/client/src/assets/img/Sport%20Field%20Reservations%20Platform.jpg)
 
 <!-- ## Objetivos del Proyecto
 
