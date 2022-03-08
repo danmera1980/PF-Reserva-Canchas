@@ -2,11 +2,11 @@
 
 # Final Project - Sport Field Reservations Platform
 <p>
-<img src="https://raw.githubusercontent.com/danmera1980/PF-Reserva-Canchas/master/client/src/assets/img/Sport%20Field%20Reservations%20Platform.jpg" alt="main"/>
+<img src="https://github.com/danmera1980/PF-Reserva-Canchas/blob/71b1800a65c8c813ca2a76c49c754450fa47facf/client/src/assets/img/Sport%20Field%20Reservations%20Platform.jpg" alt="main"/>
 </p>
 
 <p>
-<img src="client\src\assets\img\tuCanchaYaMockup.gif" alt="main"/>
+<img src="https://github.com/danmera1980/PF-Reserva-Canchas/blob/53f37db8802377521d8b653add374ec74d07cf13/client/src/assets/img/tuCanchaYaMockup.gif" alt="gif"/>
 </p>
 
 
