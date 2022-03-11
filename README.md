@@ -11,12 +11,12 @@
 
 <h1 align="center">Tecnologías utilizadas: </h1>
 
-<div style="display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:4rem">
+<div style="display:grid;grid-template-columns: repeat(4, minmax(0, 1fr));gap:4rem">
 <a href="https://www.mapbox.com/"><img src="client\src\assets\img\Mapbox_Logo.png" alt="mapbox" width="200"/></a>
 <a href="https://tailwindcss.com/"><img src="client\src\assets\img\tailwind-css.svg" alt="tailwind" width="200"/></a>
 <a href="https://react-table.tanstack.com/"><img src="client\src\assets\img\reactTable.svg" alt="reactTable" width="200"/></a>
 <a href="https://www.mercadopago.com"><img src="client\src\assets\img\mercado-pago-logo.png" alt="mercadoPago" width="210"/></a>
-<a href="https://nodemailer.com/about/"><img src="client\src\assets\img\nodeMailer.png" alt="nodeMailer" width="120"/></a>
+<a href="https://nodemailer.com/about/"><img src="client\src\assets\img\nodeMailer.png" alt="nodeMailer" width="120" style="margin-left:2.5rem"/></a>
 <a href="https://reactjs.org/"><img src="client\src\assets\img\react.png" alt="reactTable" width="200"/></a>
 <a href="https://redux.js.org/"><img src="client\src\assets\img\redux.png" alt="reactTable" width="200"/></a>
 <a href="http://expressjs.com/"><img src="client\src\assets\img\ExpressJS.png" alt="reactTable" width="200"/></a>
