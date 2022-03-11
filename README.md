@@ -9,6 +9,20 @@
 <img src="https://github.com/danmera1980/PF-Reserva-Canchas/blob/53f37db8802377521d8b653add374ec74d07cf13/client/src/assets/img/tuCanchaYaMockup.gif" alt="gif"/>
 </p>
 
+<h1 align="center">Tecnologías utilizadas: </h1>
+
+<div style="display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:2rem">
+<a href="https://www.mapbox.com/"><img src="client\src\assets\img\Mapbox_Logo.png" alt="mapbox" width="200"/></a>
+<a href="https://tailwindcss.com/"><img src="client\src\assets\img\tailwind-css.svg" alt="tailwind" width="200"/></a>
+<a href="https://react-table.tanstack.com/"><img src="client\src\assets\img\reactTable.svg" alt="reactTable" width="200"/></a>
+<a href="https://www.mercadopago.com"><img src="client\src\assets\img\mercado-pago-logo.png" alt="mercadoPago" width="210"/></a>
+<a href="https://nodemailer.com/about/"><img src="client\src\assets\img\nodeMailer.png" alt="nodeMailer" width="120"/></a>
+<a href="https://reactjs.org/"><img src="client\src\assets\img\react.png" alt="reactTable" width="200"/></a>
+<a href="https://redux.js.org/"><img src="client\src\assets\img\redux.png" alt="reactTable" width="200"/></a>
+<a href="http://expressjs.com/"><img src="client\src\assets\img\ExpressJS.png" alt="reactTable" width="200"/></a>
+</div>
+
+
 
 <!-- ## Objetivos del Proyecto
 
