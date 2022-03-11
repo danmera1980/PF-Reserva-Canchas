@@ -11,7 +11,7 @@
 
 <h1 align="center">Tecnologías utilizadas: </h1>
 
-<div style="display:grid;grid-template-columns: repeat(4, minmax(0, 1fr));gap:4rem">
+<div style="display:grid;grid-template-columns: repeat(4, minmax(0, 1fr));gap:4rem;place-content:center">
 <a href="https://www.mapbox.com/"><img src="client\src\assets\img\Mapbox_Logo.png" alt="mapbox" width="200"/></a>
 <a href="https://tailwindcss.com/"><img src="client\src\assets\img\tailwind-css.svg" alt="tailwind" width="200"/></a>
 <a href="https://react-table.tanstack.com/"><img src="client\src\assets\img\reactTable.svg" alt="reactTable" width="200"/></a>
