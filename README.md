@@ -1,9 +1,30 @@
 <!-- @format -->
 
 # Final Project - Sport Field Reservations Platform
-![App logo](https://raw.githubusercontent.com/danmera1980/PF-Reserva-Canchas/master/client/src/assets/img/tuCanchaYa!_Logo.png)
+<p>
+<img src="https://github.com/danmera1980/PF-Reserva-Canchas/blob/71b1800a65c8c813ca2a76c49c754450fa47facf/client/src/assets/img/Sport%20Field%20Reservations%20Platform.jpg" alt="main"/>
+</p>
 
-## Objetivos del Proyecto
+<p>
+<img src="https://github.com/danmera1980/PF-Reserva-Canchas/blob/53f37db8802377521d8b653add374ec74d07cf13/client/src/assets/img/tuCanchaYaMockup.gif" alt="gif"/>
+</p>
+
+<h1 align="center">Tecnologías utilizadas: </h1>
+
+<div style="display:grid;grid-template-columns: repeat(4, 1fr);gap:4rem;place-content:center">
+<a href="https://www.mapbox.com/"><img src="client\src\assets\img\Mapbox_Logo.png" alt="mapbox" width="200"/></a>
+<a href="https://tailwindcss.com/"><img src="client\src\assets\img\tailwind-css.svg" alt="tailwind" width="200"/></a>
+<a href="https://react-table.tanstack.com/"><img src="client\src\assets\img\reactTable.svg" alt="reactTable" width="200"/></a>
+<a href="https://www.mercadopago.com"><img src="client\src\assets\img\mercado-pago-logo.png" alt="mercadoPago" width="210"/></a>
+<a href="https://nodemailer.com/about/"><img src="client\src\assets\img\nodeMailer.png" alt="nodeMailer" width="120" style="margin-left:2.5rem"/></a>
+<a href="https://reactjs.org/"><img src="client\src\assets\img\react.png" alt="reactTable" width="200"/></a>
+<a href="https://redux.js.org/"><img src="client\src\assets\img\redux.png" alt="reactTable" width="200"/></a>
+<a href="http://expressjs.com/"><img src="client\src\assets\img\ExpressJS.png" alt="reactTable" width="200"/></a>
+</div>
+
+
+
+<!-- ## Objetivos del Proyecto
 
 - Construir una App utilizando React, Redux, Node, Sequelize y otros frameworks.
 - Afirmar y conectar los conceptos aprendidos en la carrera.
@@ -59,11 +80,11 @@ El contenido de `client` fue creado usando: Create React App.
 La idea general es crear una aplicación en la cual se pueda:
 
 - Como usuario:
-  - Visualizar las canchas deportivas cercanas a una ubicación.
-  - Poder filtrar la búsqueda por localidad, tipo de deporte.
-  - Agendar un horario para uso de canchas.
-  - Como Establecimiento.
-  - Agregar una cancha para que usuarios la puedan reservar.
+- Visualizar las canchas deportivas cercanas a una ubicación.
+- Poder filtrar la búsqueda por localidad, tipo de deporte.
+- Agendar un horario para uso de canchas.
+- Como Establecimiento.
+- Agregar una cancha para que usuarios la puedan reservar.
 
 #### Tecnologías necesarias:
 
@@ -80,21 +101,21 @@ Se debe desarrollar una aplicación de React/Redux que contenga las siguientes p
 
 - [ ] Alguna imagen de fondo representativa al proyecto
 - [ ] Input de búsqueda para encontrar canchas por:
-  - [ ] Nombre
-  - [ ] Ubicación
-  - [ ] Tipo de deporte
+- [ ] Nombre
+- [ ] Ubicación
+- [ ] Tipo de deporte
 
 **Ruta resultados**: debe contener
 
 - [ ] Input de búsqueda para encontrar canchas.
 - [ ] Área donde se verá el listado de canchas. Al iniciar deberá cargar los primeros resultados obtenidos y deberá mostrar su:
-  - Imagen de la cancha
-  - Nombre del establecimiento
-  - Ubicación
-  - Descripción
-  - Tipo de Deporte
-  - Precio de alquiler y tiempo
-  - Botón de favorito
+- Imagen de la cancha
+- Nombre del establecimiento
+- Ubicación
+- Descripción
+- Tipo de Deporte
+- Precio de alquiler y tiempo
+- Botón de favorito
 - [ ] Botones/Opciones para filtrar por tipo de deporte, y precio.
 - [ ] Botones/Opciones para ordenar tanto ascendentemente como descendentemente los establecimientos por orden de precio como por nombre de establecimiento.
 - [ ] Paginado para ir buscando y mostrando las siguientes canchas, 10 canchas por pagina, mostrando las primeras 9 en la primer pagina.
@@ -115,8 +136,8 @@ Se debe desarrollar una aplicación de React/Redux que contenga las siguientes p
 - [ ] Nombre del establecimiento
 - [ ] Ubicación
 - [ ] Creación de canchas/productos
-  - [ ] Nombre
-  - [ ] Imágenes de las canchas
+- [ ] Nombre
+- [ ] Imágenes de las canchas
 - [ ] Descripción
 - [ ] Calendario disponible
 - [ ] Precio
@@ -126,12 +147,12 @@ Se debe desarrollar una aplicación de React/Redux que contenga las siguientes p
 - [ ] Nombre
 - [ ] Foto
 - [ ] Reservas
-  - Actuales
-  - Pasadas
-  - Canceladas
+- Actuales
+- Pasadas
+- Canceladas
 - [ ] Pagos o Transacciones
-  - Pagadas
-  - Pendientes
+- Pagadas
+- Pendientes
 
 **Ruta de formulario de nuevo Usuario**: debe contener
 
@@ -146,8 +167,8 @@ El modelo de la base de datos deberá tener las siguientes entidades (Aquellas p
 
 - [ ] Usuario con las siguientes propiedades:
 
-  - ID (Código de 3 letras) \*
-  - Nombre \*
+- ID (Código de 3 letras) \*
+- Nombre \*
 
 - Crear las respectivas relaciones.
 
@@ -158,35 +179,35 @@ Se debe desarrollar un servidor en Node/Express con las siguientes rutas:
 **Usuarios**
 
 - [ ] **GET /users**:
-  - Deberán traer todos los usuarios desde la base de datos.
+- Deberán traer todos los usuarios desde la base de datos.
 - [ ] **GET /users/{idUser}**:
-  - Obtener el detalle de un usuario en particular.
-  - Debe traer solo los datos pedidos en la ruta de detalle de usuario.
-  - Incluir los datos de las reservas realizadas anteriormente.
+- Obtener el detalle de un usuario en particular.
+- Debe traer solo los datos pedidos en la ruta de detalle de usuario.
+- Incluir los datos de las reservas realizadas anteriormente.
 - [ ] **GET /users?name="..."**:
-  - Obtener los usuarios que coincidan con el nombre pasado como query parameter (No necesariamente tiene que ser una matcheo exacto).
-  - Si no existe ningún usuario mostrar un mensaje adecuado.
+- Obtener los usuarios que coincidan con el nombre pasado como query parameter (No necesariamente tiene que ser una matcheo exacto).
+- Si no existe ningún usuario mostrar un mensaje adecuado.
 - [ ] **POST /user**:
-  - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de usuario por body.
-  - Crea un usuario en la base de datos.
+- Recibe los datos recolectados desde el formulario controlado de la ruta de creación de usuario por body.
+- Crea un usuario en la base de datos.
 
 **Establecimientos**
 
 - [ ] **GET /establishment**:
-  - Deberán traer todos los establecimientos desde la base de datos.
+- Deberán traer todos los establecimientos desde la base de datos.
 - [ ] **GET /establishment/{idEstablishment}**:
-  - Obtener el detalle de un establecimiento en particular.
-  - Debe traer solo los datos pedidos en la ruta de detalle de establecimientos.
-  - Incluir los datos de las canchas.
+- Obtener el detalle de un establecimiento en particular.
+- Debe traer solo los datos pedidos en la ruta de detalle de establecimientos.
+- Incluir los datos de las canchas.
 - [ ] **GET /establishment?name="..."**:
-  - Obtener los establecimientos que coincidan con el nombre pasado como query parameter (No necesariamente tiene que ser una matcheo exacto).
-  - Si no existe ningún establecimiento mostrar un mensaje adecuado.
+- Obtener los establecimientos que coincidan con el nombre pasado como query parameter (No necesariamente tiene que ser una matcheo exacto).
+- Si no existe ningún establecimiento mostrar un mensaje adecuado.
 - [ ] **POST /establishment**:
-  - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de establecimiento por body.
-  - Crea un establecimientos en la base de datos.
+- Recibe los datos recolectados desde el formulario controlado de la ruta de creación de establecimiento por body.
+- Crea un establecimientos en la base de datos.
 
 #### Testing
 
 - [ ] Al menos tener un componente del frontend con sus tests respectivos.
 - [ ] Al menos tener una ruta del backend con sus tests respectivos.
-- [ ] Al menos tener un modelo de la base de datos con sus tests respectivos.
+- [ ] Al menos tener un modelo de la base de datos con sus tests respectivos. -->
